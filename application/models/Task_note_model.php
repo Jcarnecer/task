@@ -1,6 +1,6 @@
 <?php
 
-class TaskNote extends CI_Model {
+class Task_note_model extends CI_Model {
 	
 	public $body;
 	public $task_id;
