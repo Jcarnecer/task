@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class TaskController extends CI_Controller {
+class Tasks extends CI_Controller {
 
 
 	public function __construct() {
@@ -11,7 +11,7 @@ class TaskController extends CI_Controller {
 
 	public function index() {
 		$data = [];
-		$data['tasks'] = $this->task->get();
+		$data['tasks'] = $this->task_model->get();
 
 		$this->load->view('task/index', $data);
 	}
@@ -19,13 +19,13 @@ class TaskController extends CI_Controller {
 	public function create() {
 		$errors = [];
 
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			$task_details = [
-				'title' => $_POST['title'],
-				'description' => $_POST['description'],
-				'due_date' => $_POST['due_date']
+				'title' => $this->input->post('title'),
+				'description' => $this->input->post('description'),
+				'due_date' => $this->input->post('due_date')
 			];
-			$this->task->insert($task_details);
+			$this->task_model->insert($task_details);
 		}
 
 		$this->load->view('task/create', ['errors' => $errors]);

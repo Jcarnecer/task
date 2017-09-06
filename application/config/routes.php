@@ -51,10 +51,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'site';
 
-$route['tasks'] = 'taskcontroller/index';
-$route['tasks/create'] = 'taskcontroller/create';
+$route['tasks'] = 'tasks/index';
+$route['tasks/create'] = 'tasks/create';
 
-$route['tasks/(:num)/notes/create'] = 'tasknotecontroller/create/$1';
+$route['tasks/(:num)/notes/create'] = 'task_notes/create/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
