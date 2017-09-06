@@ -56,5 +56,10 @@ $route['tasks/create'] = 'tasks/create';
 
 $route['tasks/(:num)/notes/create'] = 'task_notes/create/$1';
 
+//team
+$route['tasks/team/create'] = 'tasks/create_team_task';
+
+$route['tasks/team/(:num)/notes/create'] = 'team_task_notes/create/$1';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
