@@ -35,5 +35,7 @@ class Task_model extends CI_Model {
 
 		$this->db->insert('tasks', $task_details);
 	}
+
+	#function update
 	
 }
