@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
 </head>
 <body>
-<<<<<<< HEAD
     <div class="panel panel-default" style="height:100%; width:20%; position:fixed;">
         <div class="panel-heading">
             Task List <a href="#" style="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a>
@@ -18,47 +17,6 @@
             <input type="text" class="form-control" id="task-search" placeholder="Search"/>
             <div class="list-group task-container" style="overflow-y:auto;">
             </div>
-=======
-    <nav class="navbar navbar-default">
-        <div class="main-nav">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">To do mo to'</a>
-            </div>
-        </div>
-    </nav>
-    <div class="container" style="width:200px; position:fixed; overflow-y: scroll;">
-        <h4>Create Task</h4>
-        <div class="task-submit-panel">
-            <form method="POST" action="<?php echo base_url('tasks/create'); ?>">
-                <div>
-                    <label>Title</label>
-                    <input type="text" name="title" placeholder="Title" />
-                </div>
-                <div>
-                    <label>Description</label>
-                    <textarea name="description" placeholder="Description"></textarea>
-                </div>
-                <div>
-                    <label>Due Date</label>
-                    <input type="date" name="due_date" value="<?php echo date('Y-m-d'); ?>" />
-                </div>
-                <div>
-                    <label>Color</label>
-                    <input type="text" name="color" id="task-color" />
-                </div>
-                <br/>
-                <div>
-                    <input type="submit" value="Create" />
-                </div>
-            </form>
-        </div>
-        <hr />
-
-        <h4>Task List <a href="#" data-toggle="modal" data-target="#myModal">&plus;</a></h4>
-        <input type="text" id="task-search" />
-        <div class="list-group task-container" style="overflow-y:scroll; height:400px;">
-
->>>>>>> 0cda2802ca2a2c87a93519ab9c0c52dba798e04a
         </div>
     </div>
 
