@@ -7,44 +7,17 @@
     <link rel="stylesheet" type="text/css" href="css/task.css" />
 </head>
 <body>
-    <div class="container" style="width:200px; position:fixed; overflow-y: scroll;">
-
-        <h4>Create Task</h4>
-        <div class="task-submit-panel">
-            <form method="POST" action="<?php echo base_url('tasks/create'); ?>">
-                <div>
-                    <label>Title</label>
-                    <input type="text" name="title" placeholder="Title" />
-                </div>
-                <div>
-                    <label>Description</label>
-                    <textarea name="description" placeholder="Description"></textarea>
-                </div>
-                <div>
-                    <label>Due Date</label>
-                    <input type="date" name="due_date" value="<?php echo date('Y-m-d'); ?>" />
-                </div>
-                <div>
-                    <label>Color</label>
-                    <input type="text" name="color" id="task-color" />
-                </div>
-                <br/>
-                <div>
-                    <input type="submit" value="Create" />
-                </div>
-            </form>
+    <div class="panel panel-default" style="height:100%; width:20%; position:fixed;">
+        <div class="panel-heading">
+            Task List <a href="#" style="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a>
         </div>
-
-        <hr />
-
-        <h4>Task List <a href="#" data-toggle="modal" data-target="#myModal">&plus;</a></h4>
-        <input type="text" id="task-search" />
-        <div class="list-group task-container" style="overflow-y:scroll; height:400px;">
-
+        <div class="panel-body">
+            <input type="text" class="form-control" id="task-search" placeholder="Search"/>
+            <div class="list-group task-container" style="overflow-y:auto;">
+            </div>
         </div>
     </div>
 
-    <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -66,21 +39,25 @@
                     <textarea class="form-control" rows="5" id="description"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="due_date">Date:</label>
-                    <input type="date" class="form-control" id="due_date" required>
+                    <label>Date and Time:</label>
+                    <div class="input-group">
+                        <!-- <label for="due_date">Date:</label> -->
+                        <input type="date" class="form-control" id="due_date" value="<?php echo date('Y-m-d'); ?>">
+                        <span class="input-group-addon">-</span>
+                        <!-- <label for="due_time">Date:</label> -->
+                        <input type="time" class="form-control" id="due_time" value="<?php echo strtotime(date('Y-m-d')); ?>">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="color">Color:</label>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-circle btn-color" data-color="#AA3939"></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" data-color="#226666"></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" data-color="#2D882D"></button>
-                        <!-- <button type="button" class="btn btn-color" data-value="#"></button> -->
-                    </div>
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i></i></button>
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#AA3939;"data-color="#AA3939" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#226666;"data-color="#226666" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#2D882D;"data-color="#2D882D" data-accent="#FFFFFF"><i></i></button>
                 </div>
             </div>
             <div class="modal-footer">
-            <input type="submit" class="btn btn-info" value="Add Task">
+            <input type="submit" class="btn btn-default" value="Add Task">
             </form>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -132,6 +109,14 @@
 
         $(document).on('click', '.task-item-delete', function() {
             $(this).parent().remove();
+        });
+
+        $(document).on('click', '.btn-color', function(){
+            $(this).closest('.modal-content').css('background-color', $(this).attr('data-color'));
+            $(this).closest('.modal-content').css('color', $(this).attr('data-accent'));
+            $(this).css('background-color', $(this).attr('data-color'));
+            $(this).find('i').addClass('glyphicon glyphicon-ok');
+            $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
         });
 
 

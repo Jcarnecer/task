@@ -3,18 +3,6 @@
     
 }
 
-button[data-color="#AA3939"] {
-    background-color: #AA3939;
-}
-
-button[data-color="#226666"] {
-    background-color: #226666;
-}
-
-button[data-color="#2D882D"] {
-    background-color: #2D882D;
-}
-
 .btn-circle {
     width: 30px;
     height: 30px;
