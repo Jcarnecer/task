@@ -3,12 +3,20 @@
 <head>
 	<title></title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css"/> -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" href="css/task.css" />
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
 </head>
 <body>
+    <nav class="navbar navbar-default">
+        <div class="main-nav">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">To do mo to'</a>
+            </div>
+        </div>
+    </nav>
     <div class="container" style="width:200px; position:fixed; overflow-y: scroll;">
-
         <h4>Create Task</h4>
         <div class="task-submit-panel">
             <form method="POST" action="<?php echo base_url('tasks/create'); ?>">
@@ -34,7 +42,6 @@
                 </div>
             </form>
         </div>
-
         <hr />
 
         <h4>Task List <a href="#" data-toggle="modal" data-target="#myModal">&plus;</a></h4>
