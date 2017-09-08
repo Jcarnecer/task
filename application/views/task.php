@@ -4,7 +4,10 @@
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/task.css" />
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
+=======
+>>>>>>> abe3d9acb6857df94a0ed7b97bb58117aff09983
     <link rel="stylesheet" type="text/css" href="css/mystyle2.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle3.css"/>
 </head>
