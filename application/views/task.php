@@ -15,7 +15,7 @@
         </div>
         <div class="panel-body">
             <input type="text" class="form-control" id="task-search" placeholder="Search"/>
-            <div class="list-group task-container" style="overflow-y:auto;">
+            <div class="list-group task-list" style="overflow-y:auto;">
             </div>
         </div>
     </div>
@@ -34,28 +34,31 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="title">Title:</label>
-                    <input type="text" class="form-control" id="title" required>
+                    <input type="text" class="form-control" name="title" required>
                 </dir>
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea class="form-control" rows="5" id="description"></textarea>
+                    <textarea class="form-control" rows="5" name="description"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Date and Time:</label>
                     <div class="input-group">
                         <!-- <label for="due_date">Date:</label> -->
-                        <input type="date" class="form-control" id="due_date" value="<?php echo date('Y-m-d'); ?>">
-                        <span class="input-group-addon">-</span>
+                        <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
+                        <span class="input-group-addon"></span>
                         <!-- <label for="due_time">Date:</label> -->
-                        <input type="time" class="form-control" id="due_time" value="<?php echo strtotime(date('Y-m-d')); ?>">
+                        <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="color">Color:</label>
-                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i></i></button>
-                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#AA3939;"data-color="#AA3939" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#226666;"data-color="#226666" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#2D882D;"data-color="#2D882D" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i></i></button>
+                    <input type="hidden" name="color" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -84,11 +87,11 @@
             $.each(list, function(i, item) {
                 if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                     var append = 
-                    `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-item" style="background-color:#${item['color']}; margin: 2px 0px;">
+                    `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-list-item" style="background-color:${item['color']};">
                         ${item['title']}
                      </a>`;
 
-                    $('.task-container').append(append);
+                    $('.task-list').append(append);
                 }
             });
         }
@@ -117,6 +120,7 @@
             $(this).css('background-color', $(this).attr('data-color'));
             $(this).find('i').addClass('glyphicon glyphicon-ok');
             $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
+            $(this).parent().find('input[name="color"]').attr('value', $(this).attr('data-color'));
         });
 
 

@@ -11,6 +11,7 @@
     font-size: 12px;
     line-height: 1.428571429;
     border-radius: 15px;
+    border-color: #cccccc;
 }
 
 .btn-circle.btn-lg {
@@ -20,6 +21,7 @@
     font-size: 18px;
     line-height: 1.33;
     border-radius: 25px;
+    border-color: #eeeeee;
 }
 
 .btn-circle.btn-xl {
@@ -29,6 +31,7 @@
     font-size: 24px;
     line-height: 1.33;
     border-radius: 35px;
+    border-color: #eeeeee;
   }
 
   /* #AA3939
