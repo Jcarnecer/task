@@ -36,7 +36,18 @@ class Team_task_model extends Task_model {
 	}
 
 	
-	public function update($id){
+	public function archive($id){
 		return $this->db->update('team_tasks', ['status' => 2], "id = $id");
+	}
+
+	public function update($key, $task_id, $val) {
+		switch($key) {
+			case 'title':
+				return $this->db->update('tasks', [$key => $val], "id = $task_id"); break;
+			case 'description':
+				return $this->db->update('tasks', [$key => $val], "id = $task_id"); break;
+			default: return;
+		}
+		
 	}
 }
