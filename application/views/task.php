@@ -11,7 +11,17 @@
 <body>
     <div class="panel panel-default" style="height:100%; width:20%; position:fixed;">
         <div class="panel-heading">
-            Task List <a href="#" style="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Task List
+                <span class="caret"></span>
+                </button>
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Personal</a></li>
+                    <li><a href="#">Team</a></li>
+                    <!-- <li><a href="#">JavaScript</a></li> -->
+                </ul>
+            </div>
         </div>
         <div class="panel-body">
             <input type="text" class="form-control" id="task-search" placeholder="Search"/>
@@ -25,7 +35,7 @@
         <div class="modal-dialog">
     
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content" style="background-color:#ffffff; transition:0.2s;">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Create Task</h4>
@@ -38,7 +48,7 @@
                 </dir>
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea class="form-control" rows="5" name="description"></textarea>
+                    <textarea class="form-control" rows="5" name="description" required></textarea>
                 </div>
                 <div class="form-group">
                     <label>Date and Time:</label>
@@ -51,13 +61,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="color">Color:</label>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i></i></button>
+                    <label for="color">Color: </label>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
+                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
                     <input type="hidden" name="color" />
                 </div>
             </div>
@@ -106,6 +116,7 @@
 
 
         $(document).on('input', '#task-search', function () {
+            $('.task-list').html('');
             $(document).displayList(userTask, $(this).val());
         });
         
@@ -117,7 +128,9 @@
         $(document).on('click', '.btn-color', function(){
             $(this).closest('.modal-content').css('background-color', $(this).attr('data-color'));
             $(this).closest('.modal-content').css('color', $(this).attr('data-accent'));
+            // $(this).closest('.modal-content').css('transition', '0.2s');
             $(this).css('background-color', $(this).attr('data-color'));
+            // $(this).css('backgroundtransition', '0.2s');
             $(this).find('i').addClass('glyphicon glyphicon-ok');
             $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
             $(this).parent().find('input[name="color"]').attr('value', $(this).attr('data-color'));
