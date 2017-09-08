@@ -104,7 +104,7 @@
 
 
         var userTask = <?php echo json_encode($tasks); ?>;
-
+        const baseUrl = "<?= base_url() ?>";
 
         $.fn.displayList = function(list, keyword){
             $('.task-container').html('');
@@ -112,11 +112,9 @@
             $.each(list, function(i, item) {
                 if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                     var append = 
-                    '<a href="#" class="list-group-item task-item" style="background-color:#' + item['color'] + '; margin: 2px 0px;">' +
-                        // '<a href="#"><span class="glyphicon glyphicon-envelope"></span></a>' +
-                        item['title'] + 
-                        // '<span class="badge"><button type="button" class="btn btn-xs">&times;</button></span>' + 
-                    '</a>';
+                    `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-item" style="background-color:#${item['color']}; margin: 2px 0px;">
+                        ${item['title']}
+                     </a>`;
 
                     $('.task-container').append(append);
                 }
