@@ -27,7 +27,6 @@ class Task_model extends CI_Model {
 
 	public function insert($task_details) {
 		$task_details['user_id'] = 1;
-		$task_details['color'] = '000000';
 		$task_details['due_date'] = date('Y-m-d');
 		$task_details['status'] = 1;
 		$task_details['created_at'] = date('Y-m-d');
