@@ -41,8 +41,13 @@ class Team_tasks extends CI_Controller {
 		if($id == null)
 			$this->index();
 		else{
-			$this->team_task_model->update($id);
+			$this->team_task_model->archive($id);
 		}
+	}
+
+	
+	public function update($key, $task_id, $val) {
+		$this->team_task_model->update($key, $task_id, $val);
 	}
 
 }
