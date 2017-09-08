@@ -10,7 +10,25 @@
     <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>-->
 </head>
 <body>
-    <div class="row" style="height:100%; width:100%; position:fixed;">
+        <nav class="navbar navbar-default" style="height:50%; width:100%">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">To Do Mo</a>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+                
+            </div>
+        </nav>
+    <div class="row" style="height:100%; width:100%; position:absolute;">
 
         <div class="col-md-2" style="height:100%;">
             <div class="panel panel-default" style="height:100%;">
@@ -120,8 +138,7 @@
                 }
             });
         }
-
-
+        
         $(document).displayList(userTask, '');
 
 
