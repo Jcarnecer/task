@@ -20,6 +20,10 @@ class Task_model extends CI_Model {
 		return $tasks;
 	}
 
+	public function get_task_by_id($id) {
+		return $this->db->get_where('tasks', ['id'])->result();
+	}
+
 	public function get_task_notes($task_id) {
 		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
 	}
