@@ -6,24 +6,51 @@
     <!--<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css"/> -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
     <link rel="stylesheet" type="text/css" href="css/task.css" />
-    <link rel="stylesheet" type="text/css" href="css/mystyle2.css"/>
-    <link rel="stylesheet" type="text/css" href="css/mystyle3.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="css/resources/grid.css">
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>-->
 </head>
 <body>
-    <div class="panel panel-default" style="height:100%; width:20%; position:fixed;">
-        <div class="panel-heading">
-            Task List <a href="#" style="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a>
-        </div>
-        <div class="panel-body">
-            <input type="text" class="form-control" id="task-search" placeholder="Search"/>
-            <div class="list-group task-list" style="overflow-y:auto;">
+    <div class="row" style="height:100%; width:100%; position:fixed;">
+
+        <div class="col-md-2" style="height:100%;">
+            <div class="panel panel-default" style="height:100%;">
+                <div class="panel-heading">
+                    Task List <a href="#" style="pull-right glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></a>
+                </div>  
+                <div class="panel-body">
+                    <input type="text" class="form-control" id="task-search" placeholder="Search"/>
+                    <div class="list-group task-container" style="overflow-y:auto;">
+                    </div>
+                </div>
             </div>
+        </div>  
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <!-- START PANEL 1 -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Task Mo To</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-6">Dummy Content</div>
+                                <div class="col-xs-6">Dummy Content</div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">Dummy Content</div>
+                                <div class="col-xs-6">Dummy Content</div> 
+                            </div>
+                        </div>
+                    </div>
+        
+            </div>       
+    </div>
+</div>
         </div>
     </div>
 
-
+    <div class="modal-dialog">
     <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
     
         <!-- Modal content-->
         <div class="modal-content">
@@ -46,20 +73,17 @@
                     <div class="input-group">
                         <!-- <label for="due_date">Date:</label> -->
                         <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
-                        <span class="input-group-addon"></span>
+                        <span class="input-group-addon">-</span>
                         <!-- <label for="due_time">Date:</label> -->
-                        <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                        <input type="time" class="form-control" name="due_time" value="<?php echo strtotime(date('Y-m-d')); ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="color">Color:</label>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i></i></button>
-                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i></i></button>
-                    <input type="hidden" name="color" />
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i></i></button>
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#AA3939;"data-color="#AA3939" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#226666;"data-color="#226666" data-accent="#FFFFFF"><i></i></button>
+                    <button type="button" name="color" class="btn btn-default btn-circle btn-color" style="background-color:#2D882D;"data-color="#2D882D" data-accent="#FFFFFF"><i></i></button>
                 </div>
             </div>
             <div class="modal-footer">
@@ -88,11 +112,11 @@
             $.each(list, function(i, item) {
                 if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                     var append = 
-                    `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-list-item" style="background-color:${item['color']};">
+                    `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-item" style="background-color:#${item['color']}; margin: 2px 0px;">
                         ${item['title']}
                      </a>`;
 
-                    $('.task-list').append(append);
+                    $('.task-container').append(append);
                 }
             });
         }
@@ -121,7 +145,6 @@
             $(this).css('background-color', $(this).attr('data-color'));
             $(this).find('i').addClass('glyphicon glyphicon-ok');
             $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
-            $(this).parent().find('input[name="color"]').attr('value', $(this).attr('data-color'));
         });
 
 
