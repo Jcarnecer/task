@@ -8,6 +8,13 @@ class Team_tasks extends CI_Controller {
 		parent::__construct();
 	}
 
+	public function index() {
+		$data = [];
+		$data['team_tasks'] = $this->team_task_model->get();
+
+		return $this->load->view('task', $data);
+	}
+
 	public function creat_task() {
 		$errors = [];
 
