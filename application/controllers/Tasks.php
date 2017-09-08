@@ -56,7 +56,12 @@ class Tasks extends CI_Controller {
 		if($id == null)
 			$this->index();
 		else{
-			$this->task_model->update($id);
+			$this->task_model->archive($id);
 		}
+	}
+
+
+	public function update($key, $task_id, $val) {
+		$this->task_model->update($key, $task_id, $val);
 	}
 }
