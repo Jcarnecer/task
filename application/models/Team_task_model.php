@@ -14,13 +14,16 @@ class Team_task_model extends Task_model {
 	}
 
 	public function get_task_by_id($id) {
-		return $this->db->get_where('team_tasks', ['id'])->result();
+		return $this->db->get_where('team_tasks', ['id' => $id])->result();
 	}
 
 	public function get_task_notes($task_id) {
 		return $this->db->get_where('team_task_notes', ['task_id' => $task_id])->result();
 	}
 
+	public function get_archived(){
+		return $this->db->get_where('team_tasks', ['team_id' => 1, 'status' => 2])->result();
+	}
 
 	public function insert($task_details) {
 		$task_details['team_id'] = 1;
@@ -31,5 +34,9 @@ class Team_task_model extends Task_model {
 
 		$this->db->insert('tasks', $task_details);
 	}
+
 	
+	public function update($id){
+		return $this->db->update('team_tasks', ['status' => 2], "id = $id");
+	}
 }

@@ -42,37 +42,21 @@ class Tasks extends CI_Controller {
 			$this->index();
 		else {
 			$data['task_details'] = $this->task_model->get_task_by_id($id);
-			$this->load->view('tasks/personal/view_one',$data); # view not yet created please create the view salamat po (~o.o)~
+			$this->load->view('task/personal/view_one',$data); # view not yet created please create the view salamat po (~o.o)~
 		}
 	}
 
 
-	#######################################TEAM FUNCTIONS#######################################################
-
-
-	public function create_team_task() {
-		$errors = [];
-
-		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-			$task_details = [
-				'title' => $this->input->post('title'),
-				'description' => $this->input->post('description'),
-				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
-				'color' => $this->input->post('color') ? $this->input->post('color') : 'ffffff'
-			];
-			$this->team_task_model->insert($task_details);
-		}
-
-		$this->load->view('task', ['errors' => $errors]);
+	public function fetch_archived(){
+		return $this->task_model->get_archived();
 	}
 
-	public function view_team_task($id = null) {
+
+	public function mark_as_done($id = null) {
 		if($id == null)
 			$this->index();
-		else {
-			$data['task_details'] = $this->team_task_model->get_task_by_id($id);
-			$this->load->view('tasks/team/view_one',$data); # view not yet created please create the view salamat po (~o.o)~
+		else{
+			$this->task_model->update($id);
 		}
 	}
-
 }
