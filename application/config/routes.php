@@ -60,10 +60,10 @@ $route['tasks/view/(:any)'] = 'tasks/view/$1';
 $route['tasks/(:num)/notes/create'] = 'task_notes/create/$1';
 
 # team tasks
-$route['tasks/team/create'] = 'tasks/create_team_task';
-$route['tasks/team/view/(:any)'] = 'tasks/view_team_task/$1';
+$route['tasks/team/create'] = 'team_tasks/create_task';
+$route['tasks/team/view/(:any)'] = 'team_tasks/view_task/$1';
 
-$route['tasks/team/(:num)/notes/create'] = 'team_task_notes/create/$1';
+$route['tasks/team/(:num)/notes/create'] = 'task_notes/create_team_task_note/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

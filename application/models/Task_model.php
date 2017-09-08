@@ -21,11 +21,16 @@ class Task_model extends CI_Model {
 	}
 
 	public function get_task_by_id($id) {
-		return $this->db->get_where('tasks', ['id'])->result();
+		return $this->db->get_where('tasks', ['id' => $id])->result();
 	}
 
 	public function get_task_notes($task_id) {
 		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
+	}
+
+
+	public function get_archived(){
+		return $this->db->get_where('tasks', ['user_id' => 1, 'status' => 2])->result();
 	}
 
 
@@ -39,6 +44,8 @@ class Task_model extends CI_Model {
 		$this->db->insert('tasks', $task_details);
 	}
 
-	#function update
+	public function update($id){
+		return $this->db->update('tasks', ['status' => 2], "id = $id");
+	}
 	
 }
