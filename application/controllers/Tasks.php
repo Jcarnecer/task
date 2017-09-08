@@ -12,9 +12,8 @@ class Tasks extends CI_Controller {
 	public function index() {
 		$data = [];
 		$data['tasks'] = $this->task_model->get();
-		// $data['team_tasks'] = $this->team_task_model->get();
 
-		$this->load->view('task', $data);
+		return $this->load->view('task', $data);
 	}
 
 
