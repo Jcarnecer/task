@@ -41,7 +41,7 @@ class Tasks extends CI_Controller {
 			$this->index();
 		else {
 			$data['task_details'] = $this->task_model->get_task_by_id($id);
-			$this->load->view('task/personal/view_one',$data); # view not yet created please create the view salamat po (~o.o)~
+			$this->load->view('task/personal/view_one', $data); # view not yet created please create the view salamat po (~o.o)~
 		}
 	}
 

@@ -35,6 +35,20 @@
     border-color: #eeeeee;
   }
 
+.box {
+    width: 320px;
+    padding: 10px;
+    border: 20px solid gray;
+    margin: 0;
+}
+
+.plan-box{
+    background-color: #fff;
+    border-radius: 5px;
+    width: 90%;
+    margin-left: 5%; 
+    box-shadow: 0 2px 2px #efefef;
+}
   /* #AA3939
   #226666
   #2D882D */
