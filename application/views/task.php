@@ -4,9 +4,9 @@
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/task.css" />
-    <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle2.css"/>
-    <link rel="stylesheet" type="text/css" href="css/mystyle3.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mystyle3.css"/> -->
 </head>
 <body>
     <nav class="navbar navbar-default">
