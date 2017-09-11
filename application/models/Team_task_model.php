@@ -5,8 +5,12 @@ class Team_task_model extends Task_model {
 
 	public $team_id;
 
-	public function get() {
-		$tasks = $this->db->get('team_tasks')->result();
+	public function get($status = null) {
+		
+		if($status != null)
+			$tasks = $this->db->get_where('team_tasks', ['team_id' => 1, 'status' => $status])->result();
+		else
+			$tasks = $this->db->get('tasks')->result();
 		foreach ($tasks as $task) {
 			$task->notes = $this->get_task_notes($task->id);
 		}

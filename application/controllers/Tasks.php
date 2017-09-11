@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tasks extends CI_Controller {
 
+	const ACTIVE = 1;
+	const ARCHIVED = 2;
 
 	public function __construct() {
 		parent::__construct();
@@ -11,7 +13,7 @@ class Tasks extends CI_Controller {
 
 	public function index() {
 		$data = [];
-		$data['tasks'] = $this->task_model->get();
+		$data['tasks'] = $this->task_model->get(self::ACTIVE);
 
 		return $this->load->view('task', $data);
 	}
@@ -41,13 +43,13 @@ class Tasks extends CI_Controller {
 			$this->index();
 		else {
 			$data['task_details'] = $this->task_model->get_task_by_id($id);
-			$this->load->view('task/personal/view_one',$data); # view not yet created please create the view salamat po (~o.o)~
+			$this->load->view('task/personal/view_one', $data); # view not yet created please create the view salamat po (~o.o)~
 		}
 	}
 
 
 	public function fetch_archived(){
-		return $this->task_model->get_archived();
+		return $this->task_model->get(self::ARCHIVED);
 	}
 
 
@@ -57,6 +59,7 @@ class Tasks extends CI_Controller {
 		else{
 			$this->task_model->archive($id);
 		}
+		redirect('tasks');
 	}
 
 
