@@ -34,13 +34,12 @@
     border-radius: 35px;
     border-color: #eeeeee;
   }
-
-.box {
-    width: 320px;
-    padding: 10px;
-    border: 20px solid gray;
-    margin: 0;
+.box{
+	width:100px;
+    height:100px;
+    background:#f00;
 }
+
 
 .plan-box{
     background-color: #fff;

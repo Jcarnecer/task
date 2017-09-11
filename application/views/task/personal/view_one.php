@@ -4,11 +4,11 @@
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/task.css" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle2.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle3.css"/> -->
 </head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -52,10 +52,10 @@
                 <h1>Your Task:</h1>
             </div>
             <div class="w3-card-4 card" style="width: 70%;">
-                <header class="w3-container w3-blue">
+                <header class="w3-container w3-grey">
                     <div class="row">
-                        <div class="col-xs-6"><h2><?=$task_details[0]->title;?></h2></div>    
-                        <div class="col-xs-6" style="position: absolute; right: -50px;"><a href="<?= base_url('tasks/done/' . $task_details[0]->id) ?>">Mark as done</a></div>
+                        <div class="col-xs-6"><h2><?=$task_details[0]->title;?></h2></div>  
+                        <div class="col-xs-6" style="position: absolute; right: -50px;"><button class="w3-button w3-black" href="<?= base_url('tasks/done/' . $task_details[0]->id) ?>">Mark as done</a></div>
                     </div>
                     
                     
@@ -65,9 +65,11 @@
                     </div>
                 </header>
                 <div class="w3-container">
-                    <p>
-                        <?=$task_details[0]->due_date;?>
-                    </p>
+                    <div class="row">
+                        <div class="col-xs-6">Task Date <button type="button"><span class="glyphicon glyphicon-edit"></span></button></div>
+                        <div class="col-xs-6" style="position: absolute; right: -50px;"><?=$task_details[0]->due_date ;?> <button type="button"><span class="glyphicon glyphicon-edit"></span></button></div>
+                    </div>
+                    
                     <hr>
                     <p>
                         <?=$task_details[0]->description;?>
