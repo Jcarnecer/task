@@ -25,10 +25,10 @@ class Task_model extends CI_Model {
 	}
 
 	#
-	# @params $order_by = column name
-	# @params $direction = asc/desc
+	# @param $order_by = column name
+	# @param $direction = asc/desc
 	#
-	public function order_by($order_by, $direction) {
+	public function order_by($order_by = 'created_at', $direction='asc') {
 		return $this->db->order_by($order_by, $direction);
 	}
 
