@@ -55,7 +55,7 @@
                 <header class="w3-container w3-blue">
                     <div class="row">
                         <div class="col-xs-6"><h2><?=$task_details[0]->title;?></h2></div>    
-                        <div class="col-xs-6" style="position: absolute; right: -50px;"><a href="#">Mark as done</a></div>
+                        <div class="col-xs-6" style="position: absolute; right: -50px;"><a href="<?= base_url('tasks/done/' . $task_details[0]->id) ?>">Mark as done</a></div>
                     </div>
                     
                     
