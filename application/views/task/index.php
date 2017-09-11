@@ -11,7 +11,7 @@
 			<?= $task->title ?>
 			<?= $task->description ?>
 			<?= $task->due_date ?>
-			<a href="#">Mark as Done</a>
+			<a href="<?= base_url('tasks/done/' . $task->id) ?>">Mark as Done</a>
 			<div>
 				<?php foreach ($task->notes as $note): ?>
 					<div>

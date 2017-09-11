@@ -20,6 +20,14 @@ class Task_model extends CI_Model {
 		return $tasks;
 	}
 
+	#
+	# @params $order_by = column name
+	# @params $direction = asc/desc
+	#
+	public function order_by($order_by, $direction) {
+		return $this->db->order_by($order_by, $direction);
+	}
+
 	public function get_task_by_id($id) {
 		return $this->db->get_where('tasks', ['id' => $id])->result();
 	}

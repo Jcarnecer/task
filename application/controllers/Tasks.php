@@ -60,7 +60,15 @@ class Tasks extends CI_Controller {
 	}
 
 
-	public function update($key, $task_id, $val) {
-		$this->task_model->update($key, $task_id, $val);
+	public function update($id = null) {
+
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			$this->task_model->update(
+				$this->input->post('key'),
+				$this->input->post('task_id'),
+				$this->input->post('val')
+			);
+		}
+
 	}
 }
