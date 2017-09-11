@@ -48,8 +48,34 @@
 
     <div class="container-fluid">
         <div class="col-md-10">
-
+            <div class="w3-editor">
+                <h1>Your Task:</h1>
+            </div>
+            <div class="w3-card-4 card" style="width: 70%;">
+                <header class="w3-container w3-blue">
+                    <div class="row">
+                        <div class="col-xs-6"><h2><?=$task_details[0]->title;?></h2></div>    
+                        <div class="col-xs-6" style="position: absolute; right: -50px;"><a href="#">Mark as done</a></div>
+                    </div>
+                    
+                    
+                    <div class="row">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4"></div>
+                    </div>
+                </header>
+                <div class="w3-container">
+                    <p>
+                        <?=$task_details[0]->due_date;?>
+                    </p>
+                    <hr>
+                    <p>
+                        <?=$task_details[0]->description;?>
+                    </p>
+                </div>
+            </div>
         </div>  
+
         <div class="row" style="height:100%;">
             <div class="col-md-2" style="height:100%;">
                 <div class="panel panel-default" style="height:100%;">
@@ -88,7 +114,6 @@
             
         </div>
     </div>
-
     <div id="createTaskModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" style="background-color:#ffffff; transition:0.2s;">
