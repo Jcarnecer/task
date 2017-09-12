@@ -4,11 +4,47 @@
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/task.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
-    <link rel="stylesheet" type="text/css" href="css/mystyle2.css"/>
-    <link rel="stylesheet" type="text/css" href="css/mystyle3.css"/> -->
+    
 </head>
 <body>
+    <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+            
+
+        const baseUrl = "<?= base_url() ?>";
+
+        $.fn.getTask = function(){
+            return $.ajax({
+                type: 'GET',
+                url: 'api/task',
+                dataType: 'json'
+            });
+        };
+
+        
+        $.fn.displayList = function(items, keyword){
+            $('#taskSearchQuery').html('');
+
+            $.each(items, function(i, item) {
+                if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
+                    $('#taskSearchQuery').append(
+                        '<div class="form-group">' +
+                            `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-search-item" style="background-color:${item['color']};">` +
+                                `<span class="glyphicon glyphicon-unchecked" data-value="${item['id']}"></span>` + 
+                                ` ${item['title']}` +
+                            `</a>` +
+                        `</div>`
+                    );
+                }
+            });
+        }
+
+
+        });
+    </script>
+
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -30,128 +66,127 @@
                     </ul>
                 </li>
             </ul>
+            <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul> -->
             <form class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="task-search" placeholder="Search"/>
+                    <input type="text" class="form-control" id="taskSearch" list="task-list" value="" placeholder="Search"/>
+                    <!-- <datalist id="task-list" class="list-group task-list">
+
+                    </datalist> -->
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#createTaskModal"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
             </ul>
-            <!-- <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul> -->
         </div>
     </nav>
 
     <div class="container-fluid">
-        <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="panel panel-default" style="overflow-x:auto;">
+                    <div class="panel-heading">
+                        Tasks
+                    </div>
+                    <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li><a href="#a" data-toggle="tab">a</a></li>
+                        <li><a href="#b" data-toggle="tab">b</a></li>
+                        <li><a href="#c" data-toggle="tab">c</a></li>
+                        <li><a href="#d" data-toggle="tab">d</a></li>
+                        </ul>
 
-        </div>  
-        <div class="row" style="height:100%;">
-            <div class="col-md-2" style="height:100%;">
-                <div class="panel panel-default" style="height:100%;">
+                        <div class="tab-content">
+                        <div class="tab-pane active" id="a">AAA</div>
+                        <div class="tab-pane" id="b">BBB</div>
+                        <div class="tab-pane" id="c">CCC</div>
+                        <div class="tab-pane" id="d">DDD</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         Search
                     </div>
                     <div class="panel-body">
-                        <div class="list-group task-list" style="overflow-y:auto;">
+                        <div id="taskSearchQuery" class="list-group">
 
                         </div>
-                    </div>
-                    <div class="panel-footer">
-                        &copy;Astrid
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div id="createTaskModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" style="background-color:#ffffff; transition:0.2s;">
-                <form action="<?php echo base_url('tasks/create'); ?>" method="post">    
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:#ffffff;">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Create Task</h4>
+                    <!-- <ul class="nav nav-pills">
+                        <li class="active"><a href="#personal" data-toggle="pill">Personal</a></li>
+                        <li><a href="#team" data-toggle="pill">Team</a></li>
+                    </ul> -->
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" class="form-control" name="title" required>
-                    </dir>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea class="form-control" rows="5" name="description" style="resize:none;" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Date and Time:</label>
-                        <div class="input-group">
-                            <!-- <label for="due_date">Date:</label> -->
-                            <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
-                            <span class="input-group-addon"></span>
-                            <!-- <label for="due_time">Date:</label> -->
-                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                    <div class="tab-content">
+                        <div id="personal" class="tab-pane fade in active" style="overflow-y:auto;">
+                            <div class="form-group">
+                                <label for="title">Title:</label>
+                                <input type="text" class="form-control" id="task-title" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea class="form-control" rows="5" id="task-description" name="description" style="resize:none;" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Deadline:</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="task-date" name="due_date" value="<?php echo date('Y-m-d'); ?>">
+                                    <span class="input-group-addon"></span>
+                                    <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color">Color: </label>
+                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
+                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
+                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
+                                <input type="hidden" id="task-color" name="color" value="#fffff" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="color">Color: </label>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
-                        <input type="hidden" name="color" value="#fffff" />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-default" value="Add Task">
+                    <button type="button" id="task-add" class="btn btn-default" data-dismiss="modal">Add Task</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
-                </form>
             </div>
         </div>
     </div>
 
-    <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- <script src="/task/node_modules/bootstrap/dist/css/bootstrap.min.css"></script> -->
+
     <script>
         $(function () {
 
 
-        var userTask = <?php echo json_encode($tasks); ?>;
-        const baseUrl = "<?= base_url() ?>";
-
-        $.fn.displayList = function(list, keyword){
-            $('.task-container').html('');
-
-            $.each(list, function(i, item) {
-                if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
-                    var append = 
-                    `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-list-item" style="background-color:${item['color']};">
-                        ${item['title']}
-                     </a>`;
-
-                    $('.task-list').append(append);
-                }
-            });
-        }
-
-
-        $(document).displayList(userTask, '');
-
-
-        $(document).on('input', '#task-color', function () {
-            $('.task-submit-panel').css('background-color', '#' + $(this).val());
+        $(document).getTask().done(function(data){
+            $(document).displayList(data,'');
         });
 
 
-        $(document).on('input', '#task-search', function () {
-            $('.task-list').html('');
-            $(document).displayList(userTask, $(this).val());
+        $(document).on('input', '#taskSearch', function () {
+            $(document).displayList(tasks, $(this).val());
         });
         
 
@@ -168,8 +203,23 @@
         });
 
 
-        $(document).on('click', 'task-item', function(){
+        $(document).on('click', '#task-add', function(){
+            var task = {
+                title: $('#task-title').val(),
+                description: $('#task-description').val(),
+                due_date: $('#task-date').val(),
+                color: $('#task-color').val()
+            };
 
+            $.ajax({
+                type: 'POST',
+                url: 'api/task',
+                data: task
+            }).done(function(data) {
+                $(document).getTask().done(function(data){
+                    $(document).displayList(data,'');
+                });
+            });
         });
 
 

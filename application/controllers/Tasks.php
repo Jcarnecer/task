@@ -31,8 +31,9 @@ class Tasks extends CI_Controller {
 			$this->task_model->insert($task_details);
 		}
 
+		print_r($task_details);
 		// $this->load->view('task', $data);
-		redirect('tasks');
+		// redirect('tasks');
 	}
 
 
@@ -43,6 +44,11 @@ class Tasks extends CI_Controller {
 			$data['task_details'] = $this->task_model->get_task_by_id($id);
 			$this->load->view('task/personal/view_one',$data); # view not yet created please create the view salamat po (~o.o)~
 		}
+	}
+
+
+	public function fetch() {
+		echo json_encode($this->task_model->get(), TRUE);
 	}
 
 
@@ -63,4 +69,9 @@ class Tasks extends CI_Controller {
 	public function update($key, $task_id, $val) {
 		$this->task_model->update($key, $task_id, $val);
 	}
+
+
+	// public function postOrder() {
+		
+	// }
 }
