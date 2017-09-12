@@ -4,11 +4,12 @@
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/task.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/mystyle.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle2.css"/>
     <link rel="stylesheet" type="text/css" href="css/mystyle3.css"/> -->
 </head>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -56,7 +57,14 @@
                     <div class="row">
                         <div class="col-xs-6"><h2><?=$task_details[0]->title;?></h2></div>  
                         <div class="col-xs-6" style="position: absolute; right: -50px;">
-                            <a class="w3-button w3-black" href="<?= base_url('tasks/done/' . $task_details[0]->id) ?>">Mark as done</a>
+                           <li class="dropdown" style="list-style-type: none;">
+                               <a class="dropdown-toggle w3-button w3-grey" style="position: absolute; right: 400px;" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?= base_url('tasks/done/' . $task_details[0]->id) ?>">Mark as Done</a></li>
+                                    </ul>
+                           </li>
+                           
+<!--                            <a class="w3-button w3-black" href="<?= base_url('tasks/done/' . $task_details[0]->id) ?>">Mark as done</a>-->
                         </div>
                     </div>
                     
@@ -76,9 +84,56 @@
                     <p>
                         <?=$task_details[0]->description;?>
                     </p>
+                    <button class="w3-button w3-block w3-black" data-toggle="modal" data-target="#createTaskModal1">Add task...</button>
                 </div>
             </div>
         </div>  
+        
+        <!--Add task bottom button sa cards -->
+        <div id="createTaskModal1" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+               <div class="modal-content" style="background-color:#ffffff; transition:0.2s;">
+                   <form action="<?php echo base_url('tasks/create'); ?>" method="post">
+                      <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           <h4 class="modal-title">Add a Card</h4>
+                      </div>
+                       <div class="modal-body">
+                           <div class="form-group">
+                               <label for="title">Title:</label>
+                                <input type="text" class="form-control" name="title" required>
+                                <div class="form-group">
+                                    <label for="description">Description:</label>
+                                    <textarea class="form-control" rows="5" name="description" style="resize: none;"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Date and Time:"></label>
+                                    <div class="input-group">                                       
+                                        <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
+                                        <span class="input-group-addon"></span>
+                                        <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="color">Color: </label>
+                                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
+                                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
+                                    <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
+                                    <input type="hidden" name="color" value="#fffff" />
+                                </div>
+                           </div>
+                       </div>
+                       <div class="modal-footer">
+                            <input type="submit" class="btn btn-default" value="Add Task">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                       </div>      
+                   </form>
+               </div>                
+            </div>
+        </div>
 
         <div class="row" style="height:100%;">
             <div class="col-md-2" style="height:100%;">
@@ -109,33 +164,33 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" class="form-control" name="title" required>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea class="form-control" rows="5" name="description" style="resize:none;" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Date and Time:</label>
-                        <div class="input-group">
-                            <!-- <label for="due_date">Date:</label> -->
-                            <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
-                            <span class="input-group-addon"></span>
-                            <!-- <label for="due_time">Date:</label> -->
-                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" name="title" required>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" rows="5" name="description" style="resize:none;" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Date and Time:</label>
+                            <div class="input-group">
+                                <!-- <label for="due_date">Date:</label> -->
+                                <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
+                                <span class="input-group-addon"></span>
+                                <!-- <label for="due_time">Date:</label> -->
+                                <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Color: </label>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
+                            <input type="hidden" name="color" value="#fffff" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="color">Color: </label>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
-                        <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
-                        <input type="hidden" name="color" value="#fffff" />
-                    </div>
-                </div>
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-default" value="Add Task">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
