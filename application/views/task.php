@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
 	<title>Task</title>
@@ -30,15 +30,39 @@
                 if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                     $('#taskSearchQuery').append(
                         // '<div class="form-group">' +
-                            `<a href="#updateTaskModal" class="list-group-item" data-toggle="modal" data-value="${item['id']}" style="background-color:${item['color']}; color:#000000;">` +
+                            `<a href="#" class="list-group-item" style="background-color:${item['color']}; color:#000000;">` +
                                 `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
                                 ` ${item['title']}` +
+                                `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                             `</a>`
                         // `</div>`
                     );
                 }
             });
-        }
+        };
+
+
+        $.fn.displayTiles = function(items) {
+            $('#taskTile').html('');
+
+            $.each(items, function(i, item) {
+                if(i%4 == 0) {
+                    $('#taskTile').append('<div id="#tileRowActive" class="row" style="height: 100px;></div>');
+                }
+                $('#taskTile').append(
+                    `<div class="col-md-3" style="padding:2px;">` +
+                        `<div style="background-color:${item['color']}; color:#000000; padding:10px; min-height:100px">` +
+                            `<span class="glyphicon glyphicon-unchecked task-mark-done pull-top pull-right" data-value="${item['id']}"></span>` + 
+                            `<h3><b>${item['title']}<b></h3>` +
+                            `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                        `</div>` +
+                    `</div>`
+                );
+                if(i%4 == 3) {
+                    $('#taskTile').find('div.row').removeAttr('id');
+                }
+            });
+        };
 
 
         $.fn.changeColor = function($element, color){
@@ -50,9 +74,8 @@
                 case '#4caf50': $element.css('color', '#ffffff'); break;
                 case '#ffeb3b': $element.css('color', '#000000'); break;
                 case '#ff9800': $element.css('color', '#000000'); break;
-
             }
-        }
+        };
 
 
         });
@@ -100,25 +123,11 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-10">
-                <div class="panel panel-default" style="overflow-x:auto;">
-                    <div class="panel-heading">
-                        Tasks
-                    </div>
-                    <div class="panel-body">
-                    <ul class="nav nav-tabs">
-                        <li><a href="#a" data-toggle="tab">a</a></li>
-                        <li><a href="#b" data-toggle="tab">b</a></li>
-                        <li><a href="#c" data-toggle="tab">c</a></li>
-                        <li><a href="#d" data-toggle="tab">d</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                        <div class="tab-pane active" id="a">AAA</div>
-                        <div class="tab-pane" id="b">BBB</div>
-                        <div class="tab-pane" id="c">CCC</div>
-                        <div class="tab-pane" id="d">DDD</div>
-                        </div>
+            <div class=" col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Board</div>
+                    <div id="taskTile" class="panel-body container-fluid">
+                        
                     </div>
                 </div>
             </div>
@@ -282,6 +291,15 @@
 
         $(document).getTask().done(function(data) {
             $(document).displayList(data,'');
+            $(document).displayTiles(data);
+        });
+
+
+        $('#taskSearchQuery').find('span[data-target="#updateTaskModal"]').hide();
+
+
+        $('#taskSearchQuery').find('a.list-group-item').on('mouseover', function () {
+            $(this).filter('span[data-target="#updateTaskModal"]').show(200);
         });
 
 
@@ -351,7 +369,7 @@
         });
 
 
-        $(document).on('click', 'a[href="#updateTaskModal"]', function () {
+        $(document).on('click', 'span[data-target="#updateTaskModal"]', function () {
             $('#taskUpdateForm')[0].reset();
             $.ajax({
                 type: 'GET',
@@ -399,8 +417,6 @@
         $(document).on('click', '#taskUpdate', function () {
             var task = $('#taskUpdateForm').serializeArray();
 
-            console.log(task);
-
             $.ajax({
                 type: 'POST',
                 url: `api/task/${$('#taskUpdateForm').attr('data-value')}`,
@@ -410,6 +426,11 @@
                     $(document).displayList(data,'');
                 });
             });
+        });
+
+        $(document).on('click', '.task-mark-done', function () {
+            $(this).toggleClass('glyphicon-check');
+            $(this).toggleClass('glyphicon-unchecked');
         });
 
         }); 
