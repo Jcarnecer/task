@@ -12,12 +12,24 @@ class Task_model extends CI_Model {
 	public $created_at;
 	public $updated_at;
 
-	public function get() {
-		$tasks = $this->db->get('tasks')->result();
+	public function get($status = null) {
+		
+		if($status != null)
+			$tasks = $this->db->get_where('tasks', ['user_id' => 1, 'status' => $status])->result();
+		else
+			$tasks = $this->db->get('tasks')->result();
 		foreach ($tasks as $task) {
 			$task->notes = $this->get_task_notes($task->id);
 		}
 		return $tasks;
+	}
+
+	#
+	# @param $order_by = column name
+	# @param $direction = asc/desc
+	#
+	public function order_by($order_by = 'created_at', $direction='asc') {
+		return $this->db->order_by($order_by, $direction);
 	}
 
 	public function get_task_by_id($id) {
@@ -27,12 +39,6 @@ class Task_model extends CI_Model {
 	public function get_task_notes($task_id) {
 		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
 	}
-
-
-	public function get_archived(){
-		return $this->db->get_where('tasks', ['user_id' => 1, 'status' => 2])->result();
-	}
-
 
 	public function insert($task_details) {
 		$task_details['user_id'] = 1;

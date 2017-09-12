@@ -56,6 +56,7 @@ $route['tasks'] = 'tasks';
 # personal tasks
 $route['tasks/create'] = 'tasks/create';
 $route['tasks/view/(:any)'] = 'tasks/view/$1';
+$route['tasks/done/(:any)'] = 'tasks/mark_as_done/$1';
 
 $route['tasks/(:num)/notes/create'] = 'task_notes/create/$1';
 

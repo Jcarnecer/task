@@ -34,7 +34,27 @@
     border-radius: 35px;
     border-color: #eeeeee;
   }
+.box{
+	width:100px;
+    height:100px;
+    background:#f00;
+}
 
+
+.plan-box{
+    background-color: #fff;
+    border-radius: 5px;
+    width: 90%;
+    margin-left: 5%; 
+    box-shadow: 0 2px 2px #efefef;
+}
+
+a:link,
+a:visited,
+a:hover{
+    color: #fff;
+    text-decoration: none;
+}
   /* #AA3939
   #226666
   #2D882D */

@@ -3,7 +3,7 @@ MODELS
 	Tasks
 		id
 		title
-		details
+		description
 		user_id
 		due_date
 		completion_date
