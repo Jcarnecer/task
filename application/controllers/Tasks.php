@@ -50,7 +50,7 @@ class Tasks extends CI_Controller {
 
 
 	public function fetch() {
-		echo json_encode($this->task_model->get(), TRUE);
+		echo json_encode($this->task_model->get(self::ACTIVE), TRUE);
 	}
 
 
