@@ -66,8 +66,11 @@ $route['tasks/team/view/(:any)'] = 'team_tasks/view_task/$1';
 
 $route['tasks/team/(:num)/notes/create'] = 'task_notes/create_team_task_note/$1';
 
-$route['api/task']['POST'] = 'tasks/create';
-$route['api/task']['GET'] = 'tasks/fetch';
+$route['api/task/(:any)']['POST'] = 'tasks/post/$1';
+$route['api/task/(:any)']['GET'] = 'tasks/get/$1';
+
+$route['api/task']['POST'] = 'tasks/post';
+$route['api/task']['GET'] = 'tasks/get';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

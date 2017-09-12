@@ -28,17 +28,20 @@ class Task_model extends CI_Model {
 	# @param $order_by = column name
 	# @param $direction = asc/desc
 	#
-	public function order_by($order_by = 'created_at', $direction='asc') {
+	public function order_by($order_by = 'created_at', $direction = 'asc') {
 		return $this->db->order_by($order_by, $direction);
 	}
+
 
 	public function get_task_by_id($id) {
 		return $this->db->get_where('tasks', ['id' => $id])->result();
 	}
 
+
 	public function get_task_notes($task_id) {
 		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
 	}
+
 
 	public function insert($task_details) {
 		$task_details['user_id'] = 1;
@@ -46,15 +49,21 @@ class Task_model extends CI_Model {
 		$task_details['created_at'] = date('Y-m-d');
 		$task_details['updated_at'] = date('Y-m-d');
 
-		$this->db->insert('tasks', $task_details);
+		return $this->db->insert('tasks', $task_details);
 	}
+
 
 	public function archive($id){
 		return $this->db->update('tasks', ['status' => 2, 'completion_date' => date('Y-m-d')], "id = $id");
 	}
 
-	public function update($key, $task_id, $val) {
-		return $this->db->update('tasks', [$key => $val, 'updated_at' => date('Y-m-d')], "id = $task_id");
+
+	public function update($id, $task_details) {
+		return $this->db->update('tasks', $task_details, "id = $id");
 	}
-	
+
+
+	// public function update($key, $task_id, $val) {
+	// 	return $this->db->update('tasks', [$key => $val, 'updated_at' => date('Y-m-d')], "id = $task_id");
+	// }
 }

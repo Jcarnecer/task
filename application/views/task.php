@@ -4,7 +4,6 @@
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/task.css" />
-    
 </head>
 <body>
     <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
@@ -30,20 +29,35 @@
             $.each(items, function(i, item) {
                 if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                     $('#taskSearchQuery').append(
-                        '<div class="form-group">' +
-                            `<a href="${baseUrl}tasks/view/${item['id']}" class="list-group-item task-search-item" style="background-color:${item['color']};">` +
-                                `<span class="glyphicon glyphicon-unchecked" data-value="${item['id']}"></span>` + 
+                        // '<div class="form-group">' +
+                            `<a href="#updateTaskModal" class="list-group-item" data-toggle="modal" data-value="${item['id']}" style="background-color:${item['color']}; color:#000000;">` +
+                                `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
                                 ` ${item['title']}` +
-                            `</a>` +
-                        `</div>`
+                            `</a>`
+                        // `</div>`
                     );
                 }
             });
         }
 
 
+        $.fn.changeColor = function($element, color){
+            $element.css('background-color', color);
+            switch(color.toLowerCase()){
+                case '#ffffff': $element.css('color', '#000000'); break;
+                case '#2196f3': $element.css('color', '#ffffff'); break;
+                case '#f44336': $element.css('color', '#ffffff'); break;
+                case '#4caf50': $element.css('color', '#ffffff'); break;
+                case '#ffeb3b': $element.css('color', '#000000'); break;
+                case '#ff9800': $element.css('color', '#000000'); break;
+
+            }
+        }
+
+
         });
     </script>
+
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -126,7 +140,7 @@
 
     <div id="createTaskModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content" style="background-color:#ffffff; transition:0.2s;">
+            <div class="modal-content">
                 <div class="modal-header" style="background-color:#ffffff;">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Create Task</h4>
@@ -135,40 +149,126 @@
                         <li><a href="#team" data-toggle="pill">Team</a></li>
                     </ul> -->
                 </div>
-                <div class="modal-body">
-                    <div class="tab-content">
-                        <div id="personal" class="tab-pane fade in active" style="overflow-y:auto;">
-                            <div class="form-group">
-                                <label for="title">Title:</label>
-                                <input type="text" class="form-control" id="task-title" name="title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description:</label>
-                                <textarea class="form-control" rows="5" id="task-description" name="description" style="resize:none;" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Deadline:</label>
-                                <div class="input-group">
-                                    <input type="date" class="form-control" id="task-date" name="due_date" value="<?php echo date('Y-m-d'); ?>">
-                                    <span class="input-group-addon"></span>
+                <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
+                    <!-- <div class="tab-content">
+                        <div id="personal" class="tab-pane fade in active" style="overflow-y:auto;"> -->
+                    <form id="taskCreateForm">
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" rows="5" name="description" style="resize:none;" required></textarea>
+                        </div>
+                        <div class="form-group" style="overflow-x:none;">
+                            <label>Deadline:</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                                <div class="col-md-4">
                                     <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="color">Color: </label>
-                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
-                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
-                                <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
-                                <input type="hidden" id="task-color" name="color" value="#fffff" />
+                        </div>
+                        <div class="form-group">
+                            <label>Notes:</label>
+                            <input type="text" id="taskCreateNote" class="form-control"/>
+                            <div id="taskCreateNoteList" class="list-group" style="color:#000000;">
+
                             </div>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label>Tags:</label>
+                            <input type="text" id="taskCreateTag" class="form-control"/>
+                            <div id="taskCreateTagList" class="list-group" style="color:#000000;">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Color: </label>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
+                            <input type="hidden" name="color" value="#ffffff" />
+                        </div>
+                    </form>
+                        <!-- </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="task-add" class="btn btn-default" data-dismiss="modal">Add Task</button>
+                    <button type="button" id="taskCreate" class="btn btn-default" data-dismiss="modal">Add Task</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="updateTaskModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#ffffff;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Task</h4>
+                </div>
+                <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
+                    <!-- <div class="tab-content">
+                        <div id="personal" class="tab-pane fade in active" style="overflow-y:auto;"> -->
+                    <form id="taskUpdateForm">
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" rows="5" name="description" style="resize:none;" required></textarea>
+                        </div>
+                        <div class="form-group" style="overflow-x:none;">
+                            <label>Deadline:</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Notes:</label>
+                            <input type="text" id="taskUpdateNote" class="form-control"/>
+                            <div id="taskUpdateNoteList" class="list-group" style="color:#000000;">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags:</label>
+                            <input type="text" id="taskUpdateTag" class="form-control"/>
+                            <div id="taskUpdateTagList" class="list-group" style="color:#000000;">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Color: </label>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffffff;" data-color="#ffffff"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b"><i style="color:#000000;"></i></button>
+                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800"><i style="color:#000000;"></i></button>
+                            <input type="hidden" name="color" value="#ffffff" />
+                        </div>
+                    </form>
+                        <!-- </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="taskUpdate" class="btn btn-default" data-dismiss="modal">Add Task</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -180,36 +280,109 @@
         $(function () {
 
 
-        $(document).getTask().done(function(data){
+        $(document).getTask().done(function(data) {
             $(document).displayList(data,'');
         });
 
 
-        $(document).on('input', '#taskSearch', function () {
-            $(document).displayList(tasks, $(this).val());
+        $('#taskSearch').keypress(function (e) {
+            if(e.which == 13) {
+                $(document).getTask().done(function(data){
+                    $(document).displayList(data, $('#taskSearch').val());
+                });
+                return false;
+            }    
+        });
+
+
+        $('#taskCreateTag').keypress(function (e) {
+            if(e.which == 13) {
+                $(this).parent().find('#taskCreateTagList').append(
+                    `<li class="list-group-item">${$(this).val()}</li>`
+                );
+                $(this).parent().append(
+                    `<input type="hidden" name="task_tags[]" value="${$(this).val()}" />`
+                );
+                $(this).val('');
+                return false;
+            }
         });
         
 
-        $(document).on('click', '.btn-color', function(){
-            // $(this).parent().append('<audio src=" http://ring2mob.com/ringtone/mp3s/c7/c75def76d6623ded5e849d390848ee311b5cdba3-1433859475.9334.mp3" autoplay loop></audio>');
-            $(this).closest('.modal-content').css('background-color', $(this).attr('data-color'));
-            $(this).closest('.modal-content').css('color', $(this).attr('data-accent'));
-            // $(this).closest('.modal-content').css('transition', '0.2s');
-            $(this).css('background-color', $(this).attr('data-color'));
-            // $(this).css('backgroundtransition', '0.2s');
+        $('#taskCreateNote').keypress(function (e) {
+            if(e.which == 13) {
+                $(this).parent().find('#taskCreateNoteList').append(
+                    `<li class="list-group-item">${$(this).val()}</li>`
+                );
+                $(this).parent().append(
+                    `<input type="hidden" name="taske_notes[]" value="${$(this).val()}" />`
+                );
+                $(this).val('');
+                return false;
+            }
+        });
+
+
+        $('#taskUpdateTag').keypress(function (e) {
+            if(e.which == 13) {
+                $(this).parent().find('#taskUpdateTagList').append(
+                    `<li class="list-group-item">${$(this).val()}</li>`
+                );
+                $(this).parent().append(
+                    `<input type="hidden" name="task_tags[]" value="${$(this).val()}" />`
+                );
+                $(this).val('');
+                return false;
+            }
+        });
+        
+
+        $('#taskUpdateNote').keypress(function (e) {
+            if(e.which == 13) {
+                $(this).parent().find('#taskUpdateNoteList').append(
+                    `<li class="list-group-item">${$(this).val()}</li>`
+                );
+                $(this).parent().append(
+                    `<input type="hidden" name="task_notes[]" value="${$(this).val()}" />`
+                );
+                $(this).val('');
+                return false;
+            }
+        });
+
+
+        $(document).on('click', 'a[href="#updateTaskModal"]', function () {
+            $('#taskUpdateForm')[0].reset();
+            $.ajax({
+                type: 'GET',
+                url: `api/task/${$(this).attr('data-value')}`,
+                dataType: 'json'
+            }).done(function (data) {
+                $('#taskUpdateForm').attr('data-value', data[0]['id']);
+                $('#taskUpdateForm').find('input[name="title"]').val(data[0]['title']);
+                $('#taskUpdateForm').find('textarea[name="description"]').val(data[0]['description']);
+                $('#taskUpdateForm').find('input[name="date"]').val(data[0]['due_date']);
+                $('#taskUpdateForm').find('input[name="color"]').val(data[0]['color']);
+
+                $(document).changeColor($('#taskUpdateForm').closest('.modal-body'), data[0]['color']);
+                $('#taskUpdateForm').find('.btn-color').find('i').removeClass('glyphicon glyphicon-ok');
+                $('#taskUpdateForm').find(`button[data-color="${data[0]['color']}"]`).find('i').addClass('glyphicon glyphicon-ok');
+            });
+        });
+
+
+        $(document).on('click', '.btn-color', function () {
+            $(this).parent().find('audio').remove();
+            $(this).parent().append('<audio src=" http://ring2mob.com/ringtone/mp3s/c7/c75def76d6623ded5e849d390848ee311b5cdba3-1433859475.9334.mp3" autoplay></audio>');
+            $(document).changeColor($(this).closest('.modal-body'), $(this).attr('data-color'));
             $(this).find('i').addClass('glyphicon glyphicon-ok');
             $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
             $(this).parent().find('input[name="color"]').attr('value', $(this).attr('data-color'));
         });
 
 
-        $(document).on('click', '#task-add', function(){
-            var task = {
-                title: $('#task-title').val(),
-                description: $('#task-description').val(),
-                due_date: $('#task-date').val(),
-                color: $('#task-color').val()
-            };
+        $(document).on('click', '#taskCreate', function () {
+            var task = $('#taskCreateForm').serializeArray();
 
             $.ajax({
                 type: 'POST',
@@ -222,6 +395,22 @@
             });
         });
 
+
+        $(document).on('click', '#taskUpdate', function () {
+            var task = $('#taskUpdateForm').serializeArray();
+
+            console.log(task);
+
+            $.ajax({
+                type: 'POST',
+                url: `api/task/${$('#taskUpdateForm').attr('data-value')}`,
+                data: task
+            }).done(function(data) {
+                $(document).getTask().done(function(data){
+                    $(document).displayList(data,'');
+                });
+            });
+        });
 
         }); 
     </script>

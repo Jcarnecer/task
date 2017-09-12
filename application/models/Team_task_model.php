@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Team_task_model extends Task_model {
+class Team_task_model {
 
 	public $team_id;
 

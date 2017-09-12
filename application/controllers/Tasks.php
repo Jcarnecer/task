@@ -12,30 +12,31 @@ class Tasks extends CI_Controller {
 
 
 	public function index() {
-		$data = [];
-		$data['tasks'] = $this->task_model->get(self::ACTIVE);
-
-		return $this->load->view('task', $data);
+		return $this->load->view('task');
 	}
 
 
-	public function create() {
-		$data['tasks'] = $this->task_model->get();
-		$data['errors'] = [];
-
+	public function post($id = null) {
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			$task_details = [
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
 				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
-				'color' => $this->input->post('color') ? $this->input->post('color') : 'ffffff'
+				'color' => $this->input->post('color')
 			];
-			$this->task_model->insert($task_details);
+			if($id != null)
+				$this->task_model->update($id, $task_details);
+			else
+				$this->task_model->insert($task_details);
 		}
+	}
 
-		print_r($task_details);
-		// $this->load->view('task', $data);
-		// redirect('tasks');
+
+	public function get($id = null) {
+		if($id != null)
+			echo json_encode($this->task_model->get_task_by_id($id));
+		else
+			echo json_encode($this->task_model->get());
 	}
 
 
@@ -46,11 +47,6 @@ class Tasks extends CI_Controller {
 			$data['task_details'] = $this->task_model->get_task_by_id($id);
 			$this->load->view('task/personal/view_one', $data); # view not yet created please create the view salamat po (~o.o)~
 		}
-	}
-
-
-	public function fetch() {
-		echo json_encode($this->task_model->get(), TRUE);
 	}
 
 
