@@ -46,9 +46,9 @@
             $('#taskTile').html('');
 
             $.each(items, function(i, item) {
-                if(i % 6 == 0) {
-                    $('#taskTile').append('<div id="#tileRowActive" class="row" style="height: 100px;></div>');
-                }
+                // if(i % 6 == 0) {
+                //     $('#taskTile').append('<div id="tileRowActive" class="row" style="height:100px;></div>');
+                // }
                 $('#taskTile').append(
                     `<div class="col-md-2" style="padding:3px;">` +
                         `<div class="task-tile" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
@@ -57,13 +57,13 @@
                                 ` ${item['title']}` +
                                 `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                             `</b></h4>` +
-                            `<p class="small task-tile-description">${item['description']}</p>` +
+                            `<p class="small task-tile-description task-justify">${item['description']}</p>` +
                         `</div>` +
                     `</div>`
                 );
-                if(i%4 == 3) {
-                    $('#taskTile').find('div.row').removeAttr('id');
-                }
+                // if(i%6 == 5) {
+                //     $('#taskTile').find('div.row').removeAttr('id');
+                // }
             });
         };
 
@@ -129,8 +129,12 @@
             <div class=" col-md-10">
                 <div class="panel panel-default">
                     <div class="panel-heading">Board</div>
-                    <div id="taskTile" class="panel-body container-fluid" style="background-color: #242424;">
-                        
+                    <div class="panel-body" style="background-color: #242424;">
+                        <div class="container-fluid">
+                            <div id="taskTile" class="row">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -278,8 +282,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color:#ffffff;">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update Task</h4>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <div class="row">
+                    <div class="col-md-6"><h4 class="modal-title">Update Task</h4></div>
+                    <div class="col-md-6 dropdown">
+                        <a class="dropdown-toggle pull-right" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#updateTaskModal" data-toggle="modal">Edit Task</a></li>
+                            <li><a href="#">Mark as Done</a></li>
+                        </ul>
+                    </div>
+                    </div>
                 </div>
                 <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
                     <form id="taskViewForm">
@@ -423,6 +436,8 @@
                 url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
                 dataType: 'json'
             }).done(function (data) {
+                $('#viewTaskModal').find('a[href="#updateTaskModal"]').attr('data-value', data[0]['id']);
+
                 $('#taskViewForm').attr('data-value', data[0]['id']);
                 $('#taskViewForm').find('[id="title"]').append(data[0]['title']);
                 $('#taskViewForm').find('[id="description"]').append(data[0]['description']);
