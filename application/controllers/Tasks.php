@@ -36,7 +36,7 @@ class Tasks extends CI_Controller {
 		if($id != null)
 			echo json_encode($this->task_model->get_task_by_id($id));
 		else
-			echo json_encode($this->task_model->get());
+			echo json_encode($this->task_model->get(self::ACTIVE));
 	}
 
 
@@ -60,13 +60,8 @@ class Tasks extends CI_Controller {
 	}
 
 
-	public function mark_as_done($id = null) {
-		if($id == null)
-			$this->index();
-		else{
-			$this->task_model->archive($id);
-		}
-		redirect('tasks');
+	public function mark_as_done($id) {
+		$this->task_model->archive($id);
 	}
 
 

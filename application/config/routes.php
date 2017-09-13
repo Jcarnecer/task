@@ -72,5 +72,7 @@ $route['api/task/(:any)']['GET'] = 'tasks/get/$1';
 $route['api/task']['POST'] = 'tasks/post';
 $route['api/task']['GET'] = 'tasks/get';
 
+$route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
