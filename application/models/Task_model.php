@@ -20,6 +20,7 @@ class Task_model extends CI_Model {
 			$tasks = $this->db->get('tasks')->result();
 		foreach ($tasks as $task) {
 			$task->notes = $this->get_task_notes($task->id);
+			$task->tags = $this->get_task_tags($task->id);
 		}
 		return $tasks;
 	}
@@ -32,6 +33,14 @@ class Task_model extends CI_Model {
 		return $this->db->order_by($order_by, $direction);
 	}
 
+	public function get_task_tags($id = null) {
+		return $this->db->select('name')
+			->from('tags')
+			->join('tasks_tagging', 'tasks_tagging.tags_id = tags.id')
+			->where('tasks_tagging.tasks_id',$id)
+			->get()
+			->result();
+	}
 
 	public function get_task_by_id($id) {
 		return $this->db->get_where('tasks', ['id' => $id])->result();
