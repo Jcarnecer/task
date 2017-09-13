@@ -51,12 +51,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'site';
 
-$route['tasks'] = 'tasks';
+$route['tasks'] = 'tasks/index';
 
 # personal tasks
 $route['tasks/create'] = 'tasks/create';
 $route['tasks/view/(:any)'] = 'tasks/view/$1';
 $route['tasks/done/(:any)'] = 'tasks/mark_as_done/$1';
+
+$route['tasks/(:any)/tags/add'] = 'tags/add_tag/$1';
+$route['tasks/(:any)/tags/del'] = 'tags/del_tag/$1';
 
 $route['tasks/(:num)/notes/create'] = 'task_notes/create/$1';
 
