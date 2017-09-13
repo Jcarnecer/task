@@ -84,6 +84,11 @@
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul> -->
+            <!--Button notif -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" class="btn btn-notif"><span class="glyphicon glyphicon-bell"></span></a></li>
+            </ul>
+            
             <form class="navbar-form navbar-right">
                 <div class="form-group">
                     <input type="text" class="form-control" id="taskSearch" list="task-list" value="" placeholder="Search"/>
@@ -92,9 +97,16 @@
                     </datalist> -->
                 </div>
             </form>
+            
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" data-toggle="modal" data-target="#settingsModal"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>                
+            </ul>
+            
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#createTaskModal"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
             </ul>
+            
+            
         </div>
     </nav>
 
@@ -207,8 +219,40 @@
             </div>
         </div>
     </div>
-
-
+    
+    <!--- Settings Modal -->
+    <div id="settingsModal" class="modal fade" role="dialog">
+       <div class="modal-dialog">
+          <div class="modal-content">
+             <div class="modal-header" style="background-color: #ffffff;">
+                 <h4>Settings</h4>
+             </div>
+              <div class="modal-body" style="background-color: #ffffff;">
+                  <p style="font-weight: 20; color: #918888; margin-bottom: 5px;">Customize your reminder defaults</p>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="morning">Morning</label>
+                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="afternoon">Afternnon</label>
+                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="evening">Evening</label>
+                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
+                        </div>
+                    </form>              
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="settingsUpdate" class="btn btn-sm" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-sm" data-dismiss="modal">Close</button>
+                </div>
+          </div>
+           
+       </div>
+        
+    </div>
     <div id="updateTaskModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -379,7 +423,12 @@
             $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
             $(this).parent().find('input[name="color"]').attr('value', $(this).attr('data-color'));
         });
-
+        
+        //Button notif    
+        $(document).on('click', '.btn-notif', function () {
+            $(this).parent().find('audio').remove();
+            $(this).parent().append('<audio src=" http://ring2mob.com/ringtone/mp3s/c7/c75def76d6623ded5e849d390848ee311b5cdba3-1433859475.9334.mp3" autoplay></audio>');
+        });
 
         $(document).on('click', '#taskCreate', function () {
             var task = $('#taskCreateForm').serializeArray();
