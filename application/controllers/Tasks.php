@@ -12,7 +12,10 @@ class Tasks extends CI_Controller {
 
 
 	public function index() {
-		return $this->load->view('task');
+		$this->load->view('header');
+		$this->load->view('modal');
+		$this->load->view('task');
+		$this->load->view('footer');
 	}
 
 
