@@ -1,28 +1,23 @@
     <div class="container-fluid">
         <div class="row">
-            <div class=" col-md-10">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Board</div>
-                    <div class="panel-body" style="background-color: #242424;">
-                        <div class="container-fluid">
-                            <div id="taskTile" class="row">
+        <div class="col-md-10" style="padding: 5px;">    
+                <div class="container-fluid">
+                    <div id="taskTile" class="row">
 
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="panel panel-default">
+            <div class="col-md-2" style="padding: 5px;">
+                <!-- <div class="panel panel-default">
                     <div class="panel-heading">
                         Search
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body"> -->
                         <div id="taskSearchQuery" class="list-group">
 
                         </div>
-                    </div>
-                </div>
+                    <!-- </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -49,10 +44,12 @@
         $.each(items, function(i, item) {
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                 $('#taskSearchQuery').append(
-                    `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item" style="background-color:${item['color']}; color:#000000;">` +
-                        `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
+                    `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" style="background-color:${item['color']}; color:#000000;">` +
+                        `<h5 class="tile-title"><b>` +
+                        `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` task-mark-done pull-top" data-value="${item['id']}"></span>` +
                         ` ${item['title']}` +
                         `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                        `</b></h5>` +
                     `</a>`
                 );
             }
@@ -69,12 +66,12 @@
             $('#taskTile').append(
                 `<div class="col-md-${rowNumber}" style="padding:3px;">` +
                     `<div class="task-tile" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
-                        `<h4><b>` + 
-                            `<span class="glyphicon glyphicon-unchecked task-mark-done pull-top" data-value="${item['id']}"></span>` +
+                        `<h4 class="tile-title"><b>` + 
+                            `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span>` +
                             ` ${item['title']}` +
-                            `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                            // `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                         `</b></h4>` +
-                        `<p class="small task-tile-description task-justify">${item['description']}</p>` +
+                        `<p class="tile-description task-justify"><b>${item['description']}</b></p>` +
                     `</div>` +
                 `</div>`
             );
@@ -204,20 +201,18 @@
             dataType: 'json'
         }).done(function (data) {
             $('#viewTaskModal').find('a[href="#updateTaskModal"]').attr('data-value', data[0]['id']);
-
+            
             $('#taskViewForm').attr('data-value', data[0]['id']);
-            $('#taskViewForm').find('[id="title"]').html(data[0]['title']);
-            $('#taskViewForm').find('[id="description"]').html(data[0]['description']);
+            $('#taskViewForm').find('[id="title"] b').html(data[0]['title']);
+            $('#taskViewForm').find('[id="description"] b').html(data[0]['description']);
             $('#taskViewForm').find('[id="date"]').html(data[0]['due_date']);
 
-            $(document).changeColor($('#taskViewForm').closest('.modal-body'), data[0]['color']);
+            $(document).changeColor($('#taskViewForm').closest('.modal-content'), data[0]['color']);
         });
     });
 
 
     $(document).on('click', '.btn-color', function () {
-        $(this).parent().find('audio').remove();
-        $(this).parent().append('<audio src=" http://ring2mob.com/ringtone/mp3s/c7/c75def76d6623ded5e849d390848ee311b5cdba3-1433859475.9334.mp3" autoplay></audio>');
         $(document).changeColor($(this).closest('.modal-body'), $(this).attr('data-color'));
         $(this).find('i').addClass('glyphicon glyphicon-ok');
         $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
@@ -228,8 +223,6 @@
     $(document).on('click', '#taskCreate', function () {
         var task = $('#taskCreateForm').serializeArray();
 
-        console.log(task);
-
         $.ajax({
             type: 'POST',
             url: `${baseUrl}api/task`,
@@ -237,6 +230,7 @@
         }).done(function(data) {
             $(document).getTask().done(function(data){
                 $(document).displayList(data,'');
+                $(document).displayTiles(data);
             });
         });
     });
@@ -261,6 +255,7 @@
     $(document).on('click', '.task-mark-done', function () {
         $(this).toggleClass('glyphicon-check');
         $(this).toggleClass('glyphicon-unchecked');
+        $(this).removeClass('task-mark-done');
 
         $.ajax({
             type: 'POST',
