@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/task.css" />
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>css/task.css" />
 </head>
 <body>
     <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
@@ -17,7 +17,7 @@
         $.fn.getTask = function(){
             return $.ajax({
                 type: 'GET',
-                url: 'api/task',
+                url: `${baseUrl}api/task`,
                 dataType: 'json'
             });
         };
@@ -30,15 +30,42 @@
                 if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                     $('#taskSearchQuery').append(
                         // '<div class="form-group">' +
-                            `<a href="#updateTaskModal" class="list-group-item" data-toggle="modal" data-value="${item['id']}" style="background-color:${item['color']}; color:#000000;">` +
+                            `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item" style="background-color:${item['color']}; color:#000000;">` +
                                 `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
                                 ` ${item['title']}` +
+                                `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                             `</a>`
                         // `</div>`
                     );
                 }
             });
-        }
+        };
+
+
+        $.fn.displayTiles = function(items) {
+            $('#taskTile').html('');
+
+            $.each(items, function(i, item) {
+                if(i % 6 == 0) {
+                    $('#taskTile').append('<div id="#tileRowActive" class="row" style="height: 100px;></div>');
+                }
+                $('#taskTile').append(
+                    `<div class="col-md-2" style="padding:3px;">` +
+                        `<div class="task-tile" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
+                            `<h4><b>` + 
+                                `<span class="glyphicon glyphicon-unchecked task-mark-done pull-top" data-value="${item['id']}"></span>` +
+                                ` ${item['title']}` +
+                                `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                            `</b></h4>` +
+                            `<p class="small task-tile-description">${item['description']}</p>` +
+                        `</div>` +
+                    `</div>`
+                );
+                if(i%4 == 3) {
+                    $('#taskTile').find('div.row').removeAttr('id');
+                }
+            });
+        };
 
 
         $.fn.changeColor = function($element, color){
@@ -50,9 +77,8 @@
                 case '#4caf50': $element.css('color', '#ffffff'); break;
                 case '#ffeb3b': $element.css('color', '#000000'); break;
                 case '#ff9800': $element.css('color', '#000000'); break;
-
             }
-        }
+        };
 
 
         });
@@ -112,25 +138,11 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-10">
-                <div class="panel panel-default" style="overflow-x:auto;">
-                    <div class="panel-heading">
-                        Tasks
-                    </div>
-                    <div class="panel-body">
-                    <ul class="nav nav-tabs">
-                        <li><a href="#a" data-toggle="tab">a</a></li>
-                        <li><a href="#b" data-toggle="tab">b</a></li>
-                        <li><a href="#c" data-toggle="tab">c</a></li>
-                        <li><a href="#d" data-toggle="tab">d</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                        <div class="tab-pane active" id="a">AAA</div>
-                        <div class="tab-pane" id="b">BBB</div>
-                        <div class="tab-pane" id="c">CCC</div>
-                        <div class="tab-pane" id="d">DDD</div>
-                        </div>
+            <div class=" col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Board</div>
+                    <div id="taskTile" class="panel-body container-fluid" style="background-color: #242424;">
+                        
                     </div>
                 </div>
             </div>
@@ -162,8 +174,6 @@
                     </ul> -->
                 </div>
                 <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
-                    <!-- <div class="tab-content">
-                        <div id="personal" class="tab-pane fade in active" style="overflow-y:auto;"> -->
                     <form id="taskCreateForm">
                         <div class="form-group">
                             <label for="title">Title:</label>
@@ -184,13 +194,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Notes:</label>
-                            <input type="text" id="taskCreateNote" class="form-control"/>
-                            <div id="taskCreateNoteList" class="list-group" style="color:#000000;">
-
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <label>Tags:</label>
                             <input type="text" id="taskCreateTag" class="form-control"/>
@@ -209,8 +213,6 @@
                             <input type="hidden" name="color" value="#ffffff" />
                         </div>
                     </form>
-                        <!-- </div>
-                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="taskCreate" class="btn btn-default" data-dismiss="modal">Add Task</button>
@@ -261,8 +263,6 @@
                     <h4 class="modal-title">Update Task</h4>
                 </div>
                 <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
-                    <!-- <div class="tab-content">
-                        <div id="personal" class="tab-pane fade in active" style="overflow-y:auto;"> -->
                     <form id="taskUpdateForm">
                         <div class="form-group">
                             <label for="title">Title:</label>
@@ -308,8 +308,43 @@
                             <input type="hidden" name="color" value="#ffffff" />
                         </div>
                     </form>
-                        <!-- </div>
-                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="taskUpdate" class="btn btn-default" data-dismiss="modal">Add Task</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="viewTaskModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#ffffff;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Task</h4>
+                </div>
+                <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
+                    <form id="taskViewForm">
+                        <h1 id="title">Title: </h2>
+                        <h2 id="description">Description: </h2>
+                        <div class="container" style="overflow-x:none;">
+                            <div class="row">
+                                <!-- <div class="col-md-6"><h2>Deadline:</h2></div> -->
+                                <div class="col-md-8"><h4 id="date"></h4></div>
+                                <div class="col-md-4"><h4 id="time"></h4></div>
+                            </div>
+                        </div>
+                        <h4 id="tags"></h4>
+                        <div class="form-group">
+                            <label>Notes:</label>
+                            <input type="text" id="taskCreateNote" class="form-control"/>
+                            <div id="taskCreateNoteList" class="list-group" style="color:#000000;">
+
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="taskUpdate" class="btn btn-default" data-dismiss="modal">Add Task</button>
@@ -323,9 +358,19 @@
     <script>
         $(function () {
 
+        const baseUrl = "<?= base_url() ?>";
 
-        $(document).getTask().done(function(data) {
+        $(document).getTask().done(function (data) {
             $(document).displayList(data,'');
+            $(document).displayTiles(data);
+        });
+
+
+        $('#taskSearchQuery').find('span[data-target="#updateTaskModal"]').hide();
+
+
+        $('#taskSearchQuery').find('a.list-group-item').on('mouseover', function () {
+            $(this).filter('span[data-target="#updateTaskModal"]').show(200);
         });
 
 
@@ -395,11 +440,11 @@
         });
 
 
-        $(document).on('click', 'a[href="#updateTaskModal"]', function () {
+        $(document).on('click', '[data-target="#updateTaskModal"]', function () {
             $('#taskUpdateForm')[0].reset();
             $.ajax({
                 type: 'GET',
-                url: `api/task/${$(this).attr('data-value')}`,
+                url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
                 dataType: 'json'
             }).done(function (data) {
                 $('#taskUpdateForm').attr('data-value', data[0]['id']);
@@ -411,6 +456,23 @@
                 $(document).changeColor($('#taskUpdateForm').closest('.modal-body'), data[0]['color']);
                 $('#taskUpdateForm').find('.btn-color').find('i').removeClass('glyphicon glyphicon-ok');
                 $('#taskUpdateForm').find(`button[data-color="${data[0]['color']}"]`).find('i').addClass('glyphicon glyphicon-ok');
+            });
+        });
+
+
+        $(document).on('click', '[data-target="#viewTaskModal"]', function () {
+            $('#taskViewForm')[0].reset();
+            $.ajax({
+                type: 'GET',
+                url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
+                dataType: 'json'
+            }).done(function (data) {
+                $('#taskViewForm').attr('data-value', data[0]['id']);
+                $('#taskViewForm').find('[id="title"]').append(data[0]['title']);
+                $('#taskViewForm').find('[id="description"]').append(data[0]['description']);
+                $('#taskViewForm').find('[id="date"]').append(data[0]['due_date']);
+
+                $(document).changeColor($('#taskViewForm').closest('.modal-body'), data[0]['color']);
             });
         });
 
@@ -433,9 +495,11 @@
         $(document).on('click', '#taskCreate', function () {
             var task = $('#taskCreateForm').serializeArray();
 
+            console.log(task);
+
             $.ajax({
                 type: 'POST',
-                url: 'api/task',
+                url: `${baseUrl}api/task`,
                 data: task
             }).done(function(data) {
                 $(document).getTask().done(function(data){
@@ -448,15 +512,29 @@
         $(document).on('click', '#taskUpdate', function () {
             var task = $('#taskUpdateForm').serializeArray();
 
-            console.log(task);
-
             $.ajax({
                 type: 'POST',
-                url: `api/task/${$('#taskUpdateForm').attr('data-value')}`,
+                url: `${baseUrl}api/task/${$('#taskUpdateForm').attr('data-value')}`,
                 data: task
             }).done(function(data) {
                 $(document).getTask().done(function(data){
                     $(document).displayList(data,'');
+                    $(document).displayTiles(data);
+                });
+            });
+        });
+
+        $(document).on('click', '.task-mark-done', function () {
+            $(this).toggleClass('glyphicon-check');
+            $(this).toggleClass('glyphicon-unchecked');
+
+            $.ajax({
+                type: 'POST',
+                url: `${baseUrl}api/done/${$(this).attr('data-value')}`,
+            }).done(function(data) {
+                $(document).getTask().done(function(data){
+                    $(document).displayList(data,'');
+                    $(document).displayTiles(data);
                 });
             });
         });

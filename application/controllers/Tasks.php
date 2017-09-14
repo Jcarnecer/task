@@ -63,13 +63,8 @@ class Tasks extends CI_Controller {
 	}
 
 
-	public function mark_as_done($id = null) {
-		if($id == null)
-			$this->index();
-		else{
-			$this->task_model->archive($id);
-		}
-		redirect('tasks');
+	public function mark_as_done($id) {
+		$this->task_model->archive($id);
 	}
 
 
