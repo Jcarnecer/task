@@ -20,6 +20,8 @@ a.task-search-item {
     margin: 0 0 0 25px; 
     overflow-x: hidden;
     overflow-y: hidden;
+    word-wrap: break-word;
+    height: 50%;
     /* padding: 0 0 0 10px; */
 }
 

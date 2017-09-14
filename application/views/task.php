@@ -1,148 +1,14 @@
-    <!DOCTYPE html>
-<html>
-<head>
-	<title>Task</title>
-    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>css/task.css" />
-</head>
-<body>
-    <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script>
-        $(function() {
-            
-
-        const baseUrl = "<?= base_url() ?>";
-
-        $.fn.getTask = function(){
-            return $.ajax({
-                type: 'GET',
-                url: `${baseUrl}api/task`,
-                dataType: 'json'
-            });
-        };
-
-        
-        $.fn.displayList = function(items, keyword){
-            $('#taskSearchQuery').html('');
-
-            $.each(items, function(i, item) {
-                if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
-                    $('#taskSearchQuery').append(
-                        // '<div class="form-group">' +
-                            `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item" style="background-color:${item['color']}; color:#000000;">` +
-                                `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
-                                ` ${item['title']}` +
-                                `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
-                            `</a>`
-                        // `</div>`
-                    );
-                }
-            });
-        };
-
-
-        $.fn.displayTiles = function(items) {
-            $('#taskTile').html('');
-
-            $.each(items, function(i, item) {
-                if(i % 6 == 0) {
-                    $('#taskTile').append('<div id="#tileRowActive" class="row" style="height: 100px;></div>');
-                }
-                $('#taskTile').append(
-                    `<div class="col-md-2" style="padding:3px;">` +
-                        `<div class="task-tile" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
-                            `<h4><b>` + 
-                                `<span class="glyphicon glyphicon-unchecked task-mark-done pull-top" data-value="${item['id']}"></span>` +
-                                ` ${item['title']}` +
-                                `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
-                            `</b></h4>` +
-                            `<p class="small task-tile-description">${item['description']}</p>` +
-                        `</div>` +
-                    `</div>`
-                );
-                if(i%4 == 3) {
-                    $('#taskTile').find('div.row').removeAttr('id');
-                }
-            });
-        };
-
-
-        $.fn.changeColor = function($element, color){
-            $element.css('background-color', color);
-            switch(color.toLowerCase()){
-                case '#ffffff': $element.css('color', '#000000'); break;
-                case '#2196f3': $element.css('color', '#ffffff'); break;
-                case '#f44336': $element.css('color', '#ffffff'); break;
-                case '#4caf50': $element.css('color', '#ffffff'); break;
-                case '#ffeb3b': $element.css('color', '#000000'); break;
-                case '#ff9800': $element.css('color', '#000000'); break;
-            }
-        };
-
-
-        });
-    </script>
-
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Task</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Personal</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Team <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Team 1</a></li>
-                        <li><a href="#">Team 2</a></li>
-                        <li><a href="#">Team 3</a></li>
-                        <li><a href="#">Team 4</a></li>
-                        <li><a href="#">Team 5</a></li>
-                        <li><a href="#">Team 6</a></li>
-                        <li><a href="#">Team 7</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul> -->
-            <!--Button notif -->
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="btn btn-notif"><span class="glyphicon glyphicon-bell"></span></a></li>
-            </ul>
-            
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="taskSearch" list="task-list" value="" placeholder="Search"/>
-                    <!-- <datalist id="task-list" class="list-group task-list">
-
-                    </datalist> -->
-                </div>
-            </form>
-            
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" data-toggle="modal" data-target="#settingsModal"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>                
-            </ul>
-            
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" data-toggle="modal" data-target="#createTaskModal"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
-            </ul>
-            
-            
-        </div>
-    </nav>
-
     <div class="container-fluid">
         <div class="row">
             <div class=" col-md-10">
                 <div class="panel panel-default">
                     <div class="panel-heading">Board</div>
-                    <div id="taskTile" class="panel-body container-fluid" style="background-color: #242424;">
-                        
+                    <div class="panel-body" style="background-color: #242424;">
+                        <div class="container-fluid">
+                            <div id="taskTile" class="row">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,384 +28,250 @@
     </div>
 
 
-    <div id="createTaskModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#ffffff;">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Create Task</h4>
-                    <!-- <ul class="nav nav-pills">
-                        <li class="active"><a href="#personal" data-toggle="pill">Personal</a></li>
-                        <li><a href="#team" data-toggle="pill">Team</a></li>
-                    </ul> -->
-                </div>
-                <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
-                    <form id="taskCreateForm">
-                        <div class="form-group">
-                            <label for="title">Title:</label>
-                            <input type="text" class="form-control" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <textarea class="form-control" rows="5" name="description" style="resize:none;" required></textarea>
-                        </div>
-                        <div class="form-group" style="overflow-x:none;">
-                            <label>Deadline:</label>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Tags:</label>
-                            <input type="text" id="taskCreateTag" class="form-control"/>
-                            <div id="taskCreateTagList" class="list-group" style="color:#000000;">
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="color">Color: </label>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#FFFFFF;" data-color="#FFFFFF" data-accent="#000000"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50" data-accent="#FFFFFF"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b" data-accent="#000000"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800" data-accent="#000000"><i style="color:#000000;"></i></button>
-                            <input type="hidden" name="color" value="#ffffff" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="taskCreate" class="btn btn-default" data-dismiss="modal">Add Task</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!--- Settings Modal -->
-    <div id="settingsModal" class="modal fade" role="dialog">
-       <div class="modal-dialog">
-          <div class="modal-content">
-             <div class="modal-header" style="background-color: #ffffff;">
-                 <h4>Settings</h4>
-             </div>
-              <div class="modal-body" style="background-color: #ffffff;">
-                  <p style="font-weight: 20; color: #918888; margin-bottom: 5px;">Customize your reminder defaults</p>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="morning">Morning</label>
-                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="afternoon">Afternnon</label>
-                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="evening">Evening</label>
-                            <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
-                        </div>
-                    </form>              
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="settingsUpdate" class="btn btn-sm" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-sm" data-dismiss="modal">Close</button>
-                </div>
-          </div>
-           
-       </div>
-        
-    </div>
-    <div id="updateTaskModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#ffffff;">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update Task</h4>
-                </div>
-                <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
-                    <form id="taskUpdateForm">
-                        <div class="form-group">
-                            <label for="title">Title:</label>
-                            <input type="text" class="form-control" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <textarea class="form-control" rows="5" name="description" style="resize:none;" required></textarea>
-                        </div>
-                        <div class="form-group" style="overflow-x:none;">
-                            <label>Deadline:</label>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Notes:</label>
-                            <input type="text" id="taskUpdateNote" class="form-control"/>
-                            <div id="taskUpdateNoteList" class="list-group" style="color:#000000;">
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Tags:</label>
-                            <input type="text" id="taskUpdateTag" class="form-control"/>
-                            <div id="taskUpdateTagList" class="list-group" style="color:#000000;">
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="color">Color: </label>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffffff;" data-color="#ffffff"><i style="color:#000000;" class="glyphicon glyphicon-ok"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#2196f3;" data-color="#2196f3"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#f44336;" data-color="#f44336"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#4caf50;" data-color="#4caf50"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ffeb3b;" data-color="#ffeb3b"><i style="color:#000000;"></i></button>
-                            <button type="button" class="btn btn-default btn-circle btn-color" style="background-color:#ff9800;" data-color="#ff9800"><i style="color:#000000;"></i></button>
-                            <input type="hidden" name="color" value="#ffffff" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="taskUpdate" class="btn btn-default" data-dismiss="modal">Add Task</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="viewTaskModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#ffffff;">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update Task</h4>
-                </div>
-                <div class="modal-body" style="background-color:#ffffff; transition:0.2s;">
-                    <form id="taskViewForm">
-                        <h1 id="title">Title: </h2>
-                        <h2 id="description">Description: </h2>
-                        <div class="container" style="overflow-x:none;">
-                            <div class="row">
-                                <!-- <div class="col-md-6"><h2>Deadline:</h2></div> -->
-                                <div class="col-md-8"><h4 id="date"></h4></div>
-                                <div class="col-md-4"><h4 id="time"></h4></div>
-                            </div>
-                        </div>
-                        <h4 id="tags"></h4>
-                        <div class="form-group">
-                            <label>Notes:</label>
-                            <input type="text" id="taskCreateNote" class="form-control"/>
-                            <div id="taskCreateNoteList" class="list-group" style="color:#000000;">
-
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="taskUpdate" class="btn btn-default" data-dismiss="modal">Add Task</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <script>
-        $(function () {
+    $(function () {
 
-        const baseUrl = "<?= base_url() ?>";
+    const baseUrl = "<?= base_url() ?>";
 
-        $(document).getTask().done(function (data) {
-            $(document).displayList(data,'');
-            $(document).displayTiles(data);
+    
+    $.fn.getTask = function(){
+        return $.ajax({
+            type: 'GET',
+            url: `${baseUrl}api/task`,
+            dataType: 'json'
         });
+    };
 
+    
+    $.fn.displayList = function(items, keyword){
+        $('#taskSearchQuery').html('');
 
-        $('#taskSearchQuery').find('span[data-target="#updateTaskModal"]').hide();
-
-
-        $('#taskSearchQuery').find('a.list-group-item').on('mouseover', function () {
-            $(this).filter('span[data-target="#updateTaskModal"]').show(200);
-        });
-
-
-        $('#taskSearch').keypress(function (e) {
-            if(e.which == 13) {
-                $(document).getTask().done(function(data){
-                    $(document).displayList(data, $('#taskSearch').val());
-                });
-                return false;
-            }    
-        });
-
-
-        $('#taskCreateTag').keypress(function (e) {
-            if(e.which == 13) {
-                $(this).parent().find('#taskCreateTagList').append(
-                    `<li class="list-group-item">${$(this).val()}</li>`
+        $.each(items, function(i, item) {
+            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
+                $('#taskSearchQuery').append(
+                    `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item" style="background-color:${item['color']}; color:#000000;">` +
+                        `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
+                        ` ${item['title']}` +
+                        `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                    `</a>`
                 );
-                $(this).parent().append(
-                    `<input type="hidden" name="task_tags[]" value="${$(this).val()}" />`
-                );
-                $(this).val('');
-                return false;
             }
         });
-        
+    };
 
-        $('#taskCreateNote').keypress(function (e) {
-            if(e.which == 13) {
-                $(this).parent().find('#taskCreateNoteList').append(
-                    `<li class="list-group-item">${$(this).val()}</li>`
-                );
-                $(this).parent().append(
-                    `<input type="hidden" name="taske_notes[]" value="${$(this).val()}" />`
-                );
-                $(this).val('');
-                return false;
-            }
+
+    $.fn.displayTiles = function(items, rowNumber = 3) {
+        $('#taskTile').html('');
+
+        rowNumber = 12/rowNumber;
+
+        $.each(items, function(i, item) {
+            $('#taskTile').append(
+                `<div class="col-md-${rowNumber}" style="padding:3px;">` +
+                    `<div class="task-tile" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
+                        `<h4><b>` + 
+                            `<span class="glyphicon glyphicon-unchecked task-mark-done pull-top" data-value="${item['id']}"></span>` +
+                            ` ${item['title']}` +
+                            `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                        `</b></h4>` +
+                        `<p class="small task-tile-description task-justify">${item['description']}</p>` +
+                    `</div>` +
+                `</div>`
+            );
         });
+    };
 
 
-        $('#taskUpdateTag').keypress(function (e) {
-            if(e.which == 13) {
-                $(this).parent().find('#taskUpdateTagList').append(
-                    `<li class="list-group-item">${$(this).val()}</li>`
-                );
-                $(this).parent().append(
-                    `<input type="hidden" name="task_tags[]" value="${$(this).val()}" />`
-                );
-                $(this).val('');
-                return false;
-            }
+    $.fn.changeColor = function($element, color){
+        $element.css('background-color', color);
+        switch(color.toLowerCase()){
+            case '#ffffff': $element.css('color', '#000000'); break;
+            case '#2196f3': $element.css('color', '#ffffff'); break;
+            case '#f44336': $element.css('color', '#ffffff'); break;
+            case '#4caf50': $element.css('color', '#ffffff'); break;
+            case '#ffeb3b': $element.css('color', '#000000'); break;
+            case '#ff9800': $element.css('color', '#000000'); break;
+        }
+    };
+
+
+    
+    $(document).getTask().done(function (data) {
+        $(document).displayList(data,'');
+        $(document).displayTiles(data);
+    });
+
+
+    $('#taskSearchQuery').find('span[data-target="#updateTaskModal"]').hide();
+
+
+    $('#taskSearchQuery').find('a.list-group-item').on('mouseover', function () {
+        $(this).filter('span[data-target="#updateTaskModal"]').show(200);
+    });
+
+
+    $('#taskSearch').keypress(function (e) {
+        if(e.which == 13) {
+            $(document).getTask().done(function(data){
+                $(document).displayList(data, $('#taskSearch').val());
+            });
+            return false;
+        }    
+    });
+
+
+    $('#taskCreateTag').keypress(function (e) {
+        if(e.which == 13) {
+            $(this).parent().find('#taskCreateTagList').append(
+                `<li class="list-group-item">${$(this).val()}</li>`
+            );
+            $(this).parent().append(
+                `<input type="hidden" name="task_tags[]" value="${$(this).val()}" />`
+            );
+            $(this).val('');
+            return false;
+        }
+    });
+    
+
+    $('#taskCreateNote').keypress(function (e) {
+        if(e.which == 13) {
+            $(this).parent().find('#taskCreateNoteList').append(
+                `<li class="list-group-item">${$(this).val()}</li>`
+            );
+            $(this).parent().append(
+                `<input type="hidden" name="taske_notes[]" value="${$(this).val()}" />`
+            );
+            $(this).val('');
+            return false;
+        }
+    });
+
+
+    $('#taskUpdateTag').keypress(function (e) {
+        if(e.which == 13) {
+            $(this).parent().find('#taskUpdateTagList').append(
+                `<li class="list-group-item">${$(this).val()}</li>`
+            );
+            $(this).parent().append(
+                `<input type="hidden" name="task_tags[]" value="${$(this).val()}" />`
+            );
+            $(this).val('');
+            return false;
+        }
+    });
+    
+
+    $('#taskUpdateNote').keypress(function (e) {
+        if(e.which == 13) {
+            $(this).parent().find('#taskUpdateNoteList').append(
+                `<li class="list-group-item">${$(this).val()}</li>`
+            );
+            $(this).parent().append(
+                `<input type="hidden" name="task_notes[]" value="${$(this).val()}" />`
+            );
+            $(this).val('');
+            return false;
+        }
+    });
+
+
+    $(document).on('click', '[data-target="#updateTaskModal"], [href="#updateTaskModal"]', function () {
+        $('#taskUpdateForm')[0].reset();
+        $.ajax({
+            type: 'GET',
+            url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
+            dataType: 'json'
+        }).done(function (data) {
+            $('#taskUpdateForm').attr('data-value', data[0]['id']);
+            $('#taskUpdateForm').find('input[name="title"]').val(data[0]['title']);
+            $('#taskUpdateForm').find('textarea[name="description"]').val(data[0]['description']);
+            $('#taskUpdateForm').find('input[name="date"]').val(data[0]['due_date']);
+            $('#taskUpdateForm').find('input[name="color"]').val(data[0]['color']);
+
+            $(document).changeColor($('#taskUpdateForm').closest('.modal-body'), data[0]['color']);
+            $('#taskUpdateForm').find('.btn-color').find('i').removeClass('glyphicon glyphicon-ok');
+            $('#taskUpdateForm').find(`button[data-color="${data[0]['color']}"]`).find('i').addClass('glyphicon glyphicon-ok');
         });
-        
+    });
 
-        $('#taskUpdateNote').keypress(function (e) {
-            if(e.which == 13) {
-                $(this).parent().find('#taskUpdateNoteList').append(
-                    `<li class="list-group-item">${$(this).val()}</li>`
-                );
-                $(this).parent().append(
-                    `<input type="hidden" name="task_notes[]" value="${$(this).val()}" />`
-                );
-                $(this).val('');
-                return false;
-            }
+
+    $(document).on('click', '[data-target="#viewTaskModal"]', function () {
+        $('#taskViewForm')[0].reset();
+        $.ajax({
+            type: 'GET',
+            url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
+            dataType: 'json'
+        }).done(function (data) {
+            $('#viewTaskModal').find('a[href="#updateTaskModal"]').attr('data-value', data[0]['id']);
+
+            $('#taskViewForm').attr('data-value', data[0]['id']);
+            $('#taskViewForm').find('[id="title"]').html(data[0]['title']);
+            $('#taskViewForm').find('[id="description"]').html(data[0]['description']);
+            $('#taskViewForm').find('[id="date"]').html(data[0]['due_date']);
+
+            $(document).changeColor($('#taskViewForm').closest('.modal-body'), data[0]['color']);
         });
+    });
 
 
-        $(document).on('click', '[data-target="#updateTaskModal"]', function () {
-            $('#taskUpdateForm')[0].reset();
-            $.ajax({
-                type: 'GET',
-                url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
-                dataType: 'json'
-            }).done(function (data) {
-                $('#taskUpdateForm').attr('data-value', data[0]['id']);
-                $('#taskUpdateForm').find('input[name="title"]').val(data[0]['title']);
-                $('#taskUpdateForm').find('textarea[name="description"]').val(data[0]['description']);
-                $('#taskUpdateForm').find('input[name="date"]').val(data[0]['due_date']);
-                $('#taskUpdateForm').find('input[name="color"]').val(data[0]['color']);
+    $(document).on('click', '.btn-color', function () {
+        $(this).parent().find('audio').remove();
+        $(this).parent().append('<audio src=" http://ring2mob.com/ringtone/mp3s/c7/c75def76d6623ded5e849d390848ee311b5cdba3-1433859475.9334.mp3" autoplay></audio>');
+        $(document).changeColor($(this).closest('.modal-body'), $(this).attr('data-color'));
+        $(this).find('i').addClass('glyphicon glyphicon-ok');
+        $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
+        $(this).parent().find('input[name="color"]').attr('value', $(this).attr('data-color'));
+    });
 
-                $(document).changeColor($('#taskUpdateForm').closest('.modal-body'), data[0]['color']);
-                $('#taskUpdateForm').find('.btn-color').find('i').removeClass('glyphicon glyphicon-ok');
-                $('#taskUpdateForm').find(`button[data-color="${data[0]['color']}"]`).find('i').addClass('glyphicon glyphicon-ok');
+
+    $(document).on('click', '#taskCreate', function () {
+        var task = $('#taskCreateForm').serializeArray();
+
+        console.log(task);
+
+        $.ajax({
+            type: 'POST',
+            url: `${baseUrl}api/task`,
+            data: task
+        }).done(function(data) {
+            $(document).getTask().done(function(data){
+                $(document).displayList(data,'');
             });
         });
+    });
 
 
-        $(document).on('click', '[data-target="#viewTaskModal"]', function () {
-            $('#taskViewForm')[0].reset();
-            $.ajax({
-                type: 'GET',
-                url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
-                dataType: 'json'
-            }).done(function (data) {
-                $('#taskViewForm').attr('data-value', data[0]['id']);
-                $('#taskViewForm').find('[id="title"]').append(data[0]['title']);
-                $('#taskViewForm').find('[id="description"]').append(data[0]['description']);
-                $('#taskViewForm').find('[id="date"]').append(data[0]['due_date']);
+    $(document).on('click', '#taskUpdate', function () {
+        var task = $('#taskUpdateForm').serializeArray();
 
-                $(document).changeColor($('#taskViewForm').closest('.modal-body'), data[0]['color']);
+        $.ajax({
+            type: 'POST',
+            url: `${baseUrl}api/task/${$('#taskUpdateForm').attr('data-value')}`,
+            data: task
+        }).done(function(data) {
+            $(document).getTask().done(function(data){
+                $(document).displayList(data,'');
+                $(document).displayTiles(data);
             });
         });
+    });
 
 
-        $(document).on('click', '.btn-color', function () {
-            $(this).parent().find('audio').remove();
-            $(this).parent().append('<audio src=" http://ring2mob.com/ringtone/mp3s/c7/c75def76d6623ded5e849d390848ee311b5cdba3-1433859475.9334.mp3" autoplay></audio>');
-            $(document).changeColor($(this).closest('.modal-body'), $(this).attr('data-color'));
-            $(this).find('i').addClass('glyphicon glyphicon-ok');
-            $(this).siblings().find('i').removeClass('glyphicon glyphicon-ok');
-            $(this).parent().find('input[name="color"]').attr('value', $(this).attr('data-color'));
-        });
-        
-        //Button notif    
-        $(document).on('click', '.btn-notif', function () {
-            $(this).parent().find('audio').remove();
-            $(this).parent().append('<audio src=" http://ring2mob.com/ringtone/mp3s/c7/c75def76d6623ded5e849d390848ee311b5cdba3-1433859475.9334.mp3" autoplay></audio>');
-        });
+    $(document).on('click', '.task-mark-done', function () {
+        $(this).toggleClass('glyphicon-check');
+        $(this).toggleClass('glyphicon-unchecked');
 
-        $(document).on('click', '#taskCreate', function () {
-            var task = $('#taskCreateForm').serializeArray();
-
-            console.log(task);
-
-            $.ajax({
-                type: 'POST',
-                url: `${baseUrl}api/task`,
-                data: task
-            }).done(function(data) {
-                $(document).getTask().done(function(data){
-                    $(document).displayList(data,'');
-                });
+        $.ajax({
+            type: 'POST',
+            url: `${baseUrl}api/done/${$(this).attr('data-value')}`,
+        }).done(function(data) {
+            $(document).getTask().done(function(data){
+                $(document).displayList(data,'');
+                $(document).displayTiles(data);
             });
         });
+    });
 
-
-        $(document).on('click', '#taskUpdate', function () {
-            var task = $('#taskUpdateForm').serializeArray();
-
-            $.ajax({
-                type: 'POST',
-                url: `${baseUrl}api/task/${$('#taskUpdateForm').attr('data-value')}`,
-                data: task
-            }).done(function(data) {
-                $(document).getTask().done(function(data){
-                    $(document).displayList(data,'');
-                    $(document).displayTiles(data);
-                });
-            });
-        });
-
-        $(document).on('click', '.task-mark-done', function () {
-            $(this).toggleClass('glyphicon-check');
-            $(this).toggleClass('glyphicon-unchecked');
-
-            $.ajax({
-                type: 'POST',
-                url: `${baseUrl}api/done/${$(this).attr('data-value')}`,
-            }).done(function(data) {
-                $(document).getTask().done(function(data){
-                    $(document).displayList(data,'');
-                    $(document).displayTiles(data);
-                });
-            });
-        });
-
-        }); 
+    }); 
     </script>
-</body>
-</html>
