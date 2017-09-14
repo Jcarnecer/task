@@ -29,28 +29,28 @@
             $.each(items, function(i, item) {
                 if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
                     $('#taskSearchQuery').append(
-                        // '<div class="form-group">' +
-                            `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item" style="background-color:${item['color']}; color:#000000;">` +
-                                `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
-                                ` ${item['title']}` +
-                                `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
-                            `</a>`
-                        // `</div>`
+                        `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item" style="background-color:${item['color']}; color:#000000;">` +
+                            `<span class="glyphicon glyphicon-unchecked task-mark-done" data-value="${item['id']}"></span>` + 
+                            ` ${item['title']}` +
+                            `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                        `</a>`
                     );
                 }
             });
         };
 
 
-        $.fn.displayTiles = function(items) {
+        $.fn.displayTiles = function(items, rowNumber = 3) {
             $('#taskTile').html('');
+
+            rowNumber = 12/rowNumber;
 
             $.each(items, function(i, item) {
                 // if(i % 6 == 0) {
                 //     $('#taskTile').append('<div id="tileRowActive" class="row" style="height:100px;></div>');
                 // }
                 $('#taskTile').append(
-                    `<div class="col-md-2" style="padding:3px;">` +
+                    `<div class="col-md-${rowNumber}" style="padding:3px;">` +
                         `<div class="task-tile" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
                             `<h4><b>` + 
                                 `<span class="glyphicon glyphicon-unchecked task-mark-done pull-top" data-value="${item['id']}"></span>` +
@@ -270,7 +270,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="taskUpdate" class="btn btn-default" data-dismiss="modal">Add Task</button>
+                    <button type="button" id="taskUpdate" class="btn btn-default" data-dismiss="modal">Update Task</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -284,12 +284,12 @@
                 <div class="modal-header" style="background-color:#ffffff;">
                     <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
                     <div class="row">
-                    <div class="col-md-6"><h4 class="modal-title">Update Task</h4></div>
+                    <div class="col-md-6"><h4 class="modal-title">View Task</h4></div>
                     <div class="col-md-6 dropdown">
                         <a class="dropdown-toggle pull-right" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="#updateTaskModal" data-toggle="modal">Edit Task</a></li>
-                            <li><a href="#">Mark as Done</a></li>
+                            <li><a href="#updateTaskModal" data-toggle="modal" data-dismiss="modal">Edit Task</a></li>
+                            <li><a href="#" class="task-mark-done">Mark as Done</a></li>
                         </ul>
                     </div>
                     </div>
@@ -409,7 +409,7 @@
         });
 
 
-        $(document).on('click', '[data-target="#updateTaskModal"]', function () {
+        $(document).on('click', '[data-target="#updateTaskModal"], [href="#updateTaskModal"]', function () {
             $('#taskUpdateForm')[0].reset();
             $.ajax({
                 type: 'GET',
@@ -439,9 +439,9 @@
                 $('#viewTaskModal').find('a[href="#updateTaskModal"]').attr('data-value', data[0]['id']);
 
                 $('#taskViewForm').attr('data-value', data[0]['id']);
-                $('#taskViewForm').find('[id="title"]').append(data[0]['title']);
-                $('#taskViewForm').find('[id="description"]').append(data[0]['description']);
-                $('#taskViewForm').find('[id="date"]').append(data[0]['due_date']);
+                $('#taskViewForm').find('[id="title"]').html(data[0]['title']);
+                $('#taskViewForm').find('[id="description"]').html(data[0]['description']);
+                $('#taskViewForm').find('[id="date"]').html(data[0]['due_date']);
 
                 $(document).changeColor($('#taskViewForm').closest('.modal-body'), data[0]['color']);
             });
