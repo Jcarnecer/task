@@ -33,7 +33,7 @@ class Tag_model extends CI_Model {
 			->from('tags')
 			->where('name', $name)
 			->get()
-			->result()[0]->id;
+			->row()->id;
 	}
 
 	public function del_tag($tagging_details) {

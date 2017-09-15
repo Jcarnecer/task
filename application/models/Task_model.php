@@ -21,6 +21,7 @@ class Task_model extends CI_Model {
 		foreach ($tasks as $task) {
 			$task->notes = $this->get_task_notes($task->id);
 			$task->tags = $this->get_task_tags($task->id);
+			$task->remaining_days = $this->estimate_days($task->id);
 		}
 		return $tasks;
 	}
@@ -71,6 +72,20 @@ class Task_model extends CI_Model {
 		return $this->db->update('tasks', $task_details, "id = $id");
 	}
 
+	public function estimate_days($id) {
+		$due_date = date_create($this->db->select('due_date')
+			->get_where('tasks', ['id' => $id])
+			->row()->due_date);
+		$today = date_create(date('Y-m-d'));
+		$days = date_diff($today, $due_date)->days;
+		if($days == 0)
+			return "DUE TODAY!";
+		if($days == 1)
+			return "$days day remaining";
+		if($today>$due_date)
+			return "Overdue by $days days";
+		return "$days days remaining";
+	}
 
 	// public function update($key, $task_id, $val) {
 	// 	return $this->db->update('tasks', [$key => $val, 'updated_at' => date('Y-m-d')], "id = $task_id");
