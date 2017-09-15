@@ -38,8 +38,11 @@ class Tasks extends CI_Controller {
 	public function get($id = null) {
 		if($id != null)
 			echo json_encode($this->task_model->get_task_by_id($id));
-		else
+		else{
+			// echo json_encode(array_merge($this->task_model->get(self::ACTIVE), $this->task_model->get(self::ARCHIVED)));
 			echo json_encode($this->task_model->get(self::ACTIVE));
+			// echo json_encode($this->task_model->get(self::ARCHIVED));
+		}
 	}
 
 
@@ -80,7 +83,10 @@ class Tasks extends CI_Controller {
 
 	}
 
-	// public function postOrder() {
-		
-	// }
+	public function test() {
+		$data['tasks'] = $this->task_model->get(self::ACTIVE);
+		$this->load->view('header');
+		$this->load->view('modal');
+		$this->load->view('task/index', $data);
+	}
 }

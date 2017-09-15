@@ -30,20 +30,10 @@
                     </ul>
                 </li>
             </ul>
-            <!-- <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul> -->
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="taskSearch" list="task-list" value="" placeholder="Search"/>
-                    <!-- <datalist id="task-list" class="list-group task-list">
-
-                    </datalist> -->
-                </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#createTaskModal"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#searchTaskModal"><span class="glyphicon glyphicon-search"></span> Search</a></li>
             </ul>
         </div>
     </nav>
