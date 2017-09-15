@@ -129,18 +129,18 @@
     });
     
 
-    $('#taskCreateNote').keypress(function (e) {
-        if(e.which == 13) {
-            $(this).parent().find('#taskCreateNoteList').append(
-                `<li class="list-group-item">${$(this).val()}</li>`
-            );
-            $(this).parent().append(
-                `<input type="hidden" name="taske_notes[]" value="${$(this).val()}" />`
-            );
-            $(this).val('');
-            return false;
-        }
-    });
+    // $('#taskCreateNote').keypress(function (e) {
+    //     if(e.which == 13) {
+    //         $(this).parent().find('#taskCreateNoteList').append(
+    //             `<li class="list-group-item">${$(this).val()}</li>`
+    //         );
+    //         $(this).parent().append(
+    //             `<input type="hidden" name="taske_notes[]" value="${$(this).val()}" />`
+    //         );
+    //         $(this).val('');
+    //         return false;
+    //     }
+    // });
 
 
     $('#taskUpdateTag').keypress(function (e) {

@@ -17,7 +17,7 @@ class Task_notes extends CI_Controller {
 			];
 			$this->task_note_model->insert($task_note_details);
 		}
-		return redirect('tasks');
+		return redirect('tasks/test');
 	}
 
 	public function create_team_task_note($task_id) {
