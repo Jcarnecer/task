@@ -4,14 +4,14 @@
 	<title>Tasks</title>
 </head>
 <body>
-	My tasks
-
 	<?php foreach ($tasks as $task): ?>
 		<div>
-			<?= $task->title ?>
-			<?= $task->description ?>
-			<?= $task->due_date ?>
-			<a href="<?= base_url('tasks/done/' . $task->id) ?>">Mark as Done</a>
+			<b><?= $task->title ?></b>
+			<?= $task->due_date ?> /
+			<font color ="red"><?= $task->remaining_days ?></font> /
+			<a href="<?= base_url('tasks/done/' . $task->id) ?>"> <font color = "black"><u>Mark as Done</u></font></a>
+			<br>
+			<i><?= $task->description ?></i>
 			</form>
 			<div>
 				<?php foreach ($task->tags as $tag): ?>

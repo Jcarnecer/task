@@ -68,6 +68,7 @@ class Tasks extends CI_Controller {
 
 	public function mark_as_done($id) {
 		$this->task_model->archive($id);
+		//redirect('tasks/test'); #for testing
 	}
 
 
