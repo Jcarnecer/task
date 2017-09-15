@@ -105,7 +105,7 @@
                             <a class="dropdown-toggle pull-right" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a href="#updateTaskModal" data-toggle="modal" data-dismiss="modal">Edit Task</a></li>
-                                <li><a href="#" class="task-mark-done">Mark as Done</a></li>
+                                <li><a href="#" class="task-mark-done" data-dismiss="modal">Mark as Done</a></li>
                             </ul>
                         </div>
                         <h1 id="title" class="task-title"><b></b></h1>
@@ -136,10 +136,10 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <input type="text" id="taskSearch" />
-                    <div id="taskSearchQuery" class="list-group">
+                    <input type="text" id="taskSearch" placeholder="Search"/>
+                    <ul id="taskSearchQuery" class="list-group">
 
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
