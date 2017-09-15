@@ -13,9 +13,7 @@
                         Search
                     </div>
                     <div class="panel-body"> -->
-                        <div id="taskSearchQuery" class="list-group">
-
-                        </div>
+                        
                     <!-- </div>
                 </div> -->
             </div>
@@ -42,7 +40,7 @@
         $('#taskSearchQuery').html('');
 
         $.each(items, function(i, item) {
-            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1 || keyword == '') {
+            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 $('#taskSearchQuery').append(
                     `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" style="background-color:${item['color']}; color:#000000;">` +
                         `<h5 class="tile-title"><b>` +
@@ -65,13 +63,17 @@
         $.each(items, function(i, item) {
             $('#taskTile').append(
                 `<div class="col-md-${rowNumber}" style="padding:3px;">` +
-                    `<div class="task-tile" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
-                        `<h4 class="tile-title"><b>` + 
-                            `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span>` +
-                            ` ${item['title']}` +
+                    `<div class="task-tile  container-fluid" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
+                        `<div class="row">` +
+                            `<div class="col-md-2">` +
+                                `<h4 class="pull-right"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span></h4>` +
+                            `</div>` +
                             // `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
-                        `</b></h4>` +
-                        `<p class="tile-description task-justify"><b>${item['description']}</b></p>` +
+                            `<div class="col-md-10">` +
+                                `<h4 class="tile-title"><b>${item['title']}</b></h4>` +
+                                `<p class="tile-description task-justify"><b>${item['description']}</b></p>` +
+                            `</div>` +
+                        `</div>` +
                     `</div>` +
                 `</div>`
             );
@@ -94,7 +96,6 @@
 
     
     $(document).getTask().done(function (data) {
-        $(document).displayList(data,'');
         $(document).displayTiles(data);
     });
 
@@ -107,13 +108,10 @@
     });
 
 
-    $('#taskSearch').keypress(function (e) {
-        if(e.which == 13) {
-            $(document).getTask().done(function(data){
-                $(document).displayList(data, $('#taskSearch').val());
-            });
-            return false;
-        }    
+    $(document).on('input', '#taskSearch', function () {
+        $(document).getTask().done(function(data){
+            $(document).displayList(data, $('#taskSearch').val());
+        });
     });
 
 
@@ -229,7 +227,6 @@
             data: task
         }).done(function(data) {
             $(document).getTask().done(function(data){
-                $(document).displayList(data,'');
                 $(document).displayTiles(data);
             });
         });
@@ -245,7 +242,6 @@
             data: task
         }).done(function(data) {
             $(document).getTask().done(function(data){
-                $(document).displayList(data,'');
                 $(document).displayTiles(data);
             });
         });
@@ -262,7 +258,6 @@
             url: `${baseUrl}api/done/${$(this).attr('data-value')}`,
         }).done(function(data) {
             $(document).getTask().done(function(data){
-                $(document).displayList(data,'');
                 $(document).displayTiles(data);
             });
         });
