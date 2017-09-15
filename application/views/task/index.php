@@ -8,8 +8,12 @@
 		<div>
 			<b><?= $task->title ?></b>
 			<?= $task->due_date ?> /
+			<?php if($status==1){ ?>
 			<font color ="red"><?= $task->remaining_days ?></font> /
 			<a href="<?= base_url('tasks/done/' . $task->id) ?>"> <font color = "black"><u>Mark as Done</u></font></a>
+			<?php } else { ?>
+			Task Completed
+			<?php } ?>
 			<br>
 			<i><?= $task->description ?></i>
 			</form>
