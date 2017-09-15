@@ -4,28 +4,24 @@ class Tag_model extends CI_Model {
 	
 	public $name;
 
-
-	public function create_new_tag($tag_details) {
-		$this->db->insert('tags', $tag_details);
-	}
-
-	public function add_tag($tagging_details) {
+	public function add_tag($details) {
 		
 		$tags = $this->db->get('tags')->result();
 		foreach ($tags as $tag) {
-			if($tag->name == $tagging_details['name']) {
+			if($tag->name == $details['name']) {
 				return $this->db->insert('tasks_tagging', [
-					'tasks_id' => $tagging_details['tasks_id'],
+					'tasks_id' => $details['tasks_id'],
 					'tags_id' => $tag->id
 				]);
 			}
 		}
 		
-		$this->create_new_tag(['name' => $tagging_details['name']]);
-		return $this->db->insert('tasks_tagging', [
-				'tasks_id' => $tagging_details['tasks_id'],
-				'tags_id' => $this->get_id($tagging_details['name'])
-			]);
+		$this->db->insert('tags', ['name' => $details['name']]);
+		$tagging_details = [
+			'tasks_id' => $details['tasks_id'],
+			'tags_id' => $this->get_id($details['name'])
+		];
+		return $this->db->insert('tasks_tagging', $tagging_details);
 	}
 
 	public function get_id($name) {
