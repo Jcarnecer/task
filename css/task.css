@@ -1,15 +1,17 @@
-#taskSearch {
+#taskSearch, #taskSearch:focus{
     width: 100%;
     height: 50px;
     text-align: center;
-    font-size: 24;
-    border: 0 hidden #ffffff;
+    font-size: 32px;
+    /* border: none; */
+    /* outline:none; */
+    /* border: 0 hidden #ffffff; */
 }
 
 .task-search-item {
-    margin: 3px 0;
+    margin: 2px 0;
     color: #000000;
-    border: 1px solid #000000;
+    /* border: 1px solid #000000; */
 }
 
 .task-tile {

@@ -1,21 +1,7 @@
-    <div class="container-fluid">
-        <div class="row">
-        <div class="col-md-10" style="padding: 5px;">    
-                <div class="container-fluid">
-                    <div id="taskTile" class="row">
+    <div class="container-fluid"> 
+        <div class="container-fluid">
+            <div id="taskTile" class="row">
 
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2" style="padding: 5px;">
-                <!-- <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Search
-                    </div>
-                    <div class="panel-body"> -->
-                        
-                    <!-- </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -46,7 +32,7 @@
                         `<h5 class="tile-title"><b>` +
                         `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` task-mark-done pull-top" data-value="${item['id']}"></span>` +
                         ` ${item['title']}` +
-                        `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                        // `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                         `</b></h5>` +
                     `</a>`
                 );
@@ -55,7 +41,7 @@
     };
 
 
-    $.fn.displayTiles = function(items, rowNumber = 3) {
+    $.fn.displayTiles = function(items, rowNumber = 4) {
         $('#taskTile').html('');
 
         rowNumber = 12/rowNumber;
@@ -63,13 +49,13 @@
         $.each(items, function(i, item) {
             $('#taskTile').append(
                 `<div class="col-md-${rowNumber}" style="padding:3px;">` +
-                    `<div class="task-tile  container-fluid" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
+                    `<div class="task-tile  container-fluid" style="background-color:${item['color']};">` +
                         `<div class="row">` +
                             `<div class="col-md-2">` +
                                 `<h4 class="pull-right"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span></h4>` +
                             `</div>` +
                             // `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
-                            `<div class="col-md-10">` +
+                            `<div class="col-md-10" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}">` +
                                 `<h4 class="tile-title"><b>${item['title']}</b></h4>` +
                                 `<p class="tile-description task-justify"><b>${item['description']}</b></p>` +
                             `</div>` +
@@ -97,6 +83,7 @@
     
     $(document).getTask().done(function (data) {
         $(document).displayTiles(data);
+        $(document).displayList(data, '');
     });
 
 
@@ -199,6 +186,7 @@
             dataType: 'json'
         }).done(function (data) {
             $('#viewTaskModal').find('a[href="#updateTaskModal"]').attr('data-value', data[0]['id']);
+            $('#viewTaskModal').find('a.task-mark-done').attr('data-value', data[0]['id']);
             
             $('#taskViewForm').attr('data-value', data[0]['id']);
             $('#taskViewForm').find('[id="title"] b').html(data[0]['title']);
@@ -249,8 +237,10 @@
 
 
     $(document).on('click', '.task-mark-done', function () {
-        $(this).toggleClass('glyphicon-check');
-        $(this).toggleClass('glyphicon-unchecked');
+        if($(this).is('.glyphicon')){
+            $(this).toggleClass('glyphicon-check');
+            $(this).toggleClass('glyphicon-unchecked');
+        }
         $(this).removeClass('task-mark-done');
 
         $.ajax({
