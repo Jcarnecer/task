@@ -4,6 +4,7 @@
 	<title>Tasks</title>
 </head>
 <body>
+    <hr><h1>PERSONAL TASKS</h1><hr>
 	<?php foreach ($tasks as $task): ?>
 		<div>
 			<b><?= $task->title ?></b>

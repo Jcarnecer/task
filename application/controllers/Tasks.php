@@ -56,7 +56,7 @@ class Tasks extends CI_Controller {
 				$this->task_model->insert($task_details);
 		}
 
-		redirect('task/teams');
+		redirect('teams');
 	}
 
 	public function get($id = null) {
@@ -67,6 +67,11 @@ class Tasks extends CI_Controller {
 			echo json_encode($this->task_model->get(self::ACTIVE));
 			// echo json_encode($this->task_model->get(self::ARCHIVED));
 		}
+	}
+
+
+	public function get_team_task() {
+		echo json_encode($this->task_model->get_team_task(self::ACTIVE));
 	}
 
 
