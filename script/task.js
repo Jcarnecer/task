@@ -22,13 +22,15 @@
         $.each(items, function(i, item) {
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 $('#taskSearchQuery').append(
-                    `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']}; color:#000000;">` +
-                        `<h5 class="tile-title"><b>` +
-                        // `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` task-mark-done pull-top" data-value="${item['id']}"></span>` +
-                        ` ${item['title']}` +
-                        // `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
-                        `</b></h5>` +
-                    `</a>`
+                    `<li class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']};">` +
+                        `<div class="container-fluid">` +
+                            `<div class="row">` +
+                                `<div class="col-md-1"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + `" data-value="${item['id']}"></span></div>` +
+                                `<div class="col-md-10" data-target="#viewTaskModal" data-toggle="modal" data-value="${item['id']}">${item['title']}</div>` +
+                                `<div class="col-md-1"><span class="glyphicon glyphicon-edit" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}"></span></div>` + 
+                            `</div>` +
+                        `</div>` +
+                    `</li>`
                 );
             }
         });
@@ -128,12 +130,12 @@
 
     $('.task-tag').keypress(function (e) {
         if(e.which == 13 || e.which == 32) {
-            if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val()}"]`).length){
+            if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val().toLowerCase()}"]`).length){
                 $(this).before(
-                    `<span class="label label-default">${$(this).val()} <a class="task-tag-remove" data-value="${$(this).val()}">&times;</a></span>`
+                    `<span class="label label-default">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
                 );
                 $(this).closest('.task-tag-list').parent().append(
-                    `<input type="hidden" name="tags[]" value="${$(this).val()}" />`
+                    `<input type="hidden" name="tags[]" value="${$(this).val().toLowerCase()}" />`
                 );
                 
             }
