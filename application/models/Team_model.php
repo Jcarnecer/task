@@ -12,16 +12,16 @@ class Team_model {
 
 	public function add_team($details) {
 		$teams =  $this->db->get('teams')->result();
-		$mapping_details = [
-			'teams_id' => $this->get_id($name),
-			'user_id' => $details['users_id']
-		];
+
+		$mapping_details['user_id'] = $details['users_id'];
 		foreach ($teams as $team) {
 			if($team->name == $details['name']) {
+				$mapping_details['teams_id'] = $this->get_id($details['name']);
 				return $this->db->insert('teams_mapping', $mapping_details);
 			}
 		}
 		$this->db->insert('team', ['name' => $details['name']]);
+		$mapping_details['teams_id'] = $this->get_id($details['name']);
 		return $this->db->insert('teams_mapping', $mapping_details);
 	}
 

@@ -27,5 +27,10 @@ class Tags extends CI_Controller {
 			'teams_id' => $id,
 			'peers' => $peers
 		];
+<<<<<<< HEAD
+=======
+
+		$this->team_model->add_peers($team_details);
+>>>>>>> user-integration
 	}
 }

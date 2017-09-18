@@ -15,9 +15,9 @@ class Task_model extends CI_Model {
 	public function get($status = null) {
 		
 		if($status != null)
-			$tasks = $this->db->get_where('tasks', ['user_id' => 1, 'status' => $status])->result();
+			$tasks = $this->db->get_where('tasks', ['user_id' => $this->session->user[0]->id, 'status' => $status])->result();
 		else
-			$tasks = $this->db->get('tasks')->result();
+			$tasks = $this->db->get_where('tasks', ['user_id' => $this->session->user[0]->id])->result();
 		foreach ($tasks as $task) {
 			$task->notes = $this->get_task_notes($task->id);
 			$task->tags = $this->get_task_tags($task->id);
@@ -54,7 +54,7 @@ class Task_model extends CI_Model {
 
 
 	public function insert($task_details) {
-		$task_details['user_id'] = 1;
+		$task_details['user_id'] = $this->session->user[0]->id;
 		$task_details['status'] = 1;
 		$task_details['created_at'] = date('Y-m-d');
 		$task_details['updated_at'] = date('Y-m-d');
@@ -86,8 +86,4 @@ class Task_model extends CI_Model {
 			return "Overdue by $days days";
 		return "$days days remaining";
 	}
-
-	// public function update($key, $task_id, $val) {
-	// 	return $this->db->update('tasks', [$key => $val, 'updated_at' => date('Y-m-d')], "id = $task_id");
-	// }
 }

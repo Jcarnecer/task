@@ -12,6 +12,9 @@ class Tasks extends CI_Controller {
 
 
 	public function index() {
+		if (!$this->user_model->is_login()) {
+			return redirect('users/login');
+		}
 		$this->load->view('header');
 		$this->load->view('modal');
 		$this->load->view('task');
