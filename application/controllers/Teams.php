@@ -18,7 +18,7 @@ class Teams extends CI_Controller {
 			];
 			$this->team_model->add_team($team_details);
 
-			redirect('tasks/teams');
+			redirect('teams');
 		}
 	}
 
@@ -45,7 +45,7 @@ class Teams extends CI_Controller {
 			];
 
 			$this->team_model->add_peers($team_details);
-			redirect('tasks/teams');
+			redirect('teams');
 		}
 	}
 }
