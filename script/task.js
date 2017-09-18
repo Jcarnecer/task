@@ -186,7 +186,7 @@
             $('#updateTaskModal').find('[name="date"]').val(data['due_date']);
             $('#updateTaskModal').find('[name="color"]').val(data['color']);
 
-            $('#updateTaskModal').find('.task-tag-list').html('');
+            $('#updateTaskModal').find('.task-tag-list').find('span.label').remove();
             $('#updateTaskModal').find('.task-tag-list').siblings('input').remove();
             $(document).displayTags($('#updateTaskModal').find('.task-tag-list'), data['tags'], true);
             
