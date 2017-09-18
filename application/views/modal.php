@@ -58,12 +58,12 @@
                         <div class="form-group" style="overflow-x:none;">
                             <label>Deadline:</label>
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <input type="date" class="form-control" name="due_date" value="<?php echo date('Y-m-d'); ?>">
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <input type="time" class="form-control" name="due_time" value="<?php echo date('h:i'); ?>">
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="form-group">

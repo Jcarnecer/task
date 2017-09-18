@@ -12,21 +12,17 @@ class Tasks extends CI_Controller {
 
 
 	public function index() {
-		$this->load->view('task/header');
+
+		if (!$this->user_model->is_login()) {
+			return redirect('users/login');
+		}
+		$data['teams'] = $data['teams'] = $this->team_model->get();
+		
+		$this->load->view('task/header', $data);
 		$this->load->view('task/body');
 		$this->load->view('task/footer');
 		// $this->load->view('test');
 	}
-
-
-	public function test() {
-		$text = [
-			'text' => $this->input->post('text')
-		];
-		print_r($text);
-		print_r($this->input->post('tags[]'));
-	}
-
 
 	public function post($id = null) {
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -34,7 +30,8 @@ class Tasks extends CI_Controller {
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
 				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
-				'color' => $this->input->post('color')
+				'color' => $this->input->post('color'),
+				'user_id' => $this->session->user[0]->id
 			];
 
 			if($id != null) {
@@ -50,16 +47,41 @@ class Tasks extends CI_Controller {
 		}
 	}
 
+	public function post_team($id = null) {
+
+		$data['teams'] = $this->team_model->get();
+
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			$task_details = [
+				'title' => $this->input->post('title'),
+				'description' => $this->input->post('description'),
+				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
+				'color' => $this->input->post('color'),
+				'user_id' => $this->input->post('team_id')
+			];
+			if($id != null)
+				$this->task_model->update($id, $task_details);
+			else
+				$this->task_model->insert($task_details);
+		}
+
+		redirect('teams');
+	}
 
 	public function get($id = null) {
 		if($id != null){
 			echo json_encode(array_merge($this->task_model->get_task_by_id($id), ['tags' => $this->tag_model->get($id)]));
 		}
 		else{
-			echo json_encode(array_merge($this->task_model->get(self::ACTIVE), $this->task_model->get(self::ARCHIVED)));
-			// echo json_encode($this->task_model->get(self::ACTIVE));
+			// echo json_encode(array_merge($this->task_model->get(self::ACTIVE), $this->task_model->get(self::ARCHIVED)));
+			echo json_encode($this->task_model->get(self::ACTIVE));
 			// echo json_encode($this->task_model->get(self::ARCHIVED));
 		}
+	}
+
+
+	public function get_team_task() {
+		echo json_encode($this->task_model->get_team_task(self::ACTIVE));
 	}
 
 
@@ -85,6 +107,7 @@ class Tasks extends CI_Controller {
 
 	public function mark_as_done($id) {
 		$this->task_model->archive($id);
+		//redirect('tasks/test'); #for testing
 	}
 
 
@@ -100,7 +123,11 @@ class Tasks extends CI_Controller {
 
 	}
 
-	// public function postOrder() {
-		
-	// }
+	public function test($id=1) {
+		$data['tasks'] = $this->task_model->get($id);
+		$data['status'] = $id;
+		$this->load->view('header');
+		$this->load->view('modal');
+		$this->load->view('task/index', $data);
+	}
 }

@@ -12,11 +12,11 @@ class Tags extends CI_Controller {
 	public function add_tag($id) {
 		$tagging_details = [
 			'tasks_id' => $id,
-			'name' => $this->input->post('name')
+			'name' => strtolower($this->input->post('name'))
 		];
 		$this->tag_model->add_tag($tagging_details);
 
-		redirect('tasks');
+		redirect('tasks/test');
 	}
 
 
@@ -26,7 +26,7 @@ class Tags extends CI_Controller {
 			'name' => $this->input->post('name')
 		];
 		$this->tag_model->del_tag($tagging_details);
-		redirect('tasks');
+		redirect('tasks/test');
 	}
 
 

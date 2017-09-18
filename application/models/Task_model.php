@@ -15,12 +15,36 @@ class Task_model extends CI_Model {
 	public function get($status = null) {
 		
 		if($status != null)
-			$tasks = $this->db->get_where('tasks', ['user_id' => 1, 'status' => $status])->result();
+			$tasks = $this->db->get_where('tasks', ['user_id' => $this->session->user[0]->id, 'status' => $status])->result();
 		else
-			$tasks = $this->db->get('tasks')->result();
+			$tasks = $this->db->get_where('tasks', ['user_id' => $this->session->user[0]->id])->result();
 		foreach ($tasks as $task) {
 			$task->notes = $this->get_task_notes($task->id);
 			$task->tags = $this->get_task_tags($task->id);
+			$task->remaining_days = $this->estimate_days($task->id);
+		}
+		return $tasks;
+	}
+
+	public function get_team_tasks($status = null) {
+		if($status != null)
+			$tasks = $this->db->select('*')
+				->from('tasks')
+				->join('teams_mapping', 'teams_mapping.teams_id = tasks.user_id')
+				->where(['teams_mapping.users_id'=>$this->session->user[0]->id, 'tasks.status' => $status])
+				->get()
+				->result();
+		else
+			$tasks = $this->db->select('*')
+				->from('tasks')
+				->join('teams_mapping', 'teams_mapping.teams_id = tasks.user_id')
+				->where(['teams_mapping.users_id'=>$this->session->user[0]->id])
+				->get()
+				->result();
+		foreach ($tasks as $task) {
+			$task->notes = $this->get_task_notes($task->id);
+			$task->tags = $this->get_task_tags($task->id);
+			$task->remaining_days = $this->estimate_days($task->id);
 		}
 		return $tasks;
 	}
@@ -53,7 +77,6 @@ class Task_model extends CI_Model {
 
 
 	public function insert($task_details) {
-		$task_details['user_id'] = 1;
 		$task_details['status'] = 1;
 		$task_details['created_at'] = date('Y-m-d');
 		$task_details['updated_at'] = date('Y-m-d');
@@ -72,8 +95,18 @@ class Task_model extends CI_Model {
 		return $this->db->update('tasks', $task_details, "id = $id");
 	}
 
-
-	// public function update($key, $task_id, $val) {
-	// 	return $this->db->update('tasks', [$key => $val, 'updated_at' => date('Y-m-d')], "id = $task_id");
-	// }
+	public function estimate_days($id) {
+		$due_date = date_create($this->db->select('due_date')
+			->get_where('tasks', ['id' => $id])
+			->row()->due_date);
+		$today = date_create(date('Y-m-d'));
+		$days = date_diff($today, $due_date)->days;
+		if($days == 0)
+			return "DUE TODAY!";
+		if($days == 1)
+			return "$days day remaining";
+		if($today>$due_date)
+			return "Overdue by $days days";
+		return "$days days remaining";
+	}
 }
