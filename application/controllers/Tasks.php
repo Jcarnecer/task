@@ -126,7 +126,7 @@ class Tasks extends CI_Controller {
 	public function test($id=1) {
 		$data['tasks'] = $this->task_model->get($id);
 		$data['status'] = $id;
-		$this->load->view('header');
+		$this->load->view('task/header');
 		$this->load->view('modal');
 		$this->load->view('task/index', $data);
 	}

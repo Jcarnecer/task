@@ -28,7 +28,7 @@ class Teams extends CI_Controller {
 		$data['tasks'] = $this->task_model->get(1);
 		$data['team_tasks'] = $this->task_model->get_team_tasks(1);
 		$data['status'] = 1;
-		$this->load->view('header', $data);		
+		$this->load->view('task/header', $data);		
 		$this->load->view('test/index', $data);
 		$this->load->view('task/index', $data);
 	}
