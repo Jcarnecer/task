@@ -29,4 +29,14 @@ class Tags extends CI_Controller {
 		redirect('tasks');
 	}
 
+
+	public function post($id, $tags){
+		$this->tag_model->update_tags($id, $tags);
+	}
+
+
+	public function get($id){
+		echo json_encode($this->tag_model->get_by_id($id));
+	}
+
 }

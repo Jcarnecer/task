@@ -43,7 +43,7 @@ class Task_model extends CI_Model {
 	}
 
 	public function get_task_by_id($id) {
-		return $this->db->get_where('tasks', ['id' => $id])->result();
+		return $this->db->get_where('tasks', ['id' => $id])->result_array()[0];
 	}
 
 
@@ -58,7 +58,8 @@ class Task_model extends CI_Model {
 		$task_details['created_at'] = date('Y-m-d');
 		$task_details['updated_at'] = date('Y-m-d');
 
-		return $this->db->insert('tasks', $task_details);
+		$this->db->insert('tasks', $task_details);
+		return $this->db->insert_id();
 	}
 
 

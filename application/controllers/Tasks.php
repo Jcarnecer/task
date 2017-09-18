@@ -12,10 +12,19 @@ class Tasks extends CI_Controller {
 
 
 	public function index() {
-		$this->load->view('header');
-		$this->load->view('modal');
-		$this->load->view('task');
-		$this->load->view('footer');
+		$this->load->view('task/header');
+		$this->load->view('task/body');
+		$this->load->view('task/footer');
+		// $this->load->view('test');
+	}
+
+
+	public function test() {
+		$text = [
+			'text' => $this->input->post('text')
+		];
+		print_r($text);
+		print_r($this->input->post('tags[]'));
 	}
 
 
@@ -27,17 +36,25 @@ class Tasks extends CI_Controller {
 				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
 				'color' => $this->input->post('color')
 			];
-			if($id != null)
+
+			if($id != null) {
 				$this->task_model->update($id, $task_details);
-			else
-				$this->task_model->insert($task_details);
+				if($this->input->post('tags[]') != null)
+					$this->tag_model->update($id, $this->input->post('tags[]'));
+			}
+			else {
+				// $this->task_model->insert($task_details);
+				if($this->input->post('tags[]') != null)
+					$this->tag_model->insert($this->task_model->insert($task_details), $this->input->post('tags[]'));
+			}
 		}
 	}
 
 
 	public function get($id = null) {
-		if($id != null)
-			echo json_encode($this->task_model->get_task_by_id($id));
+		if($id != null){
+			echo json_encode(array_merge($this->task_model->get_task_by_id($id), ['tags' => $this->tag_model->get($id)]));
+		}
 		else{
 			echo json_encode(array_merge($this->task_model->get(self::ACTIVE), $this->task_model->get(self::ARCHIVED)));
 			// echo json_encode($this->task_model->get(self::ACTIVE));

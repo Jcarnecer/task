@@ -3,11 +3,12 @@
 <head>
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>css/task.css" />
+    <link rel="stylesheet" type="text/css" href="/task/css/task.css" />
 </head>
 <body>
-    <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/task/script/task.js"></script>
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
