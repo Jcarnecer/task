@@ -12,16 +12,17 @@ class Tasks extends CI_Controller {
 
 
 	public function index() {
+
 		if (!$this->user_model->is_login()) {
 			return redirect('users/login');
 		}
 		$data['teams'] = $data['teams'] = $this->team_model->get();
-		$this->load->view('header', $data);
-		$this->load->view('modal');
-		$this->load->view('task');
-		$this->load->view('footer');
+		
+		$this->load->view('task/header', $data);
+		$this->load->view('task/body');
+		$this->load->view('task/footer');
+		// $this->load->view('test');
 	}
-
 
 	public function post($id = null) {
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -32,10 +33,17 @@ class Tasks extends CI_Controller {
 				'color' => $this->input->post('color'),
 				'user_id' => $this->session->user[0]->id
 			];
-			if($id != null)
+
+			if($id != null) {
 				$this->task_model->update($id, $task_details);
-			else
-				$this->task_model->insert($task_details);
+				if($this->input->post('tags[]') != null)
+					$this->tag_model->update($id, $this->input->post('tags[]'));
+			}
+			else {
+				// $this->task_model->insert($task_details);
+				if($this->input->post('tags[]') != null)
+					$this->tag_model->insert($this->task_model->insert($task_details), $this->input->post('tags[]'));
+			}
 		}
 	}
 
@@ -61,8 +69,9 @@ class Tasks extends CI_Controller {
 	}
 
 	public function get($id = null) {
-		if($id != null)
-			echo json_encode($this->task_model->get_task_by_id($id));
+		if($id != null){
+			echo json_encode(array_merge($this->task_model->get_task_by_id($id), ['tags' => $this->tag_model->get($id)]));
+		}
 		else{
 			// echo json_encode(array_merge($this->task_model->get(self::ACTIVE), $this->task_model->get(self::ARCHIVED)));
 			echo json_encode($this->task_model->get(self::ACTIVE));

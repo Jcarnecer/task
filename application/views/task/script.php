@@ -1,6 +1,7 @@
+    <script>
     $(function () {
 
-    const baseUrl = window.location.origin + '/task/';
+    const baseUrl = "<?= base_url() ?>";
 
     // Functions
 
@@ -11,8 +12,8 @@
             dataType: 'json'
         });
     };
-    
 
+    
     $.fn.searchTask = function(items, keyword) {
         $('#taskSearchQuery').html('');
 
@@ -43,7 +44,7 @@
         $.each(items, function(i, item) {
             $('#taskTileList').append(
                 `<div class="col-md-${rowNumber}" style="padding:3px;">` +
-                    `<div class="task-tile  container-fluid" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `;">` +
+                    `<div class="task-tile  container-fluid" style="background-color:` + (item['status'] == 1 ? item['color'] : '#777777') + `;">` +
                         `<div class="row">` +
                             `<div class="col-md-2">` +
                                 `<h4 class="pull-right"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span></h4>` +
@@ -74,24 +75,13 @@
 
         $element.css('background-color', color);
         $element.css('color', accent);
+        // $element.find('input -webkit-input-placeholder').css('color', accent);
     };
 
 
-    $.fn.displayTags = function($element, items, edit = false) {
+    $.fn.displayTags = function($element, items) {
         $.each(items, function(i, item) {
 
-            if(edit)
-                $element.find('.task-tag').before(
-                    `<span class="label label-default">${item} <a class="task-tag-remove" data-value="${item}">&times;</a></span>`
-                );
-            else
-                $element.append(
-                    `<span class="label label-default">${item}</span>`
-                );
-            if(edit)
-                $element.parent().append(
-                    `<input type="hidden" name="tags[]" value="${item}" />`
-                );
         });
     };
 
@@ -99,16 +89,6 @@
 
     $(document).getTask().done(function (data) {
         $(document).displayTiles(data);
-    });
-
-    // Button Color
-
-    $(document).on('click', '.btn-color', function () {
-        $(this).find('span').addClass('glyphicon glyphicon-ok');
-        $(this).siblings('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
-        $(this).siblings('[name="color"]').attr('value', $(this).attr('data-value'));
-        
-        $(this).closest('.modal-content').css('background-color', $(this).attr('data-value'));
     });
 
     // Search
@@ -128,24 +108,15 @@
 
     $('.task-tag').keypress(function (e) {
         if(e.which == 13 || e.which == 32) {
-            if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val()}"]`).length){
-                $(this).before(
-                    `<span class="label label-default">${$(this).val()} <a class="task-tag-remove" data-value="${$(this).val()}">&times;</a></span>`
-                );
-                $(this).closest('.task-tag-list').parent().append(
-                    `<input type="hidden" name="tags[]" value="${$(this).val()}" />`
-                );
-                
-            }
+            $(this).before(
+                `<span class="label label-default">${$(this).val()} <a class="task-tag-remove">&times;</a></span>`
+            );
+            $(this).parent().append(
+                `<input type="hidden" name="tags[]" value="${$(this).val()}" />`
+            );
             $(this).val('');
             return false;
         }
-    });
-
-
-    $(document).on('click', '.task-tag-remove', function() {
-        $(this).closest('.task-tag-list').parent().find(`input[name="tags[]"][value="${$(this).attr('data-value')}"]`).remove();
-        $(this).parent().remove();
     });
     
     // Notes
@@ -165,41 +136,28 @@
 
     // Load Modal
 
-    $(document).on('click', '[data-target="#createTaskModal"], [href="#createTaskModal"]', function() {
-        $('#createTaskModal').find('form')[0].reset();
-
-        $('#createTaskModal').find('.task-tag-list').find('span.label').remove();
-        $('#createTaskModal').find('.task-tag-list').siblings('input').remove();
-    });
-
-
     $(document).on('click', '[data-target="#updateTaskModal"], [href="#updateTaskModal"]', function () {
-        $('#updateTaskModal').find('form')[0].reset();
+        $('#taskUpdateForm')[0].reset();
         $.ajax({
             type: 'GET',
             url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
             dataType: 'json'
         }).done(function (data) {
-            $('#updateTaskModal').find('form').attr('data-value', data['id']);
+            $('#updateTaskModal').attr('data-value', data['id']);
             $('#updateTaskModal').find('[name="title"]').val(data['title']);
             $('#updateTaskModal').find('[name="description"]').val(data['description']);
             $('#updateTaskModal').find('[name="date"]').val(data['due_date']);
             $('#updateTaskModal').find('[name="color"]').val(data['color']);
-
-            $('#updateTaskModal').find('.task-tag-list').html('');
-            $('#updateTaskModal').find('.task-tag-list').siblings('input').remove();
-            $(document).displayTags($('#updateTaskModal').find('.task-tag-list'), data['tags'], true);
             
             $('#updateTaskModal').find('.modal-content').css('background-color', data['color']);
             $('#updateTaskModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
-            $('#updateTaskModal').find(`button[data-value="${data['color']}"] span`).addClass('glyphicon glyphicon-ok');
-
+            $('#updateTaskModal').find(`button[data-color="${data['color']}"]`).find('span').addClass('glyphicon glyphicon-ok');
         });
     });
 
 
     $(document).on('click', '[data-target="#viewTaskModal"], [href="#viewTaskModal"]', function () {
-        $('#viewTaskModal').find('form')[0].reset();
+        $('#taskViewForm')[0].reset();
 
         $.ajax({
             type: 'GET',
@@ -208,45 +166,34 @@
         }).done(function (data) {
             $('#viewTaskModal').find('.dropdown a').attr('data-value', data['id']);
             
-            $('#viewTaskModal').find('form').attr('data-value', data['id']);
+            $('#viewTaskModal').attr('data-value', data['id']);
             $('#viewTaskModal').find('[id="title"] b').html(data['title']);
             $('#viewTaskModal').find('[id="description"] b').html(data['description']);
-            $('#viewTaskModal').find('[id="date"] span').html(data['due_date']);
-            
-            $('#viewTaskModal').find('.task-tag-list').html('');
+            $('#viewTaskModal').find('[id="date"]').html(data['due_date']);
 
-            if(data['tags'].length != 0) 
-                $(document).displayTags($('#viewTaskModal').find('.task-tag-list'), data['tags']);
-            else
-                $('#viewTaskModal').find('.task-tag-list').html('None');
-
-            $('#viewTaskModal').find('.modal-content').css('background-color', data['color']);
+            $(document).changeColor($('#taskViewForm').closest('.modal-content'), data['color']);
         });
+    });
+
+
+    $(document).on('click', '.btn-color', function () {
+        $(this).find('span').addClass('glyphicon glyphicon-ok');
+        $(this).siblings('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
+        $(this).siblings('input[name="color"]').attr('value', $(this).attr('data-color'));
+        
+        $(this).closest('.modal-content').css('background-color', $(this).attr('data-color'));
     });
 
     // Submit
 
-    $(document).on('click', '#taskCreateButton', function () {
-        var task = $(`#taskCreateForm`).serializeArray();
+    $(document).on('click', '#taskCreateButton, #taskUpdateButton', function () {
+        var task = $(`#${$(this).attr('id')}Form`).serializeArray();
+
+        $(`#${$(this).attr('id')}Form`).find('.task-tag-list').html('');
 
         $.ajax({
             type: 'POST',
-            url: `${baseUrl}api/task`,
-            data: task
-        }).done(function(data) {
-            $(document).getTask().done(function(data){
-                $(document).displayTiles(data);
-            });
-        });
-    });
-
-
-    $(document).on('click', '#taskUpdateButton', function () {
-        var task = $(`#taskUpdateForm`).serializeArray();
-
-        $.ajax({
-            type: 'POST',
-            url: `${baseUrl}api/task/${$('#taskUpdateForm').attr('data-value')}`,
+            url: `${baseUrl}api/task` + ($(this).attr('id') == 'taskUpdate' ? `/${$('#taskUpdateForm').attr('data-value')}` : ''),
             data: task
         }).done(function(data) {
             $(document).getTask().done(function(data){
@@ -258,7 +205,7 @@
     // Mark as Done
 
     $(document).on('click', '.task-mark-done', function () {
-        if($(this).is('.glyphicon')) {
+        if($(this).is('.glyphicon')){
             $(this).toggleClass('glyphicon-check');
             $(this).toggleClass('glyphicon-unchecked');
         }
@@ -275,3 +222,4 @@
     });
 
     }); 
+    </script>
