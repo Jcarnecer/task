@@ -54,7 +54,6 @@ class Task_model extends CI_Model {
 
 
 	public function insert($task_details) {
-		$task_details['user_id'] = $this->session->user[0]->id;
 		$task_details['status'] = 1;
 		$task_details['created_at'] = date('Y-m-d');
 		$task_details['updated_at'] = date('Y-m-d');
