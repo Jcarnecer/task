@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tags extends CI_Controller {
+class Teams extends CI_Controller {
 
 
 	public function __construct() {
@@ -9,25 +9,37 @@ class Tags extends CI_Controller {
 	}
 
 
-	public function create_team($id) {
-		$team_details = [
-			'name' => strtolower($this->input->post('name')),
-			'users_id' => $id
-		];
-		$this->team_model->add_team($team_details);
+	public function create_team() {
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			$team_details = [
+				'name' => $this->input->post('name'),
+				'users_id' => $this->session->user[0]->id
+			];
+			$this->team_model->add_team($team_details);
 
-		redirect('tasks/test');
+			redirect('tasks/test');
+		}
 	}
 
 
-	public function add_mates($id) {
-		$peers = [];
-		$peers = $this->input->post('peers'); #must get array from post
-		$team_details = [
-			'teams_id' => $id,
-			'peers' => $peers
-		];
+	public function index() {
+		$data['teams'] = $this->team_model->get();
+		$this->load->view('test/index', $data);
+	}
 
-		$this->team_model->add_peers($team_details);
+
+	public function add_mates() {
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+			$peers = [];
+			$peers = $this->input->post('peers'); #must get array from post
+			$team_details = [
+				'teams_id' => $this->input->post('team_id'),
+				'peers' => $peers
+			];
+
+			$this->team_model->add_peers($team_details);
+		}
 	}
 }
