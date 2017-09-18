@@ -18,14 +18,17 @@ class Teams extends CI_Controller {
 			];
 			$this->team_model->add_team($team_details);
 
-			redirect('tasks/test');
+			redirect('tasks/teams');
 		}
 	}
 
 
 	public function index() {
 		$data['teams'] = $this->team_model->get();
+		$data['tasks'] = $this->task_model->get(1);
+		$data['status'] = 1;		
 		$this->load->view('test/index', $data);
+		$this->load->view('task/index', $data);
 	}
 
 
@@ -40,6 +43,7 @@ class Teams extends CI_Controller {
 			];
 
 			$this->team_model->add_peers($team_details);
+			redirect('tasks/teams');
 		}
 	}
 }

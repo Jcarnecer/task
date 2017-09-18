@@ -28,7 +28,8 @@ class Tasks extends CI_Controller {
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
 				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
-				'color' => $this->input->post('color')
+				'color' => $this->input->post('color'),
+				'user_id' => $this->session->user[0]->id
 			];
 			if($id != null)
 				$this->task_model->update($id, $task_details);
@@ -37,6 +38,26 @@ class Tasks extends CI_Controller {
 		}
 	}
 
+	public function post_team($id = null) {
+
+		$data['teams'] = $this->team_model->get();
+
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			$task_details = [
+				'title' => $this->input->post('title'),
+				'description' => $this->input->post('description'),
+				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
+				'color' => $this->input->post('color'),
+				'user_id' => $this->input->post('team_id')
+			];
+			if($id != null)
+				$this->task_model->update($id, $task_details);
+			else
+				$this->task_model->insert($task_details);
+		}
+
+		redirect('task/teams');
+	}
 
 	public function get($id = null) {
 		if($id != null)

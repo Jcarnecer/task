@@ -19,6 +19,20 @@
         <textarea name="peers" placeholder="body" required></textarea>
         <input type="submit" value="Add Mates" />
     </form>
+    <hr><hr>
+    <form method="POST" action="<?= base_url('tasks/post_team'); ?>">
+        Team name: 
+        <select name="team_id">
+        <?php foreach ($teams as $team): ?>
+            <option value="<?=$team->id?>"><?=$team->name?></option>
+        <?php endforeach; ?>
+        </select>
+        <textarea name="peers" placeholder="body" required></textarea>
+        <input type="submit" value="Add Task" />
+    </form>
+
+
+
 
 	<script>
     $(function () {

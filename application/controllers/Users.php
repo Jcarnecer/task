@@ -33,7 +33,7 @@ class Users extends CI_Controller {
                 "first_name" => ucfirst($_POST["first_name"]),
                 "last_name" => $_POST["last_name"],
                 "password" => $_POST["user_password"],
-                "company_id" => 1,
+                "company_id" => 'astrid-technologies',
                 "email_address" => $_POST["email_address"]
 
             ];

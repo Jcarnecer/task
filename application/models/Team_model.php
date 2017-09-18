@@ -12,9 +12,15 @@ class Team_model extends CI_Model {
 
 
 	public function get() {
-		return $this->db->get('teams')->result();
-	}
+		return $this->db->select('*')
+			->from('teams')
+			->join('teams_mapping', 'teams_mapping.teams_id = teams.id')
+			->where('teams_mapping.users_id',$this->session->user[0]->id)
+			->get()
+			->result();
 
+		//return $this->db->get_where('teams', ['users_id' => $this->session->user[0]->id])->result();
+	}
 
 	public function add_team($details) {
 		$teams =  $this->db->get('teams')->result();
