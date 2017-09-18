@@ -26,12 +26,56 @@
         <?php foreach ($teams as $team): ?>
             <option value="<?=$team->id?>"><?=$team->name?></option>
         <?php endforeach; ?>
-        </select>
-        <textarea name="peers" placeholder="body" required></textarea>
+        </select><br>
+        <input name="title" /><br>
+        <textarea name="description" placeholder="body" required></textarea><br>
+        <input name="color" />
         <input type="submit" value="Add Task" />
     </form>
 
+    <hr><h1>TEAM TASKS</h1><hr>
 
+    <?php foreach ($team_tasks as $task): ?>
+        <div>
+            <b><?= $task->title ?></b>
+            <?= $task->due_date ?> /
+            <?php if($status==1){ ?>
+            <font color ="red"><?= $task->remaining_days ?></font> /
+            <a href="<?= base_url('tasks/done/' . $task->id) ?>"> <font color = "black"><u>Mark as Done</u></font></a>
+            <?php } else { ?>
+            Task Completed
+            <?php } ?>
+            <br>
+            <i><?= $task->description ?></i>
+            </form>
+            <div>
+                <?php foreach ($task->tags as $tag): ?>
+                    <div>
+                        <?= $tag->name ?> <form method="POST" action="<?=base_url('tasks/' . $task->id . '/tags/del') ?>">
+                        <input type="hidden" name="name" value="<?= $tag->name ?>">
+                        <input type="submit" value="x"/></form>
+                    </div>
+                <?php endforeach; ?>
+
+                <form method="POST" action="<?= base_url('tasks/' . $task->id . '/tags/add' ) ?>">
+                    <textarea name="name" placeholder="body" required></textarea>
+                    <input type="submit" value="Add Tag" />
+                </form>
+
+                <?php foreach ($task->notes as $note): ?>
+                    <div>
+                        <?= $note->body ?>
+                    </div>
+                <?php endforeach; ?>
+
+                <form method="POST" action="<?= base_url('tasks/' . $task->id . '/notes/create') ?>">
+                    <textarea name="body" placeholder="body" reuired></textarea>
+                    <input type="submit" value="Create Note" />
+                </form>
+            </div>
+        </div>
+        <hr>
+    <?php endforeach; ?>
 
 
 	<script>

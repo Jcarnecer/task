@@ -20,13 +20,9 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Team <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Team 1</a></li>
-                        <li><a href="#">Team 2</a></li>
-                        <li><a href="#">Team 3</a></li>
-                        <li><a href="#">Team 4</a></li>
-                        <li><a href="#">Team 5</a></li>
-                        <li><a href="#">Team 6</a></li>
-                        <li><a href="#">Team 7</a></li>
+                        <?php foreach($teams as $team): ?>
+                            <li><a href="#"><?=$team->name?></a></li>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
             </ul>
