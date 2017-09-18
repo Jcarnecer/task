@@ -15,7 +15,8 @@ class Tasks extends CI_Controller {
 		if (!$this->user_model->is_login()) {
 			return redirect('users/login');
 		}
-		$this->load->view('header');
+		$data['teams'] = $data['teams'] = $this->team_model->get();
+		$this->load->view('header', $data);
 		$this->load->view('modal');
 		$this->load->view('task');
 		$this->load->view('footer');
