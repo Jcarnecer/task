@@ -9,10 +9,13 @@ class Task_note_model extends CI_Model {
 
 
 	public function get($task_id) {
+
 		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
 	}
 
+
 	public function insert($task_note_details) {
+		
 		$task_note_details['user_id'] = 1;
 		$task_note_details['created_at'] = date('Y-m-d');
 

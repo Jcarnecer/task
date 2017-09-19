@@ -55,26 +55,27 @@ class Tag_model extends CI_Model {
 
 	public function update($id, $updated_tags) {
 		
-		
 		$this->insert($id, $updated_tags);
 		
 		foreach($this->get($id) as $old_tag)
 			if(!in_array($old_tag, $updated_tags))
-
-				return $this->db->delete('tasks_tagging', ['tasks_id' => $id, 'tags_id' => $this->get_id($old_tag)]);
+				$this->db->delete('tasks_tagging', ['tasks_id' => $id, 'tags_id' => $this->get_id($old_tag)]);
 	}
 
 
 	public function get($id) {
 
-		$tags = [];
-		$task_tags = $this->db->where('tasks_id', $id)->get('tasks_tagging')->result_array();
+		$names = [];
+		$tags =  $this->db->select('name')
+			->from('tags')
+			->join('tasks_tagging', 'tasks_tagging.tags_id = tags.id')
+			->where('tasks_tagging.tasks_id', $id)
+			->get()
+			->result();
 
-		foreach($task_tags as $task_tag) {
-
-			$tags[$task_tag['tags_id']] = $this->db->select('name')->where('id', $task_tag['tags_id'])->get('tags')->result_array()[0]['name'];
-		}
-
-		return $tags;
+		foreach ($tags as $tag)
+			$names[] = $tag->name;
+		
+		return $names;
 	}
 }
