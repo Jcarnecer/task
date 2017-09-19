@@ -25,6 +25,7 @@ class Tasks extends CI_Controller {
 	}
 
 	public function post($id = null) {
+		$task_id = 0;
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			$task_details = [
 				'title' => $this->input->post('title'),
@@ -40,9 +41,9 @@ class Tasks extends CI_Controller {
 					$this->tag_model->update($id, $this->input->post('tags[]'));
 			}
 			else {
-				// $this->task_model->insert($task_details);
+				$task_id = $this->task_model->insert($task_details);
 				if($this->input->post('tags[]') != null)
-					$this->tag_model->insert($this->task_model->insert($task_details), $this->input->post('tags[]'));
+					$this->tag_model->insert($task_id, $this->input->post('tags[]'));
 			}
 		}
 	}

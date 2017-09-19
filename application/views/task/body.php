@@ -10,12 +10,8 @@
                             <hr/>
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label>Date:</label>
+                                    <label>Due Date:</label>
                                     <input type="date" name="due_date">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Time:</label>
-                                    <input type="time" name="due_time">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -58,12 +54,8 @@
                             <hr/>
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label>Date:</label>
+                                    <label>Due Date:</label>
                                     <input type="date" name="due_date">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Time:</label>
-                                    <input type="time" name="due_time">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -110,8 +102,8 @@
                         <h4 id="description" class="task-description pre-scrollable" style="overflow-x:auto; overflow-y:auto;"><b></b></h4>
                         <hr/>
                         <div class="row">
-                            <div class="col-md-6"><h4 id="date"><b>Date: </b><span></span></h4></div>
-                            <div class="col-md-6"><h4 id="time"><b>Time: </b><span></span></h4></div>
+                            <div class="col-md-6"><h4 id="date"><b>Due Date: </b><span></span></h4></div>
+                            <!-- <div class="col-md-6"><h4 id="date"><b>Date: </b><span></span></h4></div> -->
                         </div>
                         <div>
                             <h4 style="display:inline-block;"><b>Tags: </b>
@@ -136,12 +128,12 @@
     <div id="searchTaskModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body">
+                <!-- <div class="modal-body"> -->
                     <input type="text" id="taskSearch" placeholder="Search"/>
-                    <div id="taskSearchQuery" class="list-group">
+                    <ul id="taskSearchQuery" class="list-group" style="margin: 0px;">
 
-                    </div>
-                </div>
+                    </ul>
+                <!-- </div> -->
             </div>
         </div>
     </div>
