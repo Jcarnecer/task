@@ -8,11 +8,13 @@ class Utilities {
 
 
 	public function __construct() {
+
 		$this->CI =& get_instance();
 	}
 
 
 	public function generate_id($length){
+    	
     	$token = "";
 	    $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	    $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
@@ -22,7 +24,6 @@ class Utilities {
 	    for ($i=0; $i < $length; $i++) {
 
 	        $token .= $codeAlphabet[$this->random_int(0, $max-1)];
-
 	    }
 
     	return $token;
@@ -30,6 +31,7 @@ class Utilities {
 
 
 	public function random_int($min, $max) {
+	    
 	    $range = $max - $min;
 
 	    if ($range < 1)

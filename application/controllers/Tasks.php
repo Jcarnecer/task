@@ -39,6 +39,8 @@ class Tasks extends CI_Controller {
 				$this->task_model->update($id, $task_details);
 				if($this->input->post('tags[]') != null)
 					$this->tag_model->update($id, $this->input->post('tags[]'));
+				else
+					$this->tag_model->update($id, []);
 			}
 			else {
 				$task_id = $this->task_model->insert($task_details);
