@@ -63,6 +63,10 @@ $route['tasks/(:any)/tags/del'] = 'tags/del_tag/$1';
 
 $route['tasks/(:num)/notes/create'] = 'task_notes/create/$1';
 
+# users
+
+
+
 # team tasks
 $route['tasks/team/create'] = 'team_tasks/create_task';
 $route['tasks/team/view/(:any)'] = 'team_tasks/view_task/$1';

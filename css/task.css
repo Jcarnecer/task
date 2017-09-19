@@ -1,28 +1,89 @@
-#taskSearch, #taskSearch:focus{
-    width: 100%;
+/* Modal Text Area and Input */
+
+.modal input[name="title"] {
+    font-size: 32px;
     height: 50px;
+    width: 100%;
+    font-weight: 800;
+}
+
+.modal textarea[name="description"] {
+    font-size: 22px;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.modal input, .modal textarea {
+    border: 0 hidden #ffffff;
+    background-color: transparent;
+    font-weight: 500;
+}
+
+.modal input:focus, .modal textarea:focus, .modal button:focus {
+    outline: none;
+}
+
+.modal hr {
+    color: #808080;
+}
+
+.modal ::-webkit-input-placeholder {
+    color: #808080;
+}
+
+/* Tag */
+
+.modal .task-tag {
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 1px;
+}
+
+.modal .task-tag-list span.label {
+    margin: 2px;
+    font-size: 14px;
+    line-height: 1.8;
+    word-wrap: normal;
+    display: inline-block;
+}
+
+.model .task-tag-remove {
+    font-size: 10px;   
+    display: inline-block;
+}
+
+
+/* Search */
+
+#taskSearch, #taskSearch:focus {
+    width: 100%;
+    height: 70px;
     text-align: center;
     font-size: 32px;
-    /* border: none; */
-    /* outline:none; */
-    /* border: 0 hidden #ffffff; */
+    border-style: hidden;
+    outline: none;
 }
 
 .task-search-item {
-    margin: 2px 0;
+    margin: 3px 0;
     color: #000000;
-    /* border: 1px solid #000000; */
+    border-style: hidden;
+    padding: 10px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 500;
 }
+
+/* Task Tile */
 
 .task-tile {
     color: #000000; 
-    /* margin: 3px; */
     padding: 10px; 
-    /* height: 100px;  */
+    height: 95px; 
     border-radius: 2px; 
     overflow-x: hidden;
     overflow-y: hidden;
-    border: 1px solid #000000;
+    box-shadow: 0px 1px 4px;
 }
 
 a[data-toggle="dropdown"] .glyphicon {
@@ -31,14 +92,6 @@ a[data-toggle="dropdown"] .glyphicon {
 
 .tile-title {
     word-wrap: break-word;
-}
-
-.task-title {
-    padding: 10px;
-}
-
-.task-description {
-    padding: 10px;
 }
 
 .tile-description {
@@ -52,7 +105,12 @@ a[data-toggle="dropdown"] .glyphicon {
     /* padding: 0 0 0 10px; */
 }
 
-.btn-circle {
+
+.btn-color span.glyphicon {
+    color: #808080;
+}
+
+.btn-circle, .btn-circle:focus {
     width: 30px;
     height: 30px;
     text-align: center;
@@ -60,7 +118,8 @@ a[data-toggle="dropdown"] .glyphicon {
     font-size: 12px;
     line-height: 1.428571429;
     border-radius: 15px;
-    /* border-color: #aaaaaa; */
+    border-color: #808080;
+    outline: none;
     transition: 0.5s;
 }
 
@@ -82,7 +141,8 @@ a[data-toggle="dropdown"] .glyphicon {
     line-height: 1.33;
     border-radius: 35px;
     border-color: #eeeeee;
-  }
+}
+
 .box{
 	width:100px;
     height:100px;
