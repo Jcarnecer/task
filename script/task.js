@@ -1,17 +1,26 @@
-    $(function () {
+$(function () {
 
     const baseUrl = window.location.origin + '/task/';
 
     // Functions
 
-    $.fn.getTask = function() {
+    $.fn.getTask = function(id = null) {
         return $.ajax({
             type: 'GET',
-            url: `${baseUrl}api/task`,
+            url: `${baseUrl}api/task` + (id != null ? `/${id}` : ''),
             dataType: 'json'
         });
     };
     
+    $.fn.postTask = function(details, id = null) {
+        return $.ajax({
+            type: 'POST',
+            url: `${baseUrl}api/task` + (id != null ? `/${id}` : ''),
+            data: details,
+            dataType: 'json'
+        });
+    };
+
 
     $.fn.searchTask = function(items, keyword) {
         $('#taskSearchQuery').html('');
@@ -26,8 +35,8 @@
                         `<div class="container-fluid">` +
                             `<div class="row">` +
                                 `<div class="col-md-1"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + `" data-value="${item['id']}"></span></div>` +
-                                `<div class="col-md-10" data-target="#viewTaskModal" data-toggle="modal" data-value="${item['id']}">${item['title']}</div>` +
-                                `<div class="col-md-1"><span class="glyphicon glyphicon-edit" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}"></span></div>` + 
+                                `<div class="col-md-10" data-target="#taskViewModal" data-toggle="modal" data-value="${item['id']}">${item['title']}</div>` +
+                                `<div class="col-md-1"><span class="glyphicon glyphicon-edit" data-target="#taskUpdateModal" data-toggle="modal" data-value="${item['id']}"></span></div>` + 
                             `</div>` +
                         `</div>` +
                     `</li>`
@@ -50,7 +59,7 @@
                             `<div class="col-md-2">` +
                                 `<h4 class="pull-right"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span></h4>` +
                             `</div>` +
-                            `<div class="col-md-10" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}">` +
+                            `<div class="col-md-10" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">` +
                                 `<h4 class="tile-title"><b>${item['title']}</b></h4>` +
                                 `<p class="tile-description task-justify"><b>${item['description']}</b></p>` +
                             `</div>` +
@@ -59,23 +68,6 @@
                 `</div>`
             );
         });
-    };
-
-
-    $.fn.changeColor = function($element, color) {
-        var accent = "#000000";
-        
-        switch(color.toLowerCase()){
-            case '#ffffff': accent = "#000000"; break;
-            case '#2196f3': accent = "#ffffff"; break;
-            case '#f44336': accent = "#ffffff"; break;
-            case '#4caf50': accent = "#ffffff"; break;
-            case '#ffeb3b': accent = "#000000"; break;
-            case '#ff9800': accent = "#000000"; break;
-        }
-
-        $element.css('background-color', color);
-        $element.css('color', accent);
     };
 
 
@@ -116,7 +108,7 @@
     // Search
 
     $('#taskSearchQuery').find('a.list-group-item').on('mouseover', function () {
-        $(this).filter('span[data-target="#updateTaskModal"]').show(200);
+        $(this).filter('span[data-target="#taskUpdateModal"]').show(200);
     });
 
 
@@ -167,62 +159,54 @@
 
     // Load Modal
 
-    $(document).on('click', '[data-target="#createTaskModal"], [href="#createTaskModal"]', function() {
-        $('#createTaskModal').find('form')[0].reset();
+    $(document).on('click', '[data-target="#taskCreateModal"], [href="#taskCreateModal"]', function() {
+        $('#taskCreateModal').find('form')[0].reset();
 
-        $('#createTaskModal').find('.task-tag-list').find('span.label').remove();
-        $('#createTaskModal').find('.task-tag-list').siblings('input').remove();
+        $('#taskCreateModal').find('.task-tag-list').find('span.label').remove();
+        $('#taskCreateModal').find('.task-tag-list').siblings('input').remove();
     });
 
 
-    $(document).on('click', '[data-target="#updateTaskModal"], [href="#updateTaskModal"]', function () {
-        $('#updateTaskModal').find('form')[0].reset();
-        $.ajax({
-            type: 'GET',
-            url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
-            dataType: 'json'
-        }).done(function (data) {
-            $('#updateTaskModal').find('form').attr('data-value', data['id']);
-            $('#updateTaskModal').find('[name="title"]').val(data['title']);
-            $('#updateTaskModal').find('[name="description"]').val(data['description']);
-            $('#updateTaskModal').find('[name="date"]').val(data['due_date']);
-            $('#updateTaskModal').find('[name="color"]').val(data['color']);
+    $(document).on('click', '[data-target="#taskUpdateModal"], [href="#taskUpdateModal"]', function () {
+        $('#taskUpdateModal').find('form')[0].reset();
 
-            $('#updateTaskModal').find('.task-tag-list').find('span.label').remove();
-            $('#updateTaskModal').find('.task-tag-list').siblings('input').remove();
-            $(document).displayTags($('#updateTaskModal').find('.task-tag-list'), data['tags'], true);
+        $(document).getTask($(this).attr('data-value')).done(function (data) {
+            $('#taskUpdateModal').find('form').attr('data-value', data['id']);
+            $('#taskUpdateModal').find('[name="title"]').val(data['title']);
+            $('#taskUpdateModal').find('[name="description"]').val(data['description']);
+            $('#taskUpdateModal').find('[name="date"]').val(data['due_date']);
+            $('#taskUpdateModal').find('[name="color"]').val(data['color']);
+
+            $('#taskUpdateModal').find('.task-tag-list').find('span.label').remove();
+            $('#taskUpdateModal').find('.task-tag-list').siblings('input').remove();
+            $(document).displayTags($('#taskUpdateModal').find('.task-tag-list'), data['tags'], true);
             
-            $('#updateTaskModal').find('.modal-content').css('background-color', data['color']);
-            $('#updateTaskModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
-            $('#updateTaskModal').find(`button[data-value="${data['color']}"] span`).addClass('glyphicon glyphicon-ok');
-
+            $('#taskUpdateModal').find('.modal-content').css('background-color', data['color']);
+            $('#taskUpdateModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
+            $('#taskUpdateModal').find(`button[data-value="${data['color']}"] span`).addClass('glyphicon glyphicon-ok');
         });
     });
 
 
-    $(document).on('click', '[data-target="#viewTaskModal"], [href="#viewTaskModal"]', function () {
-        $('#viewTaskModal').find('form')[0].reset();
+    $(document).on('click', '[data-target="#taskViewModal"], [href="#taskViewModal"]', function () {
+        $('#taskViewModal').find('form')[0].reset();
 
-        $.ajax({
-            type: 'GET',
-            url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
-            dataType: 'json'
-        }).done(function (data) {
-            $('#viewTaskModal').find('.dropdown a').attr('data-value', data['id']);
+        $(document).getTask($(this).attr('data-value')).done(function (data) {
+            $('#taskViewModal').find('.dropdown a').attr('data-value', data['id']);
             
-            $('#viewTaskModal').find('form').attr('data-value', data['id']);
-            $('#viewTaskModal').find('[id="title"] b').html(data['title']);
-            $('#viewTaskModal').find('[id="description"] b').html(data['description']);
-            $('#viewTaskModal').find('[id="date"] span').html(data['due_date']);
+            $('#taskViewModal').find('form').attr('data-value', data['id']);
+            $('#taskViewModal').find('[id="title"] b').html(data['title']);
+            $('#taskViewModal').find('[id="description"] b').html(data['description']);
+            $('#taskViewModal').find('[id="date"] span').html(data['due_date']);
             
-            $('#viewTaskModal').find('.task-tag-list').html('');
+            $('#taskViewModal').find('.task-tag-list').html('');
 
             if(data['tags'].length != 0) 
-                $(document).displayTags($('#viewTaskModal').find('.task-tag-list'), data['tags']);
+                $(document).displayTags($('#taskViewModal').find('.task-tag-list'), data['tags']);
             else
-                $('#viewTaskModal').find('.task-tag-list').html('None');
+                $('#taskViewModal').find('.task-tag-list').html('None');
 
-            $('#viewTaskModal').find('.modal-content').css('background-color', data['color']);
+            $('#taskViewModal').find('.modal-content').css('background-color', data['color']);
         });
     });
 
@@ -231,11 +215,7 @@
     $(document).on('click', '#taskCreateButton', function () {
         var task = $(`#taskCreateForm`).serializeArray();
 
-        $.ajax({
-            type: 'POST',
-            url: `${baseUrl}api/task`,
-            data: task
-        }).done(function(data) {
+        $(document).postTask(task).done(function(data){
             $(document).getTask().done(function(data){
                 $(document).displayTiles(data);
             });
@@ -246,11 +226,7 @@
     $(document).on('click', '#taskUpdateButton', function () {
         var task = $(`#taskUpdateForm`).serializeArray();
 
-        $.ajax({
-            type: 'POST',
-            url: `${baseUrl}api/task/${$('#taskUpdateForm').attr('data-value')}`,
-            data: task
-        }).done(function(data) {
+        $(document).postTask(task, $('#taskUpdateForm').attr('data-value')).done(function(data) {
             $(document).getTask().done(function(data){
                 $(document).displayTiles(data);
             });
@@ -276,4 +252,4 @@
         });
     });
 
-    }); 
+}); 

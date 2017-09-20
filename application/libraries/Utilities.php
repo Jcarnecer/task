@@ -4,11 +4,11 @@ if (!defined('BASEPATH')) exit('No direct access allowed');
 
 class Utilities {
 
-	private $CI;
+	private $ci;
 
 
 	public function __construct() {
-		$this->CI =& get_instance();
+		$this->ci = &get_instance();
 	}
 
 
@@ -48,5 +48,33 @@ class Utilities {
 	    } while ($rnd > $range);
 
 	    return $min + $rnd;
+	}
+
+
+	public function unique_id($table, $length) {
+		switch($table) {
+			case 'teams':
+				$temp_id = '';
+
+				do {
+					$temp_id = 'TMP' . $this->generate_id($length);
+				} while ($this->ci->db->where('id', $temp_id)->get('teams')->result() != null);
+
+				return $temp_id;
+				break;
+
+			case 'users':
+				$temp_id = '';
+			
+				do {
+					$temp_id = 'USR' . $this->generate_id($length);
+				} while ($this->ci->db->where('id', $temp_id)->get('users')->result() != null);
+				
+				return $temp_id;
+				break;
+
+			default:
+				return null;
+		}
 	}
 }

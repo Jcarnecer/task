@@ -38,7 +38,7 @@
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" data-toggle="modal" data-target="#createTaskModal"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#taskCreateModal"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
             </ul>
             <!-- <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -84,13 +84,13 @@
                     <p>
                         <?=$task_details[0]->description;?>
                     </p>
-                    <button class="w3-button w3-block w3-black" data-toggle="modal" data-target="#createTaskModal1">Add task...</button>
+                    <button class="w3-button w3-block w3-black" data-toggle="modal" data-target="#taskCreateModal1">Add task...</button>
                 </div>
             </div>
         </div>  
         
         <!--Add task bottom button sa cards -->
-        <div id="createTaskModal1" class="modal fade" role="dialog">
+        <div id="taskCreateModal1" class="modal fade" role="dialog">
             <div class="modal-dialog">
                <div class="modal-content" style="background-color:#ffffff; transition:0.2s;">
                    <form action="<?php echo base_url('tasks/create'); ?>" method="post">
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <div id="createTaskModal" class="modal fade" role="dialog">
+    <div id="taskCreateModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" style="background-color:#ffffff; transition:0.2s;">
                 <form action="<?php echo base_url('tasks/create'); ?>" method="post">    

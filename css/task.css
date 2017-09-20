@@ -1,6 +1,6 @@
 /* Modal Text Area and Input */
 
-.modal input[name="title"] {
+.modal input[name="title"],.modal input[name="name"] {
     font-size: 32px;
     height: 50px;
     width: 100%;
@@ -52,6 +52,32 @@
     display: inline-block;
 }
 
+/* Team Member */
+
+.modal .team-member {
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 1px;
+}
+
+.modal .team-member-label {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal .team-member-list span.label {
+    margin: 2px;
+    font-size: 14px;
+    line-height: 1.8;
+    word-wrap: normal;
+    display: inline-block;
+}
+
+.model .team-member-remove {
+    font-size: 10px;   
+    display: inline-block;
+}
 
 /* Search */
 

@@ -16,10 +16,13 @@ class Tasks extends CI_Controller {
 		if (!$this->user_model->is_login()) {
 			return redirect('users/login');
 		}
-		$data['teams'] = $data['teams'] = $this->team_model->get();
+
+		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
+		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 		
 		$this->load->view('task/header', $data);
-		$this->load->view('task/body');
+		$this->load->view('modal', $data);
+		$this->load->view('task/body', $data);
 		$this->load->view('task/footer');
 		// $this->load->view('test');
 	}
@@ -39,8 +42,9 @@ class Tasks extends CI_Controller {
 				$this->task_model->update($id, $task_details);
 				if($this->input->post('tags[]') != null)
 					$this->tag_model->update($id, $this->input->post('tags[]'));
-			}
-			else {
+				else
+					$this->tag_model->update($id, []);
+			} else {
 				$task_id = $this->task_model->insert($task_details);
 				if($this->input->post('tags[]') != null)
 					$this->tag_model->insert($task_id, $this->input->post('tags[]'));

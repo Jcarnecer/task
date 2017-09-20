@@ -107,6 +107,13 @@ class Tag_model extends CI_Model {
 		foreach($task_tags as $task_tag) {
 			$tags[$task_tag['tags_id']] = $this->db->select('name')->where('id', $task_tag['tags_id'])->get('tags')->result_array()[0]['name'];
 		}
+
 		return $tags;
+		// return $this->db->select('name as tag')
+		// 				->from('tags')
+		// 				->join('tasks_tagging', 'tasks_tagging.tags_id = tags.id', 'inner')
+		// 				->where('tasks_tagging.tasks_id', $id)
+		// 				->get()
+		// 				->result();
 	}
 }
