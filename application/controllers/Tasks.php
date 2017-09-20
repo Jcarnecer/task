@@ -6,26 +6,48 @@ class Tasks extends CI_Controller {
 	const ACTIVE = 1;
 	const ARCHIVED = 2;
 
+	private $color = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
+
+	private $creator_id;
+
 	public function __construct() {
-		parent::__construct();
-	}
-
-
-	public function index() {
+		parent :: __construct();
 
 		if (!$this->user_model->is_login()) {
 			return redirect('users/login');
 		}
+	}
+
+
+	public function index($page = 'home') {
+		$this->creator_id = $this->session->user[0]->id;
 
 		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
-		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
+		$data['colors'] = $this->color;
 		
 		$this->load->view('task/header', $data);
 		$this->load->view('modal', $data);
-		$this->load->view('task/body', $data);
+		$this->load->view("task/$page", $data);
 		$this->load->view('task/footer');
 		// $this->load->view('test');
 	}
+
+
+	public function team($id = null) {
+		$this->creator_id = $id;
+
+		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
+		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
+
+		$data['team_name'] = $this->team_model->get($id)[0]->name;
+		$data['team_members'] = $this->team_model->get_members($id);
+		
+		$this->load->view('task/header', $data);
+		$this->load->view('modal', $data);
+		$this->load->view("task/team", $data);
+		$this->load->view('task/footer');
+	}
+
 
 	public function post($id = null) {
 		$task_id = 0;
@@ -73,14 +95,13 @@ class Tasks extends CI_Controller {
 		redirect('teams');
 	}
 
-	public function get($id = null) {
-		if($id != null){
-			echo json_encode(array_merge($this->task_model->get_task_by_id($id), ['tags' => $this->tag_model->get($id)]));
+
+	public function get($task_id = null) {
+		if($task_id != null){
+			echo json_encode(array_merge($this->task_model->get_task_by_id($task_id), ['tags' => $this->tag_model->get($task_id)]));
 		}
 		else{
-			// echo json_encode(array_merge($this->task_model->get(self::ACTIVE), $this->task_model->get(self::ARCHIVED)));
-			echo json_encode($this->task_model->get(self::ACTIVE));
-			// echo json_encode($this->task_model->get(self::ARCHIVED));
+			echo json_encode($this->task_model->get($this->creator_id, (self::ACTIVE)));
 		}
 	}
 

@@ -31,7 +31,7 @@ class Team_model extends CI_Model {
 			->from('users')
 			->join('teams_mapping', 'teams_mapping.users_id = users.id', 'inner')
 			->where('teams_mapping.teams_id', $team_id)
-			-get()
+			->get()
 			->result();
 	}
 

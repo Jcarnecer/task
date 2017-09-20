@@ -2,6 +2,8 @@ $(function () {
     
     const baseUrl = window.location.origin + '/task/';
 
+    // Functions
+
     $.fn.postTeam = function(details, id = null) {
         return $.ajax({
             type: 'POST',
@@ -10,6 +12,7 @@ $(function () {
             data: details
         });
     };
+    
     
     $.fn.validateMember = function(value) {
         return $.ajax({

@@ -12,8 +12,7 @@ class Task_model extends CI_Model {
 	public $created_at;
 	public $updated_at;
 
-	public function get($status = null) {
-		
+	public function get($creator_id, $status = null) {
 		if($status != null)
 			$tasks = $this->db->get_where('tasks', ['user_id' => $this->session->user[0]->id, 'status' => $status])->result();
 		else
@@ -23,6 +22,7 @@ class Task_model extends CI_Model {
 			$task->tags = $this->get_task_tags($task->id);
 			$task->remaining_days = $this->estimate_days($task->id);
 		}
+		
 		return $tasks;
 	}
 
