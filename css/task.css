@@ -1,24 +1,40 @@
+
 /* Modal Text Area and Input */
 
 .modal input.heading {
     height: 50px;
+    width: 100%;
 }
 
-.modal textarea.body {
+.modal textarea {
     width: 100%;
     word-wrap: break-word;
     resize: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .modal input, .modal textarea {
     border: 0 hidden #ffffff;
     background-color: transparent;
-    font-weight: 500;
-    width: 100%;
 }
 
 .modal input:focus, .modal textarea:focus, .modal button:focus {
     outline: none;
+}
+
+.modal .task-note-label {
+    font-weight: 800;
+    font-size: 28px;
+    text-align: center;
+    width: 100%;
+}
+
+.modal .task-note-box {
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin: 0 5px;
+    padding: 0 15px;
 }
 
 .modal ::-webkit-input-placeholder {
@@ -106,6 +122,12 @@
     font-weight: 500;
 }
 
+/* Task Board */
+
+.task-tag-board {
+    margin: 10px;
+}
+
 /* Task Tile */
 
 .task-tile {
@@ -116,10 +138,6 @@
     overflow-x: hidden;
     overflow-y: hidden;
     box-shadow: 0px 1px 1px;
-}
-
-a[data-toggle="dropdown"] .glyphicon {
-    color: #000000;
 }
 
 .tile-title {
@@ -181,6 +199,14 @@ a[data-toggle="dropdown"] .glyphicon {
     background:#f00;
 }
 
+.circle{
+    background-color: #808080;
+	border-radius: 50%;
+	color: #ffffff;
+	/* height: 100; */
+	width: 100%;
+	padding-bottom: 100%;
+}
 
 .plan-box{
     background-color: #fff;
@@ -190,9 +216,7 @@ a[data-toggle="dropdown"] .glyphicon {
     box-shadow: 0 2px 2px #efefef;
 }
 
-a:link,
-a:visited,
-a:hover{
+a:link, a:visited, a:hover{
     color: #fff;
     text-decoration: none;
 }
@@ -215,6 +239,7 @@ a:hover{
 .container-scroll > .row {
     margin-top: 24px;
 }
+
 .container-scroll > .row > .col-md-2 {
     font-weight: bold;
     text-align: center;

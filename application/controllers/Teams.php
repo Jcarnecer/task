@@ -25,7 +25,8 @@ class Teams extends CI_Controller {
 		$members = [];
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			if($id != null) {
-				$team_id = $this->team_model->update_team($id, $this->input->post('name'));
+				$team_id = $id;
+				$this->team_model->update_team($id, $this->input->post('name'));
 			} else
 				$team_id = $this->team_model->create_team(['name' => $this->input->post('name')]);
 				
@@ -38,7 +39,7 @@ class Teams extends CI_Controller {
 
 	public function get($id = null)	{
 		if($id != null)
-			echo json_encode(array_merge((array)$this->team_model->get($id)[0], ['members' => (array)$this->db->get_members($id)[0]])); // no get member yet
+			echo json_encode(array_merge((array)$this->team_model->get($id)[0], ['members' => (array)$this->team_model->get_members($id)]));
 		else
 			echo json_encode($this->team_model->get_all($this->session->user[0]->id));
 	}	

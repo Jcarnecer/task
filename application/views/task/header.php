@@ -5,12 +5,12 @@
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/task/css/task.css" />
 </head>
-<body style="padding-top: 70px;">
+<body style="padding-top:50px;">
     <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/task/script/task.js"></script>
     <script src="/task/script/team.js"></script>
-
+    <!-- hello -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -30,8 +30,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#teamCreateModal" data-toggle="modal"><span class="glyphicon glyphicon-user"></span> Create Team</a></li>
-                <li><a href="#taskCreateModal" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> Add Task</a></li>
+                <li><a class="team-create" href="#teamModifyModal" data-toggle="modal"><span class="glyphicon glyphicon-user"></span> Create Team</a></li>
+                <li><a class="task-create" href="#taskModifyModal" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> Add Task</a></li>
                 <li><a href="#searchTaskModal" data-toggle="modal"><span class="glyphicon glyphicon-search"></span> Search</a></li>
             </ul>
         </div>

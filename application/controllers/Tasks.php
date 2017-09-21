@@ -8,7 +8,7 @@ class Tasks extends CI_Controller {
 
 	private $color = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 
-	private $creator_id;
+	public $creator_id;
 
 	public function __construct() {
 		parent :: __construct();
@@ -39,8 +39,10 @@ class Tasks extends CI_Controller {
 		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
 		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 
-		$data['team_name'] = $this->team_model->get($id)[0]->name;
-		$data['team_members'] = $this->team_model->get_members($id);
+		$data['team'] = new stdClass();
+		$data['team']->id = $id;
+		$data['team']->name = $this->team_model->get($id)[0]->name;
+		$data['team']->members = $this->team_model->get_members($id);
 		
 		$this->load->view('task/header', $data);
 		$this->load->view('modal', $data);
@@ -51,13 +53,14 @@ class Tasks extends CI_Controller {
 
 	public function post($id = null) {
 		$task_id = 0;
+
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			$task_details = [
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
 				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
 				'color' => $this->input->post('color'),
-				'user_id' => $this->session->user[0]->id
+				'user_id' => $this->creator_id
 			];
 
 			if($id != null) {
@@ -73,6 +76,7 @@ class Tasks extends CI_Controller {
 			}
 		}
 	}
+
 
 	public function post_team($id = null) {
 
@@ -98,7 +102,7 @@ class Tasks extends CI_Controller {
 
 	public function get($task_id = null) {
 		if($task_id != null){
-			echo json_encode(array_merge($this->task_model->get_task_by_id($task_id), ['tags' => $this->tag_model->get($task_id)]));
+			echo json_encode(array_merge($this->task_model->get_task_by_id($task_id), ['remaining_days' => $this->task_model->estimate_days($task_id), 'tags' => $this->tag_model->get($task_id)]));
 		}
 		else{
 			echo json_encode($this->task_model->get($this->creator_id, (self::ACTIVE)));

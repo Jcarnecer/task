@@ -4,26 +4,26 @@ $(function () {
 
     // Functions
 
-    $.fn.displayTag = function($element, items, edit = false) {
+    $.fn.displayTag = function(items, edit = false) {
         $.each(items, function(i, item) {
 
             if(edit)
-                $element.find('.task-tag').before(
+                $('.task-tag-list').find('.task-tag').before(
                     `<span class="label label-default">${item} <a class="task-tag-remove" data-value="${item}">&times;</a></span>`
                 );
             else
-                $element.append(
+                $('.task-tag-list').append(
                     `<span class="label label-default">${item}</span>`
                 );
             if(edit)
-                $element.parent().append(
+                $('.task-tag-list').parent().append(
                     `<input type="hidden" name="tags[]" value="${item}" />`
                 );
         });
     };
 
 
-    $.fn.displayTask = function(items, rowNumber = 4) {
+    $.fn.displayTask = function(items, rowNumber = 4) { 
         $('#taskTileList').html('');
 
         rowNumber = 12/rowNumber;
@@ -33,10 +33,10 @@ $(function () {
                 `<div class="col-md-${rowNumber}" style="padding:3px;">
                     <div class="task-tile  container-fluid" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `;">
                         <div class="row">
-                            <div class="col-md-2">
-                                <span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-right lead" data-value="${item['id']}"></span>
+                            <div class="col-md-2" style="padding-top:5%;">
+                                <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
                             </div>
-                            <div class="col-md-10" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
+                            <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
                                 <span class="tile-title">${item['title']}</span>
                                 <br/>
                                 <span class="tile-description">${item['description']}</span>
@@ -80,9 +80,9 @@ $(function () {
                     `<li class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']};">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-1"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + `" data-value="${item['id']}"></span></div>
+                                <div class="col-md-1"><a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + `"></span></a></div>
                                 <div class="col-md-10" data-target="#taskViewModal" data-toggle="modal" data-value="${item['id']}">${item['title']}</div>
-                                <div class="col-md-1"><span class="glyphicon glyphicon-edit" data-target="#taskUpdateModal" data-toggle="modal" data-value="${item['id']}"></span></div>
+                                <div class="col-md-1"><a class="task-edit" href="#taskModifyModal" data-toggle="modal" data-value="${item['id']}"><span class="glyphicon glyphicon-edit"></span></a></div>
                             </div>
                         </div>
                     </li>`
@@ -93,7 +93,7 @@ $(function () {
 
     // Initialize
 
-    $(document).getTask().done(function (data) {
+    $(document).getTask().done(function(data) {
         $(document).displayTask(data);
     });
     
@@ -107,36 +107,40 @@ $(function () {
 
     // Load Modal
 
-    $(document).on('click', '[data-target="#taskCreateModal"], [href="#taskCreateModal"]', function() {
-        $('#taskCreateModal').find('form')[0].reset();
+    $(document).on('click', '.task-create', function() {
+        $('#taskModifyModal').find('form')[0].reset();
 
-        $('#taskCreateModal').find('.task-tag-list').find('span.label').remove();
-        $('#taskCreateModal').find('.task-tag-list').siblings('input').remove();
+        $('#taskModifyModal').find('form').attr('id', 'taskCreateForm');
+        $('#taskModifyModal').find('.task-tag-list').find('span.label').remove();
+        $('#taskModifyModal').find('.task-tag-list').siblings('input').remove();
     });
 
 
-    $(document).on('click', '[data-target="#taskUpdateModal"], [href="#taskUpdateModal"]', function () {
-        $('#taskUpdateModal').find('form')[0].reset();
+    $(document).on('click', '.task-edit', function () {
+        $('#taskModifyModal').find('form')[0].reset();
 
+        $('#taskModifyModal').find('.task-tag-list').siblings('input').remove();
+        $('#taskModifyModal').find('.task-tag-list').find('span.label').remove();
+        
         $(document).getTask($(this).attr('data-value')).done(function (data) {
-            $('#taskUpdateModal').find('form').attr('data-value', data['id']);
-            $('#taskUpdateModal').find('[name="title"]').val(data['title']);
-            $('#taskUpdateModal').find('[name="description"]').val(data['description']);
-            $('#taskUpdateModal').find('[name="date"]').val(data['due_date']);
-            $('#taskUpdateModal').find('[name="color"]').val(data['color']);
+            $('#taskModifyModal').find('form').attr('data-value', data['id']);
+            $('#taskModifyModal').find('form').attr('id', 'taskUpdateForm');
 
-            $('#taskUpdateModal').find('.task-tag-list').find('span.label').remove();
-            $('#taskUpdateModal').find('.task-tag-list').siblings('input').remove();
-            $(document).displayTag($('#taskUpdateModal').find('.task-tag-list'), data['tags'], true);
+            $('#taskModifyModal').find('[name="title"]').val(data['title']);
+            $('#taskModifyModal').find('[name="description"]').val(data['description']);
+            $('#taskModifyModal').find('[name="date"]').val(data['due_date']);
+            $('#taskModifyModal').find('[name="color"]').val(data['color']);
+
+            $(document).displayTag(data['tags'], true);
             
-            $('#taskUpdateModal').find('.modal-content').css('background-color', data['color']);
-            $('#taskUpdateModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
-            $('#taskUpdateModal').find(`button[data-value="${data['color']}"] span`).addClass('glyphicon glyphicon-ok');
+            $('#taskModifyModal').find('.modal-content').css('background-color', data['color']);
+            $('#taskModifyModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
+            $('#taskModifyModal').find(`button[data-value="${data['color']}"] span`).addClass('glyphicon glyphicon-ok');
         });
     });
 
 
-    $(document).on('click', '[data-target="#taskViewModal"], [href="#taskViewModal"]', function () {
+    $(document).on('click', '.task-view', function () {
         $('#taskViewModal').find('form')[0].reset();
 
         $(document).getTask($(this).attr('data-value')).done(function (data) {
@@ -146,11 +150,12 @@ $(function () {
             $('#taskViewModal').find('[id="title"]').html(data['title']);
             $('#taskViewModal').find('[id="description"]').html(data['description']);
             $('#taskViewModal').find('[id="date"] span').html(data['due_date']);
+            $('#taskViewModal').find('[id="countdown"]').html(data['remaining_days']);
             
             $('#taskViewModal').find('.task-tag-list').html('');
 
             if(data['tags'].length != 0) 
-                $(document).displayTag($('#taskViewModal').find('.task-tag-list'), data['tags']);
+                $(document).displayTag(data['tags']);
             else
                 $('#taskViewModal').find('.task-tag-list').html('None');
 
@@ -214,15 +219,13 @@ $(function () {
         var task = $(this).closest('form').serializeArray();
 
         if($(this).closest('form').is('#taskCreateForm')) {
-            $(document).postTask(task).done(function(data){
+            $(document).postTask(task).always(function() {
                 $(document).getTask().done(function(data){
                     $(document).displayTask(data);
                 });
-            });
-        }
-
-        else if($(this).closest('form').attr('id') == 'taskUpdateForm') {
-            $(document).postTask(task, $(this).closest('form').attr('data-value')).done(function(data) {
+            }); 
+        } else if($(this).closest('form').is('#taskUpdateForm')) {
+            $(document).postTask(task, $(this).closest('form').attr('data-value')).always(function(data) {
                 $(document).getTask().done(function(data){
                     $(document).displayTask(data);
                 });

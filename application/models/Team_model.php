@@ -57,13 +57,8 @@ class Team_model extends CI_Model {
 
 
 	public function update_team($team_id, $new_name) {
-
-		if(current($this->db->select('name')->where('id', $team_id)->get()->result_array())['name'] != $new_name)
-			return $this->db->set('name', $new_name)
-				->where('id', $team_id)
-				->update();
-		else
-			return false;
+		if($this->db->select('name')->from('teams')->where('id', $team_id)->get()->result()[0]->name != $new_name)
+			$this->db->where('id', $team_id)->update('teams', ['name' => $new_name]);
 	}
 
 
@@ -82,7 +77,7 @@ class Team_model extends CI_Model {
 
 		foreach ($old_member_ids as $id) {
 			if(!in_array($id, $new_member_ids)) {
-				$this->db->delete('tasks_mapping', [
+				$this->db->delete('teams_mapping', [
 					'teams_id' => $team_id,
 					'users_id' => $id
 				]);
