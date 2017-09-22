@@ -112,15 +112,15 @@ $.fn.displayTag = function(items, edit = false) {
 
         if(edit)
             $('.task-tag-list').find('.task-tag').before(
-                `<span class="label label-default">${item} <a class="task-tag-remove" data-value="${item}">&times;</a></span>`
+                `<span class="label label-default">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
             );
         else
             $('.task-tag-list').append(
-                `<span class="label label-default">${item}</span>`
+                `<span class="label label-default">${item['name']}</span>`
             );
         if(edit)
             $('.task-tag-list').parent().append(
-                `<input type="hidden" name="tags[]" value="${item}" />`
+                `<input type="hidden" name="tags[]" value="${item['name']}" />`
             );
     });
 };
@@ -150,7 +150,7 @@ $.fn.displayTask = function(items, rowNumber = 4) {
     $.each(items, function(i, item) {
         $('#taskTileList').append(
             `<div class="col-md-${rowNumber}" style="padding:3px;">
-                <div class="task-tile  container-fluid" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `;">
+                <div class="task-tile container-fluid" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `;">
                     <div class="row">
                         <div class="col-md-2" style="padding-top:5%;">
                             <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
@@ -165,6 +165,16 @@ $.fn.displayTask = function(items, rowNumber = 4) {
             </div>`
         );
     });
+
+    $('#taskTileList').append(
+        `<div class="col-md-${rowNumber}" style="padding:3px;">
+            <div class="task-tile container-fluid" style="background-color:#ffffff; padding: 5%">
+                <a href="#taskModifyModal" data-toggle="modal class="task-create" style="color:#000000;">
+                    <h4 class="heading"><span class="glyphicon glyphicon-plus" style="color:#2780e3;"></span> Create Task</h4>
+                </a>
+            </div>
+        </div>`
+    );
 };
 
 

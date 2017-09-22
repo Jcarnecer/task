@@ -12,8 +12,7 @@
                 <a class="navbar-brand" href="#">Task</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<?= base_url('tasks'); ?>">Home</a></li>
-                <li><a href="#">Personal</a></li>
+                <li><a href="<?= base_url('tasks'); ?>">Personal</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Team <span class="caret"></span></a>
                     <ul class="dropdown-menu">

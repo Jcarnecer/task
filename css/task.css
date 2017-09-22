@@ -100,6 +100,14 @@
     font-size: 22px;
 }
 
+.no-task-text {
+    font-size: 64px;
+    font-weight: 500;
+    color: rgba(128, 128, 128, 0.70);
+    text-shadow: -1px -1px 3px;
+    text-align: center;
+}
+
 /* Team Member */
 
 .modal .team-member {
@@ -218,6 +226,8 @@
     border-radius: 35px;
     border-color: #eeeeee;
 }
+
+/* Other */
 
 .box{
 	width:100px;
