@@ -72,7 +72,7 @@ class Task_model extends CI_Model {
 		return $this->db->select('name')
 			->from('tags')
 			->join('tasks_tagging', 'tasks_tagging.tags_id = tags.id')
-			->where('tasks_tagging.tasks_id',$id)
+			->where('tasks_tagging.tasks_id', $id)
 			->get()
 			->result();
 	}
