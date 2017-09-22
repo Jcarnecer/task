@@ -1,6 +1,6 @@
 <?php 
 
-class User_Model extends CI_Model {
+class User_model extends CI_Model {
     public function insertUser($user_details){
         $this->db->insert('users', $user_details);
     }
@@ -19,6 +19,10 @@ class User_Model extends CI_Model {
 
     public function is_login(){
         return $this->session->has_userdata('user');
+    }
+
+    public function get($index, $value) {
+        return $this->db->get_where('users', [$index => $value], 1)->result();
     }
 }
 ?>

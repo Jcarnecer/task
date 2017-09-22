@@ -1,34 +1,64 @@
+
 /* Modal Text Area and Input */
 
-.modal input[name="title"] {
-    font-size: 32px;
+.modal input.heading {
     height: 50px;
     width: 100%;
-    font-weight: 800;
 }
 
-.modal textarea[name="description"] {
-    font-size: 22px;
+.modal textarea {
     width: 100%;
     word-wrap: break-word;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .modal input, .modal textarea {
     border: 0 hidden #ffffff;
     background-color: transparent;
-    font-weight: 500;
 }
 
 .modal input:focus, .modal textarea:focus, .modal button:focus {
     outline: none;
 }
 
-.modal hr {
-    color: #808080;
+/* Note */
+
+.modal .task-note-label {
+    font-weight: 800;
+    font-size: 28px;
+    text-align: center;
+    width: 100%;
 }
 
-.modal ::-webkit-input-placeholder {
-    color: #808080;
+.modal .task-note-box {
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin: 0 5px;
+    padding: 10px 20px;
+}
+
+.modal .task-note-list {
+    margin: 10px;
+}
+
+.modal .task-note-list-item {
+    /* padding: 5px; */
+    margin: 0px;
+}
+
+.modal .task-note-user {
+    width: 75%;
+    padding-bottom: 75%;
+}
+
+.modal .task-note-text {
+    font-weight: 500;
+    /* width: 100%;
+    height: 100%; */
+    background-color: #ffffff;
+    border-radius: 15px;
 }
 
 /* Tag */
@@ -52,6 +82,50 @@
     display: inline-block;
 }
 
+/* Other */
+
+.modal ::-webkit-input-placeholder {
+    color: #808080;
+}
+
+/* View Task */
+
+.heading {
+    font-weight: 800;
+    font-size: 32px;
+}
+
+.body {
+    font-weight: 500;
+    font-size: 22px;
+}
+
+/* Team Member */
+
+.modal .team-member {
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 1px;
+}
+
+.modal .team-member-label {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal .team-member-list span.label {
+    margin: 2px;
+    font-size: 14px;
+    line-height: 1.8;
+    word-wrap: normal;
+    display: inline-block;
+}
+
+.model .team-member-remove {
+    font-size: 10px;   
+    display: inline-block;
+}
 
 /* Search */
 
@@ -74,6 +148,12 @@
     font-weight: 500;
 }
 
+/* Task Board */
+
+.task-tag-board {
+    margin: 10px;
+}
+
 /* Task Tile */
 
 .task-tile {
@@ -83,28 +163,24 @@
     border-radius: 2px; 
     overflow-x: hidden;
     overflow-y: hidden;
-    box-shadow: 0px 1px 4px;
-}
-
-a[data-toggle="dropdown"] .glyphicon {
-    color: #000000;
+    box-shadow: 0px 1px 1px;
 }
 
 .tile-title {
     word-wrap: break-word;
+    font-weight: 800;
+    font-size: 24px;
 }
 
 .tile-description {
-    /* border-style: solid; 
-    border-width: 0 0 0 2px;  */
-    /* margin: 0 0 0 25px;  */
     overflow-x: hidden;
     overflow-y: hidden;
     word-wrap: break-word;
-    height: 50%;
-    /* padding: 0 0 0 10px; */
+    font-weight: 500;
+    font-size: 14px;
 }
 
+/* Color Button */
 
 .btn-color span.glyphicon {
     color: #808080;
@@ -149,6 +225,14 @@ a[data-toggle="dropdown"] .glyphicon {
     background:#f00;
 }
 
+.circle{
+    background-color: #808080;
+	border-radius: 50%;
+	color: #ffffff;
+	/* height: 100; */
+	width: 100%;
+	padding-bottom: 100%;
+}
 
 .plan-box{
     background-color: #fff;
@@ -158,9 +242,7 @@ a[data-toggle="dropdown"] .glyphicon {
     box-shadow: 0 2px 2px #efefef;
 }
 
-a:link,
-a:visited,
-a:hover{
+a:link, a:visited, a:hover{
     color: #fff;
     text-decoration: none;
 }
@@ -183,6 +265,7 @@ a:hover{
 .container-scroll > .row {
     margin-top: 24px;
 }
+
 .container-scroll > .row > .col-md-2 {
     font-weight: bold;
     text-align: center;

@@ -70,11 +70,11 @@
         $.each(items, function(i, item) {
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 $('#taskSearchQuery').append(
-                    `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" style="background-color:${item['color']}; color:#000000;">` +
+                    `<a href="#taskViewModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" style="background-color:${item['color']}; color:#000000;">` +
                         `<h5 class="tile-title"><b>` +
                         `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` task-mark-done pull-top" data-value="${item['id']}"></span>` +
                         ` ${item['title']}` +
-                        `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                        `<span class="glyphicon glyphicon-pencil pull-right" data-target="#taskUpdateModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                         `</b></h5>` +
                     `</a>`
                 );
@@ -91,12 +91,12 @@
         $.each(items, function(i, item) {
             $('#taskTile').append(
                 `<div class="col-md-${rowNumber}" style="padding:3px;">` +
-                    `<div class="task-tile  container-fluid" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
+                    `<div class="task-tile  container-fluid" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" style="background-color:${item['color']};">` +
                         `<div class="row">` +
                             `<div class="col-md-2">` +
                                 `<h4 class="pull-right"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span></h4>` +
                             `</div>` +
-                            // `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                            // `<span class="glyphicon glyphicon-pencil pull-bottom pull-right" data-target="#taskUpdateModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                             `<div class="col-md-10">` +
                                 `<h4 class="tile-title"><b>${item['title']}</b></h4>` +
                                 `<p class="tile-description task-justify"><b>${item['description']}</b></p>` +
@@ -128,11 +128,11 @@
     });
 
 
-    $('#taskSearchQuery').find('span[data-target="#updateTaskModal"]').hide();
+    $('#taskSearchQuery').find('span[data-target="#taskUpdateModal"]').hide();
 
 
     $('#taskSearchQuery').find('a.list-group-item').on('mouseover', function () {
-        $(this).filter('span[data-target="#updateTaskModal"]').show(200);
+        $(this).filter('span[data-target="#taskUpdateModal"]').show(200);
     });
 
 
@@ -199,7 +199,7 @@
     });
 
 
-    $(document).on('click', '[data-target="#updateTaskModal"], [href="#updateTaskModal"]', function () {
+    $(document).on('click', '[data-target="#taskUpdateModal"], [href="#taskUpdateModal"]', function () {
         $('#taskUpdateForm')[0].reset();
         $.ajax({
             type: 'GET',
@@ -219,14 +219,14 @@
     });
 
 
-    $(document).on('click', '[data-target="#viewTaskModal"]', function () {
+    $(document).on('click', '[data-target="#taskViewModal"]', function () {
         $('#taskViewForm')[0].reset();
         $.ajax({
             type: 'GET',
             url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
             dataType: 'json'
         }).done(function (data) {
-            $('#viewTaskModal').find('a[href="#updateTaskModal"]').attr('data-value', data[0]['id']);
+            $('#taskViewModal').find('a[href="#taskUpdateModal"]').attr('data-value', data[0]['id']);
             
             $('#taskViewForm').attr('data-value', data[0]['id']);
             $('#taskViewForm').find('[id="title"] b').html(data[0]['title']);

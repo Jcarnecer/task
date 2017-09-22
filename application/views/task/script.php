@@ -23,11 +23,11 @@
         $.each(items, function(i, item) {
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 $('#taskSearchQuery').append(
-                    `<a href="#viewTaskModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']}; color:#000000;">` +
+                    `<a href="#taskViewModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']}; color:#000000;">` +
                         `<h5 class="tile-title"><b>` +
                         // `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` task-mark-done pull-top" data-value="${item['id']}"></span>` +
                         ` ${item['title']}` +
-                        // `<span class="glyphicon glyphicon-pencil pull-right" data-target="#updateTaskModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
+                        // `<span class="glyphicon glyphicon-pencil pull-right" data-target="#taskUpdateModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
                         `</b></h5>` +
                     `</a>`
                 );
@@ -49,7 +49,7 @@
                             `<div class="col-md-2">` +
                                 `<h4 class="pull-right"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked task-mark-done` : `check`) + ` pull-top" data-value="${item['id']}"></span></h4>` +
                             `</div>` +
-                            `<div class="col-md-10" data-toggle="modal" data-target="#viewTaskModal" data-value="${item['id']}">` +
+                            `<div class="col-md-10" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">` +
                                 `<h4 class="tile-title"><b>${item['title']}</b></h4>` +
                                 `<p class="tile-description task-justify"><b>${item['description']}</b></p>` +
                             `</div>` +
@@ -94,7 +94,7 @@
     // Search
 
     $('#taskSearchQuery').find('a.list-group-item').on('mouseover', function () {
-        $(this).filter('span[data-target="#updateTaskModal"]').show(200);
+        $(this).filter('span[data-target="#taskUpdateModal"]').show(200);
     });
 
 
@@ -136,27 +136,27 @@
 
     // Load Modal
 
-    $(document).on('click', '[data-target="#updateTaskModal"], [href="#updateTaskModal"]', function () {
+    $(document).on('click', '[data-target="#taskUpdateModal"], [href="#taskUpdateModal"]', function () {
         $('#taskUpdateForm')[0].reset();
         $.ajax({
             type: 'GET',
             url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
             dataType: 'json'
         }).done(function (data) {
-            $('#updateTaskModal').attr('data-value', data['id']);
-            $('#updateTaskModal').find('[name="title"]').val(data['title']);
-            $('#updateTaskModal').find('[name="description"]').val(data['description']);
-            $('#updateTaskModal').find('[name="date"]').val(data['due_date']);
-            $('#updateTaskModal').find('[name="color"]').val(data['color']);
+            $('#taskUpdateModal').attr('data-value', data['id']);
+            $('#taskUpdateModal').find('[name="title"]').val(data['title']);
+            $('#taskUpdateModal').find('[name="description"]').val(data['description']);
+            $('#taskUpdateModal').find('[name="date"]').val(data['due_date']);
+            $('#taskUpdateModal').find('[name="color"]').val(data['color']);
             
-            $('#updateTaskModal').find('.modal-content').css('background-color', data['color']);
-            $('#updateTaskModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
-            $('#updateTaskModal').find(`button[data-color="${data['color']}"]`).find('span').addClass('glyphicon glyphicon-ok');
+            $('#taskUpdateModal').find('.modal-content').css('background-color', data['color']);
+            $('#taskUpdateModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
+            $('#taskUpdateModal').find(`button[data-color="${data['color']}"]`).find('span').addClass('glyphicon glyphicon-ok');
         });
     });
 
 
-    $(document).on('click', '[data-target="#viewTaskModal"], [href="#viewTaskModal"]', function () {
+    $(document).on('click', '[data-target="#taskViewModal"], [href="#taskViewModal"]', function () {
         $('#taskViewForm')[0].reset();
 
         $.ajax({
@@ -164,12 +164,12 @@
             url: `${baseUrl}api/task/${$(this).attr('data-value')}`,
             dataType: 'json'
         }).done(function (data) {
-            $('#viewTaskModal').find('.dropdown a').attr('data-value', data['id']);
+            $('#taskViewModal').find('.dropdown a').attr('data-value', data['id']);
             
-            $('#viewTaskModal').attr('data-value', data['id']);
-            $('#viewTaskModal').find('[id="title"] b').html(data['title']);
-            $('#viewTaskModal').find('[id="description"] b').html(data['description']);
-            $('#viewTaskModal').find('[id="date"]').html(data['due_date']);
+            $('#taskViewModal').attr('data-value', data['id']);
+            $('#taskViewModal').find('[id="title"] b').html(data['title']);
+            $('#taskViewModal').find('[id="description"] b').html(data['description']);
+            $('#taskViewModal').find('[id="date"]').html(data['due_date']);
 
             $(document).changeColor($('#taskViewForm').closest('.modal-content'), data['color']);
         });
