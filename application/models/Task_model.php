@@ -11,8 +11,19 @@ class Task_model extends CI_Model {
 	public $created_by;
 	public $created_at;
 	public $updated_at;
+	
 
-	public function get($author_id, $status = null) {
+	public function get($id) {
+		$task = $this->db->get_where('tasks', ['id' => $id])->result()[0];
+		$task->notes = $this->get_task_notes($task->id);
+		$task->tags = $this->get_task_tags($task->id);
+		$task->remaining_days = $this->estimate_days($task->id);
+
+		return $task;
+	}
+
+
+	public function get_all($author_id, $status = null) {
 		if($status != null)
 			$tasks = $this->db->get_where('tasks', ['user_id' => $author_id, 'status' => $status])->result();
 		else
@@ -66,8 +77,9 @@ class Task_model extends CI_Model {
 			->result();
 	}
 
-	public function get_task_by_id($id) {
-		return $this->db->get_where('tasks', ['id' => $id])->result_array()[0];
+
+	public function add_task_notes($task_id, $note_details) {
+		$this->db->insert('task_notes', $note_details);
 	}
 
 

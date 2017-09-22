@@ -105,20 +105,20 @@
                             <span class="task-note-label">Notes</span>
                         </div>
                         <div class="row">
-                            <div class="col-md-2" style="height:100%;">
+                            <div class="col-md-2">
                                 <div class="circle"></div>
                             </div>
                             <div class="col-md-10">
                                 <div class="task-note-box">
-                                    <textarea class="task-note" rows="3"></textarea>
+                                    <textarea class="task-note" rows="2"></textarea>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div id="taskNoteList" class="list-group">
+                        <hr/>
+                        <div class="row task-note-list">
 
-                            </div>
                         </div>
+                        <input type="hidden" name="notes" />
                     </form>
                 </div>
             </div>

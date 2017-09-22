@@ -6,12 +6,6 @@
     <link rel="stylesheet" type="text/css" href="/task/css/task.css" />
 </head>
 <body style="padding-top:50px;">
-    <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/task/script/main.js"></script>
-    <script src="/task/script/task.js"></script>
-    <script src="/task/script/team.js"></script>
-    <!-- hello -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">

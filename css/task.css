@@ -23,6 +23,8 @@
     outline: none;
 }
 
+/* Note */
+
 .modal .task-note-label {
     font-weight: 800;
     font-size: 28px;
@@ -34,23 +36,29 @@
     background-color: #ffffff;
     border-radius: 15px;
     margin: 0 5px;
-    padding: 0 15px;
+    padding: 10px 20px;
 }
 
-.modal ::-webkit-input-placeholder {
-    color: #808080;
+.modal .task-note-list {
+    margin: 10px;
 }
 
-/* View Task */
-
-.heading {
-    font-weight: 800;
-    font-size: 32px;
+.modal .task-note-list-item {
+    /* padding: 5px; */
+    margin: 0px;
 }
 
-.body {
+.modal .task-note-user {
+    width: 75%;
+    padding-bottom: 75%;
+}
+
+.modal .task-note-text {
     font-weight: 500;
-    font-size: 22px;
+    /* width: 100%;
+    height: 100%; */
+    background-color: #ffffff;
+    border-radius: 15px;
 }
 
 /* Tag */
@@ -72,6 +80,24 @@
 .model .task-tag-remove {
     font-size: 10px;   
     display: inline-block;
+}
+
+/* Other */
+
+.modal ::-webkit-input-placeholder {
+    color: #808080;
+}
+
+/* View Task */
+
+.heading {
+    font-weight: 800;
+    font-size: 32px;
+}
+
+.body {
+    font-weight: 500;
+    font-size: 22px;
 }
 
 /* Team Member */

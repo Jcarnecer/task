@@ -86,10 +86,13 @@ $route['tasks/team/(:num)/notes/create'] = 'task_notes/create_team_task_note/$1'
 $route['api/task/(:any)']['POST'] = 'tasks/post/$1';
 $route['api/task/(:any)']['GET'] = 'tasks/get/$1';
 
-$route['api/task']['POST'] = 'tasks/post';
-$route['api/task']['GET'] = 'tasks/get';
+$route['api/task/(:any)/(:any)']['POST'] = 'tasks/post/$1/$2';
+$route['api/task/(:any)/(:any)']['GET'] = 'tasks/get/$1/$2';
 
 $route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
+
+$route['api/note/(:any)']['POST'] = 'tasks/post_note/$1';
+$route['api/note/(:any)']['GET'] = 'tasks/get_note/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

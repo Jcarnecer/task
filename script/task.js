@@ -1,108 +1,11 @@
 $(function () {
 
-    // Functions
-
-    $.fn.displayTag = function(items, edit = false) {
-        $.each(items, function(i, item) {
-
-            if(edit)
-                $('.task-tag-list').find('.task-tag').before(
-                    `<span class="label label-default">${item} <a class="task-tag-remove" data-value="${item}">&times;</a></span>`
-                );
-            else
-                $('.task-tag-list').append(
-                    `<span class="label label-default">${item}</span>`
-                );
-            if(edit)
-                $('.task-tag-list').parent().append(
-                    `<input type="hidden" name="tags[]" value="${item}" />`
-                );
-        });
-    };
-
-
-    $.fn.displayTask = function(items, rowNumber = 4) { 
-        $('#taskTileList').html('');
-
-        rowNumber = 12/rowNumber;
-
-        $.each(items, function(i, item) {
-            $('#taskTileList').append(
-                `<div class="col-md-${rowNumber}" style="padding:3px;">
-                    <div class="task-tile  container-fluid" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `;">
-                        <div class="row">
-                            <div class="col-md-2" style="padding-top:5%;">
-                                <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
-                            </div>
-                            <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
-                                <span class="tile-title">${item['title']}</span>
-                                <br/>
-                                <span class="tile-description">${item['description']}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>`
-            );
-        });
-    };
-
-
-    $.fn.getTask = function(id = null) {
-        return $.ajax({
-            type: 'GET',
-            url: `${baseUrl}api/task` + (id != null ? `/${id}` : ''),
-            dataType: 'json'
-        });
-    };
-
-    
-    $.fn.postTask = function(details, id = null) {
-        return $.ajax({
-            type: 'POST',
-            url: `${baseUrl}api/task` + (id != null ? `/${id}` : ''),
-            data: details,
-            dataType: 'json'
-        });
-    };
-
-
-    $.fn.searchTask = function(items, keyword) {
-        $('#taskSearchQuery').html('');
-
-        if(keyword == '')
-            return;
-
-        $.each(items, function(i, item) {
-            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
-                $('#taskSearchQuery').append(
-                    `<li class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']};">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-1"><a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + `"></span></a></div>
-                                <div class="col-md-10" data-target="#taskViewModal" data-toggle="modal" data-value="${item['id']}">${item['title']}</div>
-                                <div class="col-md-1"><a class="task-edit" href="#taskModifyModal" data-toggle="modal" data-value="${item['id']}"><span class="glyphicon glyphicon-edit"></span></a></div>
-                            </div>
-                        </div>
-                    </li>`
-                );
-            }
-        });
-    };
-
     // Initialize
 
     $(document).getTask().done(function(data) {
         $(document).displayTask(data);
     });
     
-    // Search
-
-    $(document).on('input', '#taskSearch', function () {
-        $(document).getTask().done(function(data){
-            $(document).searchTask(data, $('#taskSearch').val());
-        });
-    });
-
     // Load Modal
 
     $(document).on('click', '.task-create', function() {
@@ -141,6 +44,8 @@ $(function () {
     $(document).on('click', '.task-view', function () {
         $('#taskViewModal').find('form')[0].reset();
 
+        $('#taskViewModal').find('.task-note-list').html('');
+
         $(document).getTask($(this).attr('data-value')).done(function (data) {
             $('#taskViewModal').find('.dropdown a').attr('data-value', data['id']);
             
@@ -157,10 +62,19 @@ $(function () {
             else
                 $('#taskViewModal').find('.task-tag-list').html('None');
 
+            $(document).displayNote(data['notes']);
+
             $('#taskViewModal').find('.modal-content').css('background-color', data['color']);
         });
     });
 
+    // Search
+
+    $(document).on('input', '#taskSearch', function () {
+        $(document).getTask().done(function(data){
+            $(document).searchTask(data, $('#taskSearch').val());
+        });
+    });
 
     // Button Color
 
@@ -198,14 +112,24 @@ $(function () {
     
     // Notes
 
-    $('#taskNote').keypress(function (e) {
+    $('.task-note').keypress(function (e) {
         if(e.which == 13) {
-            $(this).parent().find('#taskNoteList').append(
-                `<li class="list-group-item">${$(this).val()}</li>`
+
+            $(this).closest('form').find('.task-note-list').append(
+                // `<div class="row task-note-list-item">
+                    `<div class="col-md-2">
+                        <div class="task-note-user circle"></div>
+                    </div>
+                    <div class="col-md-10 well well-sm task-note-text">
+                        ${$(this).val()}
+                    </div>`
+                // </div>`
             );
-            $(this).parent().append(
-                `<input type="hidden" name="notes[]" value="${$(this).val()}" />`
-            );
+
+            $(this).closest('form').find('input[name="notes"]').val($(this).val());
+
+            $(document).postTaskNote($(this).closest('form').serialize(), $(this).closest('form').attr('data-value'));
+
             $(this).val('');
             return false;
         }

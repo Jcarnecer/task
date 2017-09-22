@@ -7,7 +7,6 @@ class Tasks extends CI_Controller {
 	const ARCHIVED = 2;
 
 	private $color = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
-	private $author_id;
 
 	public function __construct() {
 		parent :: __construct();
@@ -21,19 +20,19 @@ class Tasks extends CI_Controller {
 
 
 	public function index($page = 'home') {
+		$data['author_id'] = $this->session->user[0]->id;
 		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
 		$data['colors'] = $this->color;
 
-		$this->author_id = $this->session->user[0]->id;
-		
 		$this->load->view('task/header', $data);
 		$this->load->view('modal', $data);
 		$this->load->view("task/$page", $data);
-		$this->load->view('task/footer');
+		$this->load->view('task/footer', $data);
 	}
 
 
-	public function team($id = null) {
+	public function team($id) {
+		$data['author_id'] = $id;
 		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
 		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 
@@ -42,33 +41,29 @@ class Tasks extends CI_Controller {
 		$data['team']->name = $this->team_model->get($id)[0]->name;
 		$data['team']->members = $this->team_model->get_members($id);
 		
-		$this->author_id = $id;
-
 		$this->load->view('task/header', $data);
 		$this->load->view('modal', $data);
 		$this->load->view("task/team", $data);
-		$this->load->view('task/footer');
+		$this->load->view('task/footer', $data);
 	}
 
 
-	public function post($id = null) {
-		$task_id = 0;
-
+	public function post($author_id, $task_id = null) {
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			$task_details = [
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
 				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
 				'color' => $this->input->post('color'),
-				'user_id' => $this->session->author_id
+				'user_id' => $author_id
 			];
 
-			if($id != null) {
-				$this->task_model->update($id, $task_details);
+			if($task_id != null) {
+				$this->task_model->update($task_id, $task_details);
 				if($this->input->post('tags[]') != null)
-					$this->tag_model->update($id, $this->input->post('tags[]'));
+					$this->tag_model->update($task_id, $this->input->post('tags[]'));
 				else
-					$this->tag_model->update($id, []);
+					$this->tag_model->update($task_id, []);
 			} else {
 				$task_id = $this->task_model->insert($task_details);
 				if($this->input->post('tags[]') != null)
@@ -78,11 +73,11 @@ class Tasks extends CI_Controller {
 	}
 
 
-	public function get($task_id = null) {
+	public function get($author_id, $task_id = null) {
 		if($task_id != null){
-			echo json_encode(array_merge($this->task_model->get_task_by_id($task_id), ['remaining_days' => $this->task_model->estimate_days($task_id), 'tags' => $this->tag_model->get($task_id)]));
+			echo json_encode($this->task_model->get($task_id));
 		} else{
-			echo json_encode($this->task_model->get($this->session->author_id, (self::ACTIVE)));
+			echo json_encode($this->task_model->get_all($author_id, (self::ACTIVE)));
 		}
 	}
 
@@ -134,8 +129,25 @@ class Tasks extends CI_Controller {
 	}
 
 
-	public function mark_as_done($id) {
-		$this->task_model->archive($id);
+	public function post_note($task_id)	{
+		$note_details = [
+			'task_id' => $task_id,
+			'body' => $this->input->post('notes'),
+			'created_at' => date('Y-m-d'),
+			'user_id' => $this->session->user[0]->id
+		];
+
+		$this->task_model->add_task_notes($task_id, $note_details);
+	}
+
+	
+	public function get_note($task_id) {
+		echo json_encode($this->task_model->get_task_notes($task_id));
+	}
+
+
+	public function mark_as_done($task_id) {
+		$this->task_model->archive($task_id);
 		//redirect('tasks/test'); #for testing
 	}
 
