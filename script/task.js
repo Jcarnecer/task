@@ -1,7 +1,5 @@
 $(function () {
 
-    const baseUrl = window.location.origin + '/task/';
-
     // Functions
 
     $.fn.displayTag = function(items, edit = false) {

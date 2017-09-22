@@ -41,18 +41,6 @@ class Team_model extends CI_Model {
 		$this->db->insert('teams', $team_details);
 
 		return $team_details['id'];
-		// $teams =  $this->db->get('teams')->result();
-
-		// $mapping_details['users_id'] = $details['users_id'];
-		// foreach ($teams as $team) {
-		// 	if($team->name == $details['name']) {
-		// 		$mapping_details['teams_id'] = $this->get_id($details['name']);
-		// 		return $this->db->insert('teams_mapping', $mapping_details);
-		// 	}
-		// }
-		// $this->db->insert('teams', ['id' => "TMP" . $this->utilities->generate_id(8), 'name' => $details['name']]);
-		// $mapping_details['teams_id'] = $this->get_id($details['name']);
-		// return $this->db->insert('teams_mapping', $mapping_details);
 	}
 
 

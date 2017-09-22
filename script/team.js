@@ -1,8 +1,5 @@
 $(function () {
     
-    const baseUrl = window.location.origin + '/task/';
-    var authorId = $(document).getTeam()
-
     // Functions
 
     $.fn.displayMember = function(items, edit = false) {
@@ -23,6 +20,7 @@ $(function () {
         });
     };
 
+
     $.fn.getTeam = function(id = null) {
         return $.ajax({
             type: 'GET',
@@ -31,6 +29,7 @@ $(function () {
         });
     };
 
+    
     $.fn.postTeam = function(details, id = null) {
         return $.ajax({
             type: 'POST',

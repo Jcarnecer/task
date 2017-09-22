@@ -12,11 +12,11 @@ class Task_model extends CI_Model {
 	public $created_at;
 	public $updated_at;
 
-	public function get($creator_id, $status = null) {
+	public function get($author_id, $status = null) {
 		if($status != null)
-			$tasks = $this->db->get_where('tasks', ['user_id' => $this->session->user[0]->id, 'status' => $status])->result();
+			$tasks = $this->db->get_where('tasks', ['user_id' => $author_id, 'status' => $status])->result();
 		else
-			$tasks = $this->db->get_where('tasks', ['user_id' => $this->session->user[0]->id])->result();
+			$tasks = $this->db->get_where('tasks', ['user_id' => $author_id])->result();
 		foreach ($tasks as $task) {
 			$task->notes = $this->get_task_notes($task->id);
 			$task->tags = $this->get_task_tags($task->id);
