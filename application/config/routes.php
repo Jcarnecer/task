@@ -74,6 +74,8 @@ $route['api/team/(:any)']['GET'] = 'teams/get/$1';
 
 $route['api/validate_member']['POST'] = 'teams/validate_member';
 
+$route['api/leave_team/(:any)']['POST'] = 'teams/leave_team/$1';
+
 
 # team tasks
 $route['tasks/team/create'] = 'team_tasks/create_task';

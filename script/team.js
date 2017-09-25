@@ -25,6 +25,12 @@ $(function () {
             $(document).displayMember(data['members'], true);
         });
     });
+
+
+    $(document).on('click', '.team-leave', function() {
+        $(document).leaveTeam(getAuthorId());
+        window.location.href = `${baseUrl}tasks`;
+    });
     
     // Team Member
 
@@ -62,10 +68,15 @@ $(function () {
 
     $(document).on('click', '#teamSubmit', function () {
         var team = $(this).closest('form').serializeArray();
+        var teamId = null;
         
         if($(this).closest('form').attr('id') == 'teamCreateForm')
-            $(document).postTeam(team);
+            $(document).postTeam(team).always(function(data) {
+                // window.location.href = `${baseUrl}tasks/team/${data['team_id']}`;
+            });
         else if($(this).closest('form').attr('id') == 'teamUpdateForm')
             $(document).postTeam(team, $(this).closest('form').attr('data-value'));
+
+        location.reload();
     });
 });

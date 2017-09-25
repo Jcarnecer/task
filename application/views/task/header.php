@@ -3,7 +3,8 @@
 <head>
 	<title>Task</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/task/css/task.css" />
+    <link rel="stylesheet" href="/task/css/res/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/task/css/task.css" />
 </head>
 <body style="padding-top:50px;">
     <nav class="navbar navbar-default navbar-fixed-top">

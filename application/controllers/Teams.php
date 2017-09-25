@@ -23,6 +23,7 @@ class Teams extends CI_Controller {
 	public function post($id = null) {
 		$team_id = 0;
 		$members = [];
+
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			if($id != null) {
 				$team_id = $id;
@@ -34,6 +35,8 @@ class Teams extends CI_Controller {
 			$members[] = $this->session->user[0]->email_address;
 			$this->team_model->update_members($team_id, $members);
 		}
+
+		echo json_encode(['team_id' => $team_id]);
 	}
 
 
@@ -66,5 +69,10 @@ class Teams extends CI_Controller {
             echo json_encode(array_merge((array)$user[0], ['exist' =>  true]));
         else
             echo json_encode(['exist' =>  false]);
-    }
+	}
+	
+	public function leave_team($team_id) {
+		$this->team_model->delete_member($team_id, $this->session->user[0]->id);
+		// header('Location: '.baseUrl('tasks'));
+	}
 }

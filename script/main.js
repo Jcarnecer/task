@@ -105,6 +105,15 @@ $.fn.validateMember = function(value) {
     }).responseJSON;
 };
 
+
+$.fn.leaveTeam = function(teamId, userId) {
+    return $.ajax({
+        type: 'POST',
+        url: `${baseUrl}api/leave_team/${teamId}`,
+        dataType: 'json'
+    });
+};
+
 // Task
 
 $.fn.displayTag = function(items, edit = false) {
@@ -169,7 +178,7 @@ $.fn.displayTask = function(items, rowNumber = 4) {
     $('#taskTileList').append(
         `<div class="col-md-${rowNumber}" style="padding:3px;">
             <div class="task-tile container-fluid" style="background-color:#ffffff; padding: 5%">
-                <a href="#taskModifyModal" data-toggle="modal class="task-create" style="color:#000000;">
+                <a href="#taskModifyModal" data-toggle="modal" class="task-create" style="color:#000000;">
                     <h4 class="heading"><span class="glyphicon glyphicon-plus" style="color:#2780e3;"></span> Create Task</h4>
                 </a>
             </div>
