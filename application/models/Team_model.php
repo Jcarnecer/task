@@ -83,4 +83,12 @@ class Team_model extends CI_Model {
 			}
 		}
 	}
+
+
+	public function delete_member($team_id, $user_id) {
+		$this->db->delete('teams_mapping', [
+			'teams_id' => $team_id,
+			'users_id' => $user_id
+		]);
+	}
 }
