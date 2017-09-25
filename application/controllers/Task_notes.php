@@ -5,29 +5,39 @@ class Task_notes extends CI_Controller {
 
 
 	public function __construct() {
+		
 		parent::__construct();
 	}
 
 
 	public function create($task_id) {
+		
 		if($this->input->server('REQUEST_METHOD') == 'POST') {
+			
 			$task_note_details = [
 				'body' => $this->input->post('body'),
 				'task_id' => $task_id
 			];
+			
 			$this->task_note_model->insert($task_note_details);
 		}
+
 		return redirect('tasks/test');
 	}
 
+
 	public function create_team_task_note($task_id) {
+		
 		if($this->input->server('REQUEST_METHOD') == 'POST') {
+		
 			$task_note_details = [
 				'body' => $this->input->post('body'),
 				'task_id' => $task_id
 			];
+
 			$this->team_task_note_model->insert($task_note_details);
 		}
+
 		return redirect('tasks');
 	}
 
