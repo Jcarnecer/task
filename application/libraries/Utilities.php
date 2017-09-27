@@ -9,7 +9,7 @@ class Utilities {
 
 	public function __construct() {
 
-		$this->CI =& get_instance();
+		$this->ci =& get_instance();
 	}
 
 

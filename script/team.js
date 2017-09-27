@@ -75,7 +75,7 @@ $(function () {
         if($(this).closest('form').attr('id') == 'teamCreateForm')
             $(document).postTeam(team).always(function(data) {
                 console.log(data['team_id']);
-                // window.location.href = `${baseUrl}tasks/team/${data['team_id']}`;
+                window.location.href = `${baseUrl}tasks/team/${data['team_id']}`;
                 // location.reload();
             });
         else if($(this).closest('form').attr('id') == 'teamUpdateForm')
