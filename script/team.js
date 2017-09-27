@@ -17,7 +17,7 @@ $(function () {
         $('#teamModifyModal').find('.team-member-list').find('span.label').remove();
         $('#teamModifyModal').find('.team-member-list').siblings('input').remove();
 
-        $(document).getTeam($(this).attr('data-value')).done(function(data) {
+        $(document).getTeam($(this).attr('data-value')).always(function(data) {
             $('#teamModifyModal').find('form').attr('data-value', data['id']);
             $('#teamModifyModal').find('form').attr('id', 'teamUpdateForm');
 
@@ -28,8 +28,10 @@ $(function () {
 
 
     $(document).on('click', '.team-leave', function() {
-        $(document).leaveTeam(getAuthorId());
-        window.location.href = `${baseUrl}tasks`;
+        $(document).leaveTeam(getAuthorId()).always(function () {
+            window.location.href = `${baseUrl}tasks`;
+        });
+        
     });
     
     // Team Member
@@ -72,11 +74,13 @@ $(function () {
         
         if($(this).closest('form').attr('id') == 'teamCreateForm')
             $(document).postTeam(team).always(function(data) {
+                console.log(data['team_id']);
                 // window.location.href = `${baseUrl}tasks/team/${data['team_id']}`;
+                // location.reload();
             });
         else if($(this).closest('form').attr('id') == 'teamUpdateForm')
-            $(document).postTeam(team, $(this).closest('form').attr('data-value'));
-
-        location.reload();
+            $(document).postTeam(team, $(this).closest('form').attr('data-value')).always(function() {
+                location.reload();
+            });
     });
 });

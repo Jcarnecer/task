@@ -134,12 +134,17 @@ class Task_model extends CI_Model {
 		$today = date_create(date('Y-m-d'));
 		$days = date_diff($today, $due_date)->days;
 		
-		if($days == 0)
-			return "DUE TODAY!";
-		if($days == 1)
+		
+		if($today>$due_date) {
+
+			if($days == 1)
+				return "<font color='red'>Overdue by $days day</font>";
+			else
+				return "<font color='red'>Overdue by $days days</font>";
+		} else if($days == 1)
 			return "$days day remaining";
-		if($today>$due_date)
-			return "Overdue by $days days";
+		  else if($days == 0)
+			return "<font color='red'>DUE TODAY!</font>";
 		
 		return "$days days remaining";
 	}

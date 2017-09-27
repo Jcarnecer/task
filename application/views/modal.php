@@ -60,9 +60,15 @@
                                 </button>
                             <?php endforeach; ?>
                             <input type="hidden" name="color" value="#ffffff" />
-
-                            <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-                            <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="glyphicon glyphicon-cog"></span> Settings</button>
+                        </div>
+                        <div class="d-flex flex-row-reverse">
+                            <div class="p-2"></div>
+                            <div class="p-2">
+                                <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                            </div>
+                            <div class="p-2">
+                                <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="glyphicon glyphicon-cog"></span> Settings</button>
+                            </div>
                         </div>
                     </form>
                 </div>

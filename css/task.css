@@ -1,3 +1,6 @@
+#taskTileList {
+    padding: 10px;
+}
 
 /* Modal Text Area and Input */
 
@@ -176,8 +179,8 @@
 
 .tile-title {
     word-wrap: break-word;
-    font-weight: 800;
-    font-size: 24px;
+    font-weight: 400;
+    font-size: 20px;
 }
 
 .tile-description {
@@ -253,7 +256,7 @@
 }
 
 a:link, a:visited, a:hover{
-    color: #fff;
+/*    color: #fff;*/
     text-decoration: none;
 }
 
