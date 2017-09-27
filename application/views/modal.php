@@ -84,7 +84,7 @@
                 <div class="modal-body">
                     <form id="taskViewForm">
                         <div class="dropdown">
-                            <a class="dropdown-toggle pull-right" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a>
+                            <a class="pull-right" data-toggle="dropdown"><span class="fa fa-ellipsis-v" aria-hidden="false"></span></a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a class="task-edit" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal">Edit Task</a></li>
                                 <li><a href="#" class="task-mark-done" data-dismiss="modal">Mark as Done</a></li>

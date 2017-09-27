@@ -48,6 +48,9 @@
                     </a>
                     <ul class="sub collapse" id="UIElementsSub1">
                         <li><a class="team-create" href="#teamModifyModal" data-toggle="modal">Create Team</a></li>
+                        <?php foreach($teams as $team): ?>
+                        <li><a href="<?= base_url('tasks/team/' . $team->id); ?>"><?=$team->name?></a></li>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
                 <li class="">
