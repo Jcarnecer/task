@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -17,11 +16,11 @@
     <body>
 
         <div id="sidebar" style="overflow-y: auto; margin-left: -210px;">
+
             <!-- sidebar menu start-->
             <div id="nav-icon-close" class="custom-toggle">
                 <span></span>
                 <span></span>
-
             </div>
 
             <ul class="sidebar-menu">		
@@ -50,7 +49,7 @@
                     </a>
                     <ul class="sub collapse" id="UIElementsSub1">
                         <?php foreach($teams as $team): ?>
-                            <li><a href="<?= base_url('tasks/team/' . $team->id); ?>"><?=$team->name?></a></li>
+                        <li><a href="<?= base_url('tasks/team/' . $team->id); ?>"><?=$team->name?></a></li>
                         <?php endforeach; ?>
                         <li><a class="team-create" href="#teamModifyModal" data-toggle="modal">Create Team</a></li>
                     </ul>

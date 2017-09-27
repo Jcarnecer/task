@@ -54,11 +54,13 @@ class Tasks extends CI_Controller {
 	public function post($author_id, $task_id = null) {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-	
+			$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
+			if($due_date == date('Y-m-d', strtotime('1970-01-01')))
+				$due_date = date('Y-m-d');
 			$task_details = [
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
-				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
+				'due_date' => date('Y-m-d'),
 				'color' => $this->input->post('color'),
 				'user_id' => $author_id
 			];
