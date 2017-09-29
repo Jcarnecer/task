@@ -7,7 +7,8 @@
         <title>Task</title>
 
         <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />  
-        <link rel="stylesheet" type="text/css" href="/task/css/task.css" />      
+        <link rel="stylesheet" type="text/css" href="/task/css/task.css" />     
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
         <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/flavored-reset-and-normalize.css" />
         <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/font-awesome.min.css" />
@@ -74,27 +75,7 @@
                     </div>
                     <a class="navbar-brand" href="<?= base_url('tasks'); ?>">Task</a>
 
-<!--
-                    
-<div class="box">
-<div class="container-1">
-<span class="icon"><i class="fa fa-search"></i></span>
-<input type="search" id="search" placeholder="Search" />
-</div>
-</div>
--->
 
-
-                    <!--                <a href="#"><span class="float-right"><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i></span></a>-->
-
-                    <!--
-<div class="row">
-<ul class="main-nav">
-<li><a href="#"data-toggle="tooltip" title="Notifications" style="margin:5px;"><i class="fa fa-bell fa-2x" aria-hidden="true"></i></a></li>
-<li><a href="#" data-toggle="popover" data-placement="bottom"  data-content="user@astridtechonologies.com"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i></a></li>
-</ul>
-</div>
--->
 
                 </nav>
             </div>
@@ -107,6 +88,11 @@
                     </section>
                 </div>
             </div>
+        
+
+        
+
+            
 
 <!--
             <div class="d-flex flex-row-reverse">

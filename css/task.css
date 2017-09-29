@@ -166,6 +166,18 @@
 }
 
 /* Task Tile */
+/*
+.task-tile1{
+    color: #000000; 
+    padding: 20px;
+    width: inherit;
+    height: inherit;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: absolute;
+}
+*/
+
 
 .task-tile {
     color: #000000; 
@@ -283,3 +295,13 @@ a:link, a:visited, a:hover{
     font-weight: bold;
     text-align: center;
 }
+
+
+/* Create Task button*/
+.createTaskButton{
+    width: 100px;
+    height: 100px;
+    background-color: black;
+        
+}
+

@@ -158,16 +158,18 @@ $.fn.displayTask = function(items, rowNumber = 4) {
 
     $.each(items, function(i, item) {
         $('#taskTileList').append(
-            `<div class="col-md-${rowNumber}" style="padding:3px;">
-                <div class="task-tile container-fluid" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `;">
-                    <div class="row">
-                        <div class="col-md-2" style="padding-top:5%;">
-                            <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
-                        </div>
-                        <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
-                            <span class="tile-title">${item['title']}</span>
-                            <br/>
-                            <span class="tile-description">${item['description']}</span>
+            `<div class="col-md-${rowNumber}">
+                <div class="w3-card-4" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
+                    <div class="w3-container">    
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
+                            </div>
+                            <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
+                                <span class="tile-title">${item['title']}</span>
+                                <br/>
+                                <span class="tile-description">${item['description']}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -175,15 +177,15 @@ $.fn.displayTask = function(items, rowNumber = 4) {
         );
     });
 
-    $('#taskTileList').append(
-        `<div class="col-md-${rowNumber}" style="padding:3px;">
-            <div class="task-tile container-fluid" style="background-color:#ffffff; padding: 5%">
-                <a href="#taskModifyModal" data-toggle="modal" class="task-create" style="color:#000000;">
-                    <h4 class="heading"><span class="glyphicon glyphicon-plus" style="color:#2780e3;"></span> Create Task</h4>
-                </a>
-            </div>
-        </div>`
-    );
+//        $('#taskTileList').append(
+//            `<div class="col-md-${rowNumber}" style="padding:3px;">
+//                <div class="task-tile container-fluid" style="background-color:#ffffff; padding: 5%">
+//                    <a href="#taskModifyModal" data-toggle="modal" class="task-create" style="color:#000000;">
+//                        <h4 class="heading"><span class="glyphicon glyphicon-plus" style="color:#2780e3;"></span> Create Task</h4>
+//                    </a>
+//                </div>
+//            </div>`
+//        );
 };
 
 
