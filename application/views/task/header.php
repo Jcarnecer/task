@@ -25,12 +25,14 @@
             </div>
 
             <ul class="sidebar-menu">		
+<!--
                 <li class="">
                     <a class="task-create" href="#taskModifyModal" data-toggle="modal">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <span>Add Task</span>
                     </a>
                 </li>
+-->
                 <li class="">
                     <a class="task-create" href="#searchTaskModal" data-toggle="modal">
                         <i class="fa fa-search" aria-hidden="true"></i>

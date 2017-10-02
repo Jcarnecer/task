@@ -1,7 +1,7 @@
 
     <div class="addTaskSearch" >
         <a class="task-create" href="#taskModifyModal" data-toggle="modal" style="color: inherit;">
-            <input type="text" id="taskSearch" placeholder="Add Task...">  
+            <input type="text" id="taskSearch" placeholder="Add Task..." style="color: #7f8c8d;">  
         </a>
     </div>
     
