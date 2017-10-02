@@ -52,7 +52,9 @@
                         <?php foreach($teams as $team): ?>
                         <li><a href="<?= base_url('tasks/team/' . $team->id); ?>"><?=$team->name?></a></li>
                         <?php endforeach; ?>
-                        <li><a class="team-create" href="#teamModifyModal" data-toggle="modal">Create Team</a></li>
+                        <li>
+                            <a class="team-create" href="#teamModifyModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Create Team</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="">
@@ -81,16 +83,14 @@
             </div>
 
             <!--  Title  -->
-            <div class="container-fluid">
+            <div class="container-fluid" style="margin-bottom: 50px;">
                 <div class="d-flex flex-row">
                     <section class="long-copy">
                         <h1>My Task</h1>
                     </section>
                 </div>
             </div>
-        
-
-        
+            
 
             
 
