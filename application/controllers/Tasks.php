@@ -24,6 +24,7 @@ class Tasks extends CI_Controller {
 	public function index($page = 'home') {
 		
 		$data['author_id'] = $this->session->user[0]->id;
+        $data['email'] = $this->session->user[0]->email_address;
 		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
 		$data['colors'] = $this->color;
 
@@ -37,7 +38,8 @@ class Tasks extends CI_Controller {
 	public function team($id) {
 		
 		$data['author_id'] = $id;
-		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
+        $data['email'] = $this->session->user[0]->email_address;
+        $data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
 		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 		$data['team'] = new stdClass();
 		$data['team']->id = $id;

@@ -11,6 +11,13 @@
         <script>
             setAuthorId("<?= $author_id ?>");
         </script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })        </script>
         <script src="/task/script/task.js"></script>
         <script src="/task/script/team.js"></script>
     </body>

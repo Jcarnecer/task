@@ -78,35 +78,7 @@
                         <span></span>
                     </div>
                     <a class="navbar-brand" href="<?= base_url('tasks'); ?>">Task</a>
-
-
-
+                    <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover" style="position: absolute; display:block; right: 0; color:inherit;"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
                 </nav>
             </div>
-
-            <!--  Title  -->
-            <div class="container-fluid" style="margin-bottom: 50px;">
-                <div class="d-flex flex-row">
-                    <section class="long-copy">
-                        <h1>My Task</h1>
-                    </section>
-                </div>
-            </div>
-            
-
-            
-
-<!--
-            <div class="d-flex flex-row-reverse">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="p-4"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTaskModal"> Add Task</button></div>      
-                    </div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4"></div>
-                </div>
-            </div>
--->
-            <!-- List View Buttons  -->
-
     

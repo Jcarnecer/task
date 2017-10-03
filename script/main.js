@@ -151,29 +151,33 @@ $.fn.displayNote = function(items) {
 }
 
 
-$.fn.displayTask = function(items, rowNumber = 4) {
+$.fn.displayTask = function(items, rowNumber = 3) {
     $('#taskTileList').html('');
 
     rowNumber = 12/rowNumber;
 
     $.each(items, function(i, item) {
         $('#taskTileList').append(
-            `<div class="col-md-${rowNumber}">
-                <div class="w3-card-4" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
-                    <div class="w3-container">    
-                        <div class="row">
-                            <div class="col-md-2">
-                                <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
-                            </div>
-                            <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
-                                <span class="tile-title">${item['title']}</span>
-                                <br/>
-                                <span class="tile-description">${item['description']}</span>
+            `
+            
+               <div class=" w3-third w3-section col-md-${rowNumber}" style="margin: 50px auto;">
+                    <div class="w3-card-2 w3-hover-shadow" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
+                        <div class="w3-container">    
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
+                                </div>
+                                <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
+                                    <span class="tile-title">${item['title']}</span>
+                                    <br/>
+                                    <span class="tile-description">${item['description']}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>`
+            
+            `
         );
     });
 

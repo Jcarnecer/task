@@ -120,7 +120,7 @@ section {
   border-radius: 50px; }
 
 .main-nav {
-  float: right;
+  justify-content: right;
   list-style: none;
   margin: 0px auto !important;
   margin-top: 55px; }
