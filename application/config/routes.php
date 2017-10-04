@@ -98,3 +98,9 @@ $route['api/note/(:any)']['GET'] = 'tasks/get_note/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+#migration
+
+$route['migrate/(:any)'] = 'migrate/index/$1';
+$route['migrate/(:any)/(:num)'] = 'migrate/index/$1/$2';

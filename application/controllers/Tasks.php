@@ -62,7 +62,7 @@ class Tasks extends CI_Controller {
 			$task_details = [
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
-				'due_date' => date('Y-m-d'),
+				'due_date' => $due_date,
 				'color' => $this->input->post('color'),
 				'user_id' => $author_id
 			];
