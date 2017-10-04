@@ -12,14 +12,17 @@ class Team_model extends CI_Model {
 	}
 
 
-	public function get_all($user_id) {
+	public function get_all($user_id = null) {
 
-		return $this->db->select('*')
-			->from('teams')
-			->join('teams_mapping', 'teams_mapping.teams_id = teams.id')
-			->where('teams_mapping.users_id', $user_id)
-			->get()
-			->result();
+		if($user_id != null)
+			return $this->db->select('*')
+				->from('teams')
+				->join('teams_mapping', 'teams_mapping.teams_id = teams.id')
+				->where('teams_mapping.users_id', $user_id)
+				->get()
+				->result();
+		else
+			return $this->db->select('id')->from('teams')->get()->result();
 	}
 
 
@@ -86,9 +89,21 @@ class Team_model extends CI_Model {
 
 
 	public function delete_member($team_id, $user_id) {
+		
 		$this->db->delete('teams_mapping', [
 			'teams_id' => $team_id,
 			'users_id' => $user_id
 		]);
+	}
+
+
+	public function delete_team($id) {
+
+		$this->db->delete('teams', ['id' => $id]);
+	}
+
+
+	public function check_team($id) {
+		return $this->db->get_where('teams_mapping', ['teams_id' => $id])->result();
 	}
 }
