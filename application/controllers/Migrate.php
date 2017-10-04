@@ -1,21 +1,33 @@
 <?php
 
-class Migrate extends CI_Controller
-{
+class Migrate extends CI_Controller {
 
-        public function index()
-        {
-                $this->load->library('migration');
 
-                if ($this->migration->current() === FALSE)
-                {
-                        show_error($this->migration->error_string());
-                } else 
-                	echo "Version up to date";
-                echo $this->migration->current();
-                echo $this->migration->latest();
-                echo $this->migration->version(0);
+    public function __construct() {
 
+        parent :: __construct();
+        $this->load->library('migration');
+    }
+
+
+    public function index($key=null, $ver=null) {
+        $result = "";
+
+        switch ($key) {
+            case 'lat':
+                $result = $this->migration->latest();
+                break;
+            case 'up':
+                $result = $this->migration->version($ver);
+                break;
+            default:
+                $result = $this->migration->current();
+                break;
         }
 
+        if ($result === FALSE)
+            show_error($this->migration->error_string());
+        else 
+            echo "Version $result";
+    }
 }
