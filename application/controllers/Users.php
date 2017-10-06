@@ -63,6 +63,7 @@ class Users extends CI_Controller {
         return $this->load->view('users/current_user');
     }
 
+
     public function logout() {
 
         $this->user_model->logout();

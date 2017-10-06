@@ -61,7 +61,7 @@ class Teams extends CI_Controller {
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			
 			$peers = [];
-			$peers = $this->input->post('peers[]'); #must get array[] from post
+			$peers = $this->input->post('peers[]');
 			$team_details = [
 				'teams_id' => $this->input->post('team_id'),
 				'peers' => $peers
@@ -86,6 +86,5 @@ class Teams extends CI_Controller {
 	public function leave_team($team_id) {
 		
 		$this->team_model->delete_member($team_id, $this->session->user[0]->id);
-		// header('Location: '.baseUrl('tasks'));
 	}
 }

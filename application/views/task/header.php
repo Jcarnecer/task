@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        
         <title>Task</title>
 
         <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />  
@@ -39,12 +40,14 @@
                         <span>Search</span>
                     </a>
                 </li>
+                
                 <li class="">
                     <a class="" href="<?= base_url('tasks'); ?>">
                         <i class="fa fa-tasks" aria-hidden="true"></i>
                         <span>Personal Task</span>
                     </a>    
                 </li>
+                
                 <li class="sub-menu">
                     <a data-toggle="collapse" href="#UIElementsSub1" aria-expanded="false" aria-controls="UIElementsSub1" >
                         <i class="fa fa-users" aria-hidden="true"></i>
@@ -59,12 +62,14 @@
                         </li>
                     </ul>
                 </li>
+                
                 <li class="">
                     <a class="" href="<?= base_url('users/logout'); ?>">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
                         <span>Logout</span>
                     </a>
                 </li>
+
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -81,4 +86,4 @@
                     <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover" style="position: absolute; display:block; right: 0; color:inherit;"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
                 </nav>
             </div>
-    
+        

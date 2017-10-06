@@ -11,9 +11,11 @@ class Migrate extends CI_Controller {
 
 
     public function index($key=null, $ver=null) {
+        
         $result = "";
 
         switch ($key) {
+            
             case 'lat':
                 $result = $this->migration->latest();
                 break;
