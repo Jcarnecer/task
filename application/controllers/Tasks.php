@@ -105,6 +105,7 @@ class Tasks extends CI_Controller {
 		$data['teams'] = $this->team_model->get();
 
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+			
 			$task_details = [
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
@@ -126,18 +127,6 @@ class Tasks extends CI_Controller {
 	public function get_team_task() {
 
 		echo json_encode($this->task_model->get_team_task(self::ACTIVE));
-	}
-
-
-	public function view($id = null) {
-
-		if($id == null)
-			$this->index();
-		else {
-
-			$data['task_details'] = $this->task_model->get_task_by_id($id);
-			$this->load->view('task/personal/view_one', $data); # view not yet created please create the view salamat po (~o.o)~
-		}
 	}
 
 
@@ -175,7 +164,6 @@ class Tasks extends CI_Controller {
 	public function mark_as_done($task_id) {
 		
 		$this->task_model->archive($task_id);
-		//redirect('tasks/test'); #for testing
 	}
 
 

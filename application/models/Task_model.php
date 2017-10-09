@@ -153,6 +153,7 @@ class Task_model extends CI_Model {
 	public function prune_tasks($id) {
 		
 		foreach($this->db->get_where('tasks', ['user_id' => $id])->result() as $task){
+			
 			$this->db->delete('task_notes', ['task_id' => $task->id]);
 			$this->db->delete('tasks_tagging', ['tasks_id' => $task->id]);
 		}

@@ -104,6 +104,7 @@ class Team_model extends CI_Model {
 
 
 	public function check_team($id) {
+		
 		return $this->db->get_where('teams_mapping', ['teams_id' => $id])->result();
 	}
 }

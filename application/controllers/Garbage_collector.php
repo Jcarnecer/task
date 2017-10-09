@@ -10,7 +10,7 @@ class Garbage_collector extends CI_Controller {
 	}
 
 
-	public function clean_team_tasks() {
+	public function index() {
 
 		$teams = $this->team_model->get_all();
 

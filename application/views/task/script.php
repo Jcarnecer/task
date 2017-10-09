@@ -14,26 +14,7 @@
     };
 
     
-    $.fn.searchTask = function(items, keyword) {
-        $('#taskSearchQuery').html('');
-
-        if(keyword == '')
-            return;
-
-        $.each(items, function(i, item) {
-            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
-                $('#taskSearchQuery').append(
-                    `<a href="#taskViewModal" data-toggle="modal" data-value="${item['id']}" class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']}; color:#000000;">` +
-                        `<h5 class="tile-title"><b>` +
-                        // `<span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` task-mark-done pull-top" data-value="${item['id']}"></span>` +
-                        ` ${item['title']}` +
-                        // `<span class="glyphicon glyphicon-pencil pull-right" data-target="#taskUpdateModal" data-toggle="modal" data-value="${item['id']}" data-value="${item['id']}"></span>` + 
-                        `</b></h5>` +
-                    `</a>`
-                );
-            }
-        });
-    };
+   
 
 
     $.fn.displayTiles = function(items, rowNumber = 4) {

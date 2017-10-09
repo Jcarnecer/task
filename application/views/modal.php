@@ -6,7 +6,7 @@
             <div class="modal-content" style="transition:0.2s;">
                 <div class="modal-body">
                     <form>
-                        <input type="text" class="heading"name="name" placeholder="Team Name" required>
+                        <input type="text" class="heading" name="name" placeholder="Team Name" required>
                         <hr/>
                         <div class="form-group">
                             <div class="team-member-list">
