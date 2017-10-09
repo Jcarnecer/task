@@ -160,9 +160,10 @@ $.fn.displayTask = function(items, rowNumber = 3) {
         $('#taskTileList').append(
             `
             
-               <div class=" w3-third w3-section col-md-${rowNumber}" style="margin: 50px auto;">
-                    <div class="w3-card-2 w3-hover-shadow" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
-                        <div class="w3-container">    
+               <div ondrop="drop(event)" ondragover="allowDrop(event)" data-order=${i} class="col-md-${rowNumber}" style="margin: 50px auto;">
+
+                    <div id="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
+                        <div class="container">    
                             <div class="row">
                                 <div class="col-md-2">
                                     <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
@@ -175,6 +176,7 @@ $.fn.displayTask = function(items, rowNumber = 3) {
                             </div>
                         </div>
                     </div>
+
                 </div>
             
             `

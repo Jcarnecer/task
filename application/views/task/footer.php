@@ -25,6 +25,8 @@
         
         <script src="/task/script/task.js"></script>
         <script src="/task/script/team.js"></script>
+        <script src="/task/script/main.js"></script>
+        <script src="/task/script/drag_drop.js"></script>
     
     </body>
 </html> 
