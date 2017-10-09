@@ -127,19 +127,19 @@ class Tasks extends CI_Controller {
 		
 	public function get_team_task() {
 
-		echo json_encode($this->task_model->get_team_task(self::ACTIVE));
+		echo json_encode($this->task_model->get_team_task(ACTIVE));
 	}
 
 
 	public function fetch() {
 
-		echo json_encode($this->task_model->get(self::ACTIVE), TRUE);
+		echo json_encode($this->task_model->get(ACTIVE), TRUE);
 	}
 
 
 	public function fetch_archived(){
 		
-		return $this->task_model->get(self::ARCHIVED);
+		return $this->task_model->get(ARCHIVED);
 	}
 
 

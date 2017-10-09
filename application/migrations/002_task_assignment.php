@@ -35,9 +35,9 @@ class Migration_Task_assignment extends CI_Migration {
             'CONSTRAINT `tasks_assignment_ibfk_1` FOREIGN KEY (`tasks_id`) REFERENCES `tasks` (`id`)',
             'CONSTRAINT `tasks_assignment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)'
         ]);
-                        
-        $this->dbforge->add_key(['tasks_id', 'user_id'], TRUE);
-        $this->dbforge->add_key('tasks_id');
+
+        $this->dbforge->add_key(['teams_id', 'user_id'], TRUE);
+        $this->dbforge->add_key('user_id');
         $attributes = ['ENGINE' => 'InnoDB', 'CHARSET' => 'latin1', 'COLLATE' => 'latin1_swedish_ci'];
         
         return $this->dbforge->create_table('tasks_assignment', TRUE, $attributes);
