@@ -19,11 +19,14 @@ class Migrate extends CI_Controller {
             case 'lat':
                 $result = $this->migration->latest();
                 break;
+            case 'cur':
+                $result = $this->migration->current();
+                break;
             case 'up':
                 $result = $this->migration->version($ver);
                 break;
             default:
-                $result = $this->migration->current();
+                $result = $this->migration->latest();
                 break;
         }
 

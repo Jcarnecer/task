@@ -56,23 +56,6 @@ class Teams extends CI_Controller {
 	}	
 
 
-	public function add_members() {
-		
-		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-			
-			$peers = [];
-			$peers = $this->input->post('peers[]');
-			$team_details = [
-				'teams_id' => $this->input->post('team_id'),
-				'peers' => $peers
-			];
-
-			$this->team_model->add_peers($team_details);
-			redirect('teams');
-		}
-	}
-
-
 	public function validate_member() {
         
         $user = $this->user_model->get('email_address', $this->input->post('email'));
@@ -82,6 +65,7 @@ class Teams extends CI_Controller {
         else
             echo json_encode(['exist' =>  false]);
 	}
+	
 	
 	public function leave_team($team_id) {
 		

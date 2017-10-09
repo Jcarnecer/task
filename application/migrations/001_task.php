@@ -194,10 +194,18 @@ class Migration_Task extends CI_Migration {
             'name'            => [
                 
                 'type'           => 'TEXT'
-            ]
+            ],
+             'admin'        => [
+                
+                'type'           => 'VARCHAR',
+                'constraint'     => 11,
+                'unsigned'       => TRUE
+            ],
+            'CONSTRAINT `teams_ibfk_1` FOREIGN KEY (`admin`) REFERENCES `users` (`id`)'
         ]);
                         
         $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->add_key('admin');
         $attributes = ['ENGINE' => 'InnoDB', 'CHARSET' => 'latin1', 'COLLATE' => 'latin1_swedish_ci'];
         
         return $this->dbforge->create_table('teams', TRUE, $attributes);

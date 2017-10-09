@@ -160,4 +160,32 @@ class Task_model extends CI_Model {
 
 		$this->db->delete('tasks', ['user_id' => $id]);
 	}
+
+	public function add_actors($task_id, $users) {
+		
+		$new_member_ids = array_column($this->db->select('id')->from('users')->where_in('email_address', $users)->get()->result_array(), 'id');
+		$old_member_ids = array_column($this->db->select('users_id')->from('tasks_assignment')->where('tasks_id', $task_id)->get()->result_array(), 'users_id');
+
+		foreach ($new_member_ids as $id) {
+			
+			if(!in_array($id, $old_member_ids)) {
+				
+				$this->db->insert('tasks_assignment', [
+					'tasks_id' => $task_id,
+					'user_id' => $id
+				]);
+			}
+		}
+
+		foreach ($old_member_ids as $id) {
+			
+			if(!in_array($id, $new_member_ids)) {
+			
+				$this->db->delete('teams_mapping', [
+					'teams_id' => $team_id,
+					'user_id' => $id
+				]);
+			}
+		}
+	}
 }
