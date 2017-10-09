@@ -18,6 +18,20 @@
 
     <div class="container-fluid task-tag-board"> 
         <div id="taskTileList" class="row">
+            <div class="container-fluid">
+                <div id="thingsToDo" class="row">
 
+                </div>
+            </div>
+            <div id="doing" class="container-fluid">
+                <div class="row">
+
+                </div>
+            </div>
+            <div id="done" class="container-fluid">
+                <div class="row">
+
+                </div>
+            </div>
         </div>
     </div>
