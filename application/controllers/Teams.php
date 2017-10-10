@@ -3,26 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Teams extends CI_Controller {
 
-
-	public function __construct() {
-
-		parent::__construct();
-	}
 	
-	
-	public function index() { #this view is for testing
-		
-		$data['teams'] = $this->team_model->get();
-		$data['tasks'] = $this->task_model->get(1);
-		$data['team_tasks'] = $this->task_model->get_team_tasks(1);
-		$data['status'] = 1;
-		
-		$this->load->view('task/header', $data);		
-		$this->load->view('test/index', $data);
-		$this->load->view('task/index', $data);
-	}
-
-
+	# Create Team
 	public function post($id = null) {
 		
 		$team_id = 0;
@@ -47,6 +29,7 @@ class Teams extends CI_Controller {
 	}
 
 
+	# Fetch Team
 	public function get($id = null)	{
 		
 		if($id != null)
@@ -56,6 +39,7 @@ class Teams extends CI_Controller {
 	}	
 
 
+	# Modify Team
 	public function add_members() {
 		
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -83,8 +67,10 @@ class Teams extends CI_Controller {
             echo json_encode(['exist' =>  false]);
 	}
 	
+
 	public function leave_team($team_id) {
 		
 		$this->team_model->delete_member($team_id, $this->session->user[0]->id);
 	}
+	# End Modify Team
 }

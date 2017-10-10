@@ -7,13 +7,12 @@
         
         <title>Task</title>
 
-        <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />  
-        <link rel="stylesheet" type="text/css" href="/task/css/task.css" />     
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
-        <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/flavored-reset-and-normalize.css" />
-        <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/css/font-awesome.min.css" />
-        <link rel="stylesheet" ztype="text/css" href="<?= base_url(); ?>assets/css/styles.css" />
+        <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css"> 
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/flavored-reset-and-normalize.css'); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/styles.css'); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/task.css'); ?>" />     
     </head>
     <body>
 
@@ -86,4 +85,3 @@
                     <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover" style="position: absolute; display:block; right: 0; color:inherit;"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
                 </nav>
             </div>
-        
