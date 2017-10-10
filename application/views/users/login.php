@@ -2,9 +2,8 @@
 <html>
     <head>
         <title>Login</title>
-        <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
-        <link rel="stylesheet" href="<?= base_url(); ?> css/now-ui-kit.css"/>
-<!--        <link rel="stylesheet" type="text/css" href=" <?= base_url(); ?>css/task.css" />-->
+        <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
+        <link rel="stylesheet" href="<?= base_url('assets/css/now-ui-kit.css'); ?>"/>
     </head>
     <body>
         <div class="container-fluid">
@@ -34,9 +33,9 @@
                 </div>
             </div>
         </div>
+        
+        <script src="<?= base_url('assets/js/jquery.js'); ?>"></script>
+        <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+        
     </body>
-    
-    <script src="/task/node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    
 </html>

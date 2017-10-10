@@ -13,6 +13,7 @@ class Task_model extends CI_Model {
 	public $updated_at;
 	
 
+	# Get Task By ID
 	public function get($id) {
 		
 		$task = $this->db->get_where('tasks', ['id' => $id])->result()[0];
@@ -24,6 +25,7 @@ class Task_model extends CI_Model {
 	}
 
 
+	# Get All Task
 	public function get_all($author_id, $status = null) {
 
 		if($status != null)
@@ -42,6 +44,7 @@ class Task_model extends CI_Model {
 	}
 
 
+	# Get Team Task
 	public function get_team_tasks($status = null) {
 		
 		if($status != null)
@@ -70,16 +73,15 @@ class Task_model extends CI_Model {
 	}
 
 
-	#
 	# @param $order_by = column name
 	# @param $direction = asc/desc
-	# 
 	public function order_by($order_by = 'created_at', $direction = 'asc') {
 
 		return $this->db->order_by($order_by, $direction);
 	}
 
 
+	# Get Task Tags
 	public function get_task_tags($id = null) {
 
 		return $this->db->select('name')
@@ -91,18 +93,21 @@ class Task_model extends CI_Model {
 	}
 
 
+	# Add Task Notes
 	public function add_task_notes($task_id, $note_details) {
 
 		$this->db->insert('task_notes', $note_details);
 	}
 
 
+	# Get Task Notes
 	public function get_task_notes($task_id) {
 
 		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
 	}
 
 
+	# Add Task returning ID
 	public function insert($task_details) {
 
 		$task_details['status'] = 1;
@@ -125,6 +130,7 @@ class Task_model extends CI_Model {
 
 		return $this->db->update('tasks', $task_details, "id = $id");
 	}
+	
 
 	public function estimate_days($id) {
 		

@@ -2,13 +2,10 @@
 <html>
     <head>
         <title>Register</title>
-        <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>css/task.css" />
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/task.css'); ?>" />
     </head>
     <body>
-        <script src="/task/node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="/task/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
         <div class="container-fluid">
             <div class="row"> 
                 <div class="col-sm-6 col-sm-offset-3">
@@ -46,5 +43,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <script src="<?= base_url('assets/js/jquery.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+    
     </body>
 </html>

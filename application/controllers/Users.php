@@ -29,7 +29,7 @@ class Users extends CI_Controller {
             if($user != null) {
                 
                 $this->session->set_userdata('user', $user);
-                redirect('tasks/');
+                redirect();
             }
         }
 
@@ -55,12 +55,6 @@ class Users extends CI_Controller {
         }
         
         return $this->load->view('users/register');
-    }
-
-
-    public function current_user() {
-
-        return $this->load->view('users/current_user');
     }
 
 

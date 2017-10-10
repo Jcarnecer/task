@@ -49,22 +49,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'site';
+$route['default_controller'] = 'views/personal';
 
-$route['tasks'] = 'tasks/index';
+// $route['tasks'] = 'tasks/index';
 
-# personal tasks
-$route['tasks/create'] = 'tasks/create';
-$route['tasks/view/(:any)'] = 'tasks/view/$1';
-$route['tasks/done/(:any)'] = 'tasks/mark_as_done/$1';
+# view
+$route['personal'] = 'views/personal';
+$route['team/(:any)'] = 'views/team/$1';
 
-$route['tasks/(:any)/tags/add'] = 'tags/add_tag/$1';
-$route['tasks/(:any)/tags/del'] = 'tags/del_tag/$1';
-
-$route['tasks/(:num)/notes/create'] = 'task_notes/create/$1';
-
-# users
-
+# API
 # team
 $route['api/team']['POST'] = 'teams/post';
 $route['api/team']['GET'] = 'teams/get';
@@ -77,13 +70,6 @@ $route['api/validate_member']['POST'] = 'teams/validate_member';
 $route['api/leave_team/(:any)']['POST'] = 'teams/leave_team/$1';
 
 
-# team tasks
-$route['tasks/team/create'] = 'team_tasks/create_task';
-$route['tasks/team/view/(:any)'] = 'team_tasks/view_task/$1';
-
-$route['tasks/team/(:num)/notes/create'] = 'task_notes/create_team_task_note/$1';
-
-
 # task
 $route['api/task/(:any)']['POST'] = 'tasks/post/$1';
 $route['api/task/(:any)']['GET'] = 'tasks/get/$1';
@@ -91,16 +77,17 @@ $route['api/task/(:any)']['GET'] = 'tasks/get/$1';
 $route['api/task/(:any)/(:any)']['POST'] = 'tasks/post/$1/$2';
 $route['api/task/(:any)/(:any)']['GET'] = 'tasks/get/$1/$2';
 
-$route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
-
 $route['api/note/(:any)']['POST'] = 'tasks/post_note/$1';
 $route['api/note/(:any)']['GET'] = 'tasks/get_note/$1';
 
-$route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
+# end-of-API
 
-
-#migration
-
+# migration
 $route['migrate/(:any)'] = 'migrate/index/$1';
 $route['migrate/(:any)/(:num)'] = 'migrate/index/$1/$2';
+
+
+# other
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
