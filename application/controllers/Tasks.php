@@ -23,9 +23,9 @@ class Tasks extends CI_Controller {
 
 	public function index($page = 'home') {
 		
-		$data['author_id'] = $this->session->user[0]->id;
-        $data['email'] = $this->session->user[0]->email_address;
-		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
+		$data['author_id'] = $this->session->user->id;
+        $data['email'] = $this->session->user->email_address;
+		$data['teams'] = $this->team_model->get_all($this->session->user->id);
 		$data['colors'] = $this->color;
 
 		$this->load->view('task/header', $data);
@@ -38,8 +38,8 @@ class Tasks extends CI_Controller {
 	public function team($id) {
 		
 		$data['author_id'] = $id;
-        $data['email'] = $this->session->user[0]->email_address;
-        $data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
+        $data['email'] = $this->session->user->email_address;
+        $data['teams'] = $this->team_model->get_all($this->session->user->id);
 		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 		$data['team'] = new stdClass();
 		$data['team']->id = $id;
@@ -148,7 +148,7 @@ class Tasks extends CI_Controller {
 			'task_id' => $task_id,
 			'body' => $this->input->post('notes'),
 			'created_at' => date('Y-m-d'),
-			'user_id' => $this->session->user[0]->id
+			'user_id' => $this->session->user->id
 		];
 
 		$this->task_model->add_task_notes($task_id, $note_details);

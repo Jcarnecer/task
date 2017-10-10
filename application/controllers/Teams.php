@@ -39,7 +39,7 @@ class Teams extends CI_Controller {
 				$team_id = $this->team_model->create_team(['name' => $this->input->post('name')]);
 				
 			$members = $this->input->post('members[]');
-			$members[] = $this->session->user[0]->email_address;
+			$members[] = $this->session->user->email_address;
 			$this->team_model->update_members($team_id, $members);
 		}
 
@@ -52,7 +52,7 @@ class Teams extends CI_Controller {
 		if($id != null)
 			echo json_encode(array_merge((array)$this->team_model->get($id)[0], ['members' => (array)$this->team_model->get_members($id)]));
 		else
-			echo json_encode($this->team_model->get_all($this->session->user[0]->id));
+			echo json_encode($this->team_model->get_all($this->session->user->id));
 	}	
 
 
@@ -85,6 +85,6 @@ class Teams extends CI_Controller {
 	
 	public function leave_team($team_id) {
 		
-		$this->team_model->delete_member($team_id, $this->session->user[0]->id);
+		$this->team_model->delete_member($team_id, $this->session->user->id);
 	}
 }
