@@ -91,9 +91,10 @@ class Task_model extends CI_Model {
 	}
 
 
-	public function archive($id){
-		
-		return $this->db->update('tasks', ['status' => 2, 'completion_date' => date('Y-m-d')], "id = $id");
+	# FOR KANBAN BOARD STATUS UPDATE
+	public function update_status($id, $key) {
+
+		return $this->db->update('tasks', ['status' => $key, 'completion_date' => date('Y-m-d')], "id = $id");
 	}
 
 

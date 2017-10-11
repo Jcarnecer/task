@@ -3,10 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tasks extends CI_Controller {
 
-	const ARCHIVED = 2;
-	const INACTIVE = 3;
-	const IN_PROGRESS = 4;
-
 
 	# Create Task
 	public function post($author_id, $task_id = null) {
@@ -95,7 +91,7 @@ class Tasks extends CI_Controller {
 	# Mark as Done
 	public function mark_as_done($task_id) {
 		
-		$this->task_model->archive($task_id);
+		$this->task_model->update_status($task_id, ARCHIVE);
 	}
 
 
