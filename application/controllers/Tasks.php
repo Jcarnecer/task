@@ -12,10 +12,15 @@ class Tasks extends CI_Controller {
 	public function post($author_id, $task_id = null) {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+
 			$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
+
 			if($due_date == date('Y-m-d', strtotime('1970-01-01')))
+
 				$due_date = date('Y-m-d');
+
 			$task_details = [
+
 				'title' => $this->input->post('title'),
 				'description' => $this->input->post('description'),
 				'due_date' => $due_date,
@@ -28,14 +33,17 @@ class Tasks extends CI_Controller {
 				$this->task_model->update($task_id, $task_details);
 				
 				if($this->input->post('tags[]') != null)
+
 					$this->tag_model->update($task_id, $this->input->post('tags[]'));
 				else
+
 					$this->tag_model->update($task_id, []);
 			} else {
 
 				$task_id = $this->task_model->insert($task_details);
 				
 				if($this->input->post('tags[]') != null)
+
 					$this->tag_model->insert($task_id, $this->input->post('tags[]'));
 			}
 		}
@@ -61,6 +69,7 @@ class Tasks extends CI_Controller {
 	public function post_notes($task_id)	{
 		
 		$note_details = [
+
 			'task_id' => $task_id,
 			'body' => $this->input->post('notes'),
 			'created_at' => date('Y-m-d'),
@@ -114,6 +123,7 @@ class Tasks extends CI_Controller {
 
 
 	public function assign_actors($task_id) {
+		
 		$members = $this->input->post('members[]');
 		$this->task_model->add_actors($task_id, $members);
 	}

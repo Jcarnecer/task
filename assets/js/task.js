@@ -13,7 +13,7 @@ $(function () {
         //     );
         // } else {
 
-            $(document).displayTask(data);
+            $(document).displayTask($('#todoPanel').find('.row'), data, 2);
         // }
     });
 
@@ -164,7 +164,7 @@ $(function () {
 
                 $(document).getTask().done(function(data) {
 
-                    $(document).displayTask(data);
+                    $(document).displayTask($('#taskTileList'), data);
                 });
             }); 
         } else if($(this).closest('form').is('#taskUpdateForm')) {
@@ -173,7 +173,7 @@ $(function () {
                     
                 $(document).getTask().done(function(data){
 
-                    $(document).displayTask(data);
+                    $(document).displayTask($('#taskTileList'), data);
                 });
             });
         }
@@ -199,7 +199,7 @@ $(function () {
 
             $(document).getTask().done(function(data){
 
-                $(document).displayTask(data);
+                $(document).displayTask($('#taskTileList'), data);
             });
         });
     });

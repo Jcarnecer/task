@@ -1,19 +1,43 @@
+html, body {
+    height: 100%;
+}
+
+.main-content {
+    height: 100%;
+}
+
 /* Kanban Board */
 #kanbanBoard {
+    /* background-color: #003300;
+    color: #fafafa; */
     font-family: 'Shadows Into Light';
+    height: 100%;
     /* margin: 10px; */
 }
 
 
+#kanbanBoard>.row {
+    height: 100%;
+}
+
+
 #kanbanBoard>.row>.col-md-4 {
+    /* height: 100%; */
     padding: 0px;
 }
 
 
 .kanban-panel {
     border-style: dashed;
-    border-color: rgba(0, 0, 0, 0.5);
-    padding: 0px;
+    height: 100%;
+    /* border-color: rgba(255, 255, 255, 0.5); */
+    padding: 3px;
+}
+
+
+.kanban-panel>.row {
+    min-height: auto;
+    padding: 5px;
 }
 
 
@@ -24,7 +48,8 @@
     width: 100%;
     border-bottom: 2px;
     border-style: dashed;
-    border-color: rgba(0, 0, 0, 0.5)
+    /* margin: 0px 3px; */
+    /* border-color: rgba(0, 0, 0, 0.5) */
 }
 
 

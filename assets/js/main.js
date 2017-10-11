@@ -164,16 +164,16 @@ $.fn.displayNote = function(items) {
 }
 
 
-$.fn.displayTask = function(items, rowNumber = 3) {
+$.fn.displayTask = function($container, items, colNumber = 3) {
     
-    rowNumber = 12/rowNumber;
+    colNumber = 12/colNumber;
     
-    $('#taskTileList').html('');
+    $container.html('');
 
     $.each(items, function(i, item) {
 
-        $('#taskTileList').append(
-            `<div ondrop="drop(event)" ondragover="allowDrop(event)" data-order=${i} class="col-md-${rowNumber}" style="margin: 50px auto;">
+        $container.append(
+            `<div ondrop="drop(event)" ondragover="allowDrop(event)" data-order=${i} class="col-md-${colNumber}">
 
                 <div id="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
                     <div class="container">    
