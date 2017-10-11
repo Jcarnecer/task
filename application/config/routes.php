@@ -69,7 +69,6 @@ $route['api/validate_member']['POST'] = 'teams/validate_member';
 
 $route['api/leave_team/(:any)']['POST'] = 'teams/leave_team/$1';
 
-
 # task
 $route['api/task/(:any)']['POST'] = 'tasks/post/$1';
 $route['api/task/(:any)']['GET'] = 'tasks/get/$1';
@@ -82,10 +81,6 @@ $route['api/note/(:any)']['GET'] = 'tasks/get_note/$1';
 
 $route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
 # end-of-API
-
-# migration
-$route['migrate/(:any)'] = 'migrate/index/$1';
-$route['migrate/(:any)/(:num)'] = 'migrate/index/$1/$2';
 
 
 # other

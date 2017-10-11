@@ -28,7 +28,7 @@ class Team_model extends CI_Model {
 
 	public function get($team_id) {
 
-		return $this->db->get_where('teams', ['id' => $team_id], 1)->result();
+		return $this->db->get_where('teams', ['id' => $team_id], 1)->result()[0];
 	}
 
 

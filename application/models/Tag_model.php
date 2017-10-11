@@ -1,8 +1,6 @@
 <?php
 
 class Tag_model extends CI_Model {
-	
-	public $name;
 
 
 	public function get_id($name) {
@@ -12,20 +10,6 @@ class Tag_model extends CI_Model {
 			->where('name', $name)
 			->get()
 			->row()->id;
-	}
-
-	
-	public function del_tag($id, $name) {
-		
-		$tasks_tagging = [
-			'tasks_id' => $id,
-			'tags_id' => $this->get_id($name)
-		];
-
-		return $this->db->delete('tasks_tagging', [
-			'tasks_id' => $id,
-			'tags_id' => $this->get_id($name)
-		]);
 	}
 
 
@@ -45,7 +29,7 @@ class Tag_model extends CI_Model {
 			if(!in_array($updated_tag, $this->get($id))) {
 
 				$this->db->insert('tasks_tagging', [
-					'tags_id' => $this->get_id($updated_tag),
+					'tags_id'  => $this->get_id($updated_tag),
 					'tasks_id' => $id
 				]);
 			}
@@ -66,7 +50,7 @@ class Tag_model extends CI_Model {
 	public function get($id) {
 
 		$names = [];
-		$tags =  $this->db->select('name')
+		$tags  =  $this->db->select('name')
 			->from('tags')
 			->join('tasks_tagging', 'tasks_tagging.tags_id = tags.id')
 			->where('tasks_tagging.tasks_id', $id)

@@ -16,7 +16,7 @@ class Task_note_model extends CI_Model {
 
 	public function insert($task_note_details) {
 		
-		$task_note_details['user_id'] = 1;
+		$task_note_details['user_id']	 = 1;
 		$task_note_details['created_at'] = date('Y-m-d');
 
 		$this->db->insert('task_notes', $task_note_details);

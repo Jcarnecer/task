@@ -3,9 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Views extends CI_Controller {
     
-    private $color = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
-
-
+    
     public function __construct() {
         
         parent :: __construct();	
@@ -20,10 +18,10 @@ class Views extends CI_Controller {
 
     public function personal() {
 		
-		$data['author_id'] = $this->session->user[0]->id;
-        $data['email'] = $this->session->user[0]->email_address;
-		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
-		$data['colors'] = $this->color;
+		$data['author_id']	= $this->session->user->id;
+        $data['email']		= $this->session->user->email_address;
+		$data['teams']		= $this->team_model->get_all($this->session->user->id);
+		$data['colors']		= unserialize(COLORS);
 
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);
@@ -34,14 +32,14 @@ class Views extends CI_Controller {
 
 	public function team($id) {
 		
-		$data['author_id'] = $id;
-        $data['email'] = $this->session->user[0]->email_address;
-        $data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
-		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
-		$data['team'] = new stdClass();
-		$data['team']->id = $id;
-		$data['team']->name = $this->team_model->get($id)[0]->name;
-		$data['team']->members = $this->team_model->get_members($id);
+		$data['author_id'] 		= $id;
+        $data['email'] 			= $this->session->user->email_address;
+        $data['teams']			= $this->team_model->get_all($this->session->user->id);
+		$data['colors'] 		= unserialize(COLORS);
+		$data['team'] 			= new stdClass();
+		$data['team']->id 		= $id;
+		$data['team']->name 	= $this->team_model->get($id)->name;
+		$data['team']->members 	= $this->team_model->get_members($id);
 		
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);

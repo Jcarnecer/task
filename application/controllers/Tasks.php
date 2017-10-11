@@ -3,23 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tasks extends CI_Controller {
 
-	const ACTIVE = 1;
 	const ARCHIVED = 2;
+	const INACTIVE = 3;
+	const IN_PROGRESS = 4;
 
 
-	# Create Personal Task
+	# Create Task
 	public function post($author_id, $task_id = null) {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+
 			$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
+
 			if($due_date == date('Y-m-d', strtotime('1970-01-01')))
 				$due_date = date('Y-m-d');
-			$task_details = [
-				'title' => $this->input->post('title'),
+
+			$task_details	= [
+				'title'		  => $this->input->post('title'),
 				'description' => $this->input->post('description'),
-				'due_date' => $due_date,
-				'color' => $this->input->post('color'),
-				'user_id' => $author_id
+				'due_date'	  => $due_date,
+				'color'		  => $this->input->post('color'),
+				'user_id'	  => $author_id
 			];
 
 			if($task_id != null) {
@@ -41,7 +45,7 @@ class Tasks extends CI_Controller {
 	}
 
 
-	# Fetch Personal Task
+	# Fetch Task
 	public function get($author_id, $task_id = null) {
 		
 		if($task_id != null){
@@ -50,20 +54,19 @@ class Tasks extends CI_Controller {
 
 		} else {
 			
-			echo json_encode($this->task_model->get_all($author_id, (self::ACTIVE)));
+			echo json_encode($this->task_model->get_all($author_id, (ACTIVE)));
 		}
 	}
 
 
 	# Notes
-
 	public function post_notes($task_id)	{
 		
-		$note_details = [
-			'task_id' => $task_id,
-			'body' => $this->input->post('notes'),
-			'created_at' => date('Y-m-d'),
-			'user_id' => $this->session->user[0]->id
+		$note_details 	= [
+			'task_id'	  => $task_id,
+			'body'		  => $this->input->post('notes'),
+			'created_at'  => date('Y-m-d'),
+			'user_id'	  => $this->session->user->id
 		];
 
 		$this->task_model->add_task_notes($task_id, $note_details);
@@ -77,7 +80,6 @@ class Tasks extends CI_Controller {
 
 
 	# Tags
-
 	public function post_tags($id, $tags){
 		
 		$this->tag_model->update_tags($id, $tags);
@@ -108,6 +110,12 @@ class Tasks extends CI_Controller {
 				$this->input->post('val')
 			);
 		}
+	}
 
+
+	# Actors for Team Task
+	public function assign_actors($task_id) {
+		$members = $this->input->post('members[]');
+		$this->task_model->add_actors($task_id, $members);
 	}
 }

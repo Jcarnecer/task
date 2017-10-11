@@ -16,9 +16,9 @@ class Task_model extends CI_Model {
 	# Get Task By ID
 	public function get($id) {
 		
-		$task = $this->db->get_where('tasks', ['id' => $id])->result()[0];
-		$task->notes = $this->get_task_notes($task->id);
-		$task->tags = $this->get_task_tags($task->id);
+		$task 				  = $this->db->get_where('tasks', ['id' => $id])->result()[0];
+		$task->notes 		  = $this->get_task_notes($task->id);
+		$task->tags 		  = $this->get_task_tags($task->id);
 		$task->remaining_days = $this->estimate_days($task->id);
 
 		return $task;
@@ -35,37 +35,8 @@ class Task_model extends CI_Model {
 
 		foreach ($tasks as $task) {
 
-			$task->notes = $this->get_task_notes($task->id);
-			$task->tags = $this->get_task_tags($task->id);
-			$task->remaining_days = $this->estimate_days($task->id);
-		}
-		
-		return $tasks;
-	}
-
-
-	# Get Team Task
-	public function get_team_tasks($status = null) {
-		
-		if($status != null)
-			$tasks = $this->db->select('*')
-				->from('tasks')
-				->join('teams_mapping', 'teams_mapping.teams_id = tasks.user_id')
-				->where(['teams_mapping.users_id'=>$this->session->user[0]->id, 'tasks.status' => $status])
-				->get()
-				->result();
-		else
-			$tasks = $this->db->select('*')
-				->from('tasks')
-				->join('teams_mapping', 'teams_mapping.teams_id = tasks.user_id')
-				->where(['teams_mapping.users_id'=>$this->session->user[0]->id])
-				->get()
-				->result();
-		
-		foreach ($tasks as $task) {
-			
-			$task->notes = $this->get_task_notes($task->id);
-			$task->tags = $this->get_task_tags($task->id);
+			$task->notes 		  = $this->get_task_notes($task->id);
+			$task->tags 		  = $this->get_task_tags($task->id);
 			$task->remaining_days = $this->estimate_days($task->id);
 		}
 		
@@ -132,13 +103,15 @@ class Task_model extends CI_Model {
 	}
 	
 
+
 	public function estimate_days($id) {
 		
 		$due_date = date_create($this->db->select('due_date')
 			->get_where('tasks', ['id' => $id])
 			->row()->due_date);
+		
 		$today = date_create(date('Y-m-d'));
-		$days = date_diff($today, $due_date)->days;
+		$days  = date_diff($today, $due_date)->days;
 		
 		
 		if($today>$due_date) {
@@ -165,5 +138,34 @@ class Task_model extends CI_Model {
 		}
 
 		$this->db->delete('tasks', ['user_id' => $id]);
+	}
+	
+
+	public function add_actors($task_id, $users) {
+		
+		$new_member_ids = array_column($this->db->select('id')->from('users')->where_in('email_address', $users)->get()->result_array(), 'id');
+		$old_member_ids = array_column($this->db->select('users_id')->from('tasks_assignment')->where('tasks_id', $task_id)->get()->result_array(), 'users_id');
+
+		foreach ($new_member_ids as $id) {
+			
+			if(!in_array($id, $old_member_ids)) {
+				
+				$this->db->insert('tasks_assignment', [
+					'tasks_id' => $task_id,
+					'user_id' => $id
+				]);
+			}
+		}
+
+		foreach ($old_member_ids as $id) {
+			
+			if(!in_array($id, $new_member_ids)) {
+			
+				$this->db->delete('teams_mapping', [
+					'teams_id' => $team_id,
+					'user_id' => $id
+				]);
+			}
+		}
 	}
 }
