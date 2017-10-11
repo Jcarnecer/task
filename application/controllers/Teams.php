@@ -36,7 +36,10 @@ class Teams extends CI_Controller {
 				$this->team_model->update_team($id, $this->input->post('name'));
 			
 			} else
-				$team_id = $this->team_model->create_team(['name' => $this->input->post('name'), 'admin' => $this->session->user->id]);
+				$team_id = $this->team_model->create_team([
+					'name'	=> $this->input->post('name'),
+					'admin' => $this->session->user->id
+				]);
 				
 			$members = $this->input->post('members[]');
 			$members[] = $this->session->user->email_address;
@@ -50,27 +53,12 @@ class Teams extends CI_Controller {
 	public function get($id = null)	{
 		
 		if($id != null)
-			echo json_encode(array_merge((array)$this->team_model->get($id)[0], ['members' => (array)$this->team_model->get_members($id)]));
+			echo json_encode(array_merge((array)$this->team_model->get($id), [
+				'members' => (array)$this->team_model->get_members($id)
+			]));
 		else
 			echo json_encode($this->team_model->get_all($this->session->user->id));
 	}	
-
-
-	public function add_members() {
-		
-		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-			
-			$peers = [];
-			$peers = $this->input->post('peers[]');
-			$team_details = [
-				'teams_id' => $this->input->post('team_id'),
-				'peers' => $peers
-			];
-
-			$this->team_model->add_peers($team_details);
-			redirect('teams');
-		}
-	}
 
 
 	public function validate_member() {
@@ -83,6 +71,7 @@ class Teams extends CI_Controller {
             echo json_encode(['exist' =>  false]);
 	}
 	
+
 	public function leave_team($team_id) {
 		
 		$this->team_model->delete_member($team_id, $this->session->user->id);

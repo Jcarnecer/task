@@ -3,8 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tasks extends CI_Controller {
 
-	const ACTIVE = 1;
 	const ARCHIVED = 2;
+	const INACTIVE = 3;
+	const IN_PROGRESS = 4;
 
 	private $color = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 
@@ -98,7 +99,7 @@ class Tasks extends CI_Controller {
 
 		} else {
 			
-			echo json_encode($this->task_model->get_all($author_id, (self::ACTIVE)));
+			echo json_encode($this->task_model->get_all($author_id, (ACTIVE)));
 		}
 	}
 
@@ -129,19 +130,19 @@ class Tasks extends CI_Controller {
 		
 	public function get_team_task() {
 
-		echo json_encode($this->task_model->get_team_task(self::ACTIVE));
+		echo json_encode($this->task_model->get_team_task(ACTIVE));
 	}
 
 
 	public function fetch() {
 
-		echo json_encode($this->task_model->get(self::ACTIVE), TRUE);
+		echo json_encode($this->task_model->get(ACTIVE), TRUE);
 	}
 
 
 	public function fetch_archived(){
 		
-		return $this->task_model->get(self::ARCHIVED);
+		return $this->task_model->get(ARCHIVED);
 	}
 
 
@@ -191,5 +192,11 @@ class Tasks extends CI_Controller {
 		$this->load->view('task/header');
 		$this->load->view('modal');
 		$this->load->view('task/index', $data);
+	}
+
+
+	public function assign_actors($task_id) {
+		$members = $this->input->post('members[]');
+		$this->task_model->add_actors($task_id, $members);
 	}
 }
