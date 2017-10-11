@@ -17,8 +17,8 @@ class Team_model extends CI_Model {
 		if($user_id != null)
 			return $this->db->select('*')
 				->from('teams')
-				->join('teams_mapping', 'teams_mapping.teams_id = teams.id')
-				->where('teams_mapping.users_id', $user_id)
+				->join('teams_mapping', 'teams_mapping.team_id = teams.id')
+				->where('teams_mapping.user_id', $user_id)
 				->get()
 				->result();
 		else
@@ -36,8 +36,8 @@ class Team_model extends CI_Model {
 
 		return $this->db->select('*')
 			->from('users')
-			->join('teams_mapping', 'teams_mapping.users_id = users.id') #inner?
-			->where('teams_mapping.teams_id', $team_id)
+			->join('teams_mapping', 'teams_mapping.user_id = users.id') #inner?
+			->where('teams_mapping.team_id', $team_id)
 			->get()
 			->result();
 	}
@@ -62,15 +62,15 @@ class Team_model extends CI_Model {
 	public function update_members($team_id, $users) {
 		
 		$new_member_ids = array_column($this->db->select('id')->from('users')->where_in('email_address', $users)->get()->result_array(), 'id');
-		$old_member_ids = array_column($this->db->select('users_id')->from('teams_mapping')->where('teams_id', $team_id)->get()->result_array(), 'users_id');
+		$old_member_ids = array_column($this->db->select('user_id')->from('teams_mapping')->where('team_id', $team_id)->get()->result_array(), 'user_id');
 
 		foreach ($new_member_ids as $id) {
 			
 			if(!in_array($id, $old_member_ids)) {
 				
 				$this->db->insert('teams_mapping', [
-					'teams_id' => $team_id,
-					'users_id' => $id
+					'team_id' => $team_id,
+					'user_id' => $id
 				]);
 			}
 		}
@@ -80,8 +80,8 @@ class Team_model extends CI_Model {
 			if(!in_array($id, $new_member_ids)) {
 			
 				$this->db->delete('teams_mapping', [
-					'teams_id' => $team_id,
-					'users_id' => $id
+					'team_id' => $team_id,
+					'user_id' => $id
 				]);
 			}
 		}
@@ -91,8 +91,8 @@ class Team_model extends CI_Model {
 	public function delete_member($team_id, $user_id) {
 		
 		$this->db->delete('teams_mapping', [
-			'teams_id' => $team_id,
-			'users_id' => $user_id
+			'team_id' => $team_id,
+			'user_id' => $user_id
 		]);
 	}
 
@@ -105,6 +105,6 @@ class Team_model extends CI_Model {
 
 	public function check_team($id) {
 		
-		return $this->db->get_where('teams_mapping', ['teams_id' => $id])->result();
+		return $this->db->get_where('teams_mapping', ['team_id' => $id])->result();
 	}
 }
