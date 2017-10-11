@@ -41,7 +41,7 @@ class Tasks extends CI_Controller {
 		$data['author_id'] = $id;
         $data['email'] = $this->session->user->email_address;
         $data['teams'] = $this->team_model->get_all($this->session->user->id);
-		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
+		$data['colors'] = unserialize(COLORS);
 		$data['team'] = new stdClass();
 		$data['team']->id = $id;
 		$data['team']->name = $this->team_model->get($id)->name;

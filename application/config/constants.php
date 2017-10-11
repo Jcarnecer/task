@@ -97,3 +97,16 @@ defined('ACTIVE') 		OR define('ACTIVE', 1);
 defined('ARCHIVE')		OR define('ARCHIVE', 2);
 defined('INACTIVE')		OR define('INACTIVE', 3);
 defined('IN_PROGRESS')	OR define('IN_PROGRESS', 4);
+
+
+/*
+|--------------------------------------------------------------------------
+| COLORS ARRAY CONSTANT
+|--------------------------------------------------------------------------
+|
+| Colors
+|
+*/
+$colors = serialize(['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc']);
+
+defined('COLORS')		OR define('COLORS', $colors);
