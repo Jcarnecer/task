@@ -43,7 +43,7 @@ class Tasks extends CI_Controller {
 		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 		$data['team'] = new stdClass();
 		$data['team']->id = $id;
-		$data['team']->name = $this->team_model->get($id)[0]->name;
+		$data['team']->name = $this->team_model->get($id)->name;
 		$data['team']->members = $this->team_model->get_members($id);
 		
 		$this->load->view('task/header', $data);
@@ -56,15 +56,18 @@ class Tasks extends CI_Controller {
 	public function post($author_id, $task_id = null) {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+
 			$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
+
 			if($due_date == date('Y-m-d', strtotime('1970-01-01')))
 				$due_date = date('Y-m-d');
+
 			$task_details = [
-				'title' => $this->input->post('title'),
+				'title'		  => $this->input->post('title'),
 				'description' => $this->input->post('description'),
-				'due_date' => $due_date,
-				'color' => $this->input->post('color'),
-				'user_id' => $author_id
+				'due_date'	  => $due_date,
+				'color'		  => $this->input->post('color'),
+				'user_id'	  => $author_id
 			];
 
 			if($task_id != null) {
@@ -107,11 +110,11 @@ class Tasks extends CI_Controller {
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 			
 			$task_details = [
-				'title' => $this->input->post('title'),
+				'title'		  => $this->input->post('title'),
 				'description' => $this->input->post('description'),
-				'due_date' => date('Y-m-d', strtotime($this->input->post('due_date'))),
-				'color' => $this->input->post('color'),
-				'user_id' => $this->input->post('team_id')
+				'due_date'	  => date('Y-m-d', strtotime($this->input->post('due_date'))),
+				'color'	 	  => $this->input->post('color'),
+				'user_id'	  => $this->input->post('team_id')
 			];
 
 			if($id != null)
@@ -145,10 +148,10 @@ class Tasks extends CI_Controller {
 	public function post_note($task_id)	{
 		
 		$note_details = [
-			'task_id' => $task_id,
-			'body' => $this->input->post('notes'),
-			'created_at' => date('Y-m-d'),
-			'user_id' => $this->session->user->id
+			'task_id'	  => $task_id,
+			'body'		  => $this->input->post('notes'),
+			'created_at'  => date('Y-m-d'),
+			'user_id'	  => $this->session->user->id
 		];
 
 		$this->task_model->add_task_notes($task_id, $note_details);
@@ -177,7 +180,6 @@ class Tasks extends CI_Controller {
 				$this->input->post('val')
 			);
 		}
-
 	}
 
 

@@ -42,34 +42,6 @@ class Task_model extends CI_Model {
 	}
 
 
-	public function get_team_tasks($status = null) {
-		
-		if($status != null)
-			$tasks = $this->db->select('*')
-				->from('tasks')
-				->join('teams_mapping', 'teams_mapping.teams_id = tasks.user_id')
-				->where(['teams_mapping.users_id'=>$this->session->user[0]->id, 'tasks.status' => $status])
-				->get()
-				->result();
-		else
-			$tasks = $this->db->select('*')
-				->from('tasks')
-				->join('teams_mapping', 'teams_mapping.teams_id = tasks.user_id')
-				->where(['teams_mapping.users_id'=>$this->session->user[0]->id])
-				->get()
-				->result();
-		
-		foreach ($tasks as $task) {
-			
-			$task->notes = $this->get_task_notes($task->id);
-			$task->tags = $this->get_task_tags($task->id);
-			$task->remaining_days = $this->estimate_days($task->id);
-		}
-		
-		return $tasks;
-	}
-
-
 	#
 	# @param $order_by = column name
 	# @param $direction = asc/desc
