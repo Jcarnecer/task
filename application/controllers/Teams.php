@@ -36,7 +36,7 @@ class Teams extends CI_Controller {
 				$this->team_model->update_team($id, $this->input->post('name'));
 			
 			} else
-				$team_id = $this->team_model->create_team(['name' => $this->input->post('name')]);
+				$team_id = $this->team_model->create_team(['name' => $this->input->post('name'), 'admin' => $this->session->user->id]);
 				
 			$members = $this->input->post('members[]');
 			$members[] = $this->session->user->email_address;
