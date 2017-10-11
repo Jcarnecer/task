@@ -1,9 +1,52 @@
-/* Task Board */
-.kanban-board {
-    font-family: 
+/* Kanban Board */
+#kanbanBoard {
+    font-family: 'Shadows Into Light';
+    /* margin: 10px; */
 }
 
 
+#kanbanBoard>.row>.col-md-4 {
+    padding: 0px;
+}
+
+
+.kanban-panel {
+    border-style: dashed;
+    border-color: rgba(0, 0, 0, 0.5);
+    padding: 0px;
+}
+
+
+#kanbanBoard .title {
+    font-size: 48px;
+    font-weight: 700em;
+    text-align: center;
+    width: 100%;
+    border-bottom: 2px;
+    border-style: dashed;
+    border-color: rgba(0, 0, 0, 0.5)
+}
+
+
+#kanbanBoard #todoPanel {
+    /* background-color: rgba(128, 128, 128, 0.70) */
+    border-width: 0px 0px 0px 0px;
+}
+
+
+#kanbanBoard #doingPanel {
+    /* background-color: rgba(128, 128, 128, 0.70) */
+    border-width: 0px 2px;
+}
+
+
+#kanbanBoard #donePanel {
+    /* background-color: rgba(128, 128, 128, 0.70) */
+    border-width: 0px 0px 0px 0px;
+}
+
+
+/* Task Board */
 .task-tag-board {
     margin: 10px;
 }

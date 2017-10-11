@@ -14,7 +14,7 @@ $(function () {
         // } else {
 
             $(document).displayTask(data);
-        }
+        // }
     });
 
     

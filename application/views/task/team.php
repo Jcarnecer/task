@@ -10,32 +10,38 @@
         <h5 style="font-weight:500;"><a class="team-leave" style="color:#101010;" href="#" data-value="<?= $team->id; ?>"><span class="glyphicon glyphicon-log-out"></span> Leave Group</a></h5>
     </div>
     
-    <div class="addTaskSearch" >
+    <!-- <div class="addTaskSearch" >
         <a class="task-create" href="#taskModifyModal" data-toggle="modal" style="color: inherit;">
             <input type="text" id="taskSearch" placeholder="Add Task...">  
         </a>
-    </div>
+    </div> -->
 
-    <div class="container-fluid kanban-board"> 
-        <div id="taskTileList" class="row">
-            <div class="col-md-4 container-fluid">
-                <div id="thingsToDo" class="row">
-                    <div class="col-md-12">
-                        <h3>To-Do</h3>
+    <div id="kanbanBoard" class="container-fluid"> 
+        <div class="row">
+            <div class="col-md-4">
+                <div id="todoPanel" class="kanban-panel container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="title">To-Do</h3>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="doing" class="col-md-4 container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Doing</h3>
+            <div class="col-md-4">
+                <div id="doingPanel" class="kanban-panel container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="title">Doing</h3>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div id="done" class="col-md-4 container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Done</h3>
+            <div class="col-md-4">
+                <div id="donePanel" class="kanban-panel container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="title">Done</h3>
+                        </div>
                     </div>
                 </div>
             </div>
