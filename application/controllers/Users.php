@@ -20,6 +20,7 @@ class Users extends CI_Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           
             $login_details = [
+
                 "email_address" => $_POST["email_address"],
                 "password" => $_POST["user_password"]
             ];
@@ -42,13 +43,13 @@ class Users extends CI_Controller {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
             $user_details = [
-                "id" => "USR" . $this->utilities->generate_id(8),
-                "first_name" => ucfirst($_POST["first_name"]),
-                "last_name" => $_POST["last_name"],
-                "password" => $_POST["user_password"],
-                "company_id" => 'astrid-technologies',
-                "email_address" => $_POST["email_address"]
 
+                "id" => "USR" . $this->utilities->unique_id('users', 8),
+                "first_name" => ucfirst($_POST["first_name"]),
+                "last_name" => ucfirst($_POST["last_name"]),
+                "password" => $_POST["user_password"],
+                "company_id" => 'astrid',
+                "email_address" => $_POST["email_address"]
             ];
 
             $this->user_model->insertUser($user_details);

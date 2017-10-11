@@ -7,7 +7,7 @@
         
         <title>Task</title>
 
-        <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css"> 
+        <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/flavored-reset-and-normalize.css'); ?>" />
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" />
@@ -25,14 +25,14 @@
             </div>
 
             <ul class="sidebar-menu">		
-<!--
-                <li class="">
+
+                <!-- <li class="">
                     <a class="task-create" href="#taskModifyModal" data-toggle="modal">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <span>Add Task</span>
                     </a>
-                </li>
--->
+                </li> -->
+
                 <li class="">
                     <a class="task-create" href="#searchTaskModal" data-toggle="modal">
                         <i class="fa fa-search" aria-hidden="true"></i>
@@ -41,7 +41,7 @@
                 </li>
                 
                 <li class="">
-                    <a class="" href="<?= base_url('tasks'); ?>">
+                    <a class="" href="<?= base_url('personal'); ?>">
                         <i class="fa fa-tasks" aria-hidden="true"></i>
                         <span>Personal Task</span>
                     </a>    
@@ -54,7 +54,7 @@
                     </a>
                     <ul class="sub collapse" id="UIElementsSub1">
                         <?php foreach($teams as $team): ?>
-                        <li><a href="<?= base_url('tasks/team/' . $team->id); ?>"><?=$team->name?></a></li>
+                        <li><a href="<?= base_url('team/' . $team->id); ?>"><?=$team->name?></a></li>
                         <?php endforeach; ?>
                         <li>
                             <a class="team-create" href="#teamModifyModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Create Team</a>

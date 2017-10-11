@@ -16,21 +16,27 @@
         </a>
     </div>
 
-    <div class="container-fluid task-tag-board"> 
+    <div class="container-fluid kanban-board"> 
         <div id="taskTileList" class="row">
-            <div class="container-fluid">
+            <div class="col-md-4 container-fluid">
                 <div id="thingsToDo" class="row">
-
+                    <div class="col-md-12">
+                        <h3>To-Do</h3>
+                    </div>
                 </div>
             </div>
-            <div id="doing" class="container-fluid">
+            <div id="doing" class="col-md-4 container-fluid">
                 <div class="row">
-
+                    <div class="col-md-12">
+                        <h3>Doing</h3>
+                    </div>
                 </div>
             </div>
-            <div id="done" class="container-fluid">
+            <div id="done" class="col-md-4 container-fluid">
                 <div class="row">
-
+                    <div class="col-md-12">
+                        <h3>Done</h3>
+                    </div>
                 </div>
             </div>
         </div>

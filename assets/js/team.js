@@ -1,5 +1,6 @@
 $(function () {
 
+
     // Load Modal
     $(document).on('click', '.team-create', function(){
 
@@ -85,7 +86,8 @@ $(function () {
 
             $(document).postTeam(team).always(function(data) {
 
-                window.location.href = `${baseUrl}tasks/team/${data['team_id']}`;
+                window.location.href = `${baseUrl}team/${data['team_id']}`;
+                // console.log(data['team_id']);
             });
         else if($(this).closest('form').attr('id') == 'teamUpdateForm')
         

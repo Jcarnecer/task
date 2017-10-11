@@ -4,14 +4,15 @@ $(function () {
     // Initialize
     $(document).getTask().done(function(data) {
 
-        if(data.length == 0) {
+        // if(data.length == 0) {
 
-            $('#taskTileList').html(
-                `<h1 class="no-task-text">
-                    No Task yet :(
-                </h1>`
-            );
-        } else {
+        //     $('#taskTileList').html(
+        //         `<h1 class="no-task-text">
+        //             No Task yet :(
+        //         </h1>`
+        //     );
+        // } else {
+
             $(document).displayTask(data);
         }
     });

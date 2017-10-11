@@ -18,7 +18,8 @@ class Teams extends CI_Controller {
 				$this->team_model->update_team($id, $this->input->post('name'));
 			
 			} else
-				$team_id = $this->team_model->create_team(['name' => $this->input->post('name')]);
+
+				$team_id = $this->team_model->create_team(['name' => $this->input->post('name'), 'admin' => $this->session->user[0]->id]);
 				
 			$members = $this->input->post('members[]');
 			$members[] = $this->session->user[0]->email_address;
@@ -33,8 +34,10 @@ class Teams extends CI_Controller {
 	public function get($id = null)	{
 		
 		if($id != null)
+
 			echo json_encode(array_merge((array)$this->team_model->get($id)[0], ['members' => (array)$this->team_model->get_members($id)]));
 		else
+
 			echo json_encode($this->team_model->get_all($this->session->user[0]->id));
 	}	
 
@@ -43,9 +46,11 @@ class Teams extends CI_Controller {
         
         $user = $this->user_model->get('email_address', $this->input->post('email'));
         
-        if($user !=  null)
+		if($user !=  null)
+		
             echo json_encode(array_merge((array)$user[0], ['exist' =>  true]));
-        else
+		else
+		
             echo json_encode(['exist' =>  false]);
 	}
 	

@@ -1,13 +1,25 @@
+/* Task Board */
+.kanban-board {
+    font-family: 
+}
+
+
+.task-tag-board {
+    margin: 10px;
+}
+
+
 #taskTileList {
     padding: 10px;
 }
 
-/* Modal Text Area and Input */
 
+/* Task_modal */
 .modal input.heading {
     height: 50px;
     width: 100%;
 }
+
 
 .modal textarea {
     width: 100%;
@@ -17,23 +29,26 @@
     overflow-y: hidden;
 }
 
+
 .modal input, .modal textarea {
     border: 0 hidden #ffffff;
     background-color: transparent;
 }
 
+
 .modal input:focus, .modal textarea:focus, .modal button:focus {
     outline: none;
 }
 
-/* Note */
 
+/* Note_modal */
 .modal .task-note-label {
     font-weight: 800;
     font-size: 28px;
     text-align: center;
     width: 100%;
 }
+
 
 .modal .task-note-box {
     background-color: #ffffff;
@@ -42,19 +57,23 @@
     padding: 10px 20px;
 }
 
+
 .modal .task-note-list {
     margin: 10px;
 }
+
 
 .modal .task-note-list-item {
     /* padding: 5px; */
     margin: 0px;
 }
 
+
 .modal .task-note-user {
     width: 75%;
     padding-bottom: 75%;
 }
+
 
 .modal .task-note-text {
     font-weight: 500;
@@ -63,14 +82,16 @@
     background-color: #ffffff;
     border-radius: 15px;
 }
+/* end-of-Note_modal */
 
-/* Tag */
 
+/* Tag_modal */
 .modal .task-tag {
     font-size: 14px;
     line-height: 1.8;
     margin: 1px;
 }
+
 
 .modal .task-tag-list span.label {
     margin: 2px;
@@ -80,28 +101,26 @@
     display: inline-block;
 }
 
+
 .model .task-tag-remove {
     font-size: 10px;   
     display: inline-block;
 }
+/* end-of-Tag_modal */
 
-/* Other */
 
-.modal ::-webkit-input-placeholder {
-    color: #808080;
-}
-
-/* View Task */
-
+/* View_task_modal */
 .heading {
     font-weight: 800;
     font-size: 32px;
 }
 
+
 .body {
     font-weight: 500;
     font-size: 22px;
 }
+
 
 .no-task-text {
     margin: 50px auto;
@@ -111,20 +130,30 @@
     text-shadow: -1px -1px 3px;
     text-align: center;
 }
+/* end-of-View_task_modal */
 
-/* Team Member */
 
+/* Other */
+.modal ::-webkit-input-placeholder {
+    color: #808080;
+}
+/* end-of-Task_modal */
+
+
+/* Team_modal */
 .modal .team-member {
     font-size: 14px;
     line-height: 1.8;
     margin: 1px;
 }
 
+
 .modal .team-member-label {
     display: inline-block;
     font-size: 20px;
     font-weight: 700;
 }
+
 
 .modal .team-member-list span.label {
     margin: 2px;
@@ -134,13 +163,24 @@
     display: inline-block;
 }
 
+
 .model .team-member-remove {
     font-size: 10px;   
     display: inline-block;
 }
+/* end-of-Team_modal */
+
+
+/* Create Task button*/
+.createTaskButton{
+    width: 100px;
+    height: 100px;
+    background-color: black;
+        
+}
+
 
 /* Search */
-
 #taskSearch, #taskSearch:focus {
     width: 100%;
     height: 70px;
@@ -149,6 +189,7 @@
     border-style: hidden;
     outline: none;
 }
+
 
 /* Add Task Search */
 .addTaskSearch{
@@ -160,6 +201,7 @@
     outline: none;
 }
 
+
 .task-search-item {
     margin: 3px 0;
     color: #000000;
@@ -170,14 +212,8 @@
     font-weight: 500;
 }
 
-/* Task Board */
 
-.task-tag-board {
-    margin: 10px;
-}
-
-/* Task Tile */
-/*
+/* Task Tile
 .task-tile1{
     color: #000000; 
     padding: 20px;
@@ -200,11 +236,13 @@
     box-shadow: 0px 1px 1px;
 }
 
+
 .tile-title {
     word-wrap: break-word;
     font-weight: bold;
     font-size: 20px;
 }
+
 
 .tile-description {
     overflow-x: hidden;
@@ -214,11 +252,12 @@
     font-size: 14px;
 }
 
-/* Color Button */
 
+/* Color Button */
 .btn-color span.glyphicon {
     color: #808080;
 }
+
 
 .btn-circle, .btn-circle:focus {
     width: 30px;
@@ -233,6 +272,7 @@
     transition: 0.5s;
 }
 
+
 .btn-circle.btn-lg {
     width: 50px;
     height: 50px;
@@ -242,6 +282,7 @@
     border-radius: 25px;
     border-color: #eeeeee;
 }
+
 
 .btn-circle.btn-xl {
     width: 70px;
@@ -253,13 +294,14 @@
     border-color: #eeeeee;
 }
 
-/* Other */
 
+/* Other */
 .box{
 	width:100px;
     height:100px;
     background:#f00;
 }
+
 
 .circle{
     background-color: #808080;
@@ -270,6 +312,7 @@
 	padding-bottom: 100%;
 }
 
+
 .plan-box{
     background-color: #fff;
     border-radius: 5px;
@@ -278,10 +321,12 @@
     box-shadow: 0 2px 2px #efefef;
 }
 
+
 a:link, a:visited, a:hover{
 /*    color: #fff;*/
     text-decoration: none;
 }
+
 
 @media (min-width: 992px) {
     .container-scroll {
@@ -308,11 +353,5 @@ a:link, a:visited, a:hover{
 }
 
 
-/* Create Task button*/
-.createTaskButton{
-    width: 100px;
-    height: 100px;
-    background-color: black;
-        
-}
+
 
