@@ -1,6 +1,7 @@
 $(function () {
     
     var $container = null;
+    var $kanbanPanel = [$('#todoPanel>.row'), $('#doingPanel>.row'), $('#donePanel>.row')];
     var column = 0;
 
     
@@ -30,7 +31,7 @@ $(function () {
         //     );
         // } else {
 
-            $(document).displayTask($container, data, column);
+            $(document).displayTask(getTaskType(), data, column);
         // }
     });
 
@@ -181,7 +182,7 @@ $(function () {
 
                 $(document).getTask().done(function(data) {
 
-                    $(document).displayTask($container, data);
+                    $(document).displayTask(getTaskType(), data);
                 });
             }); 
         } else if($(this).closest('form').is('#taskUpdateForm')) {
@@ -190,7 +191,7 @@ $(function () {
                     
                 $(document).getTask().done(function(data){
 
-                    $(document).displayTask($container, data);
+                    $(document).displayTask(getTaskType(), data);
                 });
             });
         }
@@ -216,7 +217,7 @@ $(function () {
 
             $(document).getTask().done(function(data){
 
-                $(document).displayTask($container, data);
+                $(document).displayTask(getTaskType(), data);
             });
         });
     });

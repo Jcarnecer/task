@@ -21,7 +21,7 @@
         <div class="col-md-4">
             <div id="todoPanel" class="kanban-panel container-fluid">
                 <h3 class="title">To-Do</h3>
-                <button class="task-create add-task btn btn-default" data-target="#taskModifyModal" data-toggle="modal">&plus;</button>
+                <!-- <button class="task-create add-task btn btn-default" data-target="#taskModifyModal" data-toggle="modal">&plus;</button> -->
                 <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
                 </div>
             </div>

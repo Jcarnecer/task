@@ -183,37 +183,74 @@ $.fn.displayNote = function(items) {
 }
 
 
-$.fn.displayTask = function($container, items, colNumber = 3) {
+$.fn.displayTask = function(type, items, column = 3) {
     
-    colNumber = 12/colNumber;
+    var $containers = [];
+    var status = [1, 4, 2];
+
+
+    switch(type) {
+        case 'personal':
+            $containers.push($('#taskTileList'));
+            column = 4;
+            break;
+
+        case 'team':
+            $containers.push($('#todoPanel>.row'));
+            status.push()
+            $containers.push($('#doingPanel>.row'));
+            $containers.push($('#donePanel>.row'));
+            column = 2;
+            break;
+    }
+
+
+    colNumber = 12/column;
     
-    $container.html('');
+    
+    $.each($containers, function(i, $container) {
+        $container.html('');
+        
+        $.each(items, function(j, item) {
+            
+            if(status[i] == item['status']) {
 
-    $.each(items, function(i, item) {
-
-        $container.append(
-            `<div data-order=${i} class="col-md-${colNumber}">
-
-                <div id="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
-                    <div class="container">    
-                        <div class="row">
-                            <div class="col-md-2">
-                                <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
-                            </div>
-                            <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
-                                <span class="tile-title">${item['title']}</span>
-                                <br/>
-                                <span class="tile-description">${item['description']}</span>
+                $container.append(
+                    `<div data-order=${j} class="col-md-${colNumber}">
+                    
+                        <div id="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:${item['color']}; padding: 20px;">
+                            <div class="container">    
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
+                                    </div>
+                                    <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
+                                        <span class="tile-title">${item['title']}</span>
+                                        <br/>
+                                        <span class="tile-description">${item['description']}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    
+                    </div>`
+                    // ondrop="drop(event)" ondragover="allowDrop(event)"
+                );
 
-            </div>`
-        );
+            }
 
-        // ondrop="drop(event)" ondragover="allowDrop(event)"
+        });
     });
+
+    $('#todoPanel>.row').append(
+        `<div class="col-md-${colNumber}">
+        
+            <div class="task-create" data-target="#taskModifyModal" data-toggle="modal" draggable="true" ondragstart="drag(event)" style="background-color:#08f; padding:20px;">
+                <div class="container"><span class="tile-title">&plus; Add Task</span></div>
+            </div>
+        
+        </div>`
+    );
 };
 
 
