@@ -57,8 +57,8 @@ class Task_model extends CI_Model {
 
 		return $this->db->select('name')
 			->from('tags')
-			->join('tasks_tagging', 'tasks_tagging.tags_id = tags.id')
-			->where('tasks_tagging.tasks_id', $id)
+			->join('tasks_tagging', 'tasks_tagging.tag_id = tags.id')
+			->where('tasks_tagging.task_id', $id)
 			->get()
 			->result();
 	}
@@ -134,8 +134,8 @@ class Task_model extends CI_Model {
 		
 		foreach($this->db->get_where('tasks', ['user_id' => $id])->result() as $task){
 			
-			$this->db->delete('task_notes', ['task_id' => $task->id]);
-			$this->db->delete('tasks_tagging', ['tasks_id' => $task->id]);
+			$this->db->delete('task_notes', 	['task_id' => $task->id]);
+			$this->db->delete('tasks_tagging',  ['task_id' => $task->id]);
 		}
 
 		$this->db->delete('tasks', ['user_id' => $id]);
@@ -145,14 +145,14 @@ class Task_model extends CI_Model {
 	public function add_actors($task_id, $users) {
 		
 		$new_member_ids = array_column($this->db->select('id')->from('users')->where_in('email_address', $users)->get()->result_array(), 'id');
-		$old_member_ids = array_column($this->db->select('users_id')->from('tasks_assignment')->where('tasks_id', $task_id)->get()->result_array(), 'users_id');
+		$old_member_ids = array_column($this->db->select('user_id')->from('tasks_assignment')->where('task_id', $task_id)->get()->result_array(), 'user_id');
 
 		foreach ($new_member_ids as $id) {
 			
 			if(!in_array($id, $old_member_ids)) {
 				
 				$this->db->insert('tasks_assignment', [
-					'tasks_id' => $task_id,
+					'task_id' => $task_id,
 					'user_id' => $id
 				]);
 			}
@@ -163,7 +163,7 @@ class Task_model extends CI_Model {
 			if(!in_array($id, $new_member_ids)) {
 			
 				$this->db->delete('teams_mapping', [
-					'teams_id' => $team_id,
+					'team_id' => $team_id,
 					'user_id' => $id
 				]);
 			}

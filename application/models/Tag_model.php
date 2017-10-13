@@ -29,8 +29,8 @@ class Tag_model extends CI_Model {
 			if(!in_array($updated_tag, $this->get($id))) {
 
 				$this->db->insert('tasks_tagging', [
-					'tags_id'  => $this->get_id($updated_tag),
-					'tasks_id' => $id
+					'tag_id'  => $this->get_id($updated_tag),
+					'task_id' => $id
 				]);
 			}
 		}
@@ -43,7 +43,7 @@ class Tag_model extends CI_Model {
 		
 		foreach($this->get($id) as $old_tag)
 			if(!in_array($old_tag, $updated_tags))
-				$this->db->delete('tasks_tagging', ['tasks_id' => $id, 'tags_id' => $this->get_id($old_tag)]);
+				$this->db->delete('tasks_tagging', ['task_id' => $id, 'tag_id' => $this->get_id($old_tag)]);
 	}
 
 
@@ -52,8 +52,8 @@ class Tag_model extends CI_Model {
 		$names = [];
 		$tags  =  $this->db->select('name')
 			->from('tags')
-			->join('tasks_tagging', 'tasks_tagging.tags_id = tags.id')
-			->where('tasks_tagging.tasks_id', $id)
+			->join('tasks_tagging', 'tasks_tagging.tag_id = tags.id')
+			->where('tasks_tagging.task_id', $id)
 			->get()
 			->result();
 
