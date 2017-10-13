@@ -54,7 +54,7 @@ class Tasks extends CI_Controller {
 
 		} else {
 			
-			echo json_encode($this->task_model->get_all($author_id, (ACTIVE)));
+			echo json_encode($this->task_model->get_all($author_id));
 		}
 	}
 
@@ -90,8 +90,21 @@ class Tasks extends CI_Controller {
 	public function change_column($task_id)	{
 
 		$column = $this->input->post('column');
-		$actor 	= $this->session->user->id;
-		echo json_encode(['id' => $task_id, 'column' => $column, 'actor' => $actor]);
+
+		switch ($column) {
+
+			case 'todoPanel':
+				$this->task_model->update_status($task_id, ACTIVE);
+				break;
+			case 'doingPanel':
+				$this->task_model->update_status($task_id, IN_PROGRESS);
+				break;
+			case 'donePanel':
+				$this->task_model->update_status($task_id, ARCHIVE);
+				break;
+		}
+		// $actor 	= $this->session->user->id;
+		// echo json_encode(['id' => $task_id, 'column' => $column, 'actor' => $actor]);
 	}
 
 
