@@ -1,17 +1,23 @@
-function allowDrop(ev) {
+function allowDrop(e) {
 
-    ev.preventDefault();
+    e.preventDefault();
 }
 
-function drag(ev) {
+function drag(e) {
 
-    ev.dataTransfer.setData("order", ev.target.parentElement.getAttribute('data-order'));
+    e.dataTransfer.setData('order', e.target.parentElement.getAttribute('data-order'));
 }
 
-function drop(ev) {
+function drop(e) {
     
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("order");
-    var list = document.getElementById('taskTileList');
-    list.insertBefore(document.querySelector(`[data-order="${data}"]`), (ev.target.nodeName == "div" && ev.target.hasAttribute('data-order') ? ev.target : ev.target.closest('div[ondrop="drop(event)"]')));
+    e.preventDefault();
+    var $column = $(e.target).is('div.kanban-panel>.row') ? $(e.target) : $(e.target).closest('div.kanban-panel>.row');
+    var data = e.dataTransfer.getData('order');
+    var taskId = $(`[data-order="${data}"]`).children('div').attr('id');
+    var details = {column: $column.parent('div.kanban-panel').attr('id')};
+
+    $column.prepend($(`[data-order="${data}"]`));
+    $(document).changeColumn(details, taskId).done(function(data){
+        console.log(data);
+    });
 }

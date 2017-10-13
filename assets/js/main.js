@@ -1,11 +1,18 @@
 const baseUrl = window.location.origin + '/task/';
 var authorId = null;
+var taskType = null;
 
 
-function setAuthorId(id) { author_id = id; }
+function setAuthorId(id) { authorId = id; }
 
 
-function getAuthorId() { return author_id; }
+function getAuthorId() { return authorId; }
+
+
+function setTaskType(type) { taskType = type; }
+
+
+function getTaskType() { return taskType; }
 
 
 // AJAX
@@ -55,27 +62,39 @@ $.fn.postTaskNote = function(details, taskId) {
 }
 
 
-$.fn.getTeam = function(id = null) {
+$.fn.getTeam = function(teamId = null) {
 
     return $.ajax({
 
         type: 'GET',
-        url: `${baseUrl}api/team` + (id != null ? `/${id}` : ''),
+        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
         dataType: 'json'
     });
 };
 
 
-$.fn.postTeam = function(details, id = null) {
+$.fn.postTeam = function(details, teamId = null) {
 
     return $.ajax({
 
         type: 'POST',
-        url: `${baseUrl}api/team` + (id != null ? `/${id}` : ''),
+        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
         dataType: 'json',
         data: details
     });
 };
+
+
+$.fn.changeColumn = function(details, taskId) {
+
+    return $.ajax({
+
+        type: 'POST',
+        url: `${baseUrl}api/change_column/${taskId}`,
+        datType: 'json',
+        data: details
+    });
+}
 
 
 // Team
@@ -164,16 +183,16 @@ $.fn.displayNote = function(items) {
 }
 
 
-$.fn.displayTask = function(items, rowNumber = 3) {
+$.fn.displayTask = function($container, items, colNumber = 3) {
     
-    rowNumber = 12/rowNumber;
+    colNumber = 12/colNumber;
     
-    $('#taskTileList').html('');
+    $container.html('');
 
     $.each(items, function(i, item) {
 
-        $('#taskTileList').append(
-            `<div ondrop="drop(event)" ondragover="allowDrop(event)" data-order=${i} class="col-md-${rowNumber}" style="margin: 50px auto;">
+        $container.append(
+            `<div data-order=${i} class="col-md-${colNumber}">
 
                 <div id="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
                     <div class="container">    
@@ -192,6 +211,8 @@ $.fn.displayTask = function(items, rowNumber = 3) {
 
             </div>`
         );
+
+        // ondrop="drop(event)" ondragover="allowDrop(event)"
     });
 };
 

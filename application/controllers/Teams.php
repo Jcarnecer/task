@@ -42,24 +42,6 @@ class Teams extends CI_Controller {
 			]));
 		else
 			echo json_encode($this->team_model->get_all($this->session->user->id));
-	}	
-
-
-	# Modify Team
-	public function add_members() {
-		
-		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-			
-			$peers = [];
-			$peers = $this->input->post('peers[]');
-			$team_details = [
-				'teams_id'	=> $this->input->post('team_id'),
-				'peers'		=> $peers
-			];
-
-			$this->team_model->add_peers($team_details);
-			redirect('teams');
-		}
 	}
 
 
@@ -67,9 +49,9 @@ class Teams extends CI_Controller {
         
         $user = $this->user_model->get('email_address', $this->input->post('email'));
         
-        if($user !=  null)
+		if($user !=  null)
             echo json_encode(array_merge((array)$user[0], ['exist' =>  true]));
-        else
+		else
             echo json_encode(['exist' =>  false]);
 	}
 	
@@ -78,5 +60,4 @@ class Teams extends CI_Controller {
 		
 		$this->team_model->delete_member($team_id, $this->session->user->id);
 	}
-	# End Modify Team
 }

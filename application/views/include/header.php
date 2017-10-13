@@ -7,7 +7,9 @@
         
         <title>Task</title>
 
-        <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Shadows+Into+Light">
+
+        <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/flavored-reset-and-normalize.css'); ?>" />
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" />
@@ -25,14 +27,14 @@
             </div>
 
             <ul class="sidebar-menu">		
-<!--
-                <li class="">
+
+                <!-- <li class="">
                     <a class="task-create" href="#taskModifyModal" data-toggle="modal">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <span>Add Task</span>
                     </a>
-                </li>
--->
+                </li> -->
+
                 <li class="">
                     <a class="task-create" href="#searchTaskModal" data-toggle="modal">
                         <i class="fa fa-search" aria-hidden="true"></i>

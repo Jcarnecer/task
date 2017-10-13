@@ -41,14 +41,13 @@ class Users extends CI_Controller {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
-            $user_details = [
+            $user_details      = [
                 "id"             => "USR" . $this->utilities->generate_id(8),
                 "first_name"     => ucfirst($_POST["first_name"]),
                 "last_name"      => $_POST["last_name"],
                 "password"       => $_POST["user_password"],
                 "company_id"     => 'astrid-technologies',
                 "email_address"  => $_POST["email_address"]
-
             ];
 
             $this->user_model->insertUser($user_details);

@@ -12,6 +12,7 @@ class Tasks extends CI_Controller {
 			$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
 
 			if($due_date == date('Y-m-d', strtotime('1970-01-01')))
+
 				$due_date = date('Y-m-d');
 
 			$task_details	= [
@@ -27,14 +28,17 @@ class Tasks extends CI_Controller {
 				$this->task_model->update($task_id, $task_details);
 				
 				if($this->input->post('tags[]') != null)
+
 					$this->tag_model->update($task_id, $this->input->post('tags[]'));
 				else
+
 					$this->tag_model->update($task_id, []);
 			} else {
 
 				$task_id = $this->task_model->insert($task_details);
 				
 				if($this->input->post('tags[]') != null)
+
 					$this->tag_model->insert($task_id, $this->input->post('tags[]'));
 			}
 		}
@@ -75,19 +79,6 @@ class Tasks extends CI_Controller {
 	}
 
 
-	# Tags
-	public function post_tags($id, $tags){
-		
-		$this->tag_model->update_tags($id, $tags);
-	}
-
-
-	public function get_tags($id){
-
-		echo json_encode($this->tag_model->get_by_id($id));
-	}
-
-
 	# Mark as Done
 	public function mark_as_done($task_id) {
 		
@@ -95,22 +86,18 @@ class Tasks extends CI_Controller {
 	}
 
 
-	# Update Task
-	public function update($id = null) {
+	# Change Task Columnn
+	public function change_column($task_id)	{
 
-		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-			
-			$this->task_model->update(
-				$this->input->post('key'),
-				$this->input->post('task_id'),
-				$this->input->post('val')
-			);
-		}
+		$column = $this->input->post('column');
+		$actor 	= $this->session->user->id;
+		echo json_encode(['id' => $task_id, 'column' => $column, 'actor' => $actor]);
 	}
 
 
 	# Actors for Team Task
 	public function assign_actors($task_id) {
+		
 		$members = $this->input->post('members[]');
 		$this->task_model->add_actors($task_id, $members);
 	}
