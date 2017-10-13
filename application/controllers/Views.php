@@ -11,7 +11,7 @@ class Views extends CI_Controller {
 
         if (!$this->user_model->is_login()) {
         
-            redirect('users/login');
+            redirect('http://localhost/main');
         }
     }
 
