@@ -1,11 +1,18 @@
 const baseUrl = window.location.origin + '/task/';
 var authorId = null;
+var taskType = null;
 
 
-function setAuthorId(id) { author_id = id; }
+function setAuthorId(id) { authorId = id; }
 
 
-function getAuthorId() { return author_id; }
+function getAuthorId() { return authorId; }
+
+
+function setTaskType(type) { taskType = type; }
+
+
+function getTaskType() { return taskType; }
 
 
 // AJAX
@@ -55,27 +62,39 @@ $.fn.postTaskNote = function(details, taskId) {
 }
 
 
-$.fn.getTeam = function(id = null) {
+$.fn.getTeam = function(teamId = null) {
 
     return $.ajax({
 
         type: 'GET',
-        url: `${baseUrl}api/team` + (id != null ? `/${id}` : ''),
+        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
         dataType: 'json'
     });
 };
 
 
-$.fn.postTeam = function(details, id = null) {
+$.fn.postTeam = function(details, teamId = null) {
 
     return $.ajax({
 
         type: 'POST',
-        url: `${baseUrl}api/team` + (id != null ? `/${id}` : ''),
+        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
         dataType: 'json',
         data: details
     });
 };
+
+
+$.fn.changeColumn = function(details, taskId) {
+
+    return $.ajax({
+
+        type: 'POST',
+        url: `${baseUrl}api/change_column/${taskId}`,
+        datType: 'json',
+        data: details
+    });
+}
 
 
 // Team

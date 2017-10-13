@@ -57,6 +57,7 @@ $route['default_controller'] = 'views/personal';
 $route['personal'] = 'views/personal';
 $route['team/(:any)'] = 'views/team/$1';
 
+
 # API
 # team
 $route['api/team']['POST'] = 'teams/post';
@@ -77,11 +78,14 @@ $route['api/task/(:any)']['GET'] = 'tasks/get/$1';
 $route['api/task/(:any)/(:any)']['POST'] = 'tasks/post/$1/$2';
 $route['api/task/(:any)/(:any)']['GET'] = 'tasks/get/$1/$2';
 
-$route['api/note/(:any)']['POST'] = 'tasks/post_note/$1';
-$route['api/note/(:any)']['GET'] = 'tasks/get_note/$1';
+$route['api/note/(:any)']['POST'] = 'tasks/post_notes/$1';
+$route['api/note/(:any)']['GET'] = 'tasks/get_notes/$1';
 
 $route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
+
+$route['api/change_column/(:any)']['POST'] = 'tasks/change_column/$1';
 # end-of-API
+
 
 # migration
 $route['migrate/(:any)'] = 'migrate/index/$1';

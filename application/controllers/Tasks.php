@@ -8,7 +8,7 @@ class Tasks extends CI_Controller {
 	const IN_PROGRESS = 4;
 
 
-	# Create Personal Task
+	# Create Task
 	public function post($author_id, $task_id = null) {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -50,7 +50,7 @@ class Tasks extends CI_Controller {
 	}
 
 
-	# Fetch Personal Task
+	# Fetch Task
 	public function get($author_id, $task_id = null) {
 		
 		if($task_id != null){
@@ -65,8 +65,7 @@ class Tasks extends CI_Controller {
 
 
 	# Notes
-
-	public function post_notes($task_id)	{
+	public function post_notes($task_id) {
 		
 		$note_details = [
 
@@ -86,20 +85,6 @@ class Tasks extends CI_Controller {
 	}
 
 
-	# Tags
-
-	public function post_tags($id, $tags){
-		
-		$this->tag_model->update_tags($id, $tags);
-	}
-
-
-	public function get_tags($id){
-
-		echo json_encode($this->tag_model->get_by_id($id));
-	}
-
-
 	# Mark as Done
 	public function mark_as_done($task_id) {
 		
@@ -107,18 +92,10 @@ class Tasks extends CI_Controller {
 	}
 
 
-	# Update Task
-	public function update($id = null) {
-
-		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-			
-			$this->task_model->update(
-				$this->input->post('key'),
-				$this->input->post('task_id'),
-				$this->input->post('val')
-			);
-		}
-
+	# Change Task Columnn
+	public function change_column($task_id)	{
+		$column = $this->input->post('column');
+		echo json_encode(['id' => $task_id, 'column' => $column]);
 	}
 
 

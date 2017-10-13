@@ -3,7 +3,6 @@
     <script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/script.js'); ?>"></script>
-    <script src="<?= base_url('assets/js/drag_drop.js'); ?>"></script>
     
     <script>
         $(function () {
@@ -15,11 +14,13 @@
     </script>
     
     <script src="<?= base_url('assets/js/main.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/drag_drop.js'); ?>"></script>
     <script src="<?= base_url('assets/js/team.js'); ?>"></script>
     <script src="<?= base_url('assets/js/task.js'); ?>"></script>
 
     <script>
-        setAuthorId("<?= $author_id ?>");
+        setAuthorId('<?= $author_id ?>');
+        setTaskType('<?= $task_type ?>');
     </script>
     
     </body>

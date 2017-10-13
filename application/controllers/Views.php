@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Views extends CI_Controller {
     
-    private $color = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
+    const COLOR = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
 
 
     public function __construct() {
@@ -23,7 +23,8 @@ class Views extends CI_Controller {
 		$data['author_id'] = $this->session->user[0]->id;
         $data['email'] = $this->session->user[0]->email_address;
 		$data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
-		$data['colors'] = $this->color;
+		$data['colors'] = self::COLOR;
+		$data['task_type'] = 'personal';
 
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);
@@ -37,7 +38,9 @@ class Views extends CI_Controller {
 		$data['author_id'] = $id;
         $data['email'] = $this->session->user[0]->email_address;
         $data['teams'] = $this->team_model->get_all($this->session->user[0]->id);
-		$data['colors'] = ['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc'];
+		$data['colors'] = self::COLOR;
+		$data['task_type'] = 'team';
+
 		$data['team'] = new stdClass();
 		$data['team']->id = $id;
 		$data['team']->name = $this->team_model->get($id)[0]->name;

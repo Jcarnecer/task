@@ -1,4 +1,21 @@
 $(function () {
+    
+    var $container = null;
+    var column = 0;
+
+    
+    switch(getTaskType()) {
+        
+        case 'personal':
+            $container = $('#taskTileList')
+            column = 4;
+            break;
+
+        case 'team':
+            $container = $('#todoPanel>.row');
+            column = 2;
+            break;
+    }
 
 
     // Initialize
@@ -13,7 +30,7 @@ $(function () {
         //     );
         // } else {
 
-            $(document).displayTask($('#todoPanel').find('.row'), data, 2);
+            $(document).displayTask($container, data, column);
         // }
     });
 
@@ -101,7 +118,7 @@ $(function () {
 
 
     // Tags
-    $('.task-tag').keypress(function (e) {
+    $(document).on('keypress', '.task-tag', function (e) {
 
         if(e.which == 13 || e.which == 32) {
 
@@ -130,7 +147,7 @@ $(function () {
     
 
     // Notes
-    $('.task-note').keypress(function (e) {
+    $(document).on('keypress', '.task-note', function (e) {
 
         if(e.which == 13) {
             $(this).closest('form').find('.task-note-list').append(
@@ -164,7 +181,7 @@ $(function () {
 
                 $(document).getTask().done(function(data) {
 
-                    $(document).displayTask($('#taskTileList'), data);
+                    $(document).displayTask($container, data);
                 });
             }); 
         } else if($(this).closest('form').is('#taskUpdateForm')) {
@@ -173,7 +190,7 @@ $(function () {
                     
                 $(document).getTask().done(function(data){
 
-                    $(document).displayTask($('#taskTileList'), data);
+                    $(document).displayTask($container, data);
                 });
             });
         }
@@ -199,7 +216,7 @@ $(function () {
 
             $(document).getTask().done(function(data){
 
-                $(document).displayTask($('#taskTileList'), data);
+                $(document).displayTask($container, data);
             });
         });
     });

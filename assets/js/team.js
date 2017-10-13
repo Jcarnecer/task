@@ -38,7 +38,7 @@ $(function () {
 
     
     // Team Member
-    $('.team-member').keypress(function (e) {
+    $(document).on('keypress', '.team-member', function (e) {
 
         if(e.which == 13 || e.which == 32) {
 
