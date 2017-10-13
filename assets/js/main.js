@@ -192,7 +192,7 @@ $.fn.displayTask = function($container, items, colNumber = 3) {
     $.each(items, function(i, item) {
 
         $container.append(
-            `<div ondrop="drop(event)" ondragover="allowDrop(event)" data-order=${i} class="col-md-${colNumber}">
+            `<div data-order=${i} class="col-md-${colNumber}">
 
                 <div id="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:` + (item['status'] == 1 ? item['color'] : '#808080') + `; padding: 20px;">
                     <div class="container">    
@@ -211,6 +211,8 @@ $.fn.displayTask = function($container, items, colNumber = 3) {
 
             </div>`
         );
+
+        // ondrop="drop(event)" ondragover="allowDrop(event)"
     });
 };
 

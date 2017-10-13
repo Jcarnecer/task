@@ -94,8 +94,10 @@ class Tasks extends CI_Controller {
 
 	# Change Task Columnn
 	public function change_column($task_id)	{
+
 		$column = $this->input->post('column');
-		echo json_encode(['id' => $task_id, 'column' => $column]);
+		$actor = $this->session->user[0]->id;
+		echo json_encode(['id' => $task_id, 'column' => $column, 'actor' => $actor]);
 	}
 
 

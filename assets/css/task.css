@@ -36,8 +36,8 @@ html, body {
 
 
 .kanban-panel>.row {
-    min-height: auto;
-    padding: 5px;
+    min-height: 100px;
+    padding: 10px;
 }
 
 
