@@ -197,7 +197,6 @@ $.fn.displayTask = function(type, items, column = 3) {
 
         case 'team':
             $containers.push($('#todoPanel>.row'));
-            status.push()
             $containers.push($('#doingPanel>.row'));
             $containers.push($('#donePanel>.row'));
             column = 2;
@@ -218,16 +217,14 @@ $.fn.displayTask = function(type, items, column = 3) {
                 $container.append(
                     `<div data-order=${j} class="col-md-${colNumber}">
                     
-                        <div id="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:${item['color']}; padding: 20px;">
+                        <div id="${item['id']}" class="task-tile w3-card-2 w3-hover-shadow" draggable="true" ondragstart="drag(event)" style="background-color:${item['color']};">
                             <div class="container">    
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + ` pull-right lead" "></span></a>
+                                        <a class="task-mark-done" data-value="${item['id']}"><i class="fa ` + (item['status'] == 1 ? `fa-square-o` : `fa-check-square-o`) + ` fa-lg"></i></a>
                                     </div>
                                     <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
                                         <span class="tile-title">${item['title']}</span>
-                                        <br/>
-                                        <span class="tile-description">${item['description']}</span>
                                     </div>
                                 </div>
                             </div>
@@ -235,22 +232,27 @@ $.fn.displayTask = function(type, items, column = 3) {
                     
                     </div>`
                     // ondrop="drop(event)" ondragover="allowDrop(event)"
+                    // <br/>
+                    // <span class="tile-description">${item['description']}</span>
                 );
 
             }
 
         });
-    });
 
-    $('#todoPanel>.row').append(
-        `<div class="col-md-${colNumber}">
-        
-            <div class="task-create" data-target="#taskModifyModal" data-toggle="modal" style="background-color:#08f; padding:20px;">
-                <div class="container"><span class="tile-title">&plus; Add Task</span></div>
-            </div>
-        
-        </div>`
-    );
+        if($container.is('#todoPanel>.row')) {
+
+            $container.append(
+                `<div class="col-md-${colNumber}">
+                
+                    <div class="task-create task-tile w3-card-2 w3-hover-shadow" data-target="#taskModifyModal" data-toggle="modal">
+                        <div class="container"><span class="tile-title"><i class="fa fa-plus fa-lg"></i>&nbsp;&nbsp;&nbsp;Add Task</span></div>
+                    </div>
+                
+                </div>`
+            );
+        }
+    });
 };
 
 

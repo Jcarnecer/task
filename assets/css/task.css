@@ -10,9 +10,11 @@ html, body {
 #kanbanBoard {
     background-color: #fafafa;
     /* color: #fafafa; */
-    font-family: 'Shadows Into Light';
+    /* font-family: 'Shadows Into Light'; */
+    font-family: 'Slabo 27px';
     height: calc(100% - 80px);
-    /* margin: 10px; */
+    padding: 0px;
+    margin: 0px;
 }
 
 
@@ -32,7 +34,7 @@ html, body {
     border-style: dashed;
     height: 100%;
     /* border-color: rgba(255, 255, 255, 0.5); */
-    padding: 3px;
+    padding: 2px;
 }
 
 
@@ -45,13 +47,20 @@ html, body {
 }
 
 
-#kanbanBoard .title {
+.kanban-panel .task-tile {
+    margin: 10px 0px;
+}
+
+
+#kanbanBoard .panel-title {
     font-size: 48px;
     font-weight: 700em;
     text-align: center;
     width: 100%;
-    border-bottom: 2px;
+    border-bottom: 2px; 
     border-style: dashed;
+    padding: 5px;
+    margin-bottom: 10px;
     /* margin: 0px 3px; */
     /* border-color: rgba(0, 0, 0, 0.5) */
 }
@@ -300,12 +309,26 @@ html, body {
 
 .task-tile {
     color: #000000; 
-    padding: 10px; 
-    height: 95px; 
+    padding: 20px; 
+    height: auto; 
     border-radius: 2px; 
     overflow-x: hidden;
     overflow-y: hidden;
     box-shadow: 0px 1px 1px;
+    transition-duration: 0.2s;
+}
+
+
+.task-tile.task-create {
+    border: 2px solid #000; 
+    background-color:#fff   ;
+    /* color: #fff; */
+    padding:20px;
+}
+
+
+.task-tile>.container>.row {
+    height: 100%;
 }
 
 

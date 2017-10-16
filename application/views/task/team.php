@@ -16,26 +16,25 @@
     </a>
 </div> -->
 
-<div id="kanbanBoard" class="container-fluid"> 
+<div id="kanbanBoard" class="paper container-fluid"> 
     <div class="row">
         <div class="col-md-4">
             <div id="todoPanel" class="kanban-panel container-fluid">
-                <h3 class="title">To-Do</h3>
-                <!-- <button class="task-create add-task btn btn-default" data-target="#taskModifyModal" data-toggle="modal">&plus;</button> -->
+                <h3 class="panel-title">To-Do</h3>
                 <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div id="doingPanel" class="kanban-panel container-fluid">
-                <h3 class="title">Doing</h3>
+                <h3 class="panel-title">Doing</h3>
                 <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div id="donePanel" class="kanban-panel container-fluid">
-                <h3 class="title">Done</h3>
+                <h3 class="panel-title">Done</h3>
                 <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
                 </div>
             </div>
