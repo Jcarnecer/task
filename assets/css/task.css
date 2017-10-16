@@ -8,16 +8,17 @@ html, body {
 
 /* Kanban Board */
 #kanbanBoard {
-    /* background-color: #003300;
-    color: #fafafa; */
+    background-color: #fafafa;
+    /* color: #fafafa; */
     font-family: 'Shadows Into Light';
-    height: 100%;
+    height: calc(100% - 80px);
     /* margin: 10px; */
 }
 
 
 #kanbanBoard>.row {
     height: 100%;
+    /* overflow-y: scroll; */
 }
 
 
@@ -37,6 +38,7 @@ html, body {
 
 .kanban-panel>.row {
     min-height: 100px;
+    width: 100%;
     padding: 10px;
 }
 

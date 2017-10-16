@@ -245,7 +245,7 @@ $.fn.displayTask = function(type, items, column = 3) {
     $('#todoPanel>.row').append(
         `<div class="col-md-${colNumber}">
         
-            <div class="task-create" data-target="#taskModifyModal" data-toggle="modal" draggable="true" ondragstart="drag(event)" style="background-color:#08f; padding:20px;">
+            <div class="task-create" data-target="#taskModifyModal" data-toggle="modal" style="background-color:#08f; padding:20px;">
                 <div class="container"><span class="tile-title">&plus; Add Task</span></div>
             </div>
         
