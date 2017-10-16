@@ -9,48 +9,54 @@
 </div>
 
 
-<div class="container" >
-    <a class="task-create" href="#taskCreate" data-toggle="collapse" style="color: inherit;">
-        <input type="text" id="taskSearch" placeholder="Add Task..." style="color: #7f8c8d;">  
-    </a>
-    <div id="taskCreate" class="collapse" style="background-color: #ffffff;">
-        <hr/>
-        <textarea rows="5" class="body lead" name="description" placeholder="Description" required></textarea>
-        <div id="createTaskSetting" class="collapse">
-            <hr/>
+<div class="container">
+    <form>
+        <!-- <a  href="#taskCreate" data-toggle="collapse" style="color: inherit;"> -->
+        <input type="text" data-target="#taskCreateCollapse" data-toggle="collapse" class="input-tag" name="title"  placeholder="Title">
+        <!-- </a> -->
+
+        <div id="taskCreateCollapse" class="collapse" style="background-color: #ffffff;">
+            <hr>
+            <textarea id="addTask" rows="2" class="body lead" name="description" placeholder="Add Task"></textarea>
             <div class="form-group">
-                <label>Due Date:</label>
-                <input type="date" name="due_date">
+                <?php foreach($colors as $color): ?>
+                <button type="button" class="btn btn-circle btn-color" style="background-color:<?= $color ?>;" data-value="<?= $color ?>">
+                    <?php if($color == '#ffffff'): ?>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <?php else: ?>
+                    <span></span>
+                    <?php endif; ?>
+                </button>
+                <?php endforeach; ?>
+                <input type="hidden" name="color" value="#ffffff" style="border-radius: 10px;" />
             </div>
-            <div class="form-group">
-                <div class="task-tag-list">
-                    <label style="display:inline-block;">Tags: </label>
-                    <input type="text" class="task-tag" placeholder="Add Tags" style="display:inline-block;"/>
+            <hr> 
+            <div class="container-fluid">
+                <div id="dateTaskSettings" class="collapse">    
+                    <div class="form-group">
+                        <label>Due Date:</label>
+                        <input type="date" name="due_date">
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="task-tag-list">
+                            <label style="display:inline-block;">Tags: </label>
+                            <input type="text" class="task-tag" placeholder="Add Tags" style="display:inline-block;"/>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>  
+            <div class="d-flex justify-content-start">
+                <div class="p-2">
+                    <a class="btn btn-calendar" href="#dateTaskSettings" data-toggle="collapse" style="color: inherit;"><i class="fa fa-calendar" aria-hidden="true"></i></a>
+                </div>
+                <div class="ml-auto p-2">
+                    <a class="btn btn-save" href="#" style="color: inherit; text-decoration: none;"><span class="icon"><i class="fa fa-cog" aria-hidden="true"></i></span> Save</a>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <?php foreach($colors as $color): ?>
-                <button type="button" class="btn btn-circle btn-color" style="background-color:<?= $color ?>;" data-value="<?= $color ?>">
-                <?php if($color == '#ffffff'): ?>
-                    <span class="glyphicon glyphicon-ok"></span>
-                <?php else: ?>
-                    <span></span>
-                <?php endif; ?>
-                </button>
-            <?php endforeach; ?>
-            <input type="hidden" name="color" value="#ffffff" />
-        </div>
-        <div class="d-flex flex-row-reverse">
-            <div class="p-2"></div>
-            <div class="p-2">
-                <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-            </div>
-            <div class="p-2">
-                <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="glyphicon glyphicon-cog"></span> Settings</button>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
 
 
