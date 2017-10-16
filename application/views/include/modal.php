@@ -115,7 +115,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr/>
                     <div class="row task-note-list">
 
                     </div>

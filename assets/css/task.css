@@ -20,6 +20,8 @@ html, body {
 
 #kanbanBoard>.row {
     height: 100%;
+    padding: 0px;
+    margin: 0px;
     /* overflow-y: scroll; */
 }
 
@@ -27,14 +29,17 @@ html, body {
 #kanbanBoard>.row>.col-md-4 {
     /* height: 100%; */
     padding: 0px;
+    margin: 0px;
 }
 
 
 .kanban-panel {
     border-style: dashed;
     height: 100%;
+    /* max-width: 100%; */
     /* border-color: rgba(255, 255, 255, 0.5); */
     padding: 2px;
+    overflow: auto;
 }
 
 
@@ -43,7 +48,6 @@ html, body {
     width: 100%;
     padding: 0px;
     margin: 0px;
-    overflow-y: auto;
 }
 
 
