@@ -146,6 +146,50 @@ $.fn.leaveTeam = function(teamId, userId) {
 
 
 // Task
+$.fn.resetForm = function() {
+    
+    // $('#taskModifyModal').find('form')[0].reset();
+    // $('#taskModifyModal').find('.task-actor-list').siblings('input').remove();
+    // $('#taskModifyModal').find('.task-actor-list').find('span.badge').remove();
+    // $('#taskModifyModal').find('.task-tag-list').siblings('input').remove();
+    // $('#taskModifyModal').find('.task-tag-list').find('span.badge').remove();
+    // $('#taskModifyModal').find('.modal-content').css('background-color', '#ffffff');
+    // $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
+    // $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
+
+    $('#personalCreate').find('form')[0].reset();
+    $('#taskModifyModal').find('form')[0].reset();
+    $('.task-container').find('.task-actor-list').siblings('input').remove();
+    $('.task-container').find('.task-actor-list').find('span.badge').remove();
+    $('.task-container').find('.task-tag-list').siblings('input').remove();
+    $('.task-container').find('.task-tag-list').find('span.badge').remove();
+    $('.task-container').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
+    $('.task-container').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
+    $('.task-container').css('background-color', '#ffffff');
+};
+
+
+$.fn.displayActor = function(items, edit = false) {
+    
+    $.each(items, function(i, item) {
+
+        if(edit) {
+
+            $('.task-actor-list').find('.task-actor').before(
+                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']} <a class="task-actors-remove" data-value="${item['id']}">&times;</a></span>`
+            );
+            $('.task-actor-list').parent().append(
+                `<input type="hidden" name="actors[]" value="${item['id']}" />`
+            );
+        } else
+
+            $('.task-actor-list').append(
+                `<span class="tag tag-default">${item['first_name'] + ' ' + item['last_name']}</span>`
+            );
+    });
+};
+    
+
 $.fn.displayTag = function(items, edit = false) {
 
     $.each(items, function(i, item) {
@@ -153,7 +197,7 @@ $.fn.displayTag = function(items, edit = false) {
         if(edit) {
 
             $('.task-tag-list').find('.task-tag').before(
-                `<span class="label label-default">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
+                `<span class="badge badge-default">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
             );
             $('.task-tag-list').parent().append(
                 `<input type="hidden" name="tags[]" value="${item['name']}" />`
@@ -161,7 +205,7 @@ $.fn.displayTag = function(items, edit = false) {
         } else
 
             $('.task-tag-list').append(
-                `<span class="label label-default">${item['name']}</span>`
+                `<span class="tag tag-default">${item['name']}</span>`
             );
     });
 };
@@ -216,24 +260,23 @@ $.fn.displayTask = function(type, items, column = 3) {
 
                 $container.append(
                     `<div data-order=${j} class="col-md-${colNumber}">
-                    
                         <div id="${item['id']}" class="task-tile w3-card-2 w3-hover-shadow" draggable="true" ondragstart="drag(event)" style="background-color:${item['color']};">
                             <div class="container">    
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <a class="task-mark-done" data-value="${item['id']}"><i class="fa ` + (item['status'] == 1 ? `fa-square-o` : `fa-check-square-o`) + ` fa-lg"></i></a>
-                                    </div>
-                                    <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
+                                    <div class="col-md-12 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
                                         <span class="tile-title">${item['title']}</span>
                                     </div>
                                 </div>
-                            </div>
                         </div>
-                    
                     </div>`
                     // ondrop="drop(event)" ondragover="allowDrop(event)"
+
                     // <br/>
                     // <span class="tile-description">${item['description']}</span>
+
+                    //     <a class="task-mark-done" data-value="${item['id']}"><i class="fa ` + (item['status'] == 1 ? `fa-square-o` : `fa-check-square-o`) + ` fa-lg"></i></a>
+                    // </div>
+                    // <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
                 );
 
             }

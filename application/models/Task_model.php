@@ -16,8 +16,9 @@ class Task_model extends CI_Model {
 	# Get Task By ID
 	public function get($id) {
 		
-		$task 				  = $this->db->get_where('tasks', ['id' => $id])->result()[0];
+		$task 				  = $this->db->get_where('tasks', ['id' => $id], 1)->result()[0];
 		$task->notes 		  = $this->get_task_notes($task->id);
+		$task->actors 		  = $this->get_task_actors($task->id);
 		$task->tags 		  = $this->get_task_tags($task->id);
 		$task->remaining_days = $this->estimate_days($task->id);
 
@@ -36,6 +37,7 @@ class Task_model extends CI_Model {
 		foreach ($tasks as $task) {
 
 			$task->notes 		  = $this->get_task_notes($task->id);
+			$task->actors 		  = $this->get_task_actors($task->id);
 			$task->tags 		  = $this->get_task_tags($task->id);
 			$task->remaining_days = $this->estimate_days($task->id);
 		}
@@ -49,6 +51,18 @@ class Task_model extends CI_Model {
 	public function order_by($order_by = 'created_at', $direction = 'asc') {
 
 		return $this->db->order_by($order_by, $direction);
+	}
+
+
+	# Get Task Actors
+	public function get_task_actors($id = null) {
+		
+		return $this->db->select('first_name, last_name')
+			->from('users')
+			->join('tasks_assignment', 'tasks_assignment.user_id = users.id')
+			->where('tasks_assignment.task_id', $id)
+			->get()
+			->result();
 	}
 
 

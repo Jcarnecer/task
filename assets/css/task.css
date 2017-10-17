@@ -6,85 +6,10 @@ html, body {
     height: 100%;
 }
 
-/* Kanban Board */
-#kanbanBoard {
-    background-color: #fafafa;
-    /* color: #fafafa; */
-    /* font-family: 'Shadows Into Light'; */
-    font-family: 'Slabo 27px';
+.inner-content {
     height: calc(100% - 80px);
-    padding: 0px;
-    margin: 0px;
-}
-
-
-#kanbanBoard>.row {
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-    /* overflow-y: scroll; */
-}
-
-
-#kanbanBoard>.row>.col-md-4 {
-    /* height: 100%; */
-    padding: 0px;
-    margin: 0px;
-}
-
-
-.kanban-panel {
-    border-style: dashed;
-    height: 100%;
-    /* max-width: 100%; */
-    /* border-color: rgba(255, 255, 255, 0.5); */
-    padding: 2px;
-    overflow: auto;
-}
-
-
-.kanban-panel>.row {
-    min-height: 70px;
-    width: 100%;
-    padding: 0px;
-    margin: 0px;
-}
-
-
-.kanban-panel .task-tile {
-    margin: 10px 0px;
-}
-
-
-#kanbanBoard .panel-title {
-    font-size: 48px;
-    font-weight: 700em;
-    text-align: center;
-    width: 100%;
-    border-bottom: 2px; 
-    border-style: dashed;
-    padding: 5px;
-    margin-bottom: 10px;
-    /* margin: 0px 3px; */
-    /* border-color: rgba(0, 0, 0, 0.5) */
-}
-
-
-#kanbanBoard #todoPanel {
-    /* background-color: rgba(128, 128, 128, 0.70) */
-    border-width: 0px 0px 0px 0px;
-}
-
-
-#kanbanBoard #doingPanel {
-    /* background-color: rgba(128, 128, 128, 0.70) */
-    border-width: 0px 2px;
-}
-
-
-#kanbanBoard #donePanel {
-    /* background-color: rgba(128, 128, 128, 0.70) */
-    border-width: 0px 0px 0px 0px;
+    padding: 0;
+    margin: 0;
 }
 
 
@@ -171,19 +96,24 @@ html, body {
 
 
 /* Tag_modal */
-.modal .task-tag {
+.modal .task-tag, .modal .task-actor {
     font-size: 14px;
     line-height: 1.8;
     margin: 1px;
 }
 
 
-.modal .task-tag-list span.label {
+.modal .task-tag-list span.badge, .modal .task-actor-list span.badge {
     margin: 2px;
     font-size: 14px;
+    font-weight: 500;
+    color: #fff;
     line-height: 1.8;
     word-wrap: normal;
     display: inline-block;
+    background-color: #1a1a1a;
+    border-radius: 2px;
+    padding: 0px 5px;
 }
 
 
@@ -240,12 +170,16 @@ html, body {
 }
 
 
-.modal .team-member-list span.label {
+.task-container span.badge {
     margin: 2px;
     font-size: 14px;
+    color: #fff;
     line-height: 1.8;
     word-wrap: normal;
     display: inline-block;
+    background-color: #1a1a1a;
+    border-radius: 2px;
+    padding: 0px 5px;
 }
 
 
@@ -298,20 +232,11 @@ html, body {
 }
 
 
-/* Task Tile
-.task-tile1{
-    color: #000000; 
-    padding: 20px;
-    width: inherit;
-    height: inherit;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    position: absolute;
-}
-*/
+/* Task Tile */
 
 
 .task-tile {
+    margin: 10px 0px;
     color: #000000; 
     padding: 20px; 
     height: auto; 
@@ -460,22 +385,54 @@ a:link, a:visited, a:hover{
     margin: 10px;
 }
 
-#addTask{
-    resize: none;
+
+#personalCreate {
+    border-radius: 4px;
+    padding: 10;
+    margin: 0 auto;
+    width: 50%;
+    background-color: #fff;
+}
+
+
+#personalCreate .collapse {
+    padding: 0;
+    margin: 0;
     width: 100%;
+}
+
+
+#personalCreate input[type="text"],
+#personalCreate input[type="date"],
+#personalCreate textarea {
+    background-color: transparent;
+    padding: 10px;
     border: none;
+    outline: none;
+} 
+
+
+#personalCreate input[type="text"]:focus,
+#personalCreate input[type="date"]:focus,
+#personalCreate textarea:focus {
+    outline: none;
+}
+
+
+.input-tag {
+    width: 100%; 
+    font-size: 32px;
+    font-weight: 500;
+}
+
+
+#addTask {
+    width: 100%; 
+    resize: none;
     font-weight: 400;
     font-size: 22px;
-    text-transform: capitalize;
 }
-.input-tag{
-    width: 100%; 
-    border: none;
-    font-size: 32px;
-    padding: 10px;
-    font-weight: 500;
-    text-transform: capitalize;
-}
+
 
 .btn-calendar,
 .btn-calendar:focus,

@@ -39,23 +39,19 @@ $(function () {
     // Load Modal
     $(document).on('click', '.task-create', function() {
 
-        $('#taskModifyModal').find('form')[0].reset();
+        $(document).resetForm();
         $('#taskModifyModal').find('form').attr('id', 'taskCreateForm');
-        $('#taskModifyModal').find('.task-tag-list').find('span.label').remove();
-        $('#taskModifyModal').find('.task-tag-list').siblings('input').remove();
     });
-
-
+    
+    
     $(document).on('click', '.task-edit', function () {
-
-        $('#taskModifyModal').find('form')[0].reset();
-        $('#taskModifyModal').find('.task-tag-list').siblings('input').remove();
-        $('#taskModifyModal').find('.task-tag-list').find('span.label').remove();
+        
+        $(document).resetForm();
+        $('#taskModifyModal').find('form').attr('id', 'taskUpdateForm');
         
         $(document).getTask($(this).attr('data-value')).done(function (data) {
 
             $('#taskModifyModal').find('form').attr('data-value', data['id']);
-            $('#taskModifyModal').find('form').attr('id', 'taskUpdateForm');
             $('#taskModifyModal').find('[name="title"]').val(data['title']);
             $('#taskModifyModal').find('[name="description"]').val(data['description']);
             $('#taskModifyModal').find('[name="date"]').val(data['due_date']);
@@ -64,8 +60,8 @@ $(function () {
             $(document).displayTag(data['tags'], true);
             
             $('#taskModifyModal').find('.modal-content').css('background-color', data['color']);
-            $('#taskModifyModal').find('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
-            $('#taskModifyModal').find(`button[data-value="${data['color']}"] span`).addClass('glyphicon glyphicon-ok');
+            $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
+            $('#taskModifyModal').find(`button[data-value="${data['color']}"] i`).addClass('fa fa-check fa-lg');
         });
     });
 
@@ -111,10 +107,10 @@ $(function () {
     // Button Color
     $(document).on('click', '.btn-color', function () {
 
-        $(this).find('span').addClass('glyphicon glyphicon-ok');
-        $(this).siblings('.btn-color').find('span').removeClass('glyphicon glyphicon-ok');
+        $(this).find('i').addClass('fa fa-check fa-lg');
+        $(this).siblings('.btn-color').find('i').removeClass('fa fa-check fa-lg');
         $(this).siblings('[name="color"]').attr('value', $(this).attr('data-value'));
-        $(this).closest('.modal-content').css('background-color', $(this).attr('data-value'));
+        $(this).closest('.task-container').css('background-color', $(this).attr('data-value'));
     });
 
 
@@ -126,7 +122,7 @@ $(function () {
             if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
                 $(this).before(
-                    `<span class="label label-default">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                    `<span class="badge badge-default">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
                 );
                 $(this).closest('.task-tag-list').parent().append(
                     `<input type="hidden" name="tags[]" value="${$(this).val().toLowerCase()}" />`
@@ -146,6 +142,44 @@ $(function () {
         $(this).parent().remove();
     });
     
+
+    // Actors
+    $(document).on('keypress', '.task-actor', function (e) {
+
+        if(e.which == 13 || e.which == 32) {
+
+            var result = $(document).validateMember($(this).val().toLowerCase());
+            
+            if(result['exist']) {
+                
+                if(!$(this).closest('.task-actor-list').parent().has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
+
+                    $(this).before(
+                        `<span class="badge badge-default">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                    );
+
+                    $(this).closest('.task-actor-list').parent().append(
+                        `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
+                    );
+                }
+            } else {
+                
+                alert('User does not exist in the company');
+            }
+
+            $(this).val('');
+
+            return false;
+        }
+    });
+
+
+    $(document).on('click', '.task-actor-remove', function() {
+
+        $(this).closest('.task-actor-list').parent().find(`input[name="actors[]"][value="${$(this).attr('data-value')}"]`).remove();
+        $(this).parent().remove();
+    });
+
 
     // Notes
     $(document).on('keypress', '.task-note', function (e) {
@@ -175,6 +209,8 @@ $(function () {
     $(document).on('click', '#taskSubmit', function () {
 
         var task = $(this).closest('form').serializeArray();
+
+        $(document).resetForm();
 
         if($(this).closest('form').is('#taskCreateForm')) {
 

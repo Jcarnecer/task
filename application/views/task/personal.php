@@ -1,67 +1,57 @@
 
-<!--  Title  -->
-<div class="container-fluid" style="margin-bottom: 50px;">
-    <div class="d-flex flex-row">
-        <section class="long-copy">
-            <h1>My Task</h1>
-        </section>
+    <div class="container-fluid text-center" style="margin-bottom: 50px;">
+        <h1 style="margin: 30px auto;">Welcome, <?= $user_name ?>!</h1>
     </div>
-</div>
 
+    <div class="container-fluid" >
+        <div id="personalCreate" class="task-container container-fluid w3-card-2 w3-hover-shadow">
+            <form id="taskCreateForm">
+                <input type="text" data-target="#createCollapse" data-toggle="collapse" class="input-tag" name="title" placeholder="Title">
 
-<div class="container">
-    <form>
-        <!-- <a  href="#taskCreate" data-toggle="collapse" style="color: inherit;"> -->
-        <input type="text" data-target="#taskCreateCollapse" data-toggle="collapse" class="input-tag" name="title"  placeholder="Title">
-        <!-- </a> -->
+                <div id="createCollapse" class="collapse">
+                    <textarea id="addTask" rows="2" class="body lead" name="description" placeholder="Description"></textarea>
 
-        <div id="taskCreateCollapse" class="collapse" style="background-color: #ffffff;">
-            <hr>
-            <textarea id="addTask" rows="2" class="body lead" name="description" placeholder="Add Task"></textarea>
-            <div class="form-group">
-                <?php foreach($colors as $color): ?>
-                <button type="button" class="btn btn-circle btn-color" style="background-color:<?= $color ?>;" data-value="<?= $color ?>">
-                    <?php if($color == '#ffffff'): ?>
-                    <span class="glyphicon glyphicon-ok"></span>
-                    <?php else: ?>
-                    <span></span>
-                    <?php endif; ?>
-                </button>
-                <?php endforeach; ?>
-                <input type="hidden" name="color" value="#ffffff" style="border-radius: 10px;" />
-            </div>
-            <hr> 
-            <div class="container-fluid">
-                <div id="dateTaskSettings" class="collapse">    
-                    <div class="form-group">
-                        <label>Due Date:</label>
-                        <input type="date" name="due_date">
-                    </div>
-                    <hr>
-                    <div class="form-group">
-                        <div class="task-tag-list">
-                            <label style="display:inline-block;">Tags: </label>
-                            <input type="text" class="task-tag" placeholder="Add Tags" style="display:inline-block;"/>
+                    <div id="dateTaskSettings" class="collapse">    
+                        <hr>
+                        <div class="container-fluid">
+                            <label>Due Date: </label>
+                            <input type="date" name="due_date">
+                        </div>
+                        <div class="container-fluid">    
+                            <div class="task-tag-list">
+                                <label style="display:inline-block;">Tags: </label>
+                                <input type="text" class="task-tag" placeholder="Add Tags" style="display:inline-block;"/>
+                            </div>
                         </div>
                     </div>
-                    <hr>
+                    
+                    <div class="container-fluid" style="padding-top: 20px; padding-bottom: 20px; overflow:auto;">
+                        <?php foreach($colors as $color): ?>
+                        <button type="button" class="btn btn-circle btn-color" style="background-color:<?= $color ?>;" data-value="<?= $color ?>">
+                            <?php if($color == '#ffffff'): ?>
+                            <i class="fa fa-check"></i>
+                            <?php else: ?>
+                            <i></i>
+                            <?php endif; ?>
+                        </button>
+                        <?php endforeach; ?>
+                        <input type="hidden" name="color" value="#ffffff"/>
+                        <button type="button" id="taskSubmit" class="btn btn-primary pull-right" style="margin: 0px 5px;"><i class="fa fa-floppy-o fa-lg"></i> Save</button>
+                        <button type="button" class="btn btn-primary pull-right" data-target="#dateTaskSettings" data-toggle="collapse" style="margin: 0px 5px;"><i class="fa fa-cog fa-lg"></i> More</button>
+                    </div>
+                
+                    <!-- <div class="form-group">
+                        <div class="row">
+                        </div>
+                    </div> -->
                 </div>
-            </div>  
-            <div class="d-flex justify-content-start">
-                <div class="p-2">
-                    <a class="btn btn-calendar" href="#dateTaskSettings" data-toggle="collapse" style="color: inherit;"><i class="fa fa-calendar" aria-hidden="true"></i></a>
-                </div>
-                <div class="ml-auto p-2">
-                    <a class="btn btn-save" href="#" style="color: inherit; text-decoration: none;"><span class="icon"><i class="fa fa-cog" aria-hidden="true"></i></span> Save</a>
-                </div>
-            </div>
+            </form>
         </div>
-    </form>
-</div>
-
-
-<div class="container-fluid task-tag-board">
-    <div id="taskTileList" class="row">
-
     </div>
-</div>
+
+
+    <div class="container-fluid task-tag-board">
+        <div id="taskTileList" class="row">
+
+        </div>
+    </div>

@@ -1,0 +1,79 @@
+#kanbanBoard {
+    background-color: #fafafa;
+    /* color: #fafafa; */
+    /* font-family: 'Shadows Into Light'; */
+    font-family: 'Slabo 27px';
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+#kanbanBoard>.row {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    /* overflow-y: scroll; */
+}
+
+
+#kanbanBoard>.row>.col-md-4 {
+    /* height: 100%; */
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.kanban-panel {
+    border-style: dashed;
+    height: 100%;
+    /* max-width: 100%; */
+    /* border-color: rgba(255, 255, 255, 0.5); */
+    padding: 2px;
+    overflow: auto;
+}
+
+
+.kanban-panel>.row {
+    min-height: 70px;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/* .kanban-panel .task-tile {
+    margin: 10px 0px;
+} */
+
+
+#kanbanBoard .panel-title {
+    font-size: 48px;
+    font-weight: 700em;
+    text-align: center;
+    width: 100%;
+    border-bottom: 2px; 
+    border-style: dashed;
+    padding: 5px;
+    margin-bottom: 10px;
+    /* margin: 0px 3px; */
+    /* border-color: rgba(0, 0, 0, 0.5) */
+}
+
+
+#kanbanBoard #todoPanel {
+    /* background-color: rgba(128, 128, 128, 0.70) */
+    border-width: 0px 0px 0px 0px;
+}
+
+
+#kanbanBoard #doingPanel {
+    /* background-color: rgba(128, 128, 128, 0.70) */
+    border-width: 0px 2px;
+}
+
+
+#kanbanBoard #donePanel {
+    /* background-color: rgba(128, 128, 128, 0.70) */
+    border-width: 0px 0px 0px 0px;
+}

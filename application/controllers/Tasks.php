@@ -33,6 +33,14 @@ class Tasks extends CI_Controller {
 				else
 
 					$this->tag_model->update($task_id, []);
+
+
+				if($this->input->post('actors[]') != null)
+
+					$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
+				else
+
+					$this->task_model->add_actors($task_id, []);
 			} else {
 
 				$task_id = $this->task_model->insert($task_details);
@@ -40,6 +48,11 @@ class Tasks extends CI_Controller {
 				if($this->input->post('tags[]') != null)
 
 					$this->tag_model->insert($task_id, $this->input->post('tags[]'));
+					
+
+				if($this->input->post('actors[]') != null)
+				
+					$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
 			}
 		}
 	}
@@ -111,7 +124,7 @@ class Tasks extends CI_Controller {
 	# Actors for Team Task
 	public function assign_actors($task_id) {
 		
-		$members = $this->input->post('members[]');
+		$members = $this->input->post('actors[]');
 		$this->task_model->add_actors($task_id, $members);
 	}
 }

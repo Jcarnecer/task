@@ -2,7 +2,7 @@ $(function () {
 
 
     // Load Modal
-    $(document).on('click', '.team-create', function(){
+    $(document).on('click', '.team-create', function() {
 
         $('#teamModifyModal').find('form')[0].reset();
         $('#teamModifyModal').find('form').attr('id', 'teamCreateForm');
@@ -46,11 +46,10 @@ $(function () {
             
             if(result['exist']) {
 
-
                 if(!$(this).closest('.team-member-list').parent().has(`input[name="members[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
                     $(this).before(
-                        `<span class="label label-default">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                        `<span class="badge badge-default">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
                     );
 
                     $(this).closest('.team-member-list').parent().append(

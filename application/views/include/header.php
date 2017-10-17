@@ -18,6 +18,7 @@
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" />
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/styles.css'); ?>" />
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/paper.css'); ?>" />     
+        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/kanban.css'); ?>" />     
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/task.css'); ?>" />     
     </head>
     <body>
@@ -91,3 +92,4 @@
                     <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover" style="position: absolute; display:block; right: 0; color:inherit;"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
                 </nav>
             </div>
+            <div class="inner-content paper">
