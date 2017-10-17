@@ -73,7 +73,7 @@ class Tasks extends CI_Controller {
 
 
 	# Notes
-	public function post_notes($task_id)	{
+	public function post_notes($task_id) {
 		
 		$note_details 	= [
 			'task_id'	  => $task_id,
@@ -126,5 +126,11 @@ class Tasks extends CI_Controller {
 		
 		$members = $this->input->post('actors[]');
 		$this->task_model->add_actors($task_id, $members);
+	}
+
+
+	# Get User Team Tasks
+	public function get_user_team_task($user_id) {
+		echo json_encode($this->task_model->get_user_team_task($user_id));
 	}
 }

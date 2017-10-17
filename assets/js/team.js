@@ -1,8 +1,13 @@
 $(function () {
 
 
+    // Highlight
+    $(document).on('click', '#highlightBtn', function () {
+        $(document).highlightTask(getUserId());
+    });
+
     // Load Modal
-    $(document).on('click', '.team-create', function() {
+    $(document).on('click', '.team-create', function () {
 
         $('#teamModifyModal').find('form')[0].reset();
         $('#teamModifyModal').find('form').attr('id', 'teamCreateForm');
@@ -11,7 +16,7 @@ $(function () {
     });
     
     
-    $(document).on('click', '.team-edit', function() {
+    $(document).on('click', '.team-edit', function () {
 
         $('#teamModifyModal').find('form')[0].reset();
         $('#teamModifyModal').find('.team-member-list').find('span.label').remove();
@@ -28,7 +33,7 @@ $(function () {
     });
 
 
-    $(document).on('click', '.team-leave', function() {
+    $(document).on('click', '.team-leave', function () {
 
         $(document).leaveTeam(getAuthorId()).always(function () {
 
@@ -68,7 +73,7 @@ $(function () {
     });
 
 
-    $(document).on('click', '.team-member-remove', function() {
+    $(document).on('click', '.team-member-remove', function () {
 
         $(this).closest('.team-member-list').parent().find(`input[name="members[]"][value="${$(this).attr('data-value')}"]`).remove();
         $(this).parent().remove();

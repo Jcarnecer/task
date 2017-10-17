@@ -209,34 +209,34 @@ $(function () {
     $(document).on('click', '#taskSubmit', function () {
 
         var task = $(this).closest('form').serializeArray();
-
-        $(document).resetForm();
-
+        
         if($(this).closest('form').is('#taskCreateForm')) {
-
+            
             $(document).postTask(task).always(function() {
-
+                
                 $(document).getTask().done(function(data) {
-
+                    
                     $(document).displayTask(getTaskType(), data);
+                    $(document).resetForm();
                 });
             }); 
         } else if($(this).closest('form').is('#taskUpdateForm')) {
-
+            
             $(document).postTask(task, $(this).closest('form').attr('data-value')).always(function(data) {
-                    
+                
                 $(document).getTask().done(function(data){
-
+                    
                     $(document).displayTask(getTaskType(), data);
+                    $(document).resetForm();
                 });
             });
         }
     });
-
-
+    
+    
     // Mark as Done
     $(document).on('click', '.task-mark-done', function () {
-
+        
         if($(this).is('.glyphicon')) {
 
             $(this).toggleClass('glyphicon-check');

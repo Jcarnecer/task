@@ -1,4 +1,5 @@
 const baseUrl = window.location.origin + '/task/';
+var userId = null;
 var authorId = null;
 var taskType = null;
 
@@ -13,6 +14,12 @@ function setTaskType(type) { taskType = type; }
 
 
 function getTaskType() { return taskType; }
+
+
+function setUserId(id) { userId = id; }
+
+
+function getUserId() { return userId; }
 
 
 // AJAX
@@ -97,6 +104,17 @@ $.fn.changeColumn = function(details, taskId) {
 }
 
 
+$.fn.getUserTeamTask = function(userId) {
+
+    return $.ajax({
+
+        type: 'GET',
+        url: `${baseUrl}api/get_user_team_task/${userId}`,
+        dataType: 'json'
+    });
+}
+
+
 // Team
 $.fn.displayMember = function(items, edit = false) {
 
@@ -157,8 +175,13 @@ $.fn.resetForm = function() {
     // $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
     // $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
 
-    $('#personalCreate').find('form')[0].reset();
-    $('#taskModifyModal').find('form')[0].reset();
+    if(getTaskType() == 'personal')
+    
+        $('#personalCreate').find('form')[0].reset();
+    else if(getTaskType() == 'team')
+        
+        $('#taskModifyModal').find('form')[0].reset();
+
     $('.task-container').find('.task-actor-list').siblings('input').remove();
     $('.task-container').find('.task-actor-list').find('span.badge').remove();
     $('.task-container').find('.task-tag-list').siblings('input').remove();
@@ -321,4 +344,17 @@ $.fn.searchTask = function(items, keyword) {
                 );
         });
     }
+};
+
+// Kanban
+$.fn.highlightTask = function(userId) {
+    userId = userId == null ? getUserId() : userId;
+
+    $('#kanbanBoard').toggleClass('highlight');
+
+    $(document).getUserTeamTask(userId).done(function (data) {
+        $.each(data, function(i, item) {
+            $(`#kanbanBoard .task-tile#${item['id']}`).toggleClass('active');
+        })
+    });
 };

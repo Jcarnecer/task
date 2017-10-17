@@ -16,7 +16,7 @@
     </a>
 </div> -->
 
-<div id="kanbanBoard" class="paper container-fluid"> 
+<div id="kanbanBoard" class="container-fluid"> 
     <div class="row">
         <div class="col-md-4">
             <div id="todoPanel" class="kanban-panel container-fluid">

@@ -83,6 +83,8 @@ $route['api/note/(:any)']['GET'] = 'tasks/get_notes/$1';
 $route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
 
 $route['api/change_column/(:any)']['POST'] = 'tasks/change_column/$1';
+
+$route['api/get_user_team_task/(:any)']['GET'] = 'tasks/get_user_team_task/$1';
 # end-of-API
 
 

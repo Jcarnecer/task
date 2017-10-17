@@ -21,6 +21,7 @@
 
     <script>
         setAuthorId('<?= $author_id ?>');
+        setUserId('<?= $user_id ?>');
         setTaskType('<?= $task_type ?>');
     </script>
     

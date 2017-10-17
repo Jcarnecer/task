@@ -1,11 +1,33 @@
 #kanbanBoard {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
     /* color: #fafafa; */
     /* font-family: 'Shadows Into Light'; */
     font-family: 'Slabo 27px';
     height: 100%;
     padding: 0px;
     margin: 0px;
+    transition: all 0.5s ease-in-out;
+}
+
+
+#kanbanBoard .task-tile {
+    transition: all 0.5s ease-in-out;
+}
+
+
+#kanbanBoard.highlight {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+}
+
+
+#kanbanBoard.highlight .task-tile.active {
+    opacity: 1;
+}
+
+
+#kanbanBoard.highlight .task-tile {
+    opacity: 0.1;
 }
 
 
@@ -40,11 +62,6 @@
     padding: 0px;
     margin: 0px;
 }
-
-
-/* .kanban-panel .task-tile {
-    margin: 10px 0px;
-} */
 
 
 #kanbanBoard .panel-title {

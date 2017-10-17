@@ -26,6 +26,18 @@ class Task_model extends CI_Model {
 	}
 
 
+	# Get User Team Tasks
+	public function get_user_team_task($user_id) {
+		
+		return $this->db->select('*')
+			->from('tasks')
+			->join('tasks_assignment', 'tasks_assignment.task_id = tasks.id')
+			->where('tasks_assignment.user_id', $user_id)
+			->get()
+			->result();
+	}
+
+
 	# Get All Task
 	public function get_all($author_id, $status = null) {
 
