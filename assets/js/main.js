@@ -199,11 +199,11 @@ $.fn.displayActor = function(items, edit = false) {
         if(edit) {
 
             $('.task-actor-list').find('.task-actor').before(
-                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']} <a class="task-actors-remove" data-value="${item['id']}">&times;</a></span>`
+                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
             $('.task-actor-list').parent().append(
-                `<input type="hidden" name="actors[]" value="${item['id']}" />`
+                `<input type="hidden" name="actors[]" value="${item['email_address']}" />`
             );
         } else
 
@@ -219,7 +219,7 @@ $.fn.displayTag = function(items, edit = false) {
     $.each(items, function(i, item) {
 
         if(edit) {
-
+                
             $('.task-tag-list').find('.task-tag').before(
                 `<span class="badge badge-default">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
             );
