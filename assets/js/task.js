@@ -58,6 +58,7 @@ $(function () {
             $('#taskModifyModal').find('[name="color"]').val(data['color']);
 
             $(document).displayTag(data['tags'], true);
+            $(document).displayActors(data['actors'], true);
             
             $('#taskModifyModal').find('.modal-content').css('background-color', data['color']);
             $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
@@ -80,6 +81,7 @@ $(function () {
             $('#taskViewModal').find('[id="date"] span').html(data['due_date']);
             $('#taskViewModal').find('[id="countdown"]').html(data['remaining_days']);
             $('#taskViewModal').find('.task-tag-list').html('');
+            $('#taskViewModal').find('.task-actor-list').html('');
             $('#taskViewModal').find('.modal-content').css('background-color', data['color']);
 
             if(data['tags'].length != 0) 
@@ -88,6 +90,13 @@ $(function () {
             else
 
                 $('#taskViewModal').find('.task-tag-list').html('None');
+
+            if(data['actors'].length != 0) 
+            
+                $(document).displayActor(data['actors']);
+            else
+
+                $('#taskViewModal').find('.task-actor-list').html('None');
 
             $(document).displayNote(data['notes']);
         });
@@ -263,5 +272,4 @@ $(function () {
             });
         });
     });
-
 });

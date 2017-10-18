@@ -255,7 +255,6 @@ $.fn.displayTask = function(type, items, column = 3) {
     var $containers = [];
     var status = [1, 4, 2];
 
-
     switch(type) {
         case 'personal':
             $containers.push($('#taskTileList'));
@@ -270,24 +269,38 @@ $.fn.displayTask = function(type, items, column = 3) {
             break;
     }
 
-
     colNumber = 12/column;
-    
-    
+
     $.each($containers, function(i, $container) {
         $container.html('');
         
         $.each(items, function(j, item) {
             
+            var actorsAppend = "";
+
+            $.each(item['actors'], function (i, actor) {
+                actorsAppend = actorsAppend + "[" + actor['first_name'] + " " + actor['last_name'] + "]";
+            });
+
+            var contributorAppend = `title="Contributors" data-toggle="popover" data-placement="auto right" data-trigger="hover" data-content="${actorsAppend}"`;
+
             if(status[i] == item['status']) {
 
                 $container.append(
                     `<div data-order=${j} class="col-md-${colNumber}">
-                        <div class="task-tile task-view w3-card-2 w3-hover-shadow" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:${item['color']};">
-                            <div class="container">    
+
+                        <div class="task-tile task-view w3-card-2 w3-hover-shadow" 
+                        data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" 
+                        draggable="true" ondragstart="drag(event)" 
+                        style="background-color:${item['color']};">
+
+                            <div class="container"
+                            ${getTaskType() == 'team' ? contributorAppend : ''}>
                                 <span class="tile-title">${item['title']}</span>
                             </div>
+
                         </div>
+                        
                     </div>`
                 );
             }
@@ -298,7 +311,7 @@ $.fn.displayTask = function(type, items, column = 3) {
             $container.append(
                 `<div class="col-md-${colNumber}">
                 
-                    <div class="task-create task-tile w3-card-2 w3-hover-shadow" data-target="#taskModifyModal" data-toggle="modal">
+                    <div class="task-tile task-create w3-card-2 w3-hover-shadow" data-target="#taskModifyModal" data-toggle="modal">
                         <div class="container"><span class="tile-title"><i class="fa fa-plus fa-lg"></i>&nbsp;&nbsp;&nbsp;Add Task</span></div>
                     </div>
                 

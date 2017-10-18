@@ -237,14 +237,20 @@ html, body {
 
 .task-tile {
     margin: 10px 0px;
+    padding: 0;
     color: #000000; 
-    padding: 20px; 
-    height: auto; 
+    /* height: auto;  */
     border-radius: 2px; 
-    overflow-x: hidden;
-    overflow-y: hidden;
     /* box-shadow: 0px 1px 1px; */
     transition: all 0.2s ease-in-out;
+}
+
+.task-tile>.container, .task-tile>.container-fluid {
+    margin: 0;
+    padding: 20px 25px; 
+    overflow-x: hidden;
+    overflow-y: hidden;
+
 }
 
 
@@ -252,7 +258,7 @@ html, body {
     border: 2px solid #000; 
     background-color:#fff   ;
     /* color: #fff; */
-    padding:20px;
+    /* padding:20px; */
 }
 
 

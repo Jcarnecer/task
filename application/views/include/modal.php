@@ -88,6 +88,9 @@
                     </div>
                     <h1 id="title" class="heading"><b></b></h1>
                     <p id="description" class="body lead"></p>
+                    <h4 style="display:inline-block;"><b>Contributors: </b>
+                        <div class="task-actor-list" style="display:inline-block;"></div>
+                    </h4>
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">
