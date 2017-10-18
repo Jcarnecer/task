@@ -283,27 +283,14 @@ $.fn.displayTask = function(type, items, column = 3) {
 
                 $container.append(
                     `<div data-order=${j} class="col-md-${colNumber}">
-                        <div id="${item['id']}" class="task-tile w3-card-2 w3-hover-shadow" draggable="true" ondragstart="drag(event)" style="background-color:${item['color']};">
+                        <div class="task-tile task-view w3-card-2 w3-hover-shadow" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" draggable="true" ondragstart="drag(event)" style="background-color:${item['color']};">
                             <div class="container">    
-                                <div class="row">
-                                    <div class="col-md-12 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
-                                        <span class="tile-title">${item['title']}</span>
-                                    </div>
-                                </div>
+                                <span class="tile-title">${item['title']}</span>
+                            </div>
                         </div>
                     </div>`
-                    // ondrop="drop(event)" ondragover="allowDrop(event)"
-
-                    // <br/>
-                    // <span class="tile-description">${item['description']}</span>
-
-                    //     <a class="task-mark-done" data-value="${item['id']}"><i class="fa ` + (item['status'] == 1 ? `fa-square-o` : `fa-check-square-o`) + ` fa-lg"></i></a>
-                    // </div>
-                    // <div class="col-md-10 task-view" data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}">
                 );
-
             }
-
         });
 
         if($container.is('#todoPanel>.row')) {
@@ -354,7 +341,7 @@ $.fn.highlightTask = function(userId) {
     $(document).getUserTeamTask(userId).done(function (data) {
 
         $.each(data, function(i, item) {
-            $(`#kanbanBoard .task-tile#${item['id']}`).toggleClass('active');
+            $(`#kanbanBoard .task-tile[data-value="${item['id']}"]`).toggleClass('active');
         })
     }).always(function () {
 

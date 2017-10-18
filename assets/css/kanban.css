@@ -6,17 +6,17 @@
     height: 100%;
     padding: 0px;
     margin: 0px;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 
 #kanbanBoard .task-tile {
-    transition: all 0.5s ease-in-out;
+    /* transition: all 0.2s ease-in-out; */
 }
 
 
 #kanbanBoard.highlight {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 1);
     color: #fff;
 }
 
