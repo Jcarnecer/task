@@ -90,9 +90,9 @@
                     </div>
                     <a class="navbar-brand" href="<?= base_url('tasks'); ?>">Task</a>
                     <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover" style="position: absolute; display:block; right: 0; color:inherit;"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
-                    <? if($task_type == 'team'): ?>
+                    <?php if($task_type == 'team'): ?>
                     <button id="highlightBtn" type="button" class="btn btn-primary navbar-btn">Show my Tasks</button>
-                    <? endif; ?>
+                    <?php endif; ?>
                 </nav>
             </div>
             <div class="inner-content paper">

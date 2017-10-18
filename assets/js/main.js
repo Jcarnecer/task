@@ -348,13 +348,16 @@ $.fn.searchTask = function(items, keyword) {
 
 // Kanban
 $.fn.highlightTask = function(userId) {
+    
     userId = userId == null ? getUserId() : userId;
 
-    $('#kanbanBoard').toggleClass('highlight');
-
     $(document).getUserTeamTask(userId).done(function (data) {
+
         $.each(data, function(i, item) {
             $(`#kanbanBoard .task-tile#${item['id']}`).toggleClass('active');
         })
+    }).always(function () {
+
+        $('#kanbanBoard').toggleClass('highlight');
     });
 };

@@ -32,14 +32,14 @@
                     <input type="text" class="heading" name="title" placeholder="Title" required>
                     <hr/>
                     <textarea rows="5" class="body lead" name="description" placeholder="Description" required></textarea>
-                    <? if($task_type == 'team'): ?>
+                    <?php if($task_type == 'team'): ?>
                     <div class="form-group">
                         <div class="task-actor-list">
                             <label style="display:inline-block;">Contributors: </label>
                             <input type="text" class="task-actor" placeholder="Add Contributor" style="display:inline-block;"/>
                         </div>
                     </div>
-                    <? endif; ?>
+                    <?php endif; ?>
                     <div id="createTaskSetting" class="collapse">
                         <!-- <hr/> -->
                         <div class="form-group">

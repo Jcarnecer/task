@@ -119,18 +119,21 @@ $(function () {
 
         if(e.which == 13 || e.which == 32) {
 
-            if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val().toLowerCase()}"]`).length){
-
-                $(this).before(
-                    `<span class="badge badge-default">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
-                );
-                $(this).closest('.task-tag-list').parent().append(
-                    `<input type="hidden" name="tags[]" value="${$(this).val().toLowerCase()}" />`
-                );
+            if($(this).val() != '') {
+                
+                if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val().toLowerCase()}"]`).length){
+                    
+                    $(this).before(
+                        `<span class="badge badge-default">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                    );
+                    $(this).closest('.task-tag-list').parent().append(
+                        `<input type="hidden" name="tags[]" value="${$(this).val().toLowerCase()}" />`
+                    );
+                }
             }
             
             $(this).val('');
-
+            
             return false;
         }
     });
@@ -148,23 +151,26 @@ $(function () {
 
         if(e.which == 13 || e.which == 32) {
 
-            var result = $(document).validateMember($(this).val().toLowerCase());
-            
-            if(result['exist']) {
+            if(!$(this).val() == '') {
+
+                var result = $(document).validateMember($(this).val().toLowerCase());
                 
-                if(!$(this).closest('.task-actor-list').parent().has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
+                if(result['exist']) {
+                    
+                    if(!$(this).closest('.task-actor-list').parent().has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
-                    $(this).before(
-                        `<span class="badge badge-default">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
-                    );
+                        $(this).before(
+                            `<span class="badge badge-default">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                        );
 
-                    $(this).closest('.task-actor-list').parent().append(
-                        `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
-                    );
+                        $(this).closest('.task-actor-list').parent().append(
+                            `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
+                        );
+                    }
+                } else {
+                    
+                    alert('User does not exist in the company');
                 }
-            } else {
-                
-                alert('User does not exist in the company');
             }
 
             $(this).val('');
