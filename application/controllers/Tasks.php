@@ -116,8 +116,9 @@ class Tasks extends CI_Controller {
 				$this->task_model->update_status($task_id, ARCHIVE);
 				break;
 		}
-		$actor 	= $this->session->user->id;
-		echo json_encode(['id' => $task_id, 'column' => $column, 'actor' => $actor]);
+		
+		// $actor 	= $this->session->user->id;
+		// echo json_encode(['id' => $task_id, 'column' => $column, 'actor' => $actor]);
 	}
 
 
