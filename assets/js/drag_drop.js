@@ -14,7 +14,7 @@ function drop(e) {
     var $column = $(e.target).is('div.kanban-panel>.row') ? $(e.target) : $(e.target).closest('div.kanban-panel>.row');
     var data = e.dataTransfer.getData('order');
     var taskId = $(`[data-order="${data}"]`).children('div').attr('data-value');
-    var details = {column: $column.parent('div.kanban-panel').attr('data-value')};
+    var details = {column: $column.parent('div.kanban-panel').attr('id')};
 
     $column.prepend($(`[data-order="${data}"]`));
     $(document).changeColumn(details, taskId).done(function(data){

@@ -201,13 +201,14 @@ $.fn.displayActor = function(items, edit = false) {
             $('.task-actor-list').find('.task-actor').before(
                 `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']} <a class="task-actors-remove" data-value="${item['id']}">&times;</a></span>`
             );
+
             $('.task-actor-list').parent().append(
                 `<input type="hidden" name="actors[]" value="${item['id']}" />`
             );
         } else
 
             $('.task-actor-list').append(
-                `<span class="tag tag-default">${item['first_name'] + ' ' + item['last_name']}</span>`
+                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']}</span>`
             );
     });
 };
@@ -228,7 +229,7 @@ $.fn.displayTag = function(items, edit = false) {
         } else
 
             $('.task-tag-list').append(
-                `<span class="tag tag-default">${item['name']}</span>`
+                `<span class="badge badge-default">${item['name']}</span>`
             );
     });
 };
@@ -278,11 +279,17 @@ $.fn.displayTask = function(type, items, column = 3) {
             
             var actorsAppend = "";
 
-            $.each(item['actors'], function (i, actor) {
-                actorsAppend = actorsAppend + "[" + actor['first_name'] + " " + actor['last_name'] + "]";
-            });
+            if(item['actors'].length) {
 
-            var contributorAppend = `title="Contributors" data-toggle="popover" data-placement="auto right" data-trigger="hover" data-content="${actorsAppend}"`;
+                $.each(item['actors'], function (i, actor) {
+                    actorsAppend = actorsAppend + actor['first_name'] + " " + actor['last_name'] + "<br/>";
+                });
+            } else {
+                
+                actorsAppend = "No Contributors";
+            }
+
+            var contributorAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="auto right" data-content="${actorsAppend}"`;
 
             if(status[i] == item['status']) {
 
@@ -294,8 +301,7 @@ $.fn.displayTask = function(type, items, column = 3) {
                         draggable="true" ondragstart="drag(event)" 
                         style="background-color:${item['color']};">
 
-                            <div class="container"
-                            ${getTaskType() == 'team' ? contributorAppend : ''}>
+                            <div class="container" ${getTaskType() == 'team' ? contributorAppend : ''}>
                                 <span class="tile-title">${item['title']}</span>
                             </div>
 

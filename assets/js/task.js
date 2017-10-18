@@ -58,7 +58,7 @@ $(function () {
             $('#taskModifyModal').find('[name="color"]').val(data['color']);
 
             $(document).displayTag(data['tags'], true);
-            $(document).displayActors(data['actors'], true);
+            $(document).displayActor(data['actors'], true);
             
             $('#taskModifyModal').find('.modal-content').css('background-color', data['color']);
             $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
