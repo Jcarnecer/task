@@ -1,4 +1,4 @@
-const baseUrl = window.location.origin + '/task/';
+const baseUrl = window.location.origin + "/";
 var userId = null;
 var authorId = null;
 var taskType = null;
