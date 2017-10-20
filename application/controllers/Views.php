@@ -10,8 +10,7 @@ class Views extends CI_Controller {
         $this->session->unset_userdata('author_id');
 
         if (!$this->user_model->is_login()) {
-        
-            redirect('http://localhost/main');
+            redirect('http://payakapps.com/users/login');
         }
     }
 
