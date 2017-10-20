@@ -9,13 +9,12 @@ class Views extends CI_Controller {
         $this->session->unset_userdata('author_id');
 
         if (!$this->user_model->is_login()) {
-            redirect('http://payakapps.com/users/login');
+            return redirect('http://payakapps.com/users/login');
         }
     }
 
 
     public function personal() {
-    	return print("123");
 		$data['author_id']		= $this->session->user->id;
 		$data['user_id']		= $this->session->user->id;
 		$data['user_name']		= $this->session->user->first_name.' '.$this->session->user->last_name;
