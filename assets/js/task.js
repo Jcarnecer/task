@@ -200,20 +200,28 @@ $(function () {
     $(document).on('keypress', '.task-note', function (e) {
 
         if(e.which == 13) {
-            $(this).closest('form').find('.task-note-list').append(
-                `<div class="col-md-2">
-                    <div class="task-note-user circle"></div>
-                </div>
-                <div class="col-md-10 well well-sm task-note-text">
-                    ${$(this).val()}
-                </div>`
-            );
 
-            $(this).closest('form').find('input[name="notes"]').val($(this).val());
-
-            $(document).postTaskNote($(this).closest('form').serialize(), $(this).closest('form').attr('data-value'));
-
-            $(this).val('');
+            var $noteInput = $(this);
+            
+            $(document).getUser(getUserId()).done(function(data) {
+                
+                $noteInput.closest('form').find('.task-note-list').append(
+                    `<div class="col-md-2 task-note-list-item">
+                        <i class="fa fa-user-circle fa-2x task-note-user" 
+                        data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${data['first_name'] + ' ' + data['last_name']}">
+                        </i>
+                        </div>
+                    </div>
+                    <div class="col-md-10 card card-sm task-note-text task-note-list-item">
+                        ${$noteInput.val()}
+                    </div>`
+                );
+            }).always(function() {
+                
+                $noteInput.closest('form').find('input[name="notes"]').val($noteInput.val());
+                $(document).postTaskNote($noteInput.closest('form').serialize(), $noteInput.closest('form').attr('data-value'));
+                $noteInput.val('');
+            }); 
 
             return false;
         }

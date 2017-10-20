@@ -23,6 +23,17 @@ function getUserId() { return userId; }
 
 
 // AJAX
+$.fn.getUser = function(userId) {
+
+    return $.ajax({
+        
+        type: 'GET',
+        url: `${baseUrl}api/user/${userId}`,
+        dataType: 'json'
+    });
+}
+
+
 $.fn.getTask = function(taskId = null) {
 
     return $.ajax({
@@ -193,7 +204,7 @@ $.fn.resetForm = function() {
 
 
 $.fn.displayActor = function(items, edit = false) {
-    
+
     $.each(items, function(i, item) {
 
         if(edit) {
@@ -239,14 +250,20 @@ $.fn.displayNote = function(items) {
 
     $.each(items, function(i, item){
 
-        $('.task-note-list').append(
-            `<div class="col-md-2">
-                <div class="task-note-user circle"></div>
-            </div>
-            <div class="col-md-10 well well-sm task-note-text">
-                ${item['body']}
-            </div>`
-        );
+        $(document).getUser(item['user_id']).always(function(data) {
+
+            $('.task-note-list').append(
+                `<div class="col-md-2 task-note-list-item">
+                    <i class="fa fa-user-circle fa-2x task-note-user" 
+                    data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${data['first_name'] + ' ' + data['last_name']}">
+                    </i>
+                    </div>
+                </div>
+                <div class="col-md-10 card card-sm task-note-text task-note-list-item">
+                    ${item['body']}
+                </div>`
+            );
+        });
     });
 }
 
@@ -286,7 +303,7 @@ $.fn.displayTask = function(type, items, column = 3) {
                 });
             } else {
                 
-                actorsAppend = "No Contributors";
+                actorsAppend = "No Contributor";
             }
 
             var contributorAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
@@ -302,7 +319,16 @@ $.fn.displayTask = function(type, items, column = 3) {
                         style="background-color:${item['color']};">
 
                             <div class="container" ${getTaskType() == 'team' ? contributorAppend : ''}>
-                                <span class="tile-title">${item['title']}</span>
+                                <span class="tile-title">
+                                    ${getTaskType() == 'team' ? 
+                                        item['actors'].length ? 
+                                            item['actors'].length > 1 ? 
+                                                '<i class="fa fa-users"></i>' : 
+                                                '<i class="fa fa-user"></i>' : 
+                                            '<i class="fa fa-user-o"></i>' : 
+                                        ''} 
+                                    ${item['title']}
+                                </span>
                             </div>
 
                         </div>

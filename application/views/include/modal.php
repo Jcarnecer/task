@@ -97,12 +97,17 @@
                    <hr>
                     
                     <h1 id="title" class="heading"><b></b></h1>
-                    <p id="description" class="body lead"></p>
 <!--
                     <h4 style="display:inline-block;"><b>Contributors: </b>
                         <div class="task-actor-list" style="display:inline-block;"></div>
                     </h4>
 -->
+                    <textarea id="description" class="body lead" disable></textarea>
+                    <?php if($task_type == 'team'): ?>
+                    <h4 style="display:inline-block;"><b>Contributors: </b>
+                        <div class="task-actor-list" style="display:inline-block;"></div>
+                    </h4>
+                    <?php endif; ?>
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">
@@ -121,9 +126,9 @@
                     <div class="form-group">
                         <span class="task-note-label">Notes</span>
                     </div>
-                    <div class="row">
+                    <div class="row task-note-create">
                         <div class="col-md-2">
-                            <div class="circle"></div>
+                            <i class="fa fa-user-circle fa-3x task-note-user"></i>
                         </div>
                         <div class="col-md-10">
                             <div class="task-note-box">
