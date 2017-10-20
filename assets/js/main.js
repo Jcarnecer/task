@@ -277,7 +277,7 @@ $.fn.displayTask = function(type, items, column = 3) {
         
         $.each(items, function(j, item) {
             
-            var actorsAppend = "";
+            var actorsAppend = "<strong>Contributors</strong><br/>";
 
             if(item['actors'].length) {
 
@@ -289,12 +289,12 @@ $.fn.displayTask = function(type, items, column = 3) {
                 actorsAppend = "No Contributors";
             }
 
-            var contributorAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="auto right" data-content="${actorsAppend}"`;
+            var contributorAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
 
             if(status[i] == item['status']) {
 
-                $container.append(
-                    `<div data-order=${j} class="col-md-${colNumber}">
+                $container.prepend(
+                    `<div data-order="${j}" class="col-md-${colNumber}">
 
                         <div class="task-tile task-view w3-card-2 w3-hover-shadow" 
                         data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" 

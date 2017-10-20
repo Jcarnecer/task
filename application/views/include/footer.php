@@ -5,6 +5,16 @@
     <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/script.js'); ?>"></script>
     
+    <script>
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
+        
+        $(document).ajaxComplete(function () {
+            
+            $('.task-tile [data-toggle="popover"]').popover();
+        });
+    </script>
+
     <script src="<?= base_url('assets/js/main.js'); ?>"></script>
     <script src="<?= base_url('assets/js/drag_drop.js'); ?>"></script>
     <script src="<?= base_url('assets/js/team.js'); ?>"></script>
@@ -14,14 +24,6 @@
         setAuthorId('<?= $author_id ?>');
         setUserId('<?= $user_id ?>');
         setTaskType('<?= $task_type ?>');
-    </script>
-    
-    
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle="popover"]').popover();
-        });
     </script>
     
     </body>
