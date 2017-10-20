@@ -49,42 +49,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'views/personal';
-$route['tasks'] = 'views/personal';
+$route['default_controller'] = 'Views/personal';
+$route['tasks'] = 'Views/personal';
 // $route['tasks'] = 'tasks/index';
 
 # view
-$route['personal'] = 'views/personal';
-$route['team/(:any)'] = 'views/team/$1';
+$route['personal'] = 'Views/personal';
+$route['team/(:any)'] = 'Views/team/$1';
 
 
 # API
 # team
-$route['api/team']['POST'] = 'teams/post';
-$route['api/team']['GET'] = 'teams/get';
+$route['api/team']['POST'] = 'Teams/post';
+$route['api/team']['GET'] = 'Teams/get';
 
-$route['api/team/(:any)']['POST'] = 'teams/post/$1';
-$route['api/team/(:any)']['GET'] = 'teams/get/$1';
+$route['api/team/(:any)']['POST'] = 'Teams/post/$1';
+$route['api/team/(:any)']['GET'] = 'Teams/get/$1';
 
-$route['api/validate_member']['POST'] = 'teams/validate_member';
+$route['api/validate_member']['POST'] = 'Teams/validate_member';
 
-$route['api/leave_team/(:any)']['POST'] = 'teams/leave_team/$1';
+$route['api/leave_team/(:any)']['POST'] = 'Teams/leave_team/$1';
 
 # task
-$route['api/task/(:any)']['POST'] = 'tasks/post/$1';
-$route['api/task/(:any)']['GET'] = 'tasks/get/$1';
+$route['api/task/(:any)']['POST'] = 'Tasks/post/$1';
+$route['api/task/(:any)']['GET'] = 'Tasks/get/$1';
 
-$route['api/task/(:any)/(:any)']['POST'] = 'tasks/post/$1/$2';
-$route['api/task/(:any)/(:any)']['GET'] = 'tasks/get/$1/$2';
+$route['api/task/(:any)/(:any)']['POST'] = 'Tasks/post/$1/$2';
+$route['api/task/(:any)/(:any)']['GET'] = 'Tasks/get/$1/$2';
 
-$route['api/note/(:any)']['POST'] = 'tasks/post_notes/$1';
-$route['api/note/(:any)']['GET'] = 'tasks/get_notes/$1';
+$route['api/note/(:any)']['POST'] = 'Tasks/post_notes/$1';
+$route['api/note/(:any)']['GET'] = 'Tasks/get_notes/$1';
 
-$route['api/done/(:any)']['POST'] = 'tasks/mark_as_done/$1';
+$route['api/done/(:any)']['POST'] = 'Tasks/mark_as_done/$1';
 
-$route['api/change_column/(:any)']['POST'] = 'tasks/change_column/$1';
+$route['api/change_column/(:any)']['POST'] = 'Tasks/change_column/$1';
 
-$route['api/get_user_team_task/(:any)']['GET'] = 'tasks/get_user_team_task/$1';
+$route['api/get_user_team_task/(:any)']['GET'] = 'Tasks/get_user_team_task/$1';
 # end-of-API
 
 
