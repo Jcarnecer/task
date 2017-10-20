@@ -21,21 +21,21 @@
         <div class="col-md-4">
             <div id="todoPanel" class="kanban-panel container-fluid">
                 <h3 class="panel-title">To-Do</h3>
-                <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="panel-content row" ondrop="drop(event)" ondragover="allowDrop(event)">
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div id="doingPanel" class="kanban-panel container-fluid">
                 <h3 class="panel-title">Doing</h3>
-                <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="panel-content row" ondrop="drop(event)" ondragover="allowDrop(event)">
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div id="donePanel" class="kanban-panel container-fluid">
                 <h3 class="panel-title">Done</h3>
-                <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="panel-content row" ondrop="drop(event)" ondragover="allowDrop(event)">
                 </div>
             </div>
         </div>

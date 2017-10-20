@@ -280,9 +280,9 @@ $.fn.displayTask = function(type, items, column = 3) {
             break;
 
         case 'team':
-            $containers.push($('#todoPanel>.row'));
-            $containers.push($('#doingPanel>.row'));
-            $containers.push($('#donePanel>.row'));
+            $containers.push($('#todoPanel>.panel-content'));
+            $containers.push($('#doingPanel>.panel-content'));
+            $containers.push($('#donePanel>.panel-content'));
             column = 2;
             break;
     }
@@ -338,7 +338,7 @@ $.fn.displayTask = function(type, items, column = 3) {
             }
         });
 
-        if($container.is('#todoPanel>.row')) {
+        if($container.is('#todoPanel>.panel-content')) {
 
             $container.append(
                 `<div class="col-md-${colNumber}">

@@ -4,7 +4,7 @@
         <div class="modal-content" style="transition:0.2s;">
             <div class="modal-body">
                 <form>
-                    <input type="text" class="heading" name="name" placeholder="Team Name" required>
+                    <input type="text" class="heading" name="name" placeholder="Team Name" maxlength="20" required>
                     <hr/>
                     <div class="form-group">
                         <div class="team-member-list">
@@ -29,7 +29,7 @@
         <div class="task-container modal-content" style="transition:0.2s;">
             <div class="modal-body">
                 <form>
-                    <input type="text" class="heading" name="title" placeholder="Title" required>
+                    <input type="text" class="heading" name="title" placeholder="Title" maxlength="20" required>
                     <hr/>
                     <textarea rows="5" class="body lead" name="description" placeholder="Description" required></textarea>
                     <?php if($task_type == 'team'): ?>
