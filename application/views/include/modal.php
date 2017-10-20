@@ -31,7 +31,7 @@
                 <form>
                     <input type="text" class="heading" name="title" placeholder="Title" maxlength="20" required>
                     <hr/>
-                    <textarea rows="5" class="body lead" name="description" placeholder="Description" required></textarea>
+                    <textarea rows="5" class="body lead" name="description" placeholder="Description"></textarea>
                     <?php if($task_type == 'team'): ?>
                     <div class="form-group">
                         <div class="task-actor-list">
@@ -64,7 +64,8 @@
                         </button>
                         <?php endforeach; ?>
                         <input type="hidden" name="color" value="#ffffff" />
-                        <button type="button" id="taskSubmit" class="btn btn-link pull-right" data-dismiss="modal"><i class="fa fa-floppy-o fa-2x"></i></button>
+                        <button type="submit" id="taskSubmit" class="btn btn-link pull-right"><i class="fa fa-floppy-o fa-2x"></i></button>
+                        <button type="button" id="taskClose" style="display:none;" data-dismiss="modal">
                         <button type="button" class="btn btn-link pull-right" data-target="#createTaskSetting" data-toggle="collapse"><i class="fa fa-cog fa-2x"></i></button>
                     </div>
                 </form>
@@ -87,7 +88,7 @@
                         </ul>
                     </div>
                     <h1 id="title" class="heading"><b></b></h1>
-                    <textarea id="description" class="body lead" disable></textarea>
+                    <textarea id="description" class="body lead" disabled></textarea>
                     <?php if($task_type == 'team'): ?>
                     <h4 style="display:inline-block;"><b>Contributors: </b>
                         <div class="task-actor-list" style="display:inline-block;"></div>

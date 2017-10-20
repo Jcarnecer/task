@@ -36,14 +36,9 @@
                         </button>
                         <?php endforeach; ?>
                         <input type="hidden" name="color" value="#ffffff"/>
-                        <button type="button" id="taskSubmit" class="btn btn-primary pull-right" style="margin: 0px 5px;"><i class="fa fa-floppy-o fa-lg"></i> Save</button>
+                        <button type="button" id="taskSubmit" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#createCollapse" style="margin: 0px 5px;"><i class="fa fa-floppy-o fa-lg"></i> Save</button>
                         <button type="button" class="btn btn-primary pull-right" data-target="#dateTaskSettings" data-toggle="collapse" style="margin: 0px 5px;"><i class="fa fa-cog fa-lg"></i> More</button>
                     </div>
-                
-                    <!-- <div class="form-group">
-                        <div class="row">
-                        </div>
-                    </div> -->
                 </div>
             </form>
         </div>

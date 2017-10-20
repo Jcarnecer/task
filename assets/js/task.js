@@ -231,28 +231,31 @@ $(function () {
     // Submit
     $(document).on('click', '#taskSubmit', function () {
 
-        var task = $(this).closest('form').serializeArray();
-        
-        if($(this).closest('form').is('#taskCreateForm')) {
+        if($(this).closest('form').find('input[name="title]').val() != '') {
+
+            var task = $(this).closest('form').serializeArray();
             
-            $(document).postTask(task).always(function() {
+            if($(this).closest('form').is('#taskCreateForm')) {
                 
-                $(document).getTask().done(function(data) {
+                $(document).postTask(task).always(function() {
                     
-                    $(document).displayTask(getTaskType(), data);
-                    $(document).resetForm();
-                });
-            }); 
-        } else if($(this).closest('form').is('#taskUpdateForm')) {
-            
-            $(document).postTask(task, $(this).closest('form').attr('data-value')).always(function(data) {
+                    $(document).getTask().done(function(data) {
+                        
+                        $(document).displayTask(getTaskType(), data);
+                        $(document).resetForm();
+                    });
+                }); 
+            } else if($(this).closest('form').is('#taskUpdateForm')) {
                 
-                $(document).getTask().done(function(data){
+                $(document).postTask(task, $(this).closest('form').attr('data-value')).always(function(data) {
                     
-                    $(document).displayTask(getTaskType(), data);
-                    $(document).resetForm();
+                    $(document).getTask().done(function(data){
+                        
+                        $(document).displayTask(getTaskType(), data);
+                        $(document).resetForm();
+                    });
                 });
-            });
+            }
         }
     });
     
