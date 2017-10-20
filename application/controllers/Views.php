@@ -15,7 +15,7 @@ class Views extends CI_Controller {
 
 
     public function personal() {
-		
+    	return print("123");
 		$data['author_id']		= $this->session->user->id;
 		$data['user_id']		= $this->session->user->id;
 		$data['user_name']		= $this->session->user->first_name.' '.$this->session->user->last_name;
