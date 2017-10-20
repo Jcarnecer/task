@@ -6,10 +6,12 @@ class Views extends CI_Controller {
 
     public function __construct() {
         parent :: __construct();	
-        $this->session->unset_userdata('author_id');
+        if ($this->session->has_userdata("author_id")) {
+        	$this->session->unset_userdata('author_id');
+        }
 
         if (!$this->user_model->is_login()) {
-            return redirect('http://payakapps.com/users/login');
+        	return redirect("http://payakapps.com/users/login");
         }
     }
 

@@ -137,5 +137,5 @@ $autoload['model'] = [
 	'Task_note_model' => "task_note_model", 
 	'Team_model' => "team_model", 
 	'Tag_model' => "tag_model", 
-	'User_model' => "user_model"
+	'User_Model' => "user_model"
 ];
