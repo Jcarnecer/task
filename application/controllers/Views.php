@@ -10,7 +10,7 @@ class Views extends CI_Controller {
         	$this->session->unset_userdata('author_id');
         }
 
-        if (!$this->user_model->is_login()) {
+        if (!$this->session->has_userdata("user")) {
         	return redirect("http://payakapps.com/users/login");
         }
     }
