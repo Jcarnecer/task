@@ -1,5 +1,5 @@
 <!-- Team Create Modal -->
-<div id="teamModifyModal" class="modal fade" role="dialog">
+<div id="teamModifyModal" class="modal fade" role="dialog" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" style="transition:0.2s;">
             <div class="modal-body">
@@ -24,7 +24,7 @@
 </div>
 
 <!-- Task Modify Modal -->
-<div id="taskModifyModal" class="modal fade" role="dialog">
+<div id="taskModifyModal" class="modal fade" role="dialog" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="task-container modal-content" style="transition:0.2s;">
             <div class="modal-body">
@@ -74,8 +74,8 @@
 </div>
 
 <!-- Task View Modal -->
-<div id="taskViewModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+<div id="taskViewModal" class="modal fade" role="dialog" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="task-container modal-content" style="transition:0.2s;">
             <div class="modal-body">
                 <form id="taskViewForm">
@@ -86,11 +86,23 @@
                             <li class="dropdown-item"><a href="#" class="task-mark-done" data-dismiss="modal">Mark as Done</a></li>
                         </ul>
                     </div>
+                   <div class="container">
+                       <div class="row">
+                           <div class="header">
+                               <a class="btn btn-avatar" href="#"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                               <div class="task-actor-list" style="display: inline-block "></div></a>
+                           </div>
+                       </div>
+                   </div>
+                   <hr>
+                    
                     <h1 id="title" class="heading"><b></b></h1>
                     <p id="description" class="body lead"></p>
+<!--
                     <h4 style="display:inline-block;"><b>Contributors: </b>
                         <div class="task-actor-list" style="display:inline-block;"></div>
                     </h4>
+-->
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">

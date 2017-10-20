@@ -198,6 +198,21 @@ html, body {
         
 }
 
+/* Avatar Modal Button */
+.btn{
+    font-weight: 300;
+    text-decoration: none;
+    border-radius: 200px;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
+    margin-bottom: 10px;
+    
+}
+
+.btn-avatar:hover,
+.btn-avatar:active{
+    border: 1px solid;
+    color: inherit;
+}
 
 /* Search */
 #taskSearch, #taskSearch:focus {
@@ -440,6 +455,7 @@ a:link, a:visited, a:hover{
 }
 
 
+/*
 .btn-calendar,
 .btn-calendar:focus,
 .btn-calendar:active,
@@ -485,4 +501,4 @@ a:link, a:visited, a:hover{
 .btn-save i{
     font-size: 20px;
     
-}
+}*/
