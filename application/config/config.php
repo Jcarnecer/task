@@ -23,7 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/task/';
+if (ENVIRONMENT == "production") {
+	$config["base_url"] = "http://task.payakapps.com/"
+} else {
+	$config['base_url'] = 'http://localhost/task/';
+}
 
 /*
 |--------------------------------------------------------------------------
