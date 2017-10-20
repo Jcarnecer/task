@@ -1,4 +1,5 @@
 html, body {
+    
     height: 100%;
 }
 
@@ -199,20 +200,28 @@ html, body {
 }
 
 /* Avatar Modal Button */
-.btn{
+.btn:link,
+.btn:visited{
     font-weight: 300;
     text-decoration: none;
     border-radius: 200px;
-    transition: background-color 0.2s, border 0.2s, color 0.2s;
+/*    transition: background-color 0.2s, border 0.2s, color 0.2s;*/
     margin-bottom: 10px;
     
 }
 
+
+.btn:hover,
+.btn:active{ 
+    background-color: inherit;
+}
+
+
 .btn-avatar:hover,
 .btn-avatar:active{
     border: 1px solid;
-    color: inherit;
 }
+
 
 /* Search */
 #taskSearch, #taskSearch:focus {

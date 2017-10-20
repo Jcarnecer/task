@@ -90,7 +90,7 @@
                        <div class="row">
                            <div class="header">
                                <a class="btn btn-avatar" href="#"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-                               <div class="task-actor-list" style="display: inline-block "></div></a>
+                               <div class="task-actor-list" style="display: inline-block;"></div></a>
                            </div>
                        </div>
                    </div>
