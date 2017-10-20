@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 if (ENVIRONMENT == "production") {
-	$config["base_url"] = "http://task.payakapps.com/"
+	$config["base_url"] = "http://task.payakapps.com/";
 } else {
 	$config['base_url'] = 'http://localhost/task/';
 }
