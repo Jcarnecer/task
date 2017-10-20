@@ -404,11 +404,20 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+if (ENVIRONMENT === "production") {
+	$config['cookie_prefix']	= '';
+	$config['cookie_domain']	= '.payakapps.com';
+	$config['cookie_path']		= '/';
+	$config['cookie_secure']	= FALSE;
+	$config['cookie_httponly'] 	= FALSE;
+} else {
+	$config['cookie_prefix']	= '';
+	$config['cookie_domain']	= '';
+	$config['cookie_path']		= '/';
+	$config['cookie_secure']	= FALSE;
+	$config['cookie_httponly'] 	= FALSE;
+}
+
 
 /*
 |--------------------------------------------------------------------------
