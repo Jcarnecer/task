@@ -7,7 +7,19 @@ class Users extends CI_Controller {
     public function __construct() {
 
 		parent::__construct();
-	}
+    }
+    
+
+    public function get($user_id) {
+        
+        $user = $this->user_model->get('id', $user_id)[0];
+
+        echo json_encode([
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email_address' => $user->email_address
+        ]);
+    }
 
 
     public function login() {

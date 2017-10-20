@@ -59,6 +59,9 @@ $route['team/(:any)'] = 'views/team/$1';
 
 
 # API
+# user
+$route['api/user/(:any)']['GET'] = 'users/get/$1';
+
 # team
 $route['api/team']['POST'] = 'teams/post';
 $route['api/team']['GET'] = 'teams/get';

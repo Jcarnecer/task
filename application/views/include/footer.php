@@ -11,7 +11,7 @@
         
         $(document).ajaxComplete(function () {
             
-            $('.task-tile [data-toggle="popover"]').popover();
+            $('[data-toggle="popover"]').popover();
         });
     </script>
 
