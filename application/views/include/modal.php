@@ -81,11 +81,11 @@
             <div class="modal-body">
                 <form id="taskViewForm">
                     <div class="dropdown">
-                        <button type="button" class="btn btn-link pull-right" data-toggle="dropdown" style="padding:5px 15px;"><span class="fa fa-ellipsis-v" aria-hidden="false"></span></button>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item"><a class="task-edit" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal">Edit Task</a></li>
-                            <li class="dropdown-item"><a href="#" class="task-mark-done" data-dismiss="modal">Mark as Done</a></li>
-                        </ul>
+                        <button type="button" class="btn btn-link dropdwon-toggle pull-right" data-toggle="dropdown" id ="taskModalDropdown" style="padding:5px 15px;"><span class="fa fa-ellipsis-v" aria-hidden="false"></span></button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-item"><a class="task-edit" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal">Edit Task</a></div>
+                            <div class="dropdown-item"><a href="#" class="task-mark-done" data-dismiss="modal">Mark as Done</a></div>
+                        </div>
                     </div>
                     <h1 id="title" class="heading"><b></b></h1>
                     <textarea id="description" class="body lead" disabled></textarea>

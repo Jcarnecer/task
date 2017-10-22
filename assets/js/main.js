@@ -294,7 +294,7 @@ $.fn.displayTask = function(type, items, column = 3) {
         
         $.each(items, function(j, item) {
             
-            var actorsAppend = "<strong>Contributors</strong><br/>";
+            var actorsAppend = "<strong>Contributor</strong><br/>";
 
             if(item['actors'].length) {
 
