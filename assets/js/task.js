@@ -231,7 +231,7 @@ $(function () {
     // Submit
     $(document).on('click', '#taskSubmit', function () {
 
-        if($(this).closest('form').find('input[name="title]').val() != '') {
+        if($(this).closest('form').find('input[name="title"]').val() != '') {
 
             var task = $(this).closest('form').serializeArray();
             
@@ -256,6 +256,8 @@ $(function () {
                     });
                 });
             }
+
+            $('#taskClose').click();
         }
     });
     

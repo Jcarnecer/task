@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="transition:0.2s;">
             <div class="modal-body">
-                <form>
+                <form method="post">
                     <input type="text" class="heading" name="name" placeholder="Team Name" maxlength="20" required>
                     <hr/>
                     <div class="form-group">
@@ -28,7 +28,7 @@
     <div class="modal-dialog">
         <div class="task-container modal-content" style="transition:0.2s;">
             <div class="modal-body">
-                <form>
+                <form method="post">
                     <input type="text" class="heading" name="title" placeholder="Title" maxlength="20" required>
                     <hr/>
                     <textarea rows="5" class="body lead" name="description" placeholder="Description"></textarea>
@@ -149,7 +149,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="transition:0.2s;">
             <div class="modal-body">
-                <form>
+                <form method="post">
                     <input type="text" class="heading" name="title" placeholder="Title" required>
                     <hr/>
                     <textarea rows="5" class="body lead" name="description" placeholder="Description" required></textarea>
