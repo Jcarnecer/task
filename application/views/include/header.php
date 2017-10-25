@@ -92,7 +92,9 @@
                     <?php if($task_type == 'team'): ?>
                     <button id="highlightBtn" type="button" class="btn btn-primary navbar-btn">Show my Tasks</button>
                     <?php endif; ?>
-                    <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover" style="position: absolute; display:block; right: 0; color:inherit;"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i></a>
+                    <a class="navbar-brand ml-auto" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
+                        <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                    </a>
                 </nav>
             </div>
             <div class="inner-content paper">
