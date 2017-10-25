@@ -1,5 +1,5 @@
 <!-- Team Create Modal -->
-<div id="teamModifyModal" class="modal fade" role="dialog">
+<div id="teamModifyModal" class="modal fade" role="dialog" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" style="transition:0.2s;">
             <div class="modal-body">
@@ -24,7 +24,7 @@
 </div>
 
 <!-- Task Modify Modal -->
-<div id="taskModifyModal" class="modal fade" role="dialog">
+<div id="taskModifyModal" class="modal fade" role="dialog" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="task-container modal-content" style="transition:0.2s;">
             <div class="modal-body">
@@ -75,7 +75,7 @@
 </div>
 
 <!-- Task View Modal -->
-<div id="taskViewModal" class="modal fade" role="dialog">
+<div id="taskViewModal" class="modal fade" role="dialog" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="task-container modal-content" style="transition:0.2s;">
             <div class="modal-body">
@@ -87,6 +87,7 @@
                             <div class="dropdown-item"><a href="#" class="task-mark-done" data-dismiss="modal">Mark as Done</a></div>
                         </div>
                     </div>
+                    
                     <h1 id="title" class="heading"><b></b></h1>
                     <textarea id="description" class="body lead" disabled></textarea>
                     <?php if($task_type == 'team'): ?>
@@ -97,16 +98,16 @@
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 id="date"><b>Due Date: </b><span class="body"></span></h4>
+                            <h5 id="date"><b>Due Date: </b><span class="body"></span></h5>
                         </div>
                         <div class="col-md-6">
-                            <h4 id="countdown" class="body"></h4>
+                            <h5 id="countdown" class="body"></h5>
                         </div>
                     </div>
                     <div>
-                        <h4 style="display:inline-block;"><b>Tags: </b>
+                        <h5 style="display:inline-block;"><b>Tags: </b>
                             <div class="task-tag-list" style="display:inline-block;"></div>
-                        </h4>
+                        </h5>
                     </div>
                     <hr/>
                     <div class="form-group">

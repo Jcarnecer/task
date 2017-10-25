@@ -1,4 +1,5 @@
 html, body {
+    
     height: 100%;
 }
 
@@ -25,6 +26,23 @@ html, body {
     padding: 10px;
 }
 
+/* Dropdown*/
+.dropdown-content{
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    width: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
 /* Task_modal */
 .modal input.heading {
@@ -118,8 +136,10 @@ html, body {
 /* Tag_modal */
 .modal .task-tag, .modal .task-actor {
     font-size: 14px;
+    font-weight: 500;
     line-height: 1.8;
     margin: 1px;
+    padding: 10px;
 }
 
 
@@ -152,8 +172,8 @@ html, body {
 
 
 .body {
-    font-weight: 500;
-    font-size: 22px;
+    font-weight: 400;
+    font-size: 20px;
 }
 
 
@@ -216,6 +236,33 @@ html, body {
     height: 100px;
     background-color: black;
         
+}
+
+/* Avatar Modal Button */
+.btn:link,
+.btn:visited{
+    font-weight: 300;
+    text-decoration: none;
+    border-radius: 200px;
+/*    transition: background-color 0.2s, border 0.2s, color 0.2s;*/
+    margin-bottom: 10px;
+    
+}
+
+.btn-settings i{
+    font-size: 20px;
+}
+
+
+.btn:hover,
+.btn:active{ 
+    background-color: inherit;
+}
+
+
+.btn-avatar:hover,
+.btn-avatar:active{
+    border: 1px solid;
 }
 
 
@@ -460,6 +507,7 @@ a:link, a:visited, a:hover{
 }
 
 
+/*
 .btn-calendar,
 .btn-calendar:focus,
 .btn-calendar:active,
@@ -505,4 +553,4 @@ a:link, a:visited, a:hover{
 .btn-save i{
     font-size: 20px;
     
-}
+}*/
