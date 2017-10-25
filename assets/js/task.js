@@ -244,7 +244,7 @@ $(function () {
                         $(document).displayTask(getTaskType(), data);
                         $(document).resetForm();
                     });
-                }); 
+                });
             } else if($(this).closest('form').is('#taskUpdateForm')) {
                 
                 $(document).postTask(task, $(this).closest('form').attr('data-value')).always(function(data) {
