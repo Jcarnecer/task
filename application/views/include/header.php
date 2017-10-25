@@ -89,12 +89,25 @@
                         <span></span>
                     </div>
                     <a class="navbar-brand" href="<?= base_url('tasks'); ?>">Task</a>
+                    
                     <?php if($task_type == 'team'): ?>
-                    <button id="highlightBtn" type="button" class="btn btn-primary navbar-btn">Show my Tasks</button>
+                    <button id="highlightBtn" type="button" class="btn btn-primary navbar-btn mx-1">
+                        <i class="fa fa-eye"></i> Show my Tasks
+                    </button>
+
+                    <button type="button" class="team-edit btn btn-primary navbar-btn mx-1" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $team->id; ?>">
+                        <i class="fa fa-edit"></i> Edit Group
+                    </button>
+
+                    <button type="button" class="team-leave btn btn-danger navbar-btn mx-1" data-value="<?= $team->id; ?>">
+                        <i class="fa fa-sign-out"></i> Leave Group
+                    </button>
                     <?php endif; ?>
+
                     <a class="navbar-brand ml-auto" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
                         <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
                     </a>
+
                 </nav>
             </div>
             <div class="inner-content paper">

@@ -229,13 +229,14 @@ $(function () {
 
 
     // Submit
-    $(document).on('click', '#taskSubmit', function () {
+    $(document).on('submit', '#taskModifyModal form', function (e) {
 
-        if($(this).closest('form').find('input[name="title"]').val() != '') {
+        e.preventDefault();
+        if($(this).find('input[name="title"]').val() != '') {
 
-            var task = $(this).closest('form').serializeArray();
+            var task = $(this).serializeArray();
             
-            if($(this).closest('form').is('#taskCreateForm')) {
+            if($(this).is('#taskCreateForm')) {
                 
                 $(document).postTask(task).always(function() {
                     
@@ -245,11 +246,11 @@ $(function () {
                         $(document).resetForm();
                     });
                 });
-            } else if($(this).closest('form').is('#taskUpdateForm')) {
+            } else if($(this).is('#taskUpdateForm')) {
                 
-                $(document).postTask(task, $(this).closest('form').attr('data-value')).always(function(data) {
+                $(document).postTask(task, $(this).attr('data-value')).always(function(data) {
                     
-                    $(document).getTask().done(function(data){
+                    $(document).getTask().always(function(data){
                         
                         $(document).displayTask(getTaskType(), data);
                         $(document).resetForm();

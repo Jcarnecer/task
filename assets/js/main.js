@@ -134,7 +134,7 @@ $.fn.displayMember = function(items, edit = false) {
         if(edit) {
 
             $('.team-member-list').find('.team-member').before(
-                `<span class="label label-default">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
+                `<span class="badge badge-default">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
             $('.team-member-list').parent().append(
                 `<input type="hidden" name="members[]" value="${item['email_address']}" />`
@@ -142,7 +142,7 @@ $.fn.displayMember = function(items, edit = false) {
         } else
 
             $('.team-member-list').append(
-                `<span class="label label-default">${item['first_name']} ${item['last_name']}</span>`
+                `<span class="badge badge-default">${item['first_name']} ${item['last_name']}</span>`
             );
     });
 };
