@@ -6,7 +6,7 @@
     <div class="container-fluid" >
         <div id="personalCreate" class="task-container container-fluid w3-card-2 w3-hover-shadow">
             <form id="taskCreateForm">
-                <input type="text" data-target="#createCollapse" data-toggle="collapse" class="input-tag" name="title" placeholder="Add Task <?= $user_name ?>">
+                <input type="text" data-target="#createCollapse" data-toggle="collapse" class="input-tag" name="title" placeholder="What's your plan, <?= $user_name ?>?">
 
                 <div id="createCollapse" class="collapse">
                     <textarea id="addTask" rows="2" class="body lead" name="description" placeholder="Description"></textarea>
