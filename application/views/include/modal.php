@@ -64,7 +64,7 @@
                         </button>
                         <?php endforeach; ?>
                         <input type="hidden" name="color" value="#ffffff" />
-                        <button type="submit" id="taskSubmit" class="btn btn-link pull-right"><i class="fa fa-floppy-o fa-2x"></i></button>
+                        <button type="submit" class="btn btn-link pull-right"><i class="fa fa-floppy-o fa-2x"></i></button>
                         <button type="button" id="taskClose" style="display:none;" data-dismiss="modal">
                         <button type="button" class="btn btn-link pull-right" data-target="#createTaskSetting" data-toggle="collapse"><i class="fa fa-cog fa-2x"></i></button>
                     </div>

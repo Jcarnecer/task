@@ -5,7 +5,9 @@
 
     <div class="container-fluid" >
         <div id="personalCreate" class="task-container container-fluid w3-card-2 w3-hover-shadow">
-            <form id="taskCreateForm">
+
+            <form id="taskCreateForm" method="post">
+
                 <input type="text" data-target="#createCollapse" data-toggle="collapse" class="input-tag" name="title" placeholder="What's your plan, <?= $user_name ?>?">
 
                 <div id="createCollapse" class="collapse">
@@ -36,11 +38,19 @@
                         </button>
                         <?php endforeach; ?>
                         <input type="hidden" name="color" value="#ffffff"/>
-                        <button type="button" id="taskSubmit" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#createCollapse" style="margin: 0px 5px;"><i class="fa fa-floppy-o fa-lg"></i> Save</button>
-                        <button type="button" class="btn btn-primary pull-right" data-target="#dateTaskSettings" data-toggle="collapse" style="margin: 0px 5px;"><i class="fa fa-cog fa-lg"></i> More</button>
+                        <button type="submit" form="taskCreateForm" id="taskSubmit" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#createCollapse" style="margin: 0px 5px;">
+                            <i class="fa fa-floppy-o fa-lg"></i> Save
+                        </button>
+                        <!-- <input type="submit" class="btn btn-primary float-right" value="Submit"> -->
+                        <button type="button" class="btn btn-primary pull-right" data-target="#dateTaskSettings" data-toggle="collapse" style="margin: 0px 5px;">
+                            <i class="fa fa-cog fa-lg"></i> More
+                        </button>
                     </div>
+
                 </div>
+
             </form>
+
         </div>
     </div>
 

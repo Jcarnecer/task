@@ -41,6 +41,7 @@ $(function () {
 
         $(document).resetForm();
         $('#taskModifyModal').find('form').attr('id', 'taskCreateForm');
+        $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskCreateForm');
     });
     
     
@@ -48,6 +49,7 @@ $(function () {
         
         $(document).resetForm();
         $('#taskModifyModal').find('form').attr('id', 'taskUpdateForm');
+        $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskUpdateForm');
         
         $(document).getTask($(this).attr('data-value')).done(function (data) {
 
@@ -229,9 +231,10 @@ $(function () {
 
 
     // Submit
-    $(document).on('submit', '#taskModifyModal form', function (e) {
+    $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e) {
 
         e.preventDefault();
+
         if($(this).find('input[name="title"]').val() != '') {
 
             var task = $(this).serializeArray();
@@ -258,8 +261,20 @@ $(function () {
                 });
             }
 
-            $('#taskClose').click();
+            if($(this).has('#taskClose'))
+                $('#taskClose').click();
+
+            if($(this).has('#createCollapse'))
+                $(this).find('#createCollapse').removeClass('show');
+                // $(this).find('input[name="title"]').click();
         }
+    });
+
+
+    $(document).on('click', 'button:submit', function(e) {
+        
+        e.preventDefault();
+        $(this).closest('form').submit();
     });
     
     
