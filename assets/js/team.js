@@ -11,7 +11,7 @@ $(function () {
 
         $('#teamModifyModal').find('form')[0].reset();
         $('#teamModifyModal').find('form').attr('id', 'teamCreateForm');
-        $('#teamModifyModal').find('.team-member-list').find('span.badge.badge-default').remove();
+        $('#teamModifyModal').find('.team-member-list').find('span.badge.badge-secondary').remove();
         $('#teamModifyModal').find('.team-member-list').siblings('input').remove();
     });
     
@@ -19,7 +19,7 @@ $(function () {
     $(document).on('click', '.team-edit', function () {
 
         $('#teamModifyModal').find('form')[0].reset();
-        $('#teamModifyModal').find('.team-member-list').find('span.badge.badge-default').remove();
+        $('#teamModifyModal').find('.team-member-list').find('span.badge.badge-secondary').remove();
         $('#teamModifyModal').find('.team-member-list').siblings('input').remove();
 
         $(document).getTeam($(this).attr('data-value')).always(function(data) {
@@ -54,7 +54,7 @@ $(function () {
                 if(!$(this).closest('.team-member-list').parent().has(`input[name="members[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
                     $(this).before(
-                        `<span class="badge badge-default">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                        `<span class="badge badge-secondary">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
                     );
 
                     $(this).closest('.team-member-list').parent().append(

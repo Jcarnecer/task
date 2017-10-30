@@ -135,7 +135,7 @@ $(function () {
                 if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val().toLowerCase()}"]`).length){
                     
                     $(this).before(
-                        `<span class="badge badge-default">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                        `<span class="badge badge-secondary">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
                     );
                     $(this).closest('.task-tag-list').parent().append(
                         `<input type="hidden" name="tags[]" value="${$(this).val().toLowerCase()}" />`
@@ -171,7 +171,7 @@ $(function () {
                     if(!$(this).closest('.task-actor-list').parent().has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
                         $(this).before(
-                            `<span class="badge badge-default">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                            `<span class="badge badge-secondary">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
                         );
 
                         $(this).closest('.task-actor-list').parent().append(

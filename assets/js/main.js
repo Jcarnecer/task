@@ -134,7 +134,7 @@ $.fn.displayMember = function(items, edit = false) {
         if(edit) {
 
             $('.team-member-list').find('.team-member').before(
-                `<span class="badge badge-default">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
+                `<span class="badge badge-secondary">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
             $('.team-member-list').parent().append(
                 `<input type="hidden" name="members[]" value="${item['email_address']}" />`
@@ -142,7 +142,7 @@ $.fn.displayMember = function(items, edit = false) {
         } else
 
             $('.team-member-list').append(
-                `<span class="badge badge-default">${item['first_name']} ${item['last_name']}</span>`
+                `<span class="badge badge-secondary">${item['first_name']} ${item['last_name']}</span>`
             );
     });
 };
@@ -210,7 +210,7 @@ $.fn.displayActor = function(items, edit = false) {
         if(edit) {
 
             $('.task-actor-list').find('.task-actor').before(
-                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
+                `<span class="badge badge-secondary">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
             $('.task-actor-list').parent().append(
@@ -219,7 +219,7 @@ $.fn.displayActor = function(items, edit = false) {
         } else
 
             $('.task-actor-list').append(
-                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']}</span>`
+                `<span class="badge badge-secondary">${item['first_name'] + ' ' + item['last_name']}</span>`
             );
     });
 };
@@ -232,7 +232,7 @@ $.fn.displayTag = function(items, edit = false) {
         if(edit) {
                 
             $('.task-tag-list').find('.task-tag').before(
-                `<span class="badge badge-default">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
+                `<span class="badge badge-secondary">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
             );
             $('.task-tag-list').parent().append(
                 `<input type="hidden" name="tags[]" value="${item['name']}" />`
@@ -240,7 +240,7 @@ $.fn.displayTag = function(items, edit = false) {
         } else
 
             $('.task-tag-list').append(
-                `<span class="badge badge-default">${item['name']}</span>`
+                `<span class="badge badge-secondary">${item['name']}</span>`
             );
     });
 };
@@ -280,9 +280,9 @@ $.fn.displayTask = function(type, items, column = 3) {
             break;
 
         case 'team':
-            $containers.push($('#todoPanel>.panel-content'));
-            $containers.push($('#doingPanel>.panel-content'));
-            $containers.push($('#donePanel>.panel-content'));
+            $containers.push($('#todoTask .card-body'));
+            $containers.push($('#doingTask .card-body'));
+            $containers.push($('#doneTask .card-body'));
             column = 2;
             break;
     }
@@ -311,42 +311,40 @@ $.fn.displayTask = function(type, items, column = 3) {
             if(status[i] == item['status']) {
 
                 $container.prepend(
-                    `<div data-order="${j}" class="col-md-${colNumber}">
-
-                        <div class="task-tile task-view w3-card-2 w3-hover-shadow" 
-                        data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" 
+                    `<div class="card my-1 rounded task-view" 
                         draggable="true" ondragstart="drag(event)" 
+                        data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" 
                         style="background-color:${item['color']};">
-
-                            <div class="container" ${getTaskType() == 'team' ? contributorAppend : ''}>
-                                <span class="tile-title">
-                                    ${getTaskType() == 'team' ? 
-                                        item['actors'].length ? 
-                                            item['actors'].length > 1 ? 
-                                                '<i class="fa fa-users"></i>' : 
-                                                '<i class="fa fa-user"></i>' : 
-                                            '<i class="fa fa-user-o"></i>' : 
-                                        ''} 
-                                    ${item['title']}
-                                </span>
-                            </div>
-
-                        </div>
                         
+                        <div class="card-body"
+                            ${getTaskType() == 'team' ? contributorAppend : ''}>
+                            <h5 class="card-title">
+                                ${getTaskType() == 'team' ? 
+                                    item['actors'].length ? 
+                                        item['actors'].length > 1 ? 
+                                            '<i class="fa fa-users"></i>' : 
+                                            '<i class="fa fa-user"></i>' : 
+                                        '<i class="fa fa-user-o"></i>' : 
+                                    ''} 
+                                ${item['title']}
+                            </h5>
+                        </div>
+
                     </div>`
                 );
             }
         });
 
-        if($container.is('#todoPanel>.panel-content')) {
+        if($container.is('#todoTask .card-body')) {
 
             $container.append(
-                `<div class="col-md-${colNumber}">
-                
-                    <div class="task-tile task-create w3-card-2 w3-hover-shadow" data-target="#taskModifyModal" data-toggle="modal">
-                        <div class="container"><span class="tile-title"><i class="fa fa-plus fa-lg"></i>&nbsp;&nbsp;&nbsp;Add Task</span></div>
+                `<div class="card my-1 rounded task-create" 
+                    data-target="#taskModifyModal" data-toggle="modal">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fa fa-plus"></i> Add Task
+                        </h5>
                     </div>
-                
                 </div>`
             );
         }
