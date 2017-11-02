@@ -1,4 +1,6 @@
+        </div>
     </div>
+
     <!--<script src="/task/assets/js/jquery.nicescroll.min.js"></script>-->
     <script src="<?= base_url('assets/js/jquery.js'); ?>"></script>
     <script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>

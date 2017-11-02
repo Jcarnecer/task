@@ -14,12 +14,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+27px">
 
     <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/flavored-reset-and-normalize.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/styles.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/paper.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/kanban.css'); ?>" />     
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/modal.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/task.css'); ?>" />
 
 </head>

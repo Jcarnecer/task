@@ -316,8 +316,7 @@ $.fn.displayTask = function(type, items, column = 3) {
                         data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" 
                         style="background-color:${item['color']};">
                         
-                        <div class="card-body"
-                            ${getTaskType() == 'team' ? contributorAppend : ''}>
+                        <div class="card-body" ${getTaskType() == 'team' ? contributorAppend : ''}>
                             <h5 class="card-title">
                                 ${getTaskType() == 'team' ? 
                                     item['actors'].length ? 
@@ -326,6 +325,7 @@ $.fn.displayTask = function(type, items, column = 3) {
                                             '<i class="fa fa-user"></i>' : 
                                         '<i class="fa fa-user-o"></i>' : 
                                     ''} 
+
                                 ${item['title']}
                             </h5>
                         </div>
@@ -339,7 +339,7 @@ $.fn.displayTask = function(type, items, column = 3) {
 
             $container.append(
                 `<div class="card my-1 rounded task-create" 
-                    data-target="#taskModifyModal" data-toggle="modal">
+                data-toggle="modal" data-target="#taskModifyModal">
                     <div class="card-body">
                         <h5 class="card-title">
                             <i class="fa fa-plus"></i> Add Task
