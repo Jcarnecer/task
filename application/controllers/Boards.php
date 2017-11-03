@@ -119,4 +119,10 @@ class Boards extends CI_Controller {
 		}
 	}
 
+
+	public function get(Type $var = null)
+	{
+		# code...
+	}
+
 }

@@ -74,6 +74,6 @@ class Board_model extends CI_Model {
 
 	public function update($id, $key, $details) {
 
-		$this->db->update($key, $details, 'id = $id');
+		return $this->db->update($key, $details, 'id = $id');
 	}
 }
