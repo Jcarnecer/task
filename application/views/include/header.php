@@ -106,9 +106,9 @@
                     </div>
                     <?php endif; ?>
 
-                    <a class="navbar-brand ml-auto" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
+                    <a class="navbar-brand ml-auto text-right" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
                         <!-- <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> -->
-                        <img src="<?= base_url('assets/img/avatar/user_id.png') ?>" alt="<?= $email ?>">
+                        <img class="img-fluid w-25 mr-auto" src="<?= 'http://localhost/main/assets/img/avatar/'.$user_id.'.png' ?>" alt="<?= $email ?>">
                     </a>
 
                 </nav>
