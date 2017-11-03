@@ -1,0 +1,184 @@
+/* Task_modal */
+.modal input.heading {
+    height: 50px;
+    width: 100%;
+}
+
+
+.modal textarea {
+    width: 100%;
+    word-wrap: break-word;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+
+.modal input, .modal textarea {
+    border: 0 hidden #ffffff;
+    background-color: transparent;
+}
+
+
+.modal input:focus, .modal textarea:focus, .modal button:focus {
+    outline: none;
+}
+
+
+/* Note_modal */
+.modal .task-note-label {
+    font-weight: 800;
+    font-size: 28px;
+    text-align: center;
+    width: 100%;
+}
+
+
+.modal .task-note-create {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.modal .task-note-create>div {
+    padding: 0px;
+    display: flex;
+    align-items: center;
+}
+
+
+.modal .task-note-box {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin: 0;
+    padding: 10px 10px;
+}
+
+
+.modal .task-note-list {
+    margin: 10px;
+}
+
+
+.modal .task-note-list-item {
+    /* padding: 5px; */
+    margin: 2px auto;
+}
+
+
+.modal .task-note-user {
+    width: 75%;
+    display: block;
+    /* vertical-align: middle; */
+    /* position: relative; */
+    /* padding-top: 100%; */
+    margin: auto;
+}
+
+
+.modal .task-note-text {
+    font-weight: 500;
+    /* width: 100%;
+    height: 100%; */
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+/* end-of-Note_modal */
+
+
+/* Tag_modal */
+.modal .task-tag, .modal .task-actor {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.8;
+    margin: 1px;
+    padding: 10px;
+}
+
+
+.modal .task-tag-list span.badge, .modal .task-actor-list span.badge {
+    margin: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.8;
+    word-wrap: normal;
+    display: inline-block;
+    background-color: #1a1a1a;
+    border-radius: 2px;
+    padding: 0px 5px;
+}
+
+
+.model .task-tag-remove {
+    font-size: 10px;   
+    display: inline-block;
+}
+/* end-of-Tag_modal */
+
+
+/* View_task_modal */
+.heading {
+    font-weight: 800;
+    font-size: 32px;
+}
+
+
+.body {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+
+.no-task-text {
+    margin: 50px auto;
+    font-size: 64px;
+    font-weight: 500;
+    color: rgba(128, 128, 128, 0.70);
+    text-shadow: -1px -1px 3px;
+    text-align: center;
+}
+/* end-of-View_task_modal */
+
+
+/* Other */
+.modal ::-webkit-input-placeholder {
+    color: #808080;
+}
+/* end-of-Task_modal */
+
+
+/* Team_modal */
+.modal .team-member {
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 1px;
+}
+
+
+.modal .team-member-label {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.task-container span.badge, #teamModifyModal span.badge {
+    margin: 2px;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.8;
+    word-wrap: normal;
+    display: inline-block;
+    background-color: #1a1a1a;
+    border-radius: 2px;
+    padding: 0px 5px;
+}
+
+
+.model .team-member-remove {
+    font-size: 10px;   
+    display: inline-block;
+}
+/* end-of-Team_modal */
