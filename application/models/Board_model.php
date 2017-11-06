@@ -5,7 +5,7 @@ class Board_model extends CI_Model {
 
 
 	# Get Board
-	public function get($id) {
+	public function get_board($id) {
 		
 		$board 				  = $this->db->get_where('kanban_boards', ['id' => $id], 1)->result()[0];
 		$board->columns 	  = $this->get_board_columns($board->id);
@@ -15,7 +15,7 @@ class Board_model extends CI_Model {
 
 
 	# Get All Boards
-	public function get_all($team_id, $status = null) {
+	public function get_all_boards($team_id, $status = null) {
 
 		$boards = $this->db->get_where('kanban_boards', ['team_id' => $team_id])->result();
 
@@ -25,22 +25,24 @@ class Board_model extends CI_Model {
 		return $boards;
 	}
 
+	
+	# Get Column
+	public function get_column($id) {
 
-	public function get_board_columns($id) {
+		$column = $this->db->get_where('kanban_columns', ['id' => $id], 1)->result()[0];
 
-		// $CI =& get_instance();
-		// $CI->load->model('Task_model');
+		return $column;
+	}
+	
+
+	# Get All Columns
+	public function get_all_columns($id) {
 
 		$columns = $this->db->get_where('kanban_columns', ['board_id' => $id])->result();
 
-		// foreach ($columns as $column) {
-
-		// 	$column->tasks = $this->get_kanban_tasks($column->id);
-		// }	
-
 		return $columns;
 	}
-	
+
 
 	public function get_kanban_tasks($id) {
 
@@ -74,7 +76,7 @@ class Board_model extends CI_Model {
 
 	public function update($id, $key, $details) {
 
-		return $this->db->update($key, $details, 'id = $id');
+		return $this->db->update($key, $details, "id = $id");
 	}
 
 

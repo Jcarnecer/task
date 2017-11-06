@@ -79,10 +79,10 @@ class Boards extends CI_Controller {
 		
 		if ($board_id != null) {
 			
-			echo json_encode((array)$this->board_model->get($board_id));
+			echo json_encode((array)$this->board_model->get_board($board_id));
 		} else {
 			
-			echo json_encode((array)$this->board_model->get_all($team_id)[0]);
+			echo json_encode((array)$this->board_model->get_all_boards($team_id)[0]);
 		}
 	}
 
@@ -105,8 +105,20 @@ class Boards extends CI_Controller {
 
 			} else {
 				
-				$this->board_model->insert('kanban_columns', $column_details);
+				echo json_encode($this->board_model->insert('kanban_columns', $column_details));
 			}
+		}
+	}
+
+
+	public function get_column($board_id, $column_id = null) {
+		
+		if ($column_id != null) {
+
+			echo json_encode((array)$this->board_model->get_column($column_id));
+		} else {
+			
+			echo json_encode((array)$this->board_model->get_all_columns($board_id));
 		}
 	}
 

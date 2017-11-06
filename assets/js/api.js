@@ -101,27 +101,26 @@ $.fn.postBoard = function(details, userId, boardId = null) {
 };
 
 
-$.fn.getColumn = function(boardId) {
+$.fn.getColumn = function(boardId, columnId = null, syncToggle = false) {
 
     return $.ajax({
 
+        async: !syncToggle,
         type: 'GET',
-        url: `${baseUrl}api/column/${boardId}`,
+        url: `${baseUrl}api/column/${boardId}` + (columnId != null ? `/${columnId}` : ''),
         dataType: 'json'
     });
 };
 
 
-$.fn.postColumn = function(boardId, columnName) {
+$.fn.postColumn = function(details, boardId, columnId = null) {
 
     return $.ajax({
 
         type: 'POST',
-        url: `${baseUrl}api/column`,
+        url: `${baseUrl}api/column/${boardId}` + (columnId != null ? `/${columnId}` : ''),
         dataType: 'json',
-        data: {
-            name: columnName
-        }
+        data: details
     });
 };
 

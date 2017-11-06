@@ -99,3 +99,9 @@
 .kanban-panel#donePanel {
     border-width: 0px 0px 0px 0px;
 }
+
+
+/* Column */
+#addColumnName {
+    outline: none;
+}

@@ -258,8 +258,8 @@ $.fn.searchTask = function(items, keyword) {
 
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
 
-                $('#taskSearchQuery').append(
-                    `<li class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']};">
+                $('#taskSearchQuery').append(`
+                    <li class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']};">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-1"><a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + `"></span></a></div>
@@ -267,28 +267,78 @@ $.fn.searchTask = function(items, keyword) {
                                 <div class="col-md-1"><a class="task-edit" href="#taskModifyModal" data-toggle="modal" data-value="${item['id']}"><span class="glyphicon glyphicon-edit"></span></a></div>
                             </div>
                         </div>
-                    </li>`
-                );
+                    </li>
+                `);
             }
         });
     }
 };
 
 
+{/* <div class="card task-create" data-value="${id}">
+    <div class="card-body">
+        <h2 class="card-title">Add Task</h2>
+    </div>
+</div> */}
+
+// Column Builder
+function columnBuilder(id, name, position) {
+    var columnString = 
+    `<div class="card h-100 w-25" data-value="${id} data-position="${position}">
+        <h2 class="card-header clearfix">
+            <span class="float-left">${name}</span>
+            <span>
+                <div class="dropdown">
+                    <a class="btn btn-link dropdown-toggle float-right" id="columnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="columnMenuButton">
+                        <a class="dropdown-item" href="#">Rename</a>
+                        <a class="dropdown-item" href="#">Delete</a>
+                    </div>
+                </div>
+            </span>
+        </h2>
+        <div class="card-body text-center" style="overflow-y: auto;">
+            <button type="button" class="btn btn-primary btn-lg task-create"
+                data-toggle="modal" data-target="#taskModifyModal" data-parent="${id}">
+                <i class="fa fa-plus"></i> Add Task
+            </button>
+        </div>
+    </div>`;
+
+    return columnString;
+}
+
+
 // Board
 $.fn.displayBoard = function(board) {
 
-    $('#kanbanBoard .card-group').css(`width`,  `${board['columns'].length * 25}%`);
+    $('#kanbanBoard .card-group').html('');
+
+    $('#kanbanBoard .card-group').css(`width`,  `${(board['columns'].length + 1) * 25}%`);
 
     $.each(board['columns'], function(i, column) {
 
-        $('#kanbanBoard .card-group').append(
-            `<div class="card h-100 w-25" data-value="${column['id']}">
-                <h2 class="card-header text-center">${column['name']}</h2>
-                <div class="card-body" style="overflow-y: auto;"></div>
-            </div>`
-        );
+        $('#kanbanBoard .card-group').append(columnBuilder(column['id'], column['name'], column['position']));
     });
+    
+    $('#kanbanBoard .card-group').append(`
+        <div id="addColumn" class="card h-100 w-25">
+            <h2 class="card-header text-center">
+                <i class="fa fa-plus"></i>
+                <span id="addColumnName" contenteditable="true">Add Column</span>
+            </h2>
+            <div class="card-body"></div>
+        </div>
+    `);
+};
+
+
+// Column
+$.fn.addColumn = function(column) {
+    
+    $('#kanbanBoard .card-group').css(`width`,  `${(column['position'] + 1) * 25}%`);
+    
+    $('#addColumn').before(columnBuilder(column['id'], column['name'], column['position']));
 };
 
 
@@ -306,4 +356,4 @@ $.fn.highlightTask = function(userId) {
 
         $('#kanbanBoard').toggleClass('highlight');
     });
-};
+};  

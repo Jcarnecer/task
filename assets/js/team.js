@@ -8,8 +8,8 @@ $(document).on('click', '#highlightBtn', function () {
 
 // Initiate
 $(document).getBoard(getAuthorId()).done(function(data) {
+    $('#kanbanBoard').attr('data-value', data['id']);
     $(document).displayBoard(data);
-    console.log('Column Loaded');
 });
 
 
@@ -103,7 +103,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
             $(document).postBoard(boardDetails, data['team_id']);
         }).always(function(data) {
 
-            // window.location.href = `${baseUrl}team/${data['team_id']}`;
+            window.location.href = `${baseUrl}team/${data['team_id']}`;
         });
     else if($(this).attr('id') == 'teamUpdateForm')
     

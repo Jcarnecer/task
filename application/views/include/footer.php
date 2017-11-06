@@ -10,6 +10,7 @@
     <script src="<?= base_url('assets/js/api.js'); ?>"></script>
     <script src="<?= base_url('assets/js/main.js'); ?>"></script>
     <script src="<?= base_url('assets/js/drag_drop.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/kanban.js'); ?>"></script>
     <script src="<?= base_url('assets/js/team.js'); ?>"></script>
     <script src="<?= base_url('assets/js/task.js'); ?>"></script>
 

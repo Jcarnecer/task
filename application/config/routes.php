@@ -75,6 +75,12 @@ $route['api/board/(:any)']['GET'] = 'boards/get_board/$1';
 $route['api/board/(:any)/(:any)']['POST'] = 'boards/post_board/$1/$2';
 $route['api/board/(:any)/(:any)']['GET'] = 'boards/get_board/$1/$2';
 
+$route['api/column/(:any)']['POST'] = 'boards/post_column/$1';
+$route['api/column/(:any)']['GET'] = 'boards/get_column/$1';
+
+$route['api/column/(:any)/(:any)']['POST'] = 'boards/post_column/$1/$2';
+$route['api/column/(:any)/(:any)']['GET'] = 'boards/get_column/$1/$2';
+
 $route['api/validate_member']['POST'] = 'teams/validate_member';
 
 $route['api/leave_team/(:any)']['POST'] = 'teams/leave_team/$1';
