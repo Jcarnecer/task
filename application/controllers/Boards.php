@@ -79,10 +79,10 @@ class Boards extends CI_Controller {
 		
 		if ($board_id != null) {
 			
-			echo json_encode((array)$this->db->get($board_id));
+			echo json_encode((array)$this->board_model->get($board_id));
 		} else {
 			
-			echo json_encode((array)$this->db->get_all($team_id)[0]);
+			echo json_encode((array)$this->board_model->get_all($team_id)[0]);
 		}
 	}
 

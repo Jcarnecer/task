@@ -69,11 +69,11 @@ $route['api/team']['GET'] = 'teams/get';
 $route['api/team/(:any)']['POST'] = 'teams/post/$1';
 $route['api/team/(:any)']['GET'] = 'teams/get/$1';
 
-$route['api/board/(:any)']['POST'] = 'boards/post_board/$1/$2';
-$route['api/board/(:any)']['GET'] = 'boards/post_board/$1/$2';
+$route['api/board/(:any)']['POST'] = 'boards/post_board/$1';
+$route['api/board/(:any)']['GET'] = 'boards/get_board/$1';
 
 $route['api/board/(:any)/(:any)']['POST'] = 'boards/post_board/$1/$2';
-$route['api/board/(:any)/(:any)']['GET'] = 'boards/post_board/$1/$2';
+$route['api/board/(:any)/(:any)']['GET'] = 'boards/get_board/$1/$2';
 
 $route['api/validate_member']['POST'] = 'teams/validate_member';
 

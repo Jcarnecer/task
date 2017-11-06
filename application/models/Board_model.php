@@ -20,7 +20,7 @@ class Board_model extends CI_Model {
 		$boards = $this->db->get_where('kanban_boards', ['team_id' => $team_id])->result();
 
 		foreach ($boards as $board)
-			$board->columns = $this->get_board_columns($board->id);
+			$board->columns = $this->db->get_where('kanban_columns', ['board_id' => $board->id])->result();
 		
 		return $boards;
 	}
@@ -28,17 +28,17 @@ class Board_model extends CI_Model {
 
 	public function get_board_columns($id) {
 
-		$CI =& get_instance();
-		$CI->load->model('Task_model');
+		// $CI =& get_instance();
+		// $CI->load->model('Task_model');
 
 		$columns = $this->db->get_where('kanban_columns', ['board_id' => $id])->result();
 
-		foreach ($columns as $column) {
+		// foreach ($columns as $column) {
 
-			$column->tasks = $this->get_kanban_tasks($column->id);
-		}	
+		// 	$column->tasks = $this->get_kanban_tasks($column->id);
+		// }	
 
-		return $column;
+		return $columns;
 	}
 	
 

@@ -278,11 +278,11 @@ $.fn.searchTask = function(items, keyword) {
 // Board
 $.fn.displayBoard = function(board) {
 
-    $('#kanbanBoard').css(`width`,  `${board['columns'].length}%`);
+    $('#kanbanBoard .card-group').css(`width`,  `${board['columns'].length * 25}%`);
 
     $.each(board['columns'], function(i, column) {
 
-        $('#kanbanBoard>.card-group').append(
+        $('#kanbanBoard .card-group').append(
             `<div class="card h-100 w-25" data-value="${column['id']}">
                 <h2 class="card-header text-center">${column['name']}</h2>
                 <div class="card-body" style="overflow-y: auto;"></div>

@@ -9,6 +9,7 @@ $(document).on('click', '#highlightBtn', function () {
 // Initiate
 $(document).getBoard(getAuthorId()).done(function(data) {
     $(document).displayBoard(data);
+    console.log('Column Loaded');
 });
 
 
