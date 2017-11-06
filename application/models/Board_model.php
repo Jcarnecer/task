@@ -35,9 +35,7 @@ class Board_model extends CI_Model {
 
 		foreach ($columns as $column) {
 
-			$column->tasks = $this->get_kanban_tasks($column->id) {
-
-			}
+			$column->tasks = $this->get_kanban_tasks($column->id);
 		}	
 
 		return $column;
@@ -68,12 +66,38 @@ class Board_model extends CI_Model {
 	#
 	public function insert($key, $details) {
 
-		return $this->db->insert($key, $details);
+		// $details['id'] = $this->utilities->unique_id($key, 8);
+		$this->db->insert($key, $details);
+		return $this->db->insert_id();
 	}
 
 
 	public function update($id, $key, $details) {
 
 		return $this->db->update($key, $details, 'id = $id');
+	}
+
+
+	public function initiate_board($board_id) {
+		
+		$columns = [
+			[
+				'name' 		=> 'Open',
+				'position' 	=> '1',
+				'board_id'	=> $board_id
+			],
+			[
+				'name' 		=> 'In Progress', 
+				'position' 	=> '2',
+				'board_id'	=> $board_id
+			],
+			[
+				'name' 		=> 'Done', 
+				'position'  => '3',
+				'board_id'	=> $board_id
+			]
+		];
+
+		$this->db->insert_batch('kanban_columns', $columns);
 	}
 }

@@ -30,7 +30,7 @@
 
 <div id="kanbanBoard" class="w-100 m-0 p-0" style="height: calc(100% - 160px); overflow-x: auto;">
     <div class="card-group h-100 m-0 p-0" style="width: 125%;">
-        <div id="todoTask" class="card h-100 w-25 bg-warning">
+        <!-- <div id="todoTask" class="card h-100 w-25 bg-warning">
             <h2 class="card-header text-center">Pending</h2>
             <div class="card-body" style="overflow-y: auto;">
 
@@ -61,6 +61,6 @@
                     <i class="fa fa-plus"></i> Add Column    
                 </h2>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

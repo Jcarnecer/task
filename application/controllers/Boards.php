@@ -40,7 +40,7 @@ class Boards extends CI_Controller {
 					break;
 			}
 
-			if($update_id != null) {
+			if ($update_id != null) {
 				
 				$this->board_model->update($update_id, $key, $board_details);
 			} else {
@@ -52,7 +52,7 @@ class Boards extends CI_Controller {
 	}
 
 
-	# board
+	# Board
 	public function post_board($team_id, $board_id = null) {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -63,18 +63,31 @@ class Boards extends CI_Controller {
 			];
 			#get details here
 
-			if($board_id != null) {
+			if ($board_id != null) {
 				
 				$this->board_model->update($board_id, 'kanban_boards', $board_details);
-
 			} else {
 				
-				$this->board_model->insert('kanban_boards', $board_details);
+				$board_id = $this->board_model->insert('kanban_boards', $board_details);
+				$this->board_model->initiate_board($board_id);
 			}
 		}
 	}
 
 
+	public function get_board($team_id, $board_id = null) {
+		
+		if ($board_id != null) {
+			
+			echo json_encode((array)$this->db->get($board_id));
+		} else {
+			
+			echo json_encode((array)$this->db->get_all($team_id)[0]);
+		}
+	}
+
+
+	# Column
 	public function post_column($board_id, $column_id = null) {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -86,7 +99,7 @@ class Boards extends CI_Controller {
 			];
 			#get details here
 
-			if($column_id != null) {
+			if ($column_id != null) {
 				
 				$this->board_model->update($column_id, 'kanban_columns', $column_details);
 
@@ -108,7 +121,7 @@ class Boards extends CI_Controller {
 			];
 			#get details here
 
-			if($id != null) {
+			if ($id != null) {
 				
 				$this->board_model->update($id, 'kanban_tasks', $task_details);
 
@@ -118,11 +131,4 @@ class Boards extends CI_Controller {
 			}
 		}
 	}
-
-
-	public function get(Type $var = null)
-	{
-		# code...
-	}
-
 }

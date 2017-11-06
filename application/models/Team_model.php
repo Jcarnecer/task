@@ -3,8 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Team_model extends CI_Model {
 
-	public $team;
-
 
 	public function get_id($name) {
 
@@ -14,15 +12,18 @@ class Team_model extends CI_Model {
 
 	public function get_all($user_id = null) {
 
-		if($user_id != null)
+		if($user_id != null) {
+		
 			return $this->db->select('*')
 				->from('teams')
 				->join('teams_mapping', 'teams_mapping.team_id = teams.id')
 				->where('teams_mapping.user_id', $user_id)
 				->get()
 				->result();
-		else
+		} else {
+		
 			return $this->db->select('id')->from('teams')->get()->result();
+		}
 	}
 
 
@@ -54,8 +55,10 @@ class Team_model extends CI_Model {
 
 	public function update_team($team_id, $new_name) {
 
-		if($this->db->select('name')->from('teams')->where('id', $team_id)->get()->result()[0]->name != $new_name)
+		if($this->db->select('name')->from('teams')->where('id', $team_id)->get()->result()[0]->name != $new_name) {
+		
 			$this->db->where('id', $team_id)->update('teams', ['name' => $new_name]);
+		}
 	}
 
 

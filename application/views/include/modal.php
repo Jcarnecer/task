@@ -14,7 +14,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="button" id="teamSubmit" class="btn btn-primary pull-right" data-dismiss="modal"><i class="fa fa-users"></i> Create Team</button>
+                            <button type="submit" id="teamSubmit" class="btn btn-primary pull-right" data-dismiss="modal"><i class="fa fa-users"></i> Create Team</button>
                         </div>
                     </div>
                 </form>

@@ -1,4 +1,5 @@
 const baseUrl = window.location.origin + '/task/';
+
 var userId = null;
 var authorId = null;
 var taskType = null;
@@ -20,110 +21,6 @@ function setUserId(id) { userId = id; }
 
 
 function getUserId() { return userId; }
-
-
-// AJAX
-$.fn.getUser = function(userId) {
-
-    return $.ajax({
-        
-        type: 'GET',
-        url: `${baseUrl}api/user/${userId}`,
-        dataType: 'json'
-    });
-}
-
-
-$.fn.getTask = function(taskId = null) {
-
-    return $.ajax({
-
-        type: 'GET',
-        url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
-        dataType: 'json'
-    });
-};
-
-
-$.fn.postTask = function(details, taskId = null) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
-        data: details,
-        dataType: 'json'
-    });
-};
-
-
-$.fn.getTaskNote = function(taskId) {
-
-    return $.ajax({
-
-        type: 'GET',
-        url: `${baseUrl}api/note/${taskId}`,
-        dataType: 'json'
-    });
-}
-
-
-$.fn.postTaskNote = function(details, taskId) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/note/${taskId}`,
-        data: details,
-        dataType: 'json'
-    })
-}
-
-
-$.fn.getTeam = function(teamId = null) {
-
-    return $.ajax({
-
-        type: 'GET',
-        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
-        dataType: 'json'
-    });
-};
-
-
-$.fn.postTeam = function(details, teamId = null) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
-        dataType: 'json',
-        data: details
-    });
-};
-
-
-$.fn.changeColumn = function(details, taskId) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/change_column/${taskId}`,
-        datType: 'json',
-        data: details
-    });
-}
-
-
-$.fn.getUserTeamTask = function(userId) {
-
-    return $.ajax({
-
-        type: 'GET',
-        url: `${baseUrl}api/get_user_team_task/${userId}`,
-        dataType: 'json'
-    });
-}
 
 
 // Team
@@ -359,7 +256,7 @@ $.fn.searchTask = function(items, keyword) {
     if(keyword != ''){
         $.each(items, function(i, item) {
 
-            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1)
+            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
 
                 $('#taskSearchQuery').append(
                     `<li class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']};">
@@ -372,9 +269,28 @@ $.fn.searchTask = function(items, keyword) {
                         </div>
                     </li>`
                 );
+            }
         });
     }
 };
+
+
+// Board
+$.fn.displayBoard = function(board) {
+
+    $('#kanbanBoard').css(`width`,  `${board['columns'].length}%`);
+
+    $.each(board['columns'], function(i, column) {
+
+        $('#kanbanBoard>.card-group').append(
+            `<div class="card h-100 w-25" data-value="${column['id']}">
+                <h2 class="card-header text-center">${column['name']}</h2>
+                <div class="card-body" style="overflow-y: auto;"></div>
+            </div>`
+        );
+    });
+};
+
 
 // Kanban
 $.fn.highlightTask = function(userId) {
