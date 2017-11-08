@@ -19,29 +19,13 @@ switch(getTaskType()) {
 }
 
 
-// Initialize
-$(document).getTask().done(function(data) {
-
-    if(data.length == 0 && getTaskType() == 'personal') {
-
-        $('#taskTileList').html(
-            `<h1 class="no-task-text">
-                No Task yet :(
-            </h1>`
-        );
-    } else {
-
-        $(document).displayTask(getTaskType(), data, column);
-    }
-});
-
-
 // Load Modal
 $(document).on('click', '.task-create', function() {
 
     $(document).resetForm();
     $('#taskModifyModal').find('form').attr('id', 'taskCreateForm');
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskCreateForm');
+    $('#taskModifyModal').find('[name="column_id"]').val($(this).attr('data-parent'));
 });
 
 
@@ -52,13 +36,13 @@ $(document).on('click', '.task-edit', function () {
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskUpdateForm');
     
     $(document).getTask($(this).attr('data-value')).done(function (data) {
-
+        
         $('#taskModifyModal').find('form').attr('data-value', data['id']);
         $('#taskModifyModal').find('[name="title"]').val(data['title']);
         $('#taskModifyModal').find('[name="description"]').val(data['description']);
         $('#taskModifyModal').find('[name="date"]').val(data['due_date']);
         $('#taskModifyModal').find('[name="color"]').val(data['color']);
-
+        
         $(document).displayTag(data['tags'], true);
         $(document).displayActor(data['actors'], true);
         
@@ -245,7 +229,7 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
                 
                 $(document).getTask().done(function(data) {
                     
-                    $(document).displayTask(getTaskType(), data);
+                    $(document).displayTask(data);
                     $(document).resetForm();
                 });
             });
@@ -255,7 +239,7 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
                 
                 $(document).getTask().always(function(data){
                     
-                    $(document).displayTask(getTaskType(), data);
+                    $(document).displayTask(data);
                     $(document).resetForm();
                 });
             });
@@ -297,7 +281,7 @@ $(document).on('click', '.task-mark-done', function () {
 
         $(document).getTask().done(function(data){
 
-            $(document).displayTask(getTaskType(), data);
+            $(document).displayTask(data);
         });
     });
 });

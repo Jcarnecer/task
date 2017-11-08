@@ -30,6 +30,7 @@
             <div class="modal-body">
                 <form method="post">
                     <input type="text" class="heading" name="title" placeholder="Title" maxlength="20" required>
+                    <input type="hidden" name="column_id" required>
                     <hr/>
                     <textarea rows="5" class="body lead" name="description" placeholder="Description"></textarea>
                     <?php if($task_type == 'team'): ?>

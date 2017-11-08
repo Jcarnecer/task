@@ -9,6 +9,7 @@ $.fn.getUser = function(userId) {
 };
 
 
+
 $.fn.getTask = function(taskId = null) {
 
     return $.ajax({
@@ -78,10 +79,11 @@ $.fn.postTeam = function(details, teamId = null) {
 };
 
 
-$.fn.getBoard = function(userId, boardId = null) {
+$.fn.getBoard = function(userId, boardId = null, syncToggle = false) {
 
     return $.ajax({
 
+        async: !syncToggle,
         type: 'GET',
         url: `${baseUrl}api/board/${userId}` + (boardId != null ? `/${boardId}` : ''),
         dataType: 'json'
@@ -89,10 +91,11 @@ $.fn.getBoard = function(userId, boardId = null) {
 };
 
 
-$.fn.postBoard = function(details, userId, boardId = null) {
+$.fn.postBoard = function(details, userId, boardId = null, syncToggle = false) {
     
     return $.ajax({
 
+        async: !syncToggle,
         type: 'POST',
         url: `${baseUrl}api/board/${userId}` + (boardId != null ? `/${boardId}` : ''),
         dataType: 'json',
@@ -113,10 +116,11 @@ $.fn.getColumn = function(boardId, columnId = null, syncToggle = false) {
 };
 
 
-$.fn.postColumn = function(details, boardId, columnId = null) {
+$.fn.postColumn = function(details, boardId, columnId = null, syncToggle = false) {
 
     return $.ajax({
 
+        async: !syncToggle,
         type: 'POST',
         url: `${baseUrl}api/column/${boardId}` + (columnId != null ? `/${columnId}` : ''),
         dataType: 'json',
@@ -125,16 +129,31 @@ $.fn.postColumn = function(details, boardId, columnId = null) {
 };
 
 
-$.fn.changeColumn = function(details, taskId) {
+$.fn.changeColumn = function(column, taskId) {
 
     return $.ajax({
 
         type: 'POST',
         url: `${baseUrl}api/change_column/${taskId}`,
         datType: 'json',
-        data: details
+        data: {
+            column_id: column
+        }
     });
 };
+
+
+$.fn.updatePositions = function(details, syncToggle = false) {
+
+    return $.ajax({
+
+        async: !syncToggle,
+        type: 'POST',
+        url: `${baseUrl}api/update_columns`,
+        dataType: 'json',
+        data: details
+    });
+}
 
 
 $.fn.getUserTeamTask = function(userId) {
@@ -143,6 +162,32 @@ $.fn.getUserTeamTask = function(userId) {
 
         type: 'GET',
         url: `${baseUrl}api/get_user_team_task/${userId}`,
+        dataType: 'json'
+    });
+};
+
+
+$.fn.validateMember = function(value) {
+
+    return $.ajax({
+
+        async: false,
+        type: 'POST',
+        url: `${baseUrl}api/validate_member`,
+        data: {
+            email: value
+        },
+        dataType: 'json'
+    }).responseJSON;
+};
+
+
+$.fn.leaveTeam = function(teamId, userId) {
+
+    return $.ajax({
+
+        type: 'POST',
+        url: `${baseUrl}api/leave_team/${teamId}`,
         dataType: 'json'
     });
 };

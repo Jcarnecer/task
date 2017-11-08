@@ -29,7 +29,5 @@
 </div>
 
 <div id="kanbanBoard" class="w-100 m-0 p-0" style="height: calc(100% - 160px); overflow-x: auto;">
-    <div class="card-group h-100 m-0 p-0" style="width: 125%;">
-        
-    </div>
+    <div class="card-group h-100 m-0 p-0"></div>
 </div>

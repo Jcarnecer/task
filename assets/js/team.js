@@ -1,17 +1,5 @@
 $(function () {
 
-// Highlight
-$(document).on('click', '#highlightBtn', function () {
-    $(document).highlightTask(getUserId());
-});
-
-
-// Initiate
-$(document).getBoard(getAuthorId()).done(function(data) {
-    $('#kanbanBoard').attr('data-value', data['id']);
-    $(document).displayBoard(data);
-});
-
 
 // Load Modal
 $(document).on('click', '.team-create', function () {
@@ -96,13 +84,11 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
     
     if($(this).attr('id') == 'teamCreateForm')
 
-        $(document).postTeam(team).done(function(data) {
+        $(document).postTeam(team).always(function(data) {
             
             var boardDetails = new Object();
             boardDetails.name = "Default";
-            $(document).postBoard(boardDetails, data['team_id']);
-        }).always(function(data) {
-
+            $(document).postBoard(boardDetails, data['team_id'], null, true);
             window.location.href = `${baseUrl}team/${data['team_id']}`;
         });
     else if($(this).attr('id') == 'teamUpdateForm')
@@ -113,4 +99,4 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
         });
 });
 
-}); 
+});

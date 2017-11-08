@@ -82,7 +82,7 @@ class Boards extends CI_Controller {
 			echo json_encode((array)$this->board_model->get_board($board_id));
 		} else {
 			
-			echo json_encode((array)$this->board_model->get_all_boards($team_id)[0]);
+			echo json_encode((array)($this->board_model->get_all_boards($team_id)[0]));
 		}
 	}
 
@@ -92,8 +92,8 @@ class Boards extends CI_Controller {
 	
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
 
-			$column_details = [
-				'name'		 => $this->input->post('name'),
+			$column_details	= [
+				'name'		 => trim(strip_tags($this->input->post('name'))),
 				'position'	 => $this->input->post('position'),
 				'board_id'	 => $board_id
 			];
@@ -141,6 +141,15 @@ class Boards extends CI_Controller {
 				
 				$this->board_model->insert('kanban_tasks', $task_details);
 			}
+		}
+	}
+
+
+	public function change_columns_position() {
+		
+		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+
+			$this->board_model->update_multiple('kanban_columns', $this->input->post('column_update'), 'id');
 		}
 	}
 }

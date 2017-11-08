@@ -45,50 +45,10 @@ $.fn.displayMember = function(items, edit = false) {
 };
 
 
-$.fn.validateMember = function(value) {
-
-    return $.ajax({
-
-        async: false,
-        type: 'POST',
-        url: `${baseUrl}api/validate_member`,
-        data: {
-            email: value
-        },
-        dataType: 'json'
-    }).responseJSON;
-};
-
-
-$.fn.leaveTeam = function(teamId, userId) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/leave_team/${teamId}`,
-        dataType: 'json'
-    });
-};
-
-
 // Task
 $.fn.resetForm = function() {
     
-    // $('#taskModifyModal').find('form')[0].reset();
-    // $('#taskModifyModal').find('.task-actor-list').siblings('input').remove();
-    // $('#taskModifyModal').find('.task-actor-list').find('span.badge').remove();
-    // $('#taskModifyModal').find('.task-tag-list').siblings('input').remove();
-    // $('#taskModifyModal').find('.task-tag-list').find('span.badge').remove();
-    // $('#taskModifyModal').find('.modal-content').css('background-color', '#ffffff');
-    // $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    // $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
-
-    if(getTaskType() == 'personal')
-    
-        $('#personalCreate').find('form')[0].reset();
-    else if(getTaskType() == 'team')
-        
-        $('#taskModifyModal').find('form')[0].reset();
+    $('#taskModifyModal').find('form')[0].reset();
 
     $('.task-container').find('.task-actor-list').siblings('input').remove();
     $('.task-container').find('.task-actor-list').find('span.badge').remove();
@@ -165,86 +125,62 @@ $.fn.displayNote = function(items) {
 }
 
 
-$.fn.displayTask = function(type, items, column = 3) {
+// Task
+function taskBuilder(task) {
     
-    var $containers = [];
-    var status = [1, 4, 2];
+    var taskString = "";
+    var actorsAppend = "";
+    var contributorsAppend = "";
+    var iconAppend = "";
 
-    switch(type) {
-        case 'personal':
-            $containers.push($('#taskTileList'));
-            column = 4;
-            break;
+    var actors = task['actor'];
+    
+    if (actors != null) {
 
-        case 'team':
-            $containers.push($('#todoTask .card-body'));
-            $containers.push($('#doingTask .card-body'));
-            $containers.push($('#doneTask .card-body'));
-            column = 2;
-            break;
+        actorsAppend = "<strong>Contributor</strong><br/>";
+
+        if(actors.length) {
+
+            $.each(actors, function (i, actor) {
+                actorsAppend += actor['first_name'] + " " + actor['last_name'] + "<br/>";
+            });
+        } else {
+            
+            actorsAppend = "No Contributor";
+        }
+
+        contributorsAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
+    
+        if (actors.length == 0) {
+            iconAppend = '<i class="fa fa-user-o"></i>';
+        } else if (actors.length == 1) {
+            iconAppend = '<i class="fa fa-user"></i>';
+        } else if (actors.length > 1) {
+            iconAppend = '<i class="fa fa-users"></i>';
+        }
     }
 
-    colNumber = 12/column;
-
-    $.each($containers, function(i, $container) {
-        $container.html('');
+    var taskString = 
+    `<div class="card my-1 rounded kanban-task task-view"
+        data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}"
+        style="background-color:${task['color']};">
         
-        $.each(items, function(j, item) {
-            
-            var actorsAppend = "<strong>Contributor</strong><br/>";
+        <div class="card-body" ${contributorsAppend}
+            draggable="true" ondragstart="drag(event)">
+            <h3 class="card-title font-weight-bold">${iconAppend + task['title']}</h3>
+        </div>
 
-            if(item['actors'].length) {
+    </div>`;
 
-                $.each(item['actors'], function (i, actor) {
-                    actorsAppend = actorsAppend + actor['first_name'] + " " + actor['last_name'] + "<br/>";
-                });
-            } else {
-                
-                actorsAppend = "No Contributor";
-            }
+    return taskString;
+}
 
-            var contributorAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
 
-            if(status[i] == item['status']) {
-
-                $container.prepend(
-                    `<div class="card my-1 rounded task-view" 
-                        draggable="true" ondragstart="drag(event)" 
-                        data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" 
-                        style="background-color:${item['color']};">
-                        
-                        <div class="card-body" ${getTaskType() == 'team' ? contributorAppend : ''}>
-                            <h5 class="card-title">
-                                ${getTaskType() == 'team' ? 
-                                    item['actors'].length ? 
-                                        item['actors'].length > 1 ? 
-                                            '<i class="fa fa-users"></i>' : 
-                                            '<i class="fa fa-user"></i>' : 
-                                        '<i class="fa fa-user-o"></i>' : 
-                                    ''} 
-
-                                ${item['title']}
-                            </h5>
-                        </div>
-
-                    </div>`
-                );
-            }
-        });
-
-        if($container.is('#todoTask .card-body')) {
-
-            $container.append(
-                `<div class="card my-1 rounded task-create" 
-                data-toggle="modal" data-target="#taskModifyModal">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="fa fa-plus"></i> Add Task
-                        </h5>
-                    </div>
-                </div>`
-            );
-        }
+$.fn.displayTask = function(items) {
+    
+    $.each(items, function(i, item) {
+        
+        $(`.kanban-column[data-value="${item['column_id']}"]>.card-body`).prepend(taskBuilder(item));
     });
 };
 
@@ -275,40 +211,6 @@ $.fn.searchTask = function(items, keyword) {
 };
 
 
-{/* <div class="card task-create" data-value="${id}">
-    <div class="card-body">
-        <h2 class="card-title">Add Task</h2>
-    </div>
-</div> */}
-
-// Column Builder
-function columnBuilder(id, name, position) {
-    var columnString = 
-    `<div class="card h-100 w-25" data-value="${id} data-position="${position}">
-        <h2 class="card-header clearfix">
-            <span class="float-left">${name}</span>
-            <span>
-                <div class="dropdown">
-                    <a class="btn btn-link dropdown-toggle float-right" id="columnMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                    <div class="dropdown-menu" aria-labelledby="columnMenuButton">
-                        <a class="dropdown-item" href="#">Rename</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                    </div>
-                </div>
-            </span>
-        </h2>
-        <div class="card-body text-center" style="overflow-y: auto;">
-            <button type="button" class="btn btn-primary btn-lg task-create"
-                data-toggle="modal" data-target="#taskModifyModal" data-parent="${id}">
-                <i class="fa fa-plus"></i> Add Task
-            </button>
-        </div>
-    </div>`;
-
-    return columnString;
-}
-
-
 // Board
 $.fn.displayBoard = function(board) {
 
@@ -318,14 +220,14 @@ $.fn.displayBoard = function(board) {
 
     $.each(board['columns'], function(i, column) {
 
-        $('#kanbanBoard .card-group').append(columnBuilder(column['id'], column['name'], column['position']));
+        $('#kanbanBoard .card-group').append(columnBuilder(column));
     });
     
     $('#kanbanBoard .card-group').append(`
         <div id="addColumn" class="card h-100 w-25">
-            <h2 class="card-header text-center">
-                <i class="fa fa-plus"></i>
-                <span id="addColumnName" contenteditable="true">Add Column</span>
+            <h2 class="card-header">
+                <i class="fa fa-plus mx-1"></i>
+                <span id="addColumnName" contenteditable="true"></span>
             </h2>
             <div class="card-body"></div>
         </div>
@@ -334,11 +236,41 @@ $.fn.displayBoard = function(board) {
 
 
 // Column
+function columnBuilder(column) {
+    var columnString = 
+    `<div class="card h-100 w-25 kanban-column" 
+        ondrop="drop(event)" ondragover="allowDrop(event)" 
+        data-value="${column['id']}" data-position="${column['position']}">
+        <h2 class="card-header clearfix"
+            draggable="true" ondragstart="drag(event)">
+
+            <span class="float-left">
+                ${column['name']}
+            </span>
+
+            <span class="float-right">
+                <a href="#"><i class="fa fa-pencil mx-1"></i></a>
+                <a href="#"><i class="fa fa-trash mx-1"></i></a>
+            </span>
+
+        </h2>
+        <div class="card-body text-center" style="overflow-y: auto;">
+            <button type="button" class="btn btn-primary btn-lg my-2 task-create"
+                data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
+                <i class="fa fa-plus"></i> Add Task
+            </button>
+        </div>
+    </div>`;
+
+    return columnString;
+}
+
+
 $.fn.addColumn = function(column) {
     
     $('#kanbanBoard .card-group').css(`width`,  `${(column['position'] + 1) * 25}%`);
     
-    $('#addColumn').before(columnBuilder(column['id'], column['name'], column['position']));
+    $('#addColumn').before(columnBuilder(column));
 };
 
 

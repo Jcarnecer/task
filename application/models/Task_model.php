@@ -16,25 +16,14 @@ class Task_model extends CI_Model {
 	# Get Task By ID
 	public function get($id) {
 		
-		$task 				  = $this->db->get_where('tasks', ['id' => $id], 1)->result()[0];
-		$task->notes 		  = $this->get_task_notes($task->id);
-		$task->actors 		  = $this->get_task_actors($task->id);
-		$task->tags 		  = $this->get_task_tags($task->id);
-		$task->remaining_days = $this->estimate_days($task->id);
+		$task 				  	= $this->db->get_where('tasks', ['id' => $id], 1)->result()[0];
+		$task->notes 		  	= $this->get_task_notes($task->id);
+		$task->actors 		  	= $this->get_task_actors($task->id);
+		$task->tags 		  	= $this->get_task_tags($task->id);
+		$task->column_id		= $this->get_task_column($task->id);
+		$task->remaining_days	= $this->estimate_days($task->id);
 
 		return $task;
-	}
-
-
-	# Get User Team Tasks
-	public function get_user_team_task($user_id) {
-		
-		return $this->db->select('*')
-			->from('tasks')
-			->join('tasks_assignment', 'tasks_assignment.task_id = tasks.id')
-			->where('tasks_assignment.user_id', $user_id)
-			->get()
-			->result();
 	}
 
 
@@ -48,13 +37,26 @@ class Task_model extends CI_Model {
 
 		foreach ($tasks as $task) {
 
-			$task->notes 		  = $this->get_task_notes($task->id);
-			$task->actors 		  = $this->get_task_actors($task->id);
-			$task->tags 		  = $this->get_task_tags($task->id);
-			$task->remaining_days = $this->estimate_days($task->id);
+			$task->notes 		  	= $this->get_task_notes($task->id);
+			$task->actors 		  	= $this->get_task_actors($task->id);
+			$task->tags 		  	= $this->get_task_tags($task->id);
+			$task->column_id		= $this->get_task_column($task->id);
+			$task->remaining_days	= $this->estimate_days($task->id);
 		}
 		
 		return $tasks;
+	}
+	
+	
+	# Get User Team Tasks
+	public function get_user_team_task($user_id) {
+		
+		return $this->db->select('*')
+			->from('tasks')
+			->join('tasks_assignment', 'tasks_assignment.task_id = tasks.id')
+			->where('tasks_assignment.user_id', $user_id)
+			->get()
+			->result();
 	}
 
 
@@ -101,6 +103,12 @@ class Task_model extends CI_Model {
 	public function get_task_notes($task_id) {
 
 		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
+	}
+
+
+	public function get_task_column($task_id) {
+		
+		return $this->db->get_where('kanban_tasks', ['id' => $task_id], 1)->result()[0]->column_id;
 	}
 
 
