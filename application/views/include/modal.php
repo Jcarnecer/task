@@ -135,13 +135,17 @@
 </div>
 
 <!-- Task Search Modal -->
-<div id="searchTaskModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <input type="text" id="taskSearch" placeholder="Search"/>
-            <ul id="taskSearchQuery" class="list-group" style="margin: 0px;">
-
-            </ul>
+<div id="taskSearchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-0">
+            <div class="card m-0 p-0">
+                <h2 class="card-header p-0">
+                    <input type="search" id="taskSearch" class="form-control text-center m-0 font-weight-bold" placeholder="Search"/>
+                </h2>
+                <div class="card-body">
+                    <div id="taskSearchList" class="card-columns"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

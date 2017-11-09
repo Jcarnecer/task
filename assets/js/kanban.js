@@ -19,11 +19,15 @@ $(document).getBoard(getAuthorId(), null, true).done(function(data) {
 $(document).getTask().done(function(data) {
     
     $(document).displayTask(data);
+
+    if(getTaskType() == 'personal') {
+        $('.task-count').html(data.length);
+    }
 });
 
 
 // Highlight
-$(document).on('click', '#highlightBtn', function () {
+$(document).on('click', '#highlightBtn', function() {
     
     $(document).highlightTask(getUserId());
 });

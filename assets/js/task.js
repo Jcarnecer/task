@@ -1,23 +1,6 @@
 $(function () {
 
-var $container = null;
-var $kanbanPanel = [$('#todoPanel>.row'), $('#doingPanel>.row'), $('#donePanel>.row')];
-var column = 0;
-
-
-switch(getTaskType()) {
-    
-    case 'personal':
-        $container = $('#taskTileList')
-        column = 4;
-        break;
-
-    case 'team':
-        $container = $('#todoPanel>.row');
-        column = 2;
-        break;
-}
-
+var storedTasks = null;
 
 // Load Modal
 $(document).on('click', '.task-create', function() {
@@ -90,12 +73,20 @@ $(document).on('click', '.task-view', function () {
 
 
 // Search
-$(document).on('input', '#taskSearch', function () {
+$(document).on('click', '[href="#taskSearchModal"]', function(e) {
 
-    $(document).getTask().done(function(data){
+    storedTasks = storeTask();
+});
 
-        $(document).searchTask(data, $('#taskSearch').val());
-    });
+
+$(document).on('input', '#taskSearch', function (e) {
+
+    if(e.which == 13) {
+
+        e.preventDefault();
+    }
+
+    $(document).searchTask(storedTasks, $('#taskSearch').val());
 });
 
 
@@ -114,17 +105,16 @@ $(document).on('keypress', '.task-tag', function (e) {
 
     if(e.which == 13 || e.which == 32) {
 
-        if($(this).val() != '') {
+        e.preventDefault();
+
+        if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val().toLowerCase()}"]`).length){
             
-            if(!$(this).closest('.task-tag-list').parent().has(`input[name="tags[]"][value="${$(this).val().toLowerCase()}"]`).length){
-                
-                $(this).before(
-                    `<span class="badge badge-secondary">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
-                );
-                $(this).closest('.task-tag-list').parent().append(
-                    `<input type="hidden" name="tags[]" value="${$(this).val().toLowerCase()}" />`
-                );
-            }
+            $(this).before(
+                `<span class="badge badge-secondary">${$(this).val().toLowerCase()} <a class="task-tag-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+            );
+            $(this).closest('.task-tag-list').parent().append(
+                `<input type="hidden" name="tags[]" value="${$(this).val().toLowerCase()}" />`
+            );
         }
         
         $(this).val('');
@@ -146,26 +136,25 @@ $(document).on('keypress', '.task-actor', function (e) {
 
     if(e.which == 13 || e.which == 32) {
 
-        if(!$(this).val() == '') {
+        e.preventDefault();
 
-            var result = $(document).validateMember($(this).val().toLowerCase());
+        var result = $(document).validateMember($(this).val().toLowerCase());
+        
+        if(result['exist']) {
             
-            if(result['exist']) {
-                
-                if(!$(this).closest('.task-actor-list').parent().has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
+            if(!$(this).closest('.task-actor-list').parent().has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
-                    $(this).before(
-                        `<span class="badge badge-secondary">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
-                    );
+                $(this).before(
+                    `<span class="badge badge-secondary">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                );
 
-                    $(this).closest('.task-actor-list').parent().append(
-                        `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
-                    );
-                }
-            } else {
-                
-                alert('User does not exist in the company');
+                $(this).closest('.task-actor-list').parent().append(
+                    `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
+                );
             }
+        } else {
+            
+            alert('User does not exist in the company');
         }
 
         $(this).val('');
@@ -186,6 +175,8 @@ $(document).on('click', '.task-actor-remove', function() {
 $(document).on('keypress', '.task-note', function (e) {
 
     if(e.which == 13) {
+
+        e.preventDefault();
 
         var $noteInput = $(this);
         

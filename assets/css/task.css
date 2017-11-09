@@ -10,7 +10,6 @@ html, body {
 }
 
 .inner-content {
-    /* font-family: 'Slabo 27px'; */
     max-height: calc(100% - 59.45px);
     height: calc(100% - 59.45px);
     overflow: hidden;
@@ -21,54 +20,18 @@ html, body {
 }
 
 
-/* Create Task button*/
-.createTaskButton{
-    width: 100px;
-    height: 100px;
-    background-color: black;
-        
-}
-
-
 /* Search */
-#taskSearch, #taskSearch:focus {
-    width: 100%;
-    height: 70px;
-    text-align: center;
-    font-size: 32px;
-    border-style: hidden;
+#taskSearch {
+    font-size: 2rem;
+    outline: none;
+}
+
+#taskSearch:focus {
     outline: none;
 }
 
 
-/* Add Task Search */
-.addTaskSearch{
-    width: 65%; 
-    height: 40px;
-    margin: 50px auto;
-    font-size: 10px;
-    border-style: hidden;
-    outline: none;
-}
-
-
-.task-search-item {
-    margin: 3px 0;
-    color: #000000;
-    border-style: hidden;
-    padding: 10px;
-    height: 50px;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-
-/* Color Button */
-.btn-color span.glyphicon {
-    color: #808080;
-}
-
-
+/* Button Color */
 .btn-circle, .btn-circle:focus {
     width: 30px;
     height: 30px;
@@ -82,7 +45,6 @@ html, body {
     transition: 0.5s;
 }
 
-
 .btn-circle.btn-lg {
     width: 50px;
     height: 50px;
@@ -95,66 +57,7 @@ html, body {
 
 
 /* Other */
-
-a:link, a:visited, a:hover{
-/*    color: #fff;*/
+a:link, a:visited, a:hover, a:focus{
     text-decoration: none;
-}
-
-
-/* Add Task Search */
-.addTaskSearch{
-    width: auto;
-    font-size: 30px;
-    border-style: hidden;
-    outline: none;
-    margin: 10px;
-}
-
-
-#personalCreate {
-    border-radius: 4px;
-    padding: 10;
-    margin: 0 auto;
-    width: 50%;
-    background-color: #fff;
-}
-
-
-#personalCreate .collapse {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
-
-#personalCreate input[type="text"],
-#personalCreate input[type="date"],
-#personalCreate textarea {
-    background-color: transparent;
-    padding: 10px;
-    border: none;
-    outline: none;
-} 
-
-
-#personalCreate input[type="text"]:focus,
-#personalCreate input[type="date"]:focus,
-#personalCreate textarea:focus {
     outline: none;
 }
-
-
-.input-tag {
-    width: 100%; 
-    font-size: 32px;
-    font-weight: 500;
-}
-
-
-#addTask {
-    width: 100%; 
-    resize: none;
-    font-weight: 400;
-    font-size: 22px;
-}   

@@ -8,13 +8,8 @@
     
     <title>Task</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Shadows+Into+Light">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+27px">
 
-    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/flavored-reset-and-normalize.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" />
@@ -37,7 +32,7 @@
 
     <ul class="sidebar-menu">		
         <li class="">
-            <a class="task-create" href="#searchTaskModal" data-toggle="modal">
+            <a class="task-create" href="#taskSearchModal" data-toggle="modal">
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <span>Search</span>
             </a>
@@ -78,7 +73,7 @@
 <div class="main-content animation">
 
     <div class="topbar">
-        <nav class="navbar navbar-custom">
+        <nav class="navbar navbar-custom clearfix">
             <div id="nav-icon-open" class="custom-toggle hidden-toggle d-block">
                 <span></span>
                 <span></span>
@@ -86,10 +81,14 @@
             </div>
             <a class="navbar-brand" href="<?= base_url('tasks'); ?>">Task</a>
             
-            <a class="navbar-brand ml-auto" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
-                <img src="<?= base_url('assets/img/avatar/user_id.png') ?>" alt="<?= $email ?>">
-            </a>
+            <span class="ml-auto">
+                <a class="navbar-brand" href="#taskSearchModal" data-toggle="modal"><i class="fa fa-search"></i> Search</a>
+                <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
+                    <!-- <i class="fa fa-user-circle"></i> <?= $user_name ?> -->
+                    <img class="img-fluid" src="<?= base_url('assets/img/avatar/'.$user_id.'.png') ?>"> <?= $user_name ?>
+                </a>
+            </span>
         </nav>
     </div>
-
+    
     <div class="inner-content">
