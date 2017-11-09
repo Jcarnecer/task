@@ -29,13 +29,13 @@ function drop(e) {
 
     if (type == 'task') {
         
-        $elem.find('.card-body').prepend($(`.kanban-task[data-value="${id}"]`));
+        $elem.children('.card-body').prepend($(`.kanban-task[data-value="${id}"]`));
         $(document).changeColumn($elem.attr('data-value'), id);
     } else if (type == 'column') {
 
         if($elem.nextAll(`.kanban-column[data-value="${id}"]`).length) {
             
-            $.each($('#kanbanBoard .card-group').children('.kanban-column'), function(i, column) {
+            $.each($('#kanbanBoard>.card-group').children('.kanban-column'), function(i, column) {
                 
                 if(Number($(column).attr('data-position')) >= Number($elem.attr('data-position')) && 
                     Number($(column).attr('data-position')) < Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {

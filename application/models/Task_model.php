@@ -107,8 +107,16 @@ class Task_model extends CI_Model {
 
 
 	public function get_task_column($task_id) {
+
+		$result = $this->db->get_where('kanban_tasks', ['id' => $task_id], 1)->result();
+
+		if($result != null) {
 		
-		return $this->db->get_where('kanban_tasks', ['id' => $task_id], 1)->result()[0]->column_id;
+			return $result[0]->column_id;
+		} else {
+			
+			return null;
+		}
 	}
 
 

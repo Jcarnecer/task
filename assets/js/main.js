@@ -177,6 +177,8 @@ function taskBuilder(task) {
 
 
 $.fn.displayTask = function(items) {
+
+    $('.kanban-column .task-create').prevAll().remove();
     
     $.each(items, function(i, item) {
         

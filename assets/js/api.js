@@ -10,10 +10,11 @@ $.fn.getUser = function(userId) {
 
 
 
-$.fn.getTask = function(taskId = null) {
+$.fn.getTask = function(taskId = null, syncToggle = false) {
 
     return $.ajax({
 
+        async: !syncToggle,
         type: 'GET',
         url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
         dataType: 'json'
@@ -21,10 +22,11 @@ $.fn.getTask = function(taskId = null) {
 };
 
 
-$.fn.postTask = function(details, taskId = null) {
+$.fn.postTask = function(details, taskId = null, syncToggle = false) {
 
     return $.ajax({
 
+        async: !syncToggle,
         type: 'POST',
         url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
         data: details,

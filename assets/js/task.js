@@ -255,13 +255,6 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
 });
 
 
-$(document).on('click', 'button:submit', function(e) {
-    
-    e.preventDefault();
-    $(this).closest('form').submit();
-});
-
-
 // Mark as Done
 $(document).on('click', '.task-mark-done', function () {
     
