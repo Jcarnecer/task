@@ -133,7 +133,7 @@ function taskBuilder(task) {
     var contributorsAppend = "";
     var iconAppend = "";
 
-    var actors = task['actor'];
+    var actors = task['actors'];
     
     if (actors != null) {
 
@@ -152,11 +152,11 @@ function taskBuilder(task) {
         contributorsAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
     
         if (actors.length == 0) {
-            iconAppend = '<i class="fa fa-user-o"></i>';
+            iconAppend = '<i class="fa fa-user-o"></i> ';
         } else if (actors.length == 1) {
-            iconAppend = '<i class="fa fa-user"></i>';
+            iconAppend = '<i class="fa fa-user"></i> ';
         } else if (actors.length > 1) {
-            iconAppend = '<i class="fa fa-users"></i>';
+            iconAppend = '<i class="fa fa-users"></i> ';
         }
     }
 
