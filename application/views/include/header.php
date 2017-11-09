@@ -66,7 +66,7 @@
         </li>
         
         <li class="">
-            <a class="" href="http://localhost/main/users/logout">
+            <a class="" href="<?= base_url('users/logout') ?>">
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                 <span>Logout</span>
             </a>
@@ -87,7 +87,6 @@
             <a class="navbar-brand" href="<?= base_url('tasks'); ?>">Task</a>
             
             <a class="navbar-brand ml-auto" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
-                <!-- <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> -->
                 <img src="<?= base_url('assets/img/avatar/user_id.png') ?>" alt="<?= $email ?>">
             </a>
         </nav>

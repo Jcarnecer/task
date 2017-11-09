@@ -225,9 +225,9 @@ $.fn.displayBoard = function(board) {
     
     $('#kanbanBoard .card-group').append(`
         <div id="addColumn" class="card h-100 w-25">
-            <h2 class="card-header">
+            <h2 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
-                <span id="addColumnName" contenteditable="true"></span>
+                <span id="addColumnName" contenteditable="true">Type Here</span>
             </h2>
             <div class="card-body"></div>
         </div>
@@ -244,13 +244,13 @@ function columnBuilder(column) {
         <h2 class="card-header clearfix"
             draggable="true" ondragstart="drag(event)">
 
-            <span class="float-left">
+            <span class="kanban-column-title float-left" contenteditable="false">
                 ${column['name']}
             </span>
 
             <span class="float-right">
-                <a href="#"><i class="fa fa-pencil mx-1"></i></a>
-                <a href="#"><i class="fa fa-trash mx-1"></i></a>
+                <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
+                <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
             </span>
 
         </h2>
@@ -282,7 +282,7 @@ $.fn.highlightTask = function(userId) {
     $(document).getUserTeamTask(userId).done(function (data) {
 
         $.each(data, function(i, item) {
-            $(`#kanbanBoard .task-tile[data-value="${item['id']}"]`).toggleClass('active');
+            $(`#kanbanBoard .kanban-task[data-value="${item['id']}"]`).toggleClass('active');
         })
     }).always(function () {
 

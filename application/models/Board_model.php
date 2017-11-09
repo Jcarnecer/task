@@ -78,9 +78,21 @@ class Board_model extends CI_Model {
 	}
 
 
+	public function delete($key, $field, $value) {
+		
+		$this->db->delete($key, [$field => $value]);
+	}
+
+
 	public function update_multiple($key, $batch_details, $pivot) {
 		
 		$this->db->update_batch($key, $batch_details, $pivot);
+	}
+
+
+	public function delete_multiple($key, $field, $values) {
+		
+		$this->db->where_in($field, $values)->delete($key);
 	}
 
 

@@ -77,12 +77,20 @@ class Boards extends CI_Controller {
 
 	public function get_board($team_id, $board_id = null) {
 		
+		$return = [];
+
 		if ($board_id != null) {
 			
 			echo json_encode((array)$this->board_model->get_board($board_id));
 		} else {
 			
-			echo json_encode((array)($this->board_model->get_all_boards($team_id)[0]));
+			if(count($this->board_model->get_all_boards($team_id))) {
+				
+				echo json_encode((array)($this->board_model->get_all_boards($team_id)[0]));
+			} else {
+				
+				echo json_encode(null);
+			}
 		}
 	}
 
@@ -121,6 +129,23 @@ class Boards extends CI_Controller {
 			echo json_encode((array)$this->board_model->get_all_columns($board_id));
 		}
 	}
+
+
+	public function delete_column($column_id) {
+		
+		if($this->input->server('REQUEST_METHOD') == 'POST') {
+
+			$task_id = array_column((array)$this->board_model->get_all_tasks($column_id), 'id');
+			
+			if(count($task_id)) {
+			
+				$this->board_model->delete_multiple('tasks', 'id', $task_id);
+			}
+
+			$this->board_model->delete('kanban_tasks', 'column_id', $column_id);
+			$this->board_model->delete('kanban_columns', 'id', $column_id);
+		}
+	}	
 
 
 	public function post_task($id = null) {

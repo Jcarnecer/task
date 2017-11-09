@@ -86,6 +86,8 @@ $route['api/column/(:any)']['GET'] = 'boards/get_column/$1';
 $route['api/column/(:any)/(:any)']['POST'] = 'boards/post_column/$1/$2';
 $route['api/column/(:any)/(:any)']['GET'] = 'boards/get_column/$1/$2';
 
+$route['api/delete_column/(:any)']['POST'] = 'boards/delete_column/$1';
+
 $route['api/update_columns']['POST'] = 'boards/change_columns_position';
 
 # task

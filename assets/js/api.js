@@ -129,6 +129,18 @@ $.fn.postColumn = function(details, boardId, columnId = null, syncToggle = false
 };
 
 
+$.fn.deleteColumn = function(columnId, syncToggle = false) {
+
+    return $.ajax({
+
+        async: !syncToggle,
+        type: 'POST',
+        url: `${baseUrl}api/delete_column/${columnId}`,
+        dataType: 'json'        
+    });
+};
+
+
 $.fn.changeColumn = function(column, taskId) {
 
     return $.ajax({
