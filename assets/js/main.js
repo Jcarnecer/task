@@ -40,12 +40,13 @@ function storeTask() {
 
 
 // Builder
-function taskBuilder(task, actorIcon = true) {
+function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     
     var taskString = "";
     var actorsAppend = "";
     var contributorsAppend = "";
     var iconAppend = "";
+    var modalDismissAppend = modalDismiss ? 'data-dismiss="modal"': '';
 
     
     if (actorIcon) {
@@ -77,7 +78,8 @@ function taskBuilder(task, actorIcon = true) {
 
     var taskString = 
     `<div class="card my-1 rounded kanban-task task-view"
-        data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}"
+        data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}" 
+        ${modalDismissAppend} 
         style="background-color:${task['color']};">
         
         <div class="card-body" ${contributorsAppend}
@@ -240,7 +242,7 @@ $.fn.searchTask = function(items, keyword) {
             
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 
-                $('#taskSearchList').append(taskBuilder(item, getTaskType() == 'team'));
+                $('#taskSearchList').append(taskBuilder(item, getTaskType() == 'team', true));
             }
         });
     }
