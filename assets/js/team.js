@@ -4,23 +4,25 @@ $(function () {
 // Load Modal
 $(document).on('click', '.team-create', function () {
 
-    $('#teamModifyModal').find('form')[0].reset();
-    $('#teamModifyModal').find('form').attr('id', 'teamCreateForm');
-    $('#teamModifyModal').find('.team-member-list').find('span.badge.badge-secondary').remove();
-    $('#teamModifyModal').find('.team-member-list').siblings('input').remove();
+    $('#teamModifyModal form')[0].reset();
+    $('#teamModifyModal form').attr('id', 'teamCreateForm');
+    $('#teamModifyModal form').children('input').remove();
+    $('#teamModifyModal .team-button-text').html('Create Team');
+    $('#teamModifyModal').find('.team-member').siblings('span.badge').remove();
 });
 
 
 $(document).on('click', '.team-edit', function () {
-
-    $('#teamModifyModal').find('form')[0].reset();
-    $('#teamModifyModal').find('.team-member-list').find('span.badge.badge-secondary').remove();
-    $('#teamModifyModal').find('.team-member-list').siblings('input').remove();
+    
+    $('#teamModifyModal form')[0].reset();
+    $('#teamModifyModal form').attr('id', 'teamUpdateForm');
+    $('#teamModifyModal form').children('input').remove();
+    $('#teamModifyModal .team-button-text').html('Edit Team');
+    $('#teamModifyModal').find('.team-member').siblings('span.badge').remove();
 
     $(document).getTeam($(this).attr('data-value')).always(function(data) {
 
         $('#teamModifyModal').find('form').attr('data-value', data['id']);
-        $('#teamModifyModal').find('form').attr('id', 'teamUpdateForm');
         $('#teamModifyModal').find('[name="name"]').val(data['name']);
 
         $(document).displayMember(data['members'], true);
@@ -42,17 +44,19 @@ $(document).on('keypress', '.team-member', function (e) {
 
     if(e.which == 13 || e.which == 32) {
 
-        var result = $(document).validateMember($(this).val().toLowerCase());
+        e.preventDefault();
+
+        var result = $(document).validateMember($(this).val().toLowerCase(), null, true).responseJSON;
         
         if(result['exist']) {
 
-            if(!$(this).closest('.team-member-list').parent().has(`input[name="members[]"][value="${$(this).val().toLowerCase()}"]`).length){
+            if(!$(this).closest('form').has(`input[name="members[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
                 $(this).before(
-                    `<span class="badge badge-secondary">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+                    `<span class="badge badge-dark mx-1">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
                 );
 
-                $(this).closest('.team-member-list').parent().append(
+                $(this).closest('form').append(
                     `<input type="hidden" name="members[]" value="${$(this).val().toLowerCase()}" />`
                 );
             }
@@ -62,15 +66,13 @@ $(document).on('keypress', '.team-member', function (e) {
         }
 
         $(this).val('');
-
-        return false;
     }
 });
 
 
 $(document).on('click', '.team-member-remove', function () {
 
-    $(this).closest('.team-member-list').parent().find(`input[name="members[]"][value="${$(this).attr('data-value')}"]`).remove();
+    $(this).closest('form').find(`input[name="members[]"][value="${$(this).attr('data-value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -78,25 +80,40 @@ $(document).on('click', '.team-member-remove', function () {
 // Submit
 $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e) {
 
-    e.preventDefault();
     var team = $(this).serializeArray();
-    var teamId = null;
-    
-    if($(this).attr('id') == 'teamCreateForm')
 
-        $(document).postTeam(team).always(function(data) {
+    e.preventDefault();
+
+    if($(this).find('input[required]').val() != '') {
+        
+        if($(this).has('.close-modal')) {
             
-            var boardDetails = new Object();
-            boardDetails.name = "Default";
-            $(document).postBoard(boardDetails, data['team_id'], null, true);
-            window.location.href = `${baseUrl}team/${data['team_id']}`;
-        });
-    else if($(this).attr('id') == 'teamUpdateForm')
-    
-        $(document).postTeam(team, $(this).attr('data-value')).always(function() {
+            $(this).find('.close-modal').click();
+        }
 
-            location.reload();
-        });
+        if($(this).attr('id') == 'teamCreateForm') {
+            
+
+            $(document).postTeam(team).always(function(data) {
+                
+                var boardDetails = new Object();
+                boardDetails.name = "Default";
+                $(document).postBoard(boardDetails, data['team_id'], null, true);
+
+                if($(this).has('.close-modal')) {
+                    
+                    $(this).find('.close-modal').click();
+                }
+
+                window.location.href = `${baseUrl}team/${data['team_id']}`;
+            });
+        } else if($(this).attr('id') == 'teamUpdateForm') {
+        
+            $(document).postTeam(team, $(this).attr('data-value')).always(function() {
+                location.reload();
+            });
+        }
+    }
 });
 
 });

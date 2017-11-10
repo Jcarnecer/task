@@ -50,13 +50,18 @@ class Teams extends CI_Controller {
 	}
 
 
-	public function validate_member() {
+	public function validate_member($team_id = null) {
         
-        $user = $this->user_model->get('email_address', $this->input->post('email'));
-        
-		if($user != null) {
+		$user = $this->user_model->get('email_address', $this->input->post('email'));
 
-			echo json_encode(array_merge((array)$user[0], ['exist' =>  true]));
+		if($user != null) {
+			
+			if($team_id != null) {
+				echo json_encode(array_merge((array)$user[0], ['exist' => $this->team_model->check_team($team_id, $user[0]->id) != null]));
+			} else {
+				
+				echo json_encode(array_merge((array)$user[0], ['exist' =>  true]));
+			}
 		} else {
 
 			echo json_encode(['exist' =>  false]);

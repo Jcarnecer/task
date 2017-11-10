@@ -1,7 +1,8 @@
-$.fn.getUser = function(userId) {
+$.fn.getUser = function(userId, syncToggle = false) {
 
     return $.ajax({
-        
+         
+        async: !syncToggle,
         type: 'GET',
         url: `${baseUrl}api/user/${userId}`,
         dataType: 'json'
@@ -46,13 +47,15 @@ $.fn.getTaskNote = function(taskId) {
 };
 
 
-$.fn.postTaskNote = function(details, taskId) {
+$.fn.postTaskNote = function(message, taskId) {
 
     return $.ajax({
 
         type: 'POST',
         url: `${baseUrl}api/note/${taskId}`,
-        data: details,
+        data: {
+            notes: message
+        },
         dataType: 'json'
     })
 };
@@ -63,7 +66,7 @@ $.fn.getTeam = function(teamId = null) {
     return $.ajax({
 
         type: 'GET',
-        url: `${baseUrl}api/board` + (teamId != null ? `/${teamId}` : ''),
+        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
         dataType: 'json'
     });
 };
@@ -181,18 +184,18 @@ $.fn.getUserTeamTask = function(userId) {
 };
 
 
-$.fn.validateMember = function(value) {
+$.fn.validateMember = function(value, teamId = null, syncToggle = false) {
 
     return $.ajax({
 
-        async: false,
+        async: !syncToggle,
         type: 'POST',
-        url: `${baseUrl}api/validate_member`,
+        url: `${baseUrl}api/validate_member` + (teamId != null ? `/${teamId}` : ''),
         data: {
             email: value
         },
         dataType: 'json'
-    }).responseJSON;
+    });
 };
 
 

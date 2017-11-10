@@ -106,8 +106,14 @@ class Team_model extends CI_Model {
 	}
 
 
-	public function check_team($id) {
+	public function check_team($id, $user_id = null) {
 		
-		return $this->db->get_where('teams_mapping', ['team_id' => $id])->result();
+		if($user_id != null) {
+
+			return $this->db->get_where('teams_mapping', ['team_id' => $id, 'user_id' => $user_id])->result();
+		} else {
+
+			return $this->db->get_where('teams_mapping', ['team_id' => $id])->result();
+		}
 	}
 }

@@ -3,7 +3,7 @@ const baseUrl = window.location.origin + '/task/';
 var userId = null;
 var authorId = null;
 var taskType = null;
-
+var userName = null;
 
 function setAuthorId(id) { authorId = id; }
 
@@ -22,6 +22,15 @@ function setUserId(id) { userId = id; }
 
 function getUserId() { return userId; }
 
+
+// Initiate
+$(function() {
+
+$(document).getUser(getUserId(), true).done(function(data) {
+    userName = data['first_name'] + ' ' + data['last_name'];
+});
+
+});
 
 // Store
 function storeTask() {
@@ -119,10 +128,10 @@ $.fn.displayMember = function(items, edit = false) {
 
         if(edit) {
 
-            $('.team-member-list').find('.team-member').before(
-                `<span class="badge badge-secondary">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
+            $('.team-member').before(
+                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
-            $('.team-member-list').parent().append(
+            $('#teamModifyModal form').append(
                 `<input type="hidden" name="members[]" value="${item['email_address']}" />`
             );
         } else
@@ -139,13 +148,12 @@ $.fn.resetForm = function() {
     
     $('#taskModifyModal').find('form')[0].reset();
 
-    $('.task-container').find('.task-actor-list').siblings('input').remove();
-    $('.task-container').find('.task-actor-list').find('span.badge').remove();
-    $('.task-container').find('.task-tag-list').siblings('input').remove();
-    $('.task-container').find('.task-tag-list').find('span.badge').remove();
-    $('.task-container').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    $('.task-container').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
-    $('.task-container').css('background-color', '#ffffff');
+    $('#taskModifyModal form').children('input').remove();
+    $('#taskModifyModal').find('.task-tag').siblings('span.badge').remove();
+    $('#taskModifyModal').find('.task-actor').siblings('span.badge').remove();
+    $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
+    $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
+    $('#taskModifyModal .card').css('background-color', '#ffffff');
 };
 
 
@@ -166,17 +174,17 @@ $.fn.displayActor = function(items, edit = false) {
 
         if(edit) {
 
-            $('.task-actor-list').find('.task-actor').before(
-                `<span class="badge badge-secondary">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
+            $('#taskModifyModal .task-actor').before(
+                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
-            $('.task-actor-list').parent().append(
+            $('#taskModifyModal form').append(
                 `<input type="hidden" name="actors[]" value="${item['email_address']}" />`
             );
         } else
 
             $('.task-actor-list').append(
-                `<span class="badge badge-secondary">${item['first_name'] + ' ' + item['last_name']}</span>`
+                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']}</span>`
             );
     });
 };
@@ -188,16 +196,16 @@ $.fn.displayTag = function(items, edit = false) {
 
         if(edit) {
                 
-            $('.task-tag-list').find('.task-tag').before(
-                `<span class="badge badge-secondary">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
+            $('#taskModifyModal .task-tag').before(
+                `<span class="badge badge-dark badge-pill mx-1">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
             );
-            $('.task-tag-list').parent().append(
+            $('#taskModifyModal .task-tag').append(
                 `<input type="hidden" name="tags[]" value="${item['name']}" />`
             );
         } else
 
             $('.task-tag-list').append(
-                `<span class="badge badge-secondary">${item['name']}</span>`
+                `<span class="badge badge-dark badge-pill mx-1">${item['name']}</span>`
             );
     });
 };
@@ -207,20 +215,17 @@ $.fn.displayNote = function(items) {
 
     $.each(items, function(i, item){
 
-        $(document).getUser(item['user_id']).always(function(data) {
+        var user = $(document).getUser(item['user_id'], true).responseJSON;
 
-            $('.task-note-list').append(
-                `<div class="col-md-2 task-note-list-item">
-                    <i class="fa fa-user-circle fa-2x task-note-user" 
-                    data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${data['first_name'] + ' ' + data['last_name']}">
-                    </i>
-                    </div>
-                </div>
-                <div class="col-md-10 card card-sm task-note-text task-note-list-item">
-                    ${item['body']}
-                </div>`
-            );
-        });
+        $('.task-note-list').append(
+            `<div class="col-2">
+                <h4 class="text-center"><i class="fa fa-user-circle" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${user['first_name'] + ' ' + user['last_name']}"></i></h4>
+            </div>
+            </div>
+            <div class="col-10 d-flex align-self-stretch my-1 rounded bg-white text-dark">
+                ${item['body']}
+            </div>`
+        );
     });
 }
 

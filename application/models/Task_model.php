@@ -17,6 +17,7 @@ class Task_model extends CI_Model {
 	public function get($id) {
 		
 		$task 				  	= $this->db->get_where('tasks', ['id' => $id], 1)->result()[0];
+		$task->due_date_long	= date('F d, Y', strtotime($task->due_date));
 		$task->notes 		  	= $this->get_task_notes($task->id);
 		$task->actors 		  	= $this->get_task_actors($task->id);
 		$task->tags 		  	= $this->get_task_tags($task->id);
@@ -149,26 +150,11 @@ class Task_model extends CI_Model {
 
 	public function estimate_days($id) {
 		
-		$due_date = date_create($this->db->select('due_date')
-			->get_where('tasks', ['id' => $id])
-			->row()->due_date);
-		
-		$today = date_create(date('Y-m-d'));
-		$days  = date_diff($today, $due_date)->days;
-		
-		
-		if($today>$due_date) {
+		$due_date = $this->db->get_where('tasks', ['id' => $id], 1)->result()[0]->due_date;
 
-			if($days == 1)
-				return "<font color='red'>Overdue by $days day</font>";
-			else
-				return "<font color='red'>Overdue by $days days</font>";
-		} else if($days == 1)
-			return "$days day remaining";
-		  else if($days == 0)
-			return "<font color='red'>DUE TODAY!</font>";
+		$days = round((strtotime($due_date) - time()) / 86400, 0);
 		
-		return "$days days remaining";
+		return $days;
 	}
 
 
