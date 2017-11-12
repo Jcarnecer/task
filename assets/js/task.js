@@ -100,6 +100,17 @@ $(document).on('click', '.btn-color', function () {
 });
 
 
+// Description
+$(document).on('keypress', 'textarea[name="description"]', function(e) {
+
+    if(e.which == 13) {
+
+        e.preventDefault();
+        $(this).closest('form').submit();
+    }
+})
+
+
 // Tags
 $(document).on('keypress', '.task-tag', function (e) {
 
@@ -181,7 +192,7 @@ $(document).on('keypress', '.task-note', function (e) {
             <div class="col-2 my-1">
                 <h4 class="text-center"><i class="fa fa-user-circle" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${userName}"></i></h4>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
                 ${$(this).val()}
             </div>
         `);

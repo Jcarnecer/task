@@ -98,7 +98,7 @@
                     <hr>
                     <p class="card-title">Tags:  <span class="task-tag-list card-text"></span></p>
                     <hr>
-                    <p class="card-title font-weight-bold">Notes</p>
+                    <h6 class="card-title font-weight-bold">Notes</h6>
                     <div class="container-fluid">
                         <div class="task-note-list row"></div>
                     </div>
@@ -107,7 +107,7 @@
                             <div class="col-2">
                                 <h2 class="text-center"><i class="fa fa-user-circle"></i></h2>
                             </div>
-                            <div class="col-10 rounded bg-white">
+                            <div class="col-10 rounded border border-secondary bg-white">
                                 <textarea class="task-note border-0 w-100" rows="2" placeholder="Type Here..." style="resize: none; outline: none;"></textarea>
                             </div>
                         </div>

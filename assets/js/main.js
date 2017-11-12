@@ -95,7 +95,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 
 function columnBuilder(column) {
     var columnString = 
-    `<div class="card h-100 w-25 kanban-column" 
+    `<div class="card border-0 h-100 w-25 kanban-column" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
         <h4 class="card-header clearfix"
@@ -224,7 +224,7 @@ $.fn.displayNote = function(items) {
                 <h4 class="text-center"><i class="fa fa-user-circle" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${user['first_name'] + ' ' + user['last_name']}"></i></h4>
             </div>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
                 ${item['body']}
             </div>`
         );
