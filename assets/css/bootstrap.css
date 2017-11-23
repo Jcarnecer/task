@@ -415,7 +415,8 @@ mark,
 
 .img-avatar {
   max-width: 32px;
-  height: auto; }
+  height: auto;
+  border-radius: 50% }
 
 .img-thumbnail {
   padding: 0.25rem;
