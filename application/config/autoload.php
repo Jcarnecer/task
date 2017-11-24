@@ -132,14 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-<<<<<<< HEAD
-$autoload['model'] = [
-	'Task_model' => "task_model", 
-	'Task_note_model' => "task_note_model", 
-	'Team_model' => "team_model", 
-	'Tag_model' => "tag_model", 
-	'User_Model' => "user_model"
-];
-=======
 $autoload['model'] = ['task_model', 'task_note_model', 'team_model', 'tag_model', 'user_model', 'board_model'];
->>>>>>> mvp6
