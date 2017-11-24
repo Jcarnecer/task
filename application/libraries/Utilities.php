@@ -61,8 +61,8 @@ class Utilities {
 
 				do {
 					
-					$temp_id = 'TMP' . $this->generate_id($length);
-				} while ($this->ci->db->where('id', $temp_id)->get('teams')->result() != null);
+					$temp_id = 'TM' . $this->generate_id($length);
+				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
 
 				return $temp_id;
 				break;
@@ -73,7 +73,40 @@ class Utilities {
 				do {
 				
 					$temp_id = 'USR' . $this->generate_id($length);
-				} while ($this->ci->db->where('id', $temp_id)->get('users')->result() != null);
+				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
+				
+				return $temp_id;
+				break;
+
+			case 'kanban_boards':
+				$temp_id = '';
+			
+				do {
+				
+					$temp_id = 'BD' . $this->generate_id($length);
+				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
+				
+				return $temp_id;
+				break;
+
+			case 'kanban_columns':
+				$temp_id = '';
+			
+				do {
+				
+					$temp_id = 'COL' . $this->generate_id($length);
+				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
+				
+				return $temp_id;
+				break;
+
+			case 'tasks':
+				$temp_id = '';
+			
+				do {
+				
+					$temp_id = 'TK' . $this->generate_id($length);
+				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
 				
 				return $temp_id;
 				break;

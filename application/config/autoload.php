@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'session', 'utilities');
+$autoload['libraries'] = array('database', 'session', 'utilities', 'upload');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'date');
+$autoload['helper'] = array('url', 'date', 'form');
 
 /*
 | -------------------------------------------------------------------
@@ -132,6 +132,7 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
+<<<<<<< HEAD
 $autoload['model'] = [
 	'Task_model' => "task_model", 
 	'Task_note_model' => "task_note_model", 
@@ -139,3 +140,6 @@ $autoload['model'] = [
 	'Tag_model' => "tag_model", 
 	'User_Model' => "user_model"
 ];
+=======
+$autoload['model'] = ['task_model', 'task_note_model', 'team_model', 'tag_model', 'user_model', 'board_model'];
+>>>>>>> mvp6

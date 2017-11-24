@@ -1,98 +1,44 @@
 #kanbanBoard {
-    /* background-color: #fafafa; */
-    /* color: #fafafa; */
-    /* font-family: 'Shadows Into Light'; */
-    font-family: 'Slabo 27px';
-    height: 100%;
-    /* width: 100%; */
-    padding: 0px;
-    margin: 0px;
     transition: all 0.2s ease-in-out;
-    overflow: hidden;
 }
 
+#kanbanBoard .card {
+    transition: all 0.2s ease-in-out;
+}
 
-#kanbanBoard .task-tile {
+#kanbanBoard .kanban-task {
     transition: all 0.2s ease-in-out;
 }
 
 
+/* Highlight */
 #kanbanBoard.highlight {
     background-color: rgba(0, 0, 0, 1);
+}
+
+
+#kanbanBoard.highlight>.card-group>.card {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+#kanbanBoard.highlight>.card-group>.card>.card-header {
     color: #fff;
 }
 
-
-#kanbanBoard.highlight .task-tile.active {
+#kanbanBoard.highlight .kanban-task.active {
     opacity: 1;
 }
 
-
-#kanbanBoard.highlight .task-tile {
+#kanbanBoard.highlight .kanban-task {
     opacity: 0.1;
 }
 
 
-#kanbanBoard>.row {
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-    /* overflow-y: scroll; */
+/* Column */
+#addColumnName {
+    outline: none;
 }
 
-
-#kanbanBoard>.row>.col-md-4 {
-    /* height: 100%; */
-    padding: 0px;
-    margin: 0px;
-}
-
-
-.kanban-panel {
-    border-style: dashed;
-    height: 100%;
-    /* max-width: 100%; */
-    /* border-color: rgba(255, 255, 255, 0.5); */
-    padding: 2px;
-    overflow: auto;
-}
-
-
-.kanban-panel>.row {
-    min-height: 70px;
-    width: 100%;
-    padding: 0px;
-    margin: 0px;
-}
-
-
-#kanbanBoard .panel-title {
-    font-size: 48px;
-    font-weight: 700em;
-    text-align: center;
-    width: 100%;
-    border-bottom: 2px; 
-    border-style: dashed;
-    padding: 5px;
-    margin-bottom: 10px;
-    /* margin: 0px 3px; */
-    /* border-color: rgba(0, 0, 0, 0.5) */
-}
-
-
-#kanbanBoard #todoPanel {
-    /* background-color: rgba(128, 128, 128, 0.70) */
-    border-width: 0px 0px 0px 0px;
-}
-
-
-#kanbanBoard #doingPanel {
-    /* background-color: rgba(128, 128, 128, 0.70) */
-    border-width: 0px 2px;
-}
-
-
-#kanbanBoard #donePanel {
-    /* background-color: rgba(128, 128, 128, 0.70) */
-    border-width: 0px 0px 0px 0px;
+.kanban-column-title {
+    outline:none;
 }

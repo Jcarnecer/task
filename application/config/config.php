@@ -23,11 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-if (ENVIRONMENT == "production") {
-	$config["base_url"] = "http://task.payakapps.com/";
-} else {
-	$config['base_url'] = 'http://localhost/task/';
-}
+$config["base_url"] = "http://note.payakapps.com/";
 
 /*
 |--------------------------------------------------------------------------
@@ -404,19 +400,11 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-if (ENVIRONMENT === "production") {
-	$config['cookie_prefix']	= '';
-	$config['cookie_domain']	= '.payakapps.com';
-	$config['cookie_path']		= '/';
-	$config['cookie_secure']	= FALSE;
-	$config['cookie_httponly'] 	= FALSE;
-} else {
-	$config['cookie_prefix']	= '';
-	$config['cookie_domain']	= '';
-	$config['cookie_path']		= '/';
-	$config['cookie_secure']	= FALSE;
-	$config['cookie_httponly'] 	= FALSE;
-}
+$config['cookie_prefix']	= '';
+$config['cookie_domain']	= '.payakapps.com';
+$config['cookie_path']		= '/';
+$config['cookie_secure']	= FALSE;
+$config['cookie_httponly'] 	= FALSE;
 
 
 /*

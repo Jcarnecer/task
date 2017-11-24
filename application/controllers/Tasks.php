@@ -11,9 +11,10 @@ class Tasks extends CI_Controller {
 
 			$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
 
-			if($due_date == date('Y-m-d', strtotime('1970-01-01')))
+			if($due_date == date('Y-m-d', strtotime('1970-01-01'))) {
 
 				$due_date = date('Y-m-d');
+			}
 
 			$task_details	= [
 				'title'		  => $this->input->post('title'),
@@ -22,6 +23,8 @@ class Tasks extends CI_Controller {
 				'color'		  => $this->input->post('color'),
 				'user_id'	  => $author_id
 			];
+
+			$column_id = $this->input->post('column_id');
 
 			if($task_id != null) {
 				
@@ -44,6 +47,7 @@ class Tasks extends CI_Controller {
 			} else {
 
 				$task_id = $this->task_model->insert($task_details);
+				$this->board_model->insert('kanban_tasks', ['id' => $task_id, 'column_id' => $column_id]);
 				
 				if($this->input->post('tags[]') != null)
 
@@ -102,23 +106,9 @@ class Tasks extends CI_Controller {
 	# Change Task Columnn
 	public function change_column($task_id)	{
 
-		$column = $this->input->post('column');
+		$column_id = $this->input->post('column_id');
 
-		switch ($column) {
-
-			case 'todoPanel':
-				$this->task_model->update_status($task_id, ACTIVE);
-				break;
-			case 'doingPanel':
-				$this->task_model->update_status($task_id, IN_PROGRESS);
-				break;
-			case 'donePanel':
-				$this->task_model->update_status($task_id, ARCHIVE);
-				break;
-		}
-		
-		// $actor 	= $this->session->user->id;
-		// echo json_encode(['id' => $task_id, 'column' => $column, 'actor' => $actor]);
+		$this->board_model->update($task_id, 'kanban_tasks', ['column_id' => $column_id]);
 	}
 
 

@@ -1,8 +1,9 @@
 const baseUrl = window.location.origin + "/";
+
 var userId = null;
 var authorId = null;
 var taskType = null;
-
+var userName = null;
 
 function setAuthorId(id) { authorId = id; }
 
@@ -22,96 +23,103 @@ function setUserId(id) { userId = id; }
 function getUserId() { return userId; }
 
 
-// AJAX
-$.fn.getTask = function(taskId = null) {
+// Initiate
+$(function() {
 
-    return $.ajax({
+$(document).getUser(getUserId(), true).done(function(data) {
+    userName = data['first_name'] + ' ' + data['last_name'];
+});
 
-        type: 'GET',
-        url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
-        dataType: 'json'
-    });
-};
+});
 
+// Store
+function storeTask() {
 
-$.fn.postTask = function(details, taskId = null) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
-        data: details,
-        dataType: 'json'
-    });
-};
-
-
-$.fn.getTaskNote = function(taskId) {
-
-    return $.ajax({
-
-        type: 'GET',
-        url: `${baseUrl}api/note/${taskId}`,
-        dataType: 'json'
-    });
+    return $(document).getTask(null, true).responseJSON;
 }
 
 
-$.fn.postTaskNote = function(details, taskId) {
+// Builder
+function taskBuilder(task, actorIcon = true, modalDismiss = false) {
+    
+    var taskString = "";
+    var actorsAppend = "";
+    var contributorsAppend = "";
+    var iconAppend = "";
+    var modalDismissAppend = modalDismiss ? 'data-dismiss="modal"': '';
 
-    return $.ajax({
+    
+    if (actorIcon) {
+        
+        var actors = task['actors'];
 
-        type: 'POST',
-        url: `${baseUrl}api/note/${taskId}`,
-        data: details,
-        dataType: 'json'
-    })
+        actorsAppend = "<strong>Contributor</strong><br/>";
+
+        if(actors.length) {
+
+            $.each(actors, function (i, actor) {
+                actorsAppend += actor['first_name'] + " " + actor['last_name'] + "<br/>";
+            });
+        } else {
+            
+            actorsAppend = "No Contributor";
+        }
+
+        contributorsAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
+    
+        if (actors.length == 0) {
+            iconAppend = '<i class="fa fa-user-o"></i> ';
+        } else if (actors.length == 1) {
+            iconAppend = '<i class="fa fa-user"></i> ';
+        } else if (actors.length > 1) {
+            iconAppend = '<i class="fa fa-users"></i> ';
+        }
+    }
+
+    var taskString = 
+    `<div class="card my-1 rounded kanban-task task-view"
+        data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}" 
+        ${modalDismissAppend} 
+        style="background-color:${task['color']};">
+        
+        <div class="card-body" ${contributorsAppend}
+            draggable="true" ondragstart="drag(event)">
+            <h5 class="card-title font-weight-bold">${iconAppend + task['title']}</h5>
+        </div>
+
+    </div>`;
+
+    return taskString;
 }
 
 
-$.fn.getTeam = function(teamId = null) {
+function columnBuilder(column) {
+    var columnString = 
+    `<div class="card border-0 h-100 w-25 kanban-column" 
+        ondrop="drop(event)" ondragover="allowDrop(event)" 
+        data-value="${column['id']}" data-position="${column['position']}">
+        <h4 class="card-header clearfix"
+            draggable="true" ondragstart="drag(event)">
 
-    return $.ajax({
+            <span class="kanban-column-title float-left" contenteditable="false">
+                ${column['name']}
+            </span>
 
-        type: 'GET',
-        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
-        dataType: 'json'
-    });
-};
+            <span class="float-right">
+                <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
+                <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
+            </span>
 
+        </h4>
+        <div class="card-body text-center" style="overflow-y: auto;">
+            <button type="button" class="btn btn-primary btn-lg btn-block my-2 task-create"
+                data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
+                <i class="fa fa-plus"></i> Add Task
+            </button>
+        </div>
+    </div>`;
 
-$.fn.postTeam = function(details, teamId = null) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
-        dataType: 'json',
-        data: details
-    });
-};
-
-
-$.fn.changeColumn = function(details, taskId) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/change_column/${taskId}`,
-        datType: 'json',
-        data: details
-    });
-}
-
-
-$.fn.getUserTeamTask = function(userId) {
-
-    return $.ajax({
-
-        type: 'GET',
-        url: `${baseUrl}api/get_user_team_task/${userId}`,
-        dataType: 'json'
-    });
+    return columnString;
 }
 
 
@@ -122,43 +130,17 @@ $.fn.displayMember = function(items, edit = false) {
 
         if(edit) {
 
-            $('.team-member-list').find('.team-member').before(
-                `<span class="label label-default">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
+            $('.team-member').before(
+                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
-            $('.team-member-list').parent().append(
+            $('#teamModifyModal form').append(
                 `<input type="hidden" name="members[]" value="${item['email_address']}" />`
             );
         } else
 
             $('.team-member-list').append(
-                `<span class="label label-default">${item['first_name']} ${item['last_name']}</span>`
+                `<span class="badge badge-secondary">${item['first_name']} ${item['last_name']}</span>`
             );
-    });
-};
-
-
-$.fn.validateMember = function(value) {
-
-    return $.ajax({
-
-        async: false,
-        type: 'POST',
-        url: `${baseUrl}api/validate_member`,
-        data: {
-            email: value
-        },
-        dataType: 'json'
-    }).responseJSON;
-};
-
-
-$.fn.leaveTeam = function(teamId, userId) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/leave_team/${teamId}`,
-        dataType: 'json'
     });
 };
 
@@ -166,49 +148,45 @@ $.fn.leaveTeam = function(teamId, userId) {
 // Task
 $.fn.resetForm = function() {
     
-    // $('#taskModifyModal').find('form')[0].reset();
-    // $('#taskModifyModal').find('.task-actor-list').siblings('input').remove();
-    // $('#taskModifyModal').find('.task-actor-list').find('span.badge').remove();
-    // $('#taskModifyModal').find('.task-tag-list').siblings('input').remove();
-    // $('#taskModifyModal').find('.task-tag-list').find('span.badge').remove();
-    // $('#taskModifyModal').find('.modal-content').css('background-color', '#ffffff');
-    // $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    // $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
+    $('#taskModifyModal').find('form')[0].reset();
 
-    if(getTaskType() == 'personal')
+    $('#taskModifyModal form').children('input').remove();
+    $('#taskModifyModal').find('.task-tag').siblings('span.badge').remove();
+    $('#taskModifyModal').find('.task-actor').siblings('span.badge').remove();
+    $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
+    $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
+    $('#taskModifyModal .card').css('background-color', '#ffffff');
+};
+
+
+$.fn.displayTask = function(items) {
+
+    $('.kanban-column .task-create').prevAll().remove();
     
-        $('#personalCreate').find('form')[0].reset();
-    else if(getTaskType() == 'team')
+    $.each(items, function(i, item) {
         
-        $('#taskModifyModal').find('form')[0].reset();
-
-    $('.task-container').find('.task-actor-list').siblings('input').remove();
-    $('.task-container').find('.task-actor-list').find('span.badge').remove();
-    $('.task-container').find('.task-tag-list').siblings('input').remove();
-    $('.task-container').find('.task-tag-list').find('span.badge').remove();
-    $('.task-container').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    $('.task-container').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
-    $('.task-container').css('background-color', '#ffffff');
+        $(`.kanban-column[data-value="${item['column_id']}"]>.card-body`).prepend(taskBuilder(item, getTaskType() == 'team'));
+    });
 };
 
 
 $.fn.displayActor = function(items, edit = false) {
-    
+
     $.each(items, function(i, item) {
 
         if(edit) {
 
-            $('.task-actor-list').find('.task-actor').before(
-                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
+            $('#taskModifyModal .task-actor').before(
+                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
-            $('.task-actor-list').parent().append(
+            $('#taskModifyModal form').append(
                 `<input type="hidden" name="actors[]" value="${item['email_address']}" />`
             );
         } else
 
             $('.task-actor-list').append(
-                `<span class="badge badge-default">${item['first_name'] + ' ' + item['last_name']}</span>`
+                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']}</span>`
             );
     });
 };
@@ -220,16 +198,16 @@ $.fn.displayTag = function(items, edit = false) {
 
         if(edit) {
                 
-            $('.task-tag-list').find('.task-tag').before(
-                `<span class="badge badge-default">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
+            $('#taskModifyModal .task-tag').before(
+                `<span class="badge badge-dark badge-pill mx-1">${item['name']} <a class="task-tag-remove" data-value="${item['name']}">&times;</a></span>`
             );
-            $('.task-tag-list').parent().append(
+            $('#taskModifyModal .task-tag').append(
                 `<input type="hidden" name="tags[]" value="${item['name']}" />`
             );
         } else
 
             $('.task-tag-list').append(
-                `<span class="badge badge-default">${item['name']}</span>`
+                `<span class="badge badge-dark badge-pill mx-1">${item['name']}</span>`
             );
     });
 };
@@ -239,11 +217,14 @@ $.fn.displayNote = function(items) {
 
     $.each(items, function(i, item){
 
+        var user = $(document).getUser(item['user_id'], true).responseJSON;
+
         $('.task-note-list').append(
-            `<div class="col-md-2">
-                <div class="task-note-user circle"></div>
+            `<div class="col-2">
+                <h4 class="text-center"><i class="fa fa-user-circle" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${user['first_name'] + ' ' + user['last_name']}"></i></h4>
             </div>
-            <div class="col-md-10 well well-sm task-note-text">
+            </div>
+            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
                 ${item['body']}
             </div>`
         );
@@ -251,108 +232,55 @@ $.fn.displayNote = function(items) {
 }
 
 
-$.fn.displayTask = function(type, items, column = 3) {
-    
-    var $containers = [];
-    var status = [1, 4, 2];
-
-    switch(type) {
-        case 'personal':
-            $containers.push($('#taskTileList'));
-            column = 4;
-            break;
-
-        case 'team':
-            $containers.push($('#todoPanel>.row'));
-            $containers.push($('#doingPanel>.row'));
-            $containers.push($('#donePanel>.row'));
-            column = 2;
-            break;
-    }
-
-    colNumber = 12/column;
-
-    $.each($containers, function(i, $container) {
-        $container.html('');
-        
-        $.each(items, function(j, item) {
-            
-            var actorsAppend = "<strong>Contributors</strong><br/>";
-
-            if(item['actors'].length) {
-
-                $.each(item['actors'], function (i, actor) {
-                    actorsAppend = actorsAppend + actor['first_name'] + " " + actor['last_name'] + "<br/>";
-                });
-            } else {
-                
-                actorsAppend = "No Contributors";
-            }
-
-            var contributorAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
-
-            if(status[i] == item['status']) {
-
-                $container.prepend(
-                    `<div data-order="${j}" class="col-md-${colNumber}">
-
-                        <div class="task-tile task-view w3-card-2 w3-hover-shadow" 
-                        data-toggle="modal" data-target="#taskViewModal" data-value="${item['id']}" 
-                        draggable="true" ondragstart="drag(event)" 
-                        style="background-color:${item['color']};">
-
-                            <div class="container" ${getTaskType() == 'team' ? contributorAppend : ''}>
-                                <span class="tile-title">${item['title']}</span>
-                            </div>
-
-                        </div>
-                        
-                    </div>`
-                );
-            }
-        });
-
-        if($container.is('#todoPanel>.row')) {
-
-            $container.append(
-                `<div class="col-md-${colNumber}">
-                
-                    <div class="task-tile task-create w3-card-2 w3-hover-shadow" data-target="#taskModifyModal" data-toggle="modal">
-                        <div class="container"><span class="tile-title"><i class="fa fa-plus fa-lg"></i>&nbsp;&nbsp;&nbsp;Add Task</span></div>
-                    </div>
-                
-                </div>`
-            );
-        }
-    });
-};
-
-
 $.fn.searchTask = function(items, keyword) {
 
-    $('#taskSearchQuery').html('');
+    $('#taskSearchList').html('');
 
-    if(keyword != ''){
+    if(keyword != '') {
+
         $.each(items, function(i, item) {
-
-            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1)
-
-                $('#taskSearchQuery').append(
-                    `<li class="list-group-item task-search-item" data-dismiss="modal" style="background-color:${item['color']};">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-1"><a class="task-mark-done" data-value="${item['id']}"><span class="glyphicon glyphicon-` + (item['status'] == 1 ? `unchecked` : `check`) + `"></span></a></div>
-                                <div class="col-md-10" data-target="#taskViewModal" data-toggle="modal" data-value="${item['id']}">${item['title']}</div>
-                                <div class="col-md-1"><a class="task-edit" href="#taskModifyModal" data-toggle="modal" data-value="${item['id']}"><span class="glyphicon glyphicon-edit"></span></a></div>
-                            </div>
-                        </div>
-                    </li>`
-                );
+            
+            if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
+                
+                $('#taskSearchList').append(taskBuilder(item, getTaskType() == 'team', true));
+            }
         });
     }
 };
 
+
 // Kanban
+$.fn.displayBoard = function(board) {
+
+    $('#kanbanBoard .card-group').html('');
+
+    $('#kanbanBoard .card-group').css(`width`, `${(board['columns'].length + 1) * 25}%`);
+
+    $.each(board['columns'], function(i, column) {
+
+        $('#kanbanBoard .card-group').append(columnBuilder(column));
+    });
+    
+    $('#kanbanBoard .card-group').append(`
+        <div id="addColumn" class="card h-100 w-25">
+            <h4 class="card-header w-100">
+                <i class="fa fa-plus mx-1"></i>
+                <span id="addColumnName" contenteditable="true">Type Here</span>
+            </h4>
+            <div class="card-body"></div>
+        </div>
+    `);
+};
+
+
+$.fn.addColumn = function(column) {
+    
+    $('#kanbanBoard .card-group').css(`width`,  `${(column['position'] + 1) * 25}%`);
+    
+    $('#addColumn').before(columnBuilder(column));
+};
+
+
 $.fn.highlightTask = function(userId) {
     
     userId = userId == null ? getUserId() : userId;
@@ -360,10 +288,10 @@ $.fn.highlightTask = function(userId) {
     $(document).getUserTeamTask(userId).done(function (data) {
 
         $.each(data, function(i, item) {
-            $(`#kanbanBoard .task-tile[data-value="${item['id']}"]`).toggleClass('active');
+            $(`#kanbanBoard .kanban-task[data-value="${item['id']}"]`).toggleClass('active');
         })
     }).always(function () {
 
         $('#kanbanBoard').toggleClass('highlight');
     });
-};
+};  

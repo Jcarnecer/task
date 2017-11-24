@@ -1,43 +1,35 @@
-<!-- <div class="jumbotron text-center">
-    <h1 style="font-weight:800;"><?= $team->name; ?></h1>
-    <h4 style="font-weight:500;">
-        <?php foreach($team->members as $team_member): ?>
-            &lt;<?= $team_member->first_name . ' ' . $team_member->last_name ?> /&gt;
-        <?php endforeach; ?>
-            
-    </h4> 
-    <h5 style="font-weight:500;"><a class="team-edit" style="color:#101010;" href="#teamModifyModal" data-toggle="modal" data-value="<?= $team->id; ?>"><span class="glyphicon glyphicon-edit"></span> Edit Group</a></h5>
-    <h5 style="font-weight:500;"><a class="team-leave" style="color:#101010;" href="#" data-value="<?= $team->id; ?>"><span class="glyphicon glyphicon-log-out"></span> Leave Group</a></h5>
-</div> -->
-
-<!-- <div class="addTaskSearch" >
-    <a class="task-create" href="#taskModifyModal" data-toggle="modal" style="color: inherit;">
-        <input type="text" id="taskSearch" placeholder="Add Task...">  
-    </a>
-</div> -->
-
-<div id="kanbanBoard" class="container-fluid"> 
-    <div class="row">
-        <div class="col-md-4">
-            <div id="todoPanel" class="kanban-panel container-fluid">
-                <h3 class="panel-title">To-Do</h3>
-                <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
-                </div>
-            </div>
+<div class="container-fluid text-center text-light bg-info m-0 p-3" style="height: 160px;">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <h1 class="text-center"><?= $team->name ?></h1>
         </div>
-        <div class="col-md-4">
-            <div id="doingPanel" class="kanban-panel container-fluid">
-                <h3 class="panel-title">Doing</h3>
-                <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
-                </div>
-            </div>
+        <div class="w-100"></div>
+        <div class="col-12">
+            <h6>
+            <?php foreach($team->members as $team_member): ?>
+                <span class="badge badge-dark"><?= $team_member->first_name . ' ' . $team_member->last_name ?></span>
+            <?php endforeach; ?>
+            </h6>
         </div>
-        <div class="col-md-4">
-            <div id="donePanel" class="kanban-panel container-fluid">
-                <h3 class="panel-title">Done</h3>
-                <div class="row" ondrop="drop(event)" ondragover="allowDrop(event)">
-                </div>
+        <div class="w-100"></div>
+        <div class="col-12">
+            <div class="btn-group btn-group-sm">
+                <button id="highlightBtn" type="button" class="btn btn-success">
+                    <i class="fa fa-eye"></i> Highlight Tasks
+                </button>
+
+                <button type="button" class="team-edit btn btn-warning" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $team->id; ?>">
+                    <i class="fa fa-edit"></i> Edit Group
+                </button>
+
+                <button type="button" class="team-leave btn btn-danger" data-value="<?= $team->id; ?>">
+                    <i class="fa fa-sign-out"></i> Leave Group
+                </button>
             </div>
         </div>
     </div>
+</div>
+
+<div id="kanbanBoard" class="w-100 m-0 p-0" style="height: calc(100% - 160px); overflow-x: auto;">
+    <div class="card-group h-100 m-0 p-0"></div>
 </div>

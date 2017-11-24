@@ -16,25 +16,15 @@ class Task_model extends CI_Model {
 	# Get Task By ID
 	public function get($id) {
 		
-		$task 				  = $this->db->get_where('tasks', ['id' => $id], 1)->result()[0];
-		$task->notes 		  = $this->get_task_notes($task->id);
-		$task->actors 		  = $this->get_task_actors($task->id);
-		$task->tags 		  = $this->get_task_tags($task->id);
-		$task->remaining_days = $this->estimate_days($task->id);
+		$task 				  	= $this->db->get_where('tasks', ['id' => $id], 1)->result()[0];
+		$task->due_date_long	= date('F d, Y', strtotime($task->due_date));
+		$task->notes 		  	= $this->get_task_notes($task->id);
+		$task->actors 		  	= $this->get_task_actors($task->id);
+		$task->tags 		  	= $this->get_task_tags($task->id);
+		$task->column_id		= $this->get_task_column($task->id);
+		$task->remaining_days	= $this->estimate_days($task->id);
 
 		return $task;
-	}
-
-
-	# Get User Team Tasks
-	public function get_user_team_task($user_id) {
-		
-		return $this->db->select('*')
-			->from('tasks')
-			->join('tasks_assignment', 'tasks_assignment.task_id = tasks.id')
-			->where('tasks_assignment.user_id', $user_id)
-			->get()
-			->result();
 	}
 
 
@@ -48,13 +38,26 @@ class Task_model extends CI_Model {
 
 		foreach ($tasks as $task) {
 
-			$task->notes 		  = $this->get_task_notes($task->id);
-			$task->actors 		  = $this->get_task_actors($task->id);
-			$task->tags 		  = $this->get_task_tags($task->id);
-			$task->remaining_days = $this->estimate_days($task->id);
+			$task->notes 		  	= $this->get_task_notes($task->id);
+			$task->actors 		  	= $this->get_task_actors($task->id);
+			$task->tags 		  	= $this->get_task_tags($task->id);
+			$task->column_id		= $this->get_task_column($task->id);
+			$task->remaining_days	= $this->estimate_days($task->id);
 		}
 		
 		return $tasks;
+	}
+	
+	
+	# Get User Team Tasks
+	public function get_user_team_task($user_id) {
+		
+		return $this->db->select('*')
+			->from('tasks')
+			->join('tasks_assignment', 'tasks_assignment.task_id = tasks.id')
+			->where('tasks_assignment.user_id', $user_id)
+			->get()
+			->result();
 	}
 
 
@@ -104,6 +107,20 @@ class Task_model extends CI_Model {
 	}
 
 
+	public function get_task_column($task_id) {
+
+		$result = $this->db->get_where('kanban_tasks', ['id' => $task_id], 1)->result();
+
+		if($result != null) {
+		
+			return $result[0]->column_id;
+		} else {
+			
+			return null;
+		}
+	}
+
+
 	# Add Task returning ID
 	public function insert($task_details) {
 
@@ -133,26 +150,33 @@ class Task_model extends CI_Model {
 
 	public function estimate_days($id) {
 		
-		$due_date = date_create($this->db->select('due_date')
+		$task = $this->db->select('*')
 			->get_where('tasks', ['id' => $id])
-			->row()->due_date);
-		
+			->row();
+
+		$due_date = date_create($task->due_date);
+		$status = $task->status;
 		$today = date_create(date('Y-m-d'));
 		$days  = date_diff($today, $due_date)->days;
 		
-		
-		if($today>$due_date) {
+		if($status == ARCHIVE) {
 
-			if($days == 1)
-				return "<font color='red'>Overdue by $days day</font>";
-			else
-				return "<font color='red'>Overdue by $days days</font>";
-		} else if($days == 1)
-			return "$days day remaining";
-		  else if($days == 0)
-			return "<font color='red'>DUE TODAY!</font>";
-		
-		return "$days days remaining";
+			return "COMPLETED";
+		} else {
+			
+			if($today>$due_date) {
+
+				if($days == 1)
+					return "<font color='red'>Overdue by $days day</font>";
+				else
+					return "<font color='red'>Overdue by $days days</font>";
+			} else if($days == 1)
+				return "$days day remaining";
+			  else if($days == 0)
+				return "<font color='red'>DUE TODAY!</font>";
+			
+			return "$days days remaining";
+		}
 	}
 
 
