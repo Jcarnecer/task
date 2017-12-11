@@ -47,7 +47,6 @@ $(document).on('click', '.task-view', function () {
         $('#taskViewModal').find('.task-title').html(data['title']);
         $('#taskViewModal').find('.task-description').html(data['description'] ? data['description'] : '<small class="text-muted">No Description</small>');
         $('#taskViewModal').find('.task-date').html(data['due_date_long']);
-        $('#taskViewModal').find('.task-countdown').html(Math.abs(data['remaining_days']));
         $('#taskViewModal').find('.task-countdown-text').html(data['remaining_days']);
         $('#taskViewModal').find('.task-tag-list').html('');
         $('#taskViewModal').find('.task-actor-list').html('');
