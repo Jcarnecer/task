@@ -70,7 +70,7 @@
 
 </div>
 
-<div class="main-content animation">
+<div class="main-content animation h-100">
 
     <div class="topbar">
         <nav class="navbar navbar-custom clearfix">
@@ -91,4 +91,4 @@
         </nav>
     </div>
     
-    <div class="inner-content">
+    <div class="inner-content h-100">

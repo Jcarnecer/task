@@ -162,11 +162,22 @@ class Task_model extends CI_Model {
 		
 		foreach($this->db->get_where('tasks', ['user_id' => $id])->result() as $task){
 			
-			$this->db->delete('task_notes', 	['task_id' => $task->id]);
-			$this->db->delete('tasks_tagging',  ['task_id' => $task->id]);
+			$this->db->delete('task_notes', ['task_id' => $task->id]);
+			$this->db->delete('tasks_tagging', ['task_id' => $task->id]);
+			$this->db->delete('tasks_assignment', ['task_id' => $task->id]);
 		}
 
 		$this->db->delete('tasks', ['user_id' => $id]);
+	}
+
+
+	public function delete($task_id) {
+		
+		$this->db->delete('task_notes', ['task_id' => $task_id]);
+		$this->db->delete('tasks_tagging', ['task_id' => $task_id]);
+		$this->db->delete('tasks_assignment', ['task_id' => $task_id]);
+
+		$this->db->delete('tasks', ['id' => $task_id]);
 	}
 	
 

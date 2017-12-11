@@ -139,7 +139,10 @@ class Boards extends CI_Controller {
 			
 			if(count($task_id)) {
 			
-				$this->board_model->delete_multiple('tasks', 'id', $task_id);
+				foreach($task_id as $task_id_instance) {
+
+					$this->task_model->delete($task_id_instance);
+				}
 			}
 
 			$this->board_model->delete('kanban_tasks', 'column_id', $column_id);
