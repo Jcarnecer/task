@@ -47,10 +47,30 @@ $(document).on('click', '.task-view', function () {
         $('#taskViewModal').find('.task-title').html(data['title']);
         $('#taskViewModal').find('.task-description').html(data['description'] ? data['description'] : '<small class="text-muted">No Description</small>');
         $('#taskViewModal').find('.task-date').html(data['due_date_long']);
-        $('#taskViewModal').find('.task-countdown-text').html(data['remaining_days']);
+        $('#taskViewModal').find('.task-countdown').css('color', 'black');
+        $('#taskViewModal').find('.task-countdown-text').css('color', 'black');
+        $('#taskViewModal').find('.task-countdown').html(Math.abs(data['remaining_days']));
+        $('#taskViewModal').find('.task-countdown-text').html('');
         $('#taskViewModal').find('.task-tag-list').html('');
         $('#taskViewModal').find('.task-actor-list').html('');
         $('#taskViewModal').find('.card').css('background-color', data['color']);
+
+        if(data['status'] == 2) // ARCHIVE
+
+            $('#taskViewModal').find('.task-countdown-text').html('COMPLETED');
+        else {
+
+            if(data['remaining_days'] > 0) {
+                $('#taskViewModal').find('.task-countdown-text').html(' day(s) remaining');
+            } else if(data['remaining_days'] == 0) {
+                $('#taskViewModal').find('.task-countdown').css('color', 'red');
+                $('#taskViewModal').find('.task-countdown').html('DUE TODAY');
+            } else {
+                $('#taskViewModal').find('.task-countdown').css('color', 'red');
+                $('#taskViewModal').find('.task-countdown-text').css('color', 'red');
+                $('#taskViewModal').find('.task-countdown-text').html(' day(s) overdue');
+            }
+        }
 
         if(data['tags'].length != 0) 
 

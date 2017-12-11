@@ -116,7 +116,7 @@
                 </div>
                 <div class="card-footer text-center">
                     <small class="float-left">Deadline: <span class="task-date font-weight-bold"></span></small>
-                    <small class="float-right text-right"><span class="task-countdown-text font-weight-bold"></span></small>
+                    <small class="float-right text-right"><span class ="task-countdown font-weight-bold"></span><span class="task-countdown-text"></span></small>
                 </div>
             </div>
         </div>
