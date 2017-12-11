@@ -135,14 +135,11 @@ class Boards extends CI_Controller {
 		
 		if($this->input->server('REQUEST_METHOD') == 'POST') {
 
-			$task_id = array_column((array)$this->board_model->get_all_tasks($column_id), 'id');
+			$tasks = $this->board_model->get_all_tasks_by_array($column_id);
 			
-			if(count($task_id)) {
-			
-				foreach($task_id as $task_id_instance) {
+			foreach($tasks as $task) {
 
-					$this->task_model->delete($task_id_instance);
-				}
+				$this->task_model->delete($task['id']);
 			}
 
 			$this->board_model->delete('kanban_tasks', 'column_id', $column_id);

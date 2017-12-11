@@ -326,9 +326,15 @@ $.fn.displayBoard = function(board) {
 
 $.fn.addColumn = function(column) {
     
-    $('#kanbanSmBoard .kanban-column-holder').css(`width`,  `${(column['position'] + 1) * 100}%`);
-    $('#kanbanMdBoard .kanban-column-holder').css(`width`,  `${(column['position'] + 1) * 25}%`);
-    
+    var newSmWidth = (column['position'] + 1) * 100;
+    var newMdWidth = (column['position'] + 1) * 25;
+
+    newSmWidth = Number(newSmWidth) < 100 ? '100' : newSmWidth;
+    newMdWidth = Number(newMdWidth) < 100 ? '100' : newMdWidth;
+
+    $('#kanbanSmBoard .kanban-column-holder').css(`width`, `${newSmWidth}%`);
+    $('#kanbanMdBoard .kanban-column-holder').css(`width`, `${newMdWidth}%`);
+
     $('#addSmColumn').before(columnSmBuilder(column));
     $('#addMdColumn').before(columnMdBuilder(column));
 };
