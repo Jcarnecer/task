@@ -105,7 +105,9 @@
                     <div class="container-fluid my-1">
                         <div class="row">
                             <div class="col-2">
-                                <h2 class="text-center"><i class="fa fa-user-circle"></i></h2>
+                                <h2 class="text-center">
+                                    <img class="img-avatar" src="<?= 'http://localhost/main/assets/img/avatar/'.$user_id.'.png' ?>">
+                                </h2>
                             </div>
                             <div class="col-10 rounded border border-secondary bg-white">
                                 <textarea class="task-note border-0 w-100" rows="2" placeholder="Type Here..." style="resize: none; outline: none;"></textarea>

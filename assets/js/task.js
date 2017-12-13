@@ -209,7 +209,10 @@ $(document).on('keypress', '.task-note', function (e) {
 
         $(this).closest('.modal').find('.task-note-list').append(`
             <div class="col-2 my-1">
-                <h4 class="text-center"><i class="fa fa-user-circle" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${userName}"></i></h4>
+                <h4 class="text-center">
+                <img class="img-avatar-sm" src="http://localhost/main/assets/img/avatar/${userId}.png" 
+                    data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${userName}">
+                </h4>
             </div>
             <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
                 ${$(this).val()}

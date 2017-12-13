@@ -418,6 +418,11 @@ mark,
   height: auto;
   border-radius: 50% }
 
+.img-avatar-sm {
+  max-width: 25px;
+  height: auto;
+  border-radius: 50% }
+
 .img-thumbnail {
   padding: 0.25rem;
   background-color: #fff;
