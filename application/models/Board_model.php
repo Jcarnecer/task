@@ -63,6 +63,14 @@ class Board_model extends CI_Model {
 	}
 
 
+	public function get_all_tasks_by_array($id) {
+		
+		$tasks = $this->db->get_where('kanban_tasks', ['column_id' => $id])->result_array();
+
+		return $tasks;
+	}
+
+
 	#	$key : table name
 	#	$details : must be complete
 	public function insert($key, $details) {

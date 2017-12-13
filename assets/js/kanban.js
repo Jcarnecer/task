@@ -11,7 +11,8 @@ $(document).getBoard(getAuthorId(), null, true).done(function(data) {
         $(document).postBoard(boardDetails, getAuthorId());
     }
 
-    $('#kanbanBoard').attr('data-value', data['id']);
+    $('#kanbanMdBoard').attr('data-value', data['id']);
+    $('#kanbanSmBoard').attr('data-value', data['id']);
     $(document).displayBoard(data);
 });
 
@@ -34,17 +35,17 @@ $(document).on('click', '#highlightBtn', function() {
 
 
 // Add Column
-$(document).on('select, click', '#addColumnName', function(e) {
+$(document).on('select, click', '.add-column-name', function(e) {
 
-    $('#addColumnName').html('');
+    $('.add-column-name').html('');
 });
 
 
-$(document).on('keypress', '#addColumnName', function(e) {
+$(document).on('keypress', '.add-column-name', function(e) {
 
-    if ($('#addColumnName').html() == 'Type Here') {
+    if ($('.add-column-name').html() == 'Type Here') {
         
-        $('#addColumnName').html('');
+        $('.add-column-name').html('');
     }
 
     if (e.which == 13) {
@@ -53,12 +54,12 @@ $(document).on('keypress', '#addColumnName', function(e) {
         
         var columnDetails = new Object;
         columnDetails.name = $(this).html();
-        columnDetails.position = $(document).getColumn($('#kanbanBoard').attr('data-value'), null, true).responseJSON.length + 1;
+        columnDetails.position = $(document).getColumn($('#kanbanMdBoard').attr('data-value'), null, true).responseJSON.length + 1;
 
-        columnDetails.id = $(document).postColumn(columnDetails, $('#kanbanBoard').attr('data-value'), null, true).responseJSON;
+        columnDetails.id = $(document).postColumn(columnDetails, $('#kanbanMdBoard').attr('data-value'), null, true).responseJSON;
 
         $(document).addColumn(columnDetails);
-        $('#addColumnName').html('Type Here');
+        $('.add-column-name').html('Type Here');
     }
 });
 
@@ -70,9 +71,14 @@ $(document).on('click', '.kanban-column-delete',  function(e) {
     $(this).closest('.kanban-column').remove();
 
 
-    var newWidth = $('#kanbanBoard>.card-group').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
+    var newSmWidth = $('#kanbanSmBoard .kanban-column-holder').css('width').replace(/\D/g, '') / $('#kanbanSmBoard').css('width').replace(/\D/g, '') * 100 - 100;
+    var newMdWidth = $('#kanbanMdBoard .kanban-column-holder').css('width').replace(/\D/g, '') / $('#kanbanMdBoard').css('width').replace(/\D/g, '') * 100 - 25;
 
-    $('#kanbanBoard>.card-group').css('width', `${newWidth}%`);
+    newSmWidth = Number(newSmWidth) < 100 ? '100' : newSmWidth;
+    newMdWidth = Number(newMdWidth) < 100 ? '100' : newMdWidth;
+
+    $('#kanbanSmBoard .kanban-column-holder').css('width', `${newSmWidth}%`);
+    $('#kanbanMdBoard .kanban-column-holder').css('width', `${newMdWidth}%`);
 });
    
 
@@ -94,8 +100,8 @@ $(document).on('keypress', '.kanban-column .kanban-column-title', function(e) {
             position: $(this).closest('.kanban-column').attr('data-position')
         };
 
-        $(document).postColumn(columnDetails, $('#kanbanBoard').attr('data-value'), $(this).closest('.kanban-column').attr('data-value'));
-        console.log(columnDetails + ' ' + $('#kanbanBoard').attr('data-value') + ' ' + $(this).closest('.kanban-column').attr('data-value'));
+        $(document).postColumn(columnDetails, $('#kanbanMdBoard').attr('data-value'), $(this).closest('.kanban-column').attr('data-value'));
+        // console.log(columnDetails + ' ' + $('#kanbanBoard').attr('data-value') + ' ' + $(this).closest('.kanban-column').attr('data-value'));
 
         $(this).attr('contenteditable', false);
     }

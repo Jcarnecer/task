@@ -93,9 +93,10 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 }
 
 
-function columnBuilder(column) {
-    var columnString = 
-    `<div class="card border-0 h-100 w-25 kanban-column" 
+function columnMdBuilder(column) {
+    
+    var columnMdString = 
+    `<div class="d-inline-block card border-0 h-100 w-25 kanban-column" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
         <h4 class="card-header clearfix"
@@ -119,7 +120,38 @@ function columnBuilder(column) {
         </div>
     </div>`;
 
-    return columnString;
+    return columnMdString;
+}
+
+
+function columnSmBuilder(column) {
+
+    var columnSmString = 
+    `<div class="d-inline-block card border-0 h-100 w-100 kanban-column" 
+        ondrop="drop(event)" ondragover="allowDrop(event)" 
+        data-value="${column['id']}" data-position="${column['position']}">
+        <h4 class="card-header clearfix"
+            draggable="true" ondragstart="drag(event)">
+
+            <span class="kanban-column-title float-left" contenteditable="false">
+                ${column['name']}
+            </span>
+
+            <span class="float-right">
+                <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
+                <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
+            </span>
+
+        </h4>
+        <div class="card-body text-center" style="overflow-y: auto;">
+            <button type="button" class="btn btn-primary btn-lg btn-block my-2 task-create"
+                data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
+                <i class="fa fa-plus"></i> Add Task
+            </button>
+        </div>
+    </div>`;
+
+    return columnSmString;
 }
 
 
@@ -252,20 +284,39 @@ $.fn.searchTask = function(items, keyword) {
 // Kanban
 $.fn.displayBoard = function(board) {
 
-    $('#kanbanBoard .card-group').html('');
+    $('#kanbanSmBoard .kanban-column-holder').html('');
+    $('#kanbanMdBoard .kanban-column-holder').html('');
 
-    $('#kanbanBoard .card-group').css(`width`, `${(board['columns'].length + 1) * 25}%`);
+    var newSmWidth = (board['columns'].length + 1) * 100;
+    var newMdWidth = (board['columns'].length + 1) * 25;
+
+    newSmWidth = Number(newSmWidth) < 100 ? '100' : newSmWidth;
+    newMdWidth = Number(newMdWidth) < 100 ? '100' : newMdWidth;
+
+    $('#kanbanSmBoard .kanban-column-holder').css(`width`, `${newSmWidth}%`);
+    $('#kanbanMdBoard .kanban-column-holder').css(`width`, `${newMdWidth}%`);
 
     $.each(board['columns'], function(i, column) {
 
-        $('#kanbanBoard .card-group').append(columnBuilder(column));
+        $('#kanbanSmBoard .kanban-column-holder').append(columnSmBuilder(column));
+        $('#kanbanMdBoard .kanban-column-holder').append(columnMdBuilder(column));
     });
     
-    $('#kanbanBoard .card-group').append(`
-        <div id="addColumn" class="card h-100 w-25">
+    $('#kanbanSmBoard .kanban-column-holder').append(`
+        <div id="addSmColumn" class="card border-0 h-100 w-100">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
-                <span id="addColumnName" contenteditable="true">Type Here</span>
+                <span class="add-column-name" contenteditable="true">Type Here</span>
+            </h4>
+            <div class="card-body"></div>
+        </div>
+    `);
+
+    $('#kanbanMdBoard .kanban-column-holder').append(`
+        <div id="addMdColumn" class="card border-0 h-100 w-25">
+            <h4 class="card-header w-100">
+                <i class="fa fa-plus mx-1"></i>
+                <span class="add-column-name" contenteditable="true">Type Here</span>
             </h4>
             <div class="card-body"></div>
         </div>
@@ -275,9 +326,17 @@ $.fn.displayBoard = function(board) {
 
 $.fn.addColumn = function(column) {
     
-    $('#kanbanBoard .card-group').css(`width`,  `${(column['position'] + 1) * 25}%`);
-    
-    $('#addColumn').before(columnBuilder(column));
+    var newSmWidth = (column['position'] + 1) * 100;
+    var newMdWidth = (column['position'] + 1) * 25;
+
+    newSmWidth = Number(newSmWidth) < 100 ? '100' : newSmWidth;
+    newMdWidth = Number(newMdWidth) < 100 ? '100' : newMdWidth;
+
+    $('#kanbanSmBoard .kanban-column-holder').css(`width`, `${newSmWidth}%`);
+    $('#kanbanMdBoard .kanban-column-holder').css(`width`, `${newMdWidth}%`);
+
+    $('#addSmColumn').before(columnSmBuilder(column));
+    $('#addMdColumn').before(columnMdBuilder(column));
 };
 
 
