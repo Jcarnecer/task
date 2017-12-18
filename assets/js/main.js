@@ -218,10 +218,12 @@ $.fn.displayNote = function(items) {
     $.each(items, function(i, item){
 
         var user = $(document).getUser(item['user_id'], true).responseJSON;
-
         $('.task-note-list').append(
             `<div class="col-2">
-                <h4 class="text-center"><i class="fa fa-user-circle" data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${user['first_name'] + ' ' + user['last_name']}"></i></h4>
+                <h4 class="text-center">
+                <img class="img-avatar-sm" src="http://localhost/main/assets/img/avatar/${item['user_id']}.png" 
+                    data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${user['first_name'] + ' ' + user['last_name']}">
+                </h4>
             </div>
             </div>
             <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
