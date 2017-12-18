@@ -35,7 +35,20 @@ function drop(e) {
 
         if($elem.nextAll(`.kanban-column[data-value="${id}"]`).length) {
             
-            $.each($('#kanbanBoard>.card-group').children('.kanban-column'), function(i, column) {
+            $.each($('#kanbanSmBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
+                
+                if(Number($(column).attr('data-position')) >= Number($elem.attr('data-position')) && 
+                    Number($(column).attr('data-position')) < Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {
+                    
+                    $(column).attr('data-position', Number($(column).attr('data-position')) + 1);
+                    updateColumn.push({
+                        id: $(column).attr('data-value'),
+                        position: $(column).attr('data-position')
+                    });
+                }
+            });
+
+            $.each($('#kanbanSmBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
                 
                 if(Number($(column).attr('data-position')) >= Number($elem.attr('data-position')) && 
                     Number($(column).attr('data-position')) < Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {
@@ -57,7 +70,20 @@ function drop(e) {
             $elem.before($(`.kanban-column[data-value="${id}"]`));
         } else if($elem.prevAll(`.kanban-column[data-value="${id}"]`).length) {
             
-            $.each($('#kanbanBoard .card-group').children('.kanban-column'), function(i, column) {
+            $.each($('#kanbanSmBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
+                
+                if(Number($(column).attr('data-position')) <= Number($elem.attr('data-position')) && 
+                Number($(column).attr('data-position')) > Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {
+                    
+                    $(column).attr('data-position', Number($(column).attr('data-position')) - 1);
+                    updateColumn.push({
+                        id: $(column).attr('data-value'),
+                        position: $(column).attr('data-position')
+                    });
+                }
+            });
+
+            $.each($('#kanbanMdBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
                 
                 if(Number($(column).attr('data-position')) <= Number($elem.attr('data-position')) && 
                 Number($(column).attr('data-position')) > Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {

@@ -105,7 +105,9 @@
                     <div class="container-fluid my-1">
                         <div class="row">
                             <div class="col-2">
-                                <h2 class="text-center"><i class="fa fa-user-circle"></i></h2>
+                                <h2 class="text-center">
+                                    <img class="img-avatar" src="<?= $avatar_url ?>">
+                                </h2>
                             </div>
                             <div class="col-10 rounded border border-secondary bg-white">
                                 <textarea class="task-note border-0 w-100" rows="2" placeholder="Type Here..." style="resize: none; outline: none;"></textarea>
@@ -116,7 +118,7 @@
                 </div>
                 <div class="card-footer text-center">
                     <small class="float-left">Deadline: <span class="task-date font-weight-bold"></span></small>
-                    <small class="float-right text-right"><span class="task-countdown font-weight-bold"></span><span class="task-countdown-text"></span></small>
+                    <small class="float-right text-right"><span class ="task-countdown font-weight-bold"></span><span class="task-countdown-text"></span></small>
                 </div>
             </div>
         </div>
