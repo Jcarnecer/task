@@ -15,9 +15,10 @@ class Users extends CI_Controller {
         $user = $this->user_model->get('id', $user_id)[0];
 
         echo json_encode([
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
-            'email_address' => $user->email_address
+            'first_name'    => $user->first_name,
+            'last_name'     => $user->last_name,
+            'email_address' => $user->email_address,
+            'avatar_url'    => $user->avatar_url
         ]);
     }
 
