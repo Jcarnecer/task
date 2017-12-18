@@ -85,7 +85,7 @@
                 <a class="navbar-brand" href="#taskSearchModal" data-toggle="modal"><i class="fa fa-search"></i> Search</a>
                 <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
                     <!-- <i class="fa fa-user-circle"></i> <?= $user_name ?> -->
-                    <img class="img-avatar" src="<?= 'http://localhost/main/assets/img/avatar/'.$user_id.'.png' ?>"> <?= $user_name ?>
+                    <img class="img-avatar" src="<?= $avatar_url ?>"> <?= $user_name ?>
                 </a>
             </span>
         </nav>

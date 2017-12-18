@@ -4,6 +4,7 @@ var userId = null;
 var authorId = null;
 var taskType = null;
 var userName = null;
+var avatarUrl = null;
 
 function setAuthorId(id) { authorId = id; }
 
@@ -28,6 +29,7 @@ $(function() {
 
 $(document).getUser(getUserId(), true).done(function(data) {
     userName = data['first_name'] + ' ' + data['last_name'];
+    avatarUrl = data['avatar_url'];
 });
 
 });
@@ -250,10 +252,11 @@ $.fn.displayNote = function(items) {
     $.each(items, function(i, item){
 
         var user = $(document).getUser(item['user_id'], true).responseJSON;
+        console.log(item['user_id']);
         $('.task-note-list').append(
             `<div class="col-2">
                 <h4 class="text-center">
-                <img class="img-avatar-sm" src="http://localhost/main/assets/img/avatar/${item['user_id']}.png" 
+                <img class="img-avatar-sm" src="${user['avatar_url']}" 
                     data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${user['first_name'] + ' ' + user['last_name']}">
                 </h4>
             </div>
