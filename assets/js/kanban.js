@@ -66,13 +66,16 @@ $(document).on('keypress', '#addColumnName', function(e) {
 // Delete Column
 $(document).on('click', '.kanban-column-delete',  function(e) {
 
-    $(document).deleteColumn($(this).closest('.kanban-column').attr('data-value'));
-    $(this).closest('.kanban-column').remove();
+    if(confirm(`Are you sure you want to delete ${$(this).closest('.kanban-column').find('.kanban-column-title').html().trim()}?`)){
 
-
-    var newWidth = $('#kanbanBoard>.card-group').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
-
-    $('#kanbanBoard>.card-group').css('width', `${newWidth}%`);
+        $(document).deleteColumn($(this).closest('.kanban-column').attr('data-value'));
+        $(this).closest('.kanban-column').remove();
+    
+    
+        var newWidth = $('#kanbanBoard>.card-group').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
+    
+        $('#kanbanBoard>.card-group').css('width', `${newWidth}%`);
+    }
 });
    
 
