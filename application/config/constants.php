@@ -97,7 +97,7 @@ defined('ACTIVE') 		OR define('ACTIVE', 1);
 defined('ARCHIVE')		OR define('ARCHIVE', 2);
 defined('INACTIVE')		OR define('INACTIVE', 3);
 defined('IN_PROGRESS')	OR define('IN_PROGRESS', 4);
-defined('DONE')	OR define('DONE', 4);
+defined('DONE')			OR define('DONE', 4);
 
 
 /*
