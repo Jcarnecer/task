@@ -9,18 +9,28 @@ function drag(e) {
 
     e.dataTransfer.setData('id', $elem.parent().attr('data-value'));
 
+    console.log('dragging...');
+
     if($elem.parent().hasClass('kanban-column')) {
       
         e.dataTransfer.setData('type', 'column');
     } else if($elem.parent().hasClass('kanban-task')) {
         
         e.dataTransfer.setData('type', 'task');
+        $('#deleteTaskModal').removeClass('d-none');
     }
+}
+
+function closeDeleteModal(e) {
+    
+    $('#deleteTaskModal').addClass('d-none');
 }
 
 function drop(e) {
     
     e.preventDefault();
+
+    $('#deleteTaskModal').addClass('d-none');
 
     var $elem = $(e.target).hasClass('.kanban-column') ? $(e.target) : $(e.target).closest('.kanban-column');
     var id = e.dataTransfer.getData('id');
@@ -107,4 +117,12 @@ function drop(e) {
 
         $(document).updatePositions({column_update: updateColumn}, true);
     }
+}
+
+function deleteTask(e) {
+    
+    $(document).archiveTask(e.dataTransfer.getData('id')).done(() => {
+
+        $(`.kanban-task[data-value="${e.dataTransfer.getData('id')}"]`).remove();   
+    });
 }
