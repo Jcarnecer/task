@@ -36,6 +36,17 @@ $.fn.postTask = function(details, taskId = null, syncToggle = false) {
 };
 
 
+$.fn.archiveTask = function(taskId) {
+
+    return $.ajax({
+
+        type: 'POST',
+        url: `${baseUrl}api/done/${taskId}`,
+        dataType: 'json'
+    });
+};
+
+
 $.fn.getTaskNote = function(taskId) {
 
     return $.ajax({

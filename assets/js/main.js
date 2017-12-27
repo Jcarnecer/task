@@ -85,7 +85,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
         style="background-color:${task['color']};">
         
         <div class="card-body" ${contributorsAppend}
-            draggable="true" ondragstart="drag(event)">
+            draggable="true" ondragstart="drag(event)" ondragend="closeDeleteModal(event)">
             <h5 class="card-title font-weight-bold">${iconAppend + task['title']}</h5>
         </div>
 

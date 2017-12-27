@@ -2,6 +2,11 @@ $(function () {
 
 var storedTasks = null;
 
+function archive(taskId) {
+
+    $(document).archiveTask(taskId);
+}
+
 // Load Modal
 $(document).on('click', '.task-create', function() {
 
@@ -261,6 +266,5 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
         } 
     }
 });
-
 
 });
