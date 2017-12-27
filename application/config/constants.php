@@ -111,3 +111,5 @@ defined('DONE')			OR define('DONE', 4);
 $colors = serialize(['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7ffeb', '#80d8ff', '#cfd8dc']);
 
 defined('COLORS')		OR define('COLORS', $colors);
+
+define("LOGIN_URL", ENVIRONMENT === "production" ? "http://payakapps.com/users/login" : "http://localhost/main/users/login");

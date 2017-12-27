@@ -1,4 +1,6 @@
-const baseUrl = window.location.origin + "/";
+const baseUrl = window.location.origin === "http://task.payakapps.com" ? "http://task.payakapps.com/" : "http://localhost/task/";
+
+console.log(baseUrl);
 
 var userId = null;
 var authorId = null;
