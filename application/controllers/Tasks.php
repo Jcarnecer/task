@@ -71,7 +71,7 @@ class Tasks extends CI_Controller {
 
 		} else {
 			
-			echo json_encode($this->task_model->get_all($author_id));
+			echo json_encode($this->task_model->get_all($author_id, 1));
 		}
 	}
 
@@ -99,7 +99,7 @@ class Tasks extends CI_Controller {
 	# Mark as Done
 	public function mark_as_done($task_id) {
 		
-		$this->task_model->update_status($task_id, ARCHIVE);
+		echo json_encode(['status' => $this->task_model->update_status($task_id, ARCHIVE)]);
 	}
 
 

@@ -414,13 +414,13 @@ mark,
   height: auto; }
 
 .img-avatar {
-  max-width: 32px;
-  height: auto;
+  width: 32px;
+  height: 32px;
   border-radius: 50% }
 
 .img-avatar-sm {
-  max-width: 25px;
-  height: auto;
+  width: 25px;
+  height: 25px;
   border-radius: 50% }
 
 .img-thumbnail {
