@@ -211,11 +211,10 @@ $(document).on('keypress', '.task-note', function (e) {
     if(e.which == 13) {
 
         e.preventDefault();
-
         $(this).closest('.modal').find('.task-note-list').append(`
             <div class="col-2 my-1">
                 <h4 class="text-center">
-                <img class="img-avatar-sm" src="http://localhost/main/assets/img/avatar/${userId}.png" 
+                <img class="img-avatar-sm" src="${avatarUrl}" 
                     data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${userName}">
                 </h4>
             </div>

@@ -106,7 +106,7 @@
                         <div class="row">
                             <div class="col-2">
                                 <h2 class="text-center">
-                                    <img class="img-avatar" src="<?= 'http://localhost/main/assets/img/avatar/'.$user_id.'.png' ?>">
+                                    <img class="img-avatar" src="<?= $avatar_url ?>">
                                 </h2>
                             </div>
                             <div class="col-10 rounded border border-secondary bg-white">
