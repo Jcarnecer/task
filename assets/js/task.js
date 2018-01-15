@@ -113,6 +113,11 @@ $(document).on('input', '#taskSearch', function (e) {
     $(document).searchTask(storedTasks, $('#taskSearch').val());
 });
 
+$('#taskSearchModal').on('hidden.bs.modal', function () {
+    
+    $('#taskSearchList').html('');
+});
+
 
 // Button Color
 $(document).on('click', '.btn-color', function () {
