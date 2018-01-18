@@ -151,7 +151,7 @@ class Task_model extends CI_Model {
 		
 		$due_date = $this->db->get_where('tasks', ['id' => $id], 1)->result()[0]->due_date;
 
-		$days = round((strtotime($due_date) - time()) / 86400, 0);
+		$days = round((strtotime($due_date) - time()) / 86400, 0) + 1;
 		
 		return $days;
 	}

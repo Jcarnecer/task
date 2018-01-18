@@ -66,9 +66,12 @@ $(document).on('click', '.task-view', function () {
         else {
 
             if(data['remaining_days'] > 0) {
+                $('#taskViewModal').find('.task-countdown').css('color', 'black');
+                $('#taskViewModal').find('.task-countdown-text').css('color', 'black');
                 $('#taskViewModal').find('.task-countdown-text').html(' day(s) remaining');
             } else if(data['remaining_days'] == 0) {
                 $('#taskViewModal').find('.task-countdown').css('color', 'red');
+                $('#taskViewModal').find('.task-countdown-text').css('color', 'red');
                 $('#taskViewModal').find('.task-countdown').html('DUE TODAY');
             } else {
                 $('#taskViewModal').find('.task-countdown').css('color', 'red');
