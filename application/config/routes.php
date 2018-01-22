@@ -37,6 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | This route will tell the Router which controller/method to use if those
 | provided in the URL cannot be matched to a valid route.
+
 |
 |	$route['translate_uri_dashes'] = FALSE;
 |
@@ -63,50 +64,39 @@ $route['team/(:any)'] = 'Views/team/$1';
 $route['api/user/(:any)']['GET'] = 'users/get/$1';
 
 # team
-$route['api/team']['POST'] = 'Teams/post';
-$route['api/team']['GET'] = 'Teams/get';
+$route['api/team']['POST'] = 'Projects/insert';
+$route['api/team']['GET'] = 'Projects/get_all';
 
-$route['api/team/(:any)']['POST'] = 'Teams/post/$1';
+$route['api/team/(:any)']['POST'] = 'Teams/update/$1';
 $route['api/team/(:any)']['GET'] = 'Teams/get/$1';
 
 
 $route['api/validate_member/(:any)']['POST'] = 'Teams/validate_member/$1';
 $route['api/validate_member']['POST'] = 'Teams/validate_member';
-
 $route['api/leave_team/(:any)']['POST'] = 'Teams/leave_team/$1';
 
 # board
 $route['api/board/(:any)']['POST'] = 'Boards/post_board/$1';
 $route['api/board/(:any)']['GET'] = 'Boards/get_board/$1';
-
 $route['api/board/(:any)/(:any)']['POST'] = 'Boards/post_board/$1/$2';
 $route['api/board/(:any)/(:any)']['GET'] = 'Boards/get_board/$1/$2';
-
 $route['api/column/(:any)']['POST'] = 'Boards/post_column/$1';
 $route['api/column/(:any)']['GET'] = 'Boards/get_column/$1';
-
 $route['api/column/(:any)/(:any)']['POST'] = 'Boards/post_column/$1/$2';
 $route['api/column/(:any)/(:any)']['GET'] = 'Boards/get_column/$1/$2';
-
 $route['api/delete_column/(:any)']['POST'] = 'Boards/delete_column/$1';
-
 $route['api/update_columns']['POST'] = 'Boards/change_columns_position';
 
 # task
 $route['api/task/(:any)']['POST'] = 'Tasks/post/$1';
 $route['api/task/(:any)']['GET'] = 'Tasks/get/$1';
-
 $route['api/task/(:any)/(:any)']['POST'] = 'Tasks/post/$1/$2';
 $route['api/task/(:any)/(:any)']['GET'] = 'Tasks/get/$1/$2';
-
 $route['api/note/(:any)']['POST'] = 'Tasks/post_notes/$1';
 $route['api/note/(:any)']['GET'] = 'Tasks/get_notes/$1';
-
 $route['api/done/(:any)']['POST'] = 'Tasks/mark_as_done/$1';
-
 $route['api/change_column/(:any)']['POST'] = 'Tasks/change_column/$1';
-
-$route['api/get_user_team_task/(:any)']['GET'] = 'Tasks/get_user_team_task/$1';
+$route['api/get_user_team_task/(:any)']['GET'] = 'Tasks/get_task_by_actor/$1';
 # end-of-API
 
 

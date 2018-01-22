@@ -7,7 +7,7 @@ class Board_model extends CI_Model {
 	# Get Board
 	public function get_board($id) {
 		
-		$board				= $this->db->get_where('kanban_boards', ['id' => $id], 1)->result()[0];
+		$board				= $this->db->get_where('kb_boards', ['id' => $id], 1)->row();
 		$board->columns		= $this->get_all_columns($board->id);
 
 		return $board;
@@ -15,9 +15,9 @@ class Board_model extends CI_Model {
 
 
 	# Get All Boards
-	public function get_all_boards($team_id, $status = null) {
+	public function get_all_boards($proj_id, $status = null) {
 
-		$boards = $this->db->get_where('kanban_boards', ['team_id' => $team_id])->result();
+		$boards = $this->db->get_where('kb_boards', ['proj_id' => $team_id])->result();
 
 		foreach ($boards as $board)
 			$board->columns	= $this->get_all_columns($board->id);
@@ -29,7 +29,7 @@ class Board_model extends CI_Model {
 	# Get Column
 	public function get_column($id) {
 
-		$column = $this->db->get_where('kanban_columns', ['id' => $id], 1)->result()[0];
+		$column = $this->db->get_where('kb_columns', ['id' => $id], 1)->result()[0];
 
 		return $column;
 	}
@@ -40,34 +40,10 @@ class Board_model extends CI_Model {
 
 		$columns = $this->db->where('board_id', $id)
 					->order_by('position', 'asc')
-					->get('kanban_columns')
+					->get('kb_columns')
 					->result();
 
 		return $columns;
-	}
-
-
-	public function get_task($id) {
-
-		$task = $this->db->get_where('kanban_tasks', ['id' => $id], 1)->result()[0];
-
-		return $task;
-	}
-
-
-	public function get_all_tasks($id) {
-		
-		$tasks = $this->db->get_where('kanban_tasks', ['column_id' => $id])->result();
-
-		return $tasks;
-	}
-
-
-	public function get_all_tasks_by_array($id) {
-		
-		$tasks = $this->db->get_where('kanban_tasks', ['column_id' => $id])->result_array();
-
-		return $tasks;
 	}
 
 
@@ -89,12 +65,6 @@ class Board_model extends CI_Model {
 	public function delete($key, $field, $value) {
 		
 		$this->db->delete($key, [$field => $value]);
-	}
-
-
-	public function update_multiple($key, $batch_details, $pivot) {
-		
-		$this->db->update_batch($key, $batch_details, $pivot);
 	}
 
 

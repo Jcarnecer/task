@@ -5,59 +5,72 @@ class Tasks extends CI_Controller {
 
 
 	# Create Task
-	public function post($author_id, $task_id = null) {
+	public function insert($author_id, $task_id = null) {
 	
-		if ($this->input->server('REQUEST_METHOD') == 'POST') {
+		$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
 
-			$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
+		if($due_date == date('Y-m-d', strtotime('1970-01-01'))) {
 
-			if($due_date == date('Y-m-d', strtotime('1970-01-01'))) {
+			$due_date = date('Y-m-d');
+		}
 
-				$due_date = date('Y-m-d');
-			}
+		$task_details	= [
+			'title'		  	=> $this->input->post('title'),
+			'description' 	=> $this->input->post('description'),
+			'due_date'	  	=> $due_date,
+			'color'		  	=> $this->input->post('color'),
+			'user_id'	  	=> $author_id,
+			'column_id'		=> $this->input->post('column_id')
+		];
 
-			$task_details	= [
-				'title'		  => $this->input->post('title'),
-				'description' => $this->input->post('description'),
-				'due_date'	  => $due_date,
-				'color'		  => $this->input->post('color'),
-				'user_id'	  => $author_id
-			];
+		$task_id = $this->task_model->insert($task_details);
+		
+		if($this->input->post('tags[]') != null) {
 
-			$column_id = $this->input->post('column_id');
+			$this->tag_model->insert($task_id, $this->input->post('tags[]'));
+		}
 
-			if($task_id != null) {
-				
-				$this->task_model->update($task_id, $task_details);
-				
-				if($this->input->post('tags[]') != null)
+		if($this->input->post('actors[]') != null){
 
-					$this->tag_model->update($task_id, $this->input->post('tags[]'));
-				else
-
-					$this->tag_model->update($task_id, []);
+			$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
+		}
+	}
 
 
-				if($this->input->post('actors[]') != null)
+	public function update($id)
+	{
+		$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
 
-					$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
-				else
+		if($due_date == date('Y-m-d', strtotime('1970-01-01'))) {
 
-					$this->task_model->add_actors($task_id, []);
-			} else {
+			$due_date = date('Y-m-d');
+		}
 
-				$task_id = $this->task_model->insert($task_details);
-				$this->board_model->insert('kanban_tasks', ['id' => $task_id, 'column_id' => $column_id]);
-				
-				if($this->input->post('tags[]') != null)
+		$task_details = [
+			'title'		  	=> $this->input->post('title'),
+			'description' 	=> $this->input->post('description'),
+			'due_date'	  	=> $due_date,
+			'color'		  	=> $this->input->post('color'),
+			'user_id'	  	=> $author_id,
+			'column_id'		=> $this->input->post('column_id')
+		];
 
-					$this->tag_model->insert($task_id, $this->input->post('tags[]'));
-					
+		$this->task_model->update($task_id, $task_details);
+		
+		if($this->input->post('tags[]') != null) {
 
-				if($this->input->post('actors[]') != null)
-				
-					$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
-			}
+			$this->tag_model->update($task_id, $this->input->post('tags[]'));
+		} else {
+
+			$this->tag_model->update($task_id, []);
+		}
+
+		if($this->input->post('actors[]') != null) {
+
+			$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
+		} else {
+
+			$this->task_model->add_actors($task_id, []);
 		}
 	}
 
@@ -86,13 +99,13 @@ class Tasks extends CI_Controller {
 			'user_id'	  => $this->session->user->id
 		];
 
-		$this->task_model->add_task_notes($task_id, $note_details);
+		$this->task_model->add_notes($task_id, $note_details);
 	}
 
 	
 	public function get_notes($task_id) {
 		
-		echo json_encode($this->task_model->get_task_notes($task_id));
+		echo json_encode($this->task_model->get_notes($task_id));
 	}
 
 
@@ -106,9 +119,11 @@ class Tasks extends CI_Controller {
 	# Change Task Columnn
 	public function change_column($task_id)	{
 
-		$column_id = $this->input->post('column_id');
+		$data = [
+			'column_id' => $this->input->post('column_id')
+		];
 
-		$this->board_model->update($task_id, 'kanban_tasks', ['column_id' => $column_id]);
+		$this->task_model->update($task_id, $data);
 	}
 
 
@@ -121,7 +136,8 @@ class Tasks extends CI_Controller {
 
 
 	# Get User Team Tasks
-	public function get_user_team_task($user_id) {
-		echo json_encode($this->task_model->get_user_team_task($user_id));
+	public function get_task_by_actor($user_id) {
+
+		echo json_encode($this->task_model->get_by_actor($user_id));
 	}
 }

@@ -32,8 +32,8 @@ class User_model extends CI_Model {
     }
 
 
-    public function get($index, $value) {
+    public function get_by($where) {
 
-        return $this->db->get_where('users', [$index => $value], 1)->result();
+        return $this->db->get_where('users', $where)->row();
     }
 }

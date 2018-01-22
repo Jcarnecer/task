@@ -56,12 +56,12 @@ class Utilities {
 		
 		switch($table) {
 		
-			case 'teams':
+			case 'pj_projects':
 				$temp_id = '';
 
 				do {
 					
-					$temp_id = 'TM' . $this->generate_id($length);
+					$temp_id = 'PJ' . $this->generate_id($length);
 				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
 
 				return $temp_id;
