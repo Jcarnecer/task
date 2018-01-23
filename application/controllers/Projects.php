@@ -3,6 +3,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Projects extends CI_Controller {
 
+	# Fetch Projects
+	public function get()	{
+		
+		$project 			= $this->project->get($this->input->post('id'));
+		$project->members 	= $this->project->get_members($this->input->post('id'));
+		
+		echo json_encode($project);
+	}
+	
+	
+	# Fetch All Projects
+	public function get_all()
+	{
+		echo json_encode($this->project->get_many_by_user($this->session->user->id));
+	}
+
 	
 	# Create Project
 	public function insert() {
@@ -22,8 +38,10 @@ class Projects extends CI_Controller {
 
 
 	# Update Project
-	public function update($id)
+	public function update()
 	{
+		$proj_id	= $this->input->post('id');
+
 		$members 	= $this->input->post('members[]');
 		$members[]	= $this->session->user->email_address;
 		
@@ -32,27 +50,11 @@ class Projects extends CI_Controller {
 	}
 
 
-	# Fetch Projects
-	public function get($id = null)	{
-		
-		$project 			= $this->project->get($id);
-		$project->members 	= $this->project->get_members($id);
-		
-		echo json_encode($projects);
-	}
-	
-	
-	# Fetch All Projects
-	public function get_all()
-	{
-		echo json_encode($this->project->get_many_by_user($this->session->user->id));
-	}
-
-
 	# Check if user is a member
-	public function validate_member($proj_id = null) {
+	public function validate_member() {
         
-		$user = $this->user_model->get_by(['email_address' => $this->input->post('email')]);
+		$user 		= $this->user_model->get_by(['email_address' => $this->input->post('email')]);
+		$proj_id 	= $this->input->post('proj_id');
 
 		if($user != null) {
 			
@@ -73,8 +75,8 @@ class Projects extends CI_Controller {
 	
 
 	# Leave Projects
-	public function leave_project($proj_id) {
+	public function leave_project() {
 		
-		$this->project->delete_member($proj_id, $this->session->user->id);
+		$this->project->delete_member($this->input->post('proj_id'), $this->session->user->id);
 	}
 }

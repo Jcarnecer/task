@@ -3,9 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tasks extends CI_Controller {
 
+	# Fetch Task
+	public function get() {
 
+		$task_id = $this->input->get('id');
+		echo json_encode($this->task->get($task_id));
+	}
+	
+	
+	# Fetch All Board Tasks
+	public function get_all()
+	{
+		$author_id = $this->input->get('author_id');
+		echo json_encode($this->task->get_all($author_id, 1));
+	}
+	
+	
 	# Create Task
-	public function insert($author_id, $task_id = null) {
+	public function insert() {
 	
 		$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
 
@@ -19,11 +34,11 @@ class Tasks extends CI_Controller {
 			'description' 	=> $this->input->post('description'),
 			'due_date'	  	=> $due_date,
 			'color'		  	=> $this->input->post('color'),
-			'user_id'	  	=> $author_id,
+			'user_id'	  	=> $this->input->post('author_id'),
 			'column_id'		=> $this->input->post('column_id')
 		];
 
-		$task_id = $this->task_model->insert($task_details);
+		$task_id = $this->task->insert($task_details);
 		
 		if($this->input->post('tags[]') != null) {
 
@@ -32,13 +47,15 @@ class Tasks extends CI_Controller {
 
 		if($this->input->post('actors[]') != null){
 
-			$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
+			$this->task->add_actors($task_id, $this->input->post('actors[]'));
 		}
 	}
 
 
-	public function update($id)
+	# Update Task
+	public function update()
 	{
+		$task_id = $this->input->post('id');
 		$due_date = date('Y-m-d', strtotime($this->input->post('due_date')));
 
 		if($due_date == date('Y-m-d', strtotime('1970-01-01'))) {
@@ -51,11 +68,10 @@ class Tasks extends CI_Controller {
 			'description' 	=> $this->input->post('description'),
 			'due_date'	  	=> $due_date,
 			'color'		  	=> $this->input->post('color'),
-			'user_id'	  	=> $author_id,
 			'column_id'		=> $this->input->post('column_id')
 		];
 
-		$this->task_model->update($task_id, $task_details);
+		$this->task->update($task_id, $task_details);
 		
 		if($this->input->post('tags[]') != null) {
 
@@ -67,77 +83,74 @@ class Tasks extends CI_Controller {
 
 		if($this->input->post('actors[]') != null) {
 
-			$this->task_model->add_actors($task_id, $this->input->post('actors[]'));
+			$this->task->add_actors($task_id, $this->input->post('actors[]'));
 		} else {
 
-			$this->task_model->add_actors($task_id, []);
+			$this->task->add_actors($task_id, []);
 		}
 	}
 
 
-	# Fetch Task
-	public function get($author_id, $task_id = null) {
+	# Update Task
+	public function change_column()
+	{
+		$task_id = $this->input->post('id');
 		
-		if($task_id != null){
+		$task_details = [
+			'column_id'		=> $this->input->post('column_id')
+		];
 
-			echo json_encode($this->task_model->get($task_id));
-
-		} else {
-			
-			echo json_encode($this->task_model->get_all($author_id, 1));
-		}
+		$data['response'] = $this->task->update($task_id, $task_details);
+		
+		echo json_encode($data);
 	}
 
 
-	# Notes
-	public function post_notes($task_id) {
+	# Archive Task
+	public function archive() {
+
+		$task_id = $this->input->post('id');
+		$data['response'] = $this->task->update($task_id, ['status' => ARCHIVE]);
+		
+		echo json_encode($data);
+	}
+
+	
+	# Get Task Notes
+	public function get_notes($task_id) {
+		
+		echo json_encode($this->task->get_notes($task_id));
+	}
+
+
+	# Create Notes
+	public function insert_notes() {
 		
 		$note_details 	= [
 			'task_id'	  => $task_id,
-			'body'		  => $this->input->post('notes'),
+			'body'		  => $this->input->post('note'),
 			'created_at'  => date('Y-m-d'),
 			'user_id'	  => $this->session->user->id
 		];
 
-		$this->task_model->add_notes($task_id, $note_details);
-	}
+		$data['response'] = $this->task->add_notes($task_id, $note_details);
 
-	
-	public function get_notes($task_id) {
-		
-		echo json_encode($this->task_model->get_notes($task_id));
-	}
-
-
-	# Mark as Done
-	public function mark_as_done($task_id) {
-		
-		echo json_encode(['status' => $this->task_model->update_status($task_id, ARCHIVE)]);
-	}
-
-
-	# Change Task Columnn
-	public function change_column($task_id)	{
-
-		$data = [
-			'column_id' => $this->input->post('column_id')
-		];
-
-		$this->task_model->update($task_id, $data);
+		echo json_encode($data);
 	}
 
 
 	# Actors for Team Task
 	public function assign_actors($task_id) {
 		
-		$members = $this->input->post('actors[]');
-		$this->task_model->add_actors($task_id, $members);
+		$data['response'] = $this->task->add_actors($task_id, $this->input->post('actors[]'));
+
+		echo json_encode($data);
 	}
 
 
 	# Get User Team Tasks
-	public function get_task_by_actor($user_id) {
+	public function get_task_by_actor() {
 
-		echo json_encode($this->task_model->get_by_actor($user_id));
+		echo json_encode($this->task->get_by_actor($this->input->get('actor_id')));
 	}
 }

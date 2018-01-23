@@ -119,21 +119,36 @@ class Task_model extends CI_Model {
 	}
 
 
+	public function update($id, $data) {
+
+		return $this->db->update('kb_tasks', $data, ['id' => $id]);
+	}
+
+	# Delete Task
 	public function delete($task_id) {
 		
 		$this->db->delete('kb_notes', ['task_id' => $task_id]);
 		$this->db->delete('kb_ttags', ['task_id' => $task_id]);
 		$this->db->delete('kb_tactors', ['task_id' => $task_id]);
 
-		$this->db->delete('kb_tasks', ['id' => $task_id]);
+		return $this->db->delete('kb_tasks', ['id' => $task_id]);
 	}
 
+	# Delete Task by condition (Used on delete_column)
+	public function delete_by($where) {
+		
+		$tasks = $this->db->get_where('kb_tasks', $where);
 
-	public function update($id, $data) {
+		foreach($tasks as $task) {
 
-		return $this->db->update('kb_tasks', $data, ['id' => $id]);
+			$this->db->delete('kb_notes', ['task_id' => $task->id]);
+			$this->db->delete('kb_ttags', ['task_id' => $task->id]);
+			$this->db->delete('kb_tactors', ['task_id' => $task->id]);
+		}
+		
+		$this->db->delete('kb_tasks', $where);
 	}
-	
+
 
 	# Add Task Actors
 	public function add_actors($task_id, $users) {
