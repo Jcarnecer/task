@@ -9,17 +9,7 @@ getUser(getUserId()).done(function(data) {
 
 getBoard().done(function(data) {
 
-    if(data == null) {
-
-        var data = {
-            name:       'Default',
-            author_id:  getAuthorId()
-        };
-        
-        createBoard(data);
-    }
-
-    $('#kanbanBoard').data('value', data['id']);
+    $('#kanbanBoard').attr('data-value', data['id']);
     
     displayBoard(data);
 });
@@ -59,11 +49,15 @@ $(document).on('keypress', '#addColumnName', function(e) {
     if (e.which == 13) {
 
         e.preventDefault();
+
+        console.log(getAllColumn($('#kanbanBoard').data('value')));
+
+        var columnCount = getAllColumn($('#kanbanBoard').data('value')).responseJSON.length + 1;
         
         var columnDetails = {
             name:       $(this).html(),
             board_id:   $('#kanbanBoard').data('value'),
-            position:   getColumn($('#kanbanBoard').data('value')).responseJSON.length + 1
+            position:   columnCount
         };
         
         columnDetails.id = createColumn(columnDetails).responseJSON['response'];

@@ -12,7 +12,7 @@ class Users extends CI_Controller {
 
     public function get($user_id) {
         
-        $user = $this->user_model->get('id', $user_id)[0];
+        $user = $this->user_model->get($user_id);
 
         echo json_encode([
             'first_name'    => $user->first_name,

@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="container-fluid text-center text-light bg-info m-0 p-3" style="height: 160px;">
+<div class="container-fluid text-center text-light bg-primary m-0 p-3" style="height: 160px;">
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center"><?= $team->name ?></h1>

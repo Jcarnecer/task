@@ -18,7 +18,11 @@ class Kanban_model extends CI_Model {
 	public function get_board_by($where) {
 		
 		$board				= $this->db->get_where('kb_boards', $where)->row();
-		$board->columns		= $this->get_all_columns($board->id);
+
+		if($board != null) {
+
+			$board->columns		= $this->get_all_columns($board->id);
+		}
 
 		return $board;
 	}

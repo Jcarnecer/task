@@ -95,13 +95,14 @@ function drop(e) {
             $elem.after($(`.kanban-column[data-value="${id}"]`));
         }
 
-        changeColumnsPositions({column_update: updateColumn});
+        changeColumnsPosition({column_update: updateColumn});
     }
 }
 
 function deleteTask(e) {
     
     $(`.kanban-task[data-value="${e.dataTransfer.getData('id')}"]`).remove();
+    $(`.task-count`).html(Number($(`.task-count`).html()) - 1);
 
     archiveTask(e.dataTransfer.getData('id'));
 }

@@ -18,7 +18,7 @@ function getTask(taskId) {
         type: 'GET',
         url: `${baseUrl}api/task/get`,
         data: {
-            id: task_id
+            id: taskId
         },
         dataType: 'json'
     });
@@ -74,7 +74,7 @@ function archiveTask(taskId) {
 
         type: 'POST',
         url: `${baseUrl}api/task/archive`,
-        date: {
+        data: {
             id: taskId
         },
         dataType: 'json'
@@ -146,7 +146,7 @@ function createBoard(details) {
     
     return $.ajax({
 
-        async: !syncToggle,
+        async: false,
         type: 'POST',
         url: `${baseUrl}api/board/insert`,
         data: details,
@@ -234,7 +234,7 @@ function changeColumnsPosition(details) {
 
     return $.ajax({
 
-        async: !syncToggle,
+        async: false,
         type: 'POST',
         url: `${baseUrl}api/column/change_position`,
         dataType: 'json',

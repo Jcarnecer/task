@@ -8,7 +8,19 @@ class Boards extends CI_Controller {
 		
 		$proj_id = $this->input->get('author_id');
 
-		echo json_encode($this->kanban->get_board_by(['team_id' => $proj_id]));
+		$result = $this->kanban->get_board_by(['project_id' => $proj_id]);
+		
+		if($result == null) {
+			
+			$board_details = [
+				'name'			=> 'Default',
+				'project_id'	=> $this->input->get('author_id')
+			];
+
+			$result = $this->kanban->get_board($this->kanban->insert_board($board_details));
+		}
+
+		echo json_encode($result);
 	}
 
 
@@ -16,8 +28,8 @@ class Boards extends CI_Controller {
 	public function insert_board() {
 
 		$board_details = [
-			'name'		=> $this->input->post('name'),
-			'team_id'	=> $this->input->post('author_id')
+			'name'			=> 'Default',
+			'project_id'	=> $this->input->post('author_id')
 		];
 
 		$data['response'] = $this->kanban->insert_board($board_details);
@@ -49,7 +61,7 @@ class Boards extends CI_Controller {
 	# Get All Board Columns
 	public function get_all_columns()
 	{
-		echo json_encode($this->kanban->get_all_columns($this->input->post(board_id)));
+		echo json_encode($this->kanban->get_all_columns($this->input->get('board_id')));
 	}
 
 

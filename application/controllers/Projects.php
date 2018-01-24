@@ -6,8 +6,8 @@ class Projects extends CI_Controller {
 	# Fetch Projects
 	public function get()	{
 		
-		$project 			= $this->project->get($this->input->post('id'));
-		$project->members 	= $this->project->get_members($this->input->post('id'));
+		$project 			= $this->project->get($this->input->get('id'));
+		$project->members 	= $this->project->get_members($this->input->get('id'));
 		
 		echo json_encode($project);
 	}
@@ -24,8 +24,9 @@ class Projects extends CI_Controller {
 	public function insert() {
 		
 		$proj_id	= $this->project->insert([
-			'title'	=> $this->input->post('name'),
-			'admin' => $this->session->user->id
+			'name'			=> $this->input->post('name'),
+			'admin' 		=> $this->session->user->id,
+			'company_id' 	=> $this->session->user->company_id
 		]);
 				
 		$members 	= $this->input->post('members[]');
@@ -61,7 +62,6 @@ class Projects extends CI_Controller {
 			if($proj_id != null) {
 
 				$user->exists = $this->project->check_project($proj_id, $user->id) != null;
-				
 			} else {
 				
 				$user->exists = true;

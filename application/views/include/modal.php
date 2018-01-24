@@ -128,16 +128,16 @@
 <!-- Task Search Modal -->
 <div id="taskSearchModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content border-0">
-            <div class="card">
-                <h2 class="card-header p-0">
-                    <input type="search" id="taskSearch" class="form-control text-center m-0 font-weight-bold" placeholder="Search"/>
+        <!-- <div class="modal-content border-0 rounded"> -->
+            <div class="card border-0">
+                <h2 class="card-header rounded-top p-0">
+                    <input type="search" id="taskSearch" class="form-control text-center m-0 font-weight-bold border-0" placeholder="Search"/>
                 </h2>
-                <div class="card-body">
+                <div class="card-body bg-primary rounded-bottom ">
                     <div id="taskSearchList" class="card-columns"></div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </div>
 

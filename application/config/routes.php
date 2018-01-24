@@ -60,13 +60,13 @@ $route['team/(:any)']                           = 'Views/team/$1';
 
 # API
 # user
-$route['api/user/(:any)']['GET']                = 'users/get/$1';
+$route['api/user/(:any)']['GET']                = 'Users/get/$1';
 
 # team
 $route['api/project/get']['GET']                = 'Projects/get';
 $route['api/project/insert']['POST']            = 'Projects/insert';
 $route['api/project/update']['POST']            = 'Projects/update';
-$route['api/project/leave_team']['POST']        = 'Projects/leave_project';
+$route['api/project/leave']['POST']             = 'Projects/leave_project';
 $route['api/validate_member']['POST']           = 'Projects/validate_member';
 
 # board
@@ -87,7 +87,7 @@ $route['api/task/get_user_task']['GET']         = 'Tasks/get_task_by_actor';
 $route['api/task/insert']['POST']               = 'Tasks/insert';
 $route['api/task/update']['POST']               = 'Tasks/update';
 $route['api/task/archive']['POST']              = 'Tasks/archive';
-$route['api/change_column']['POST']             = 'Tasks/change_column';
+$route['api/task/change_column']['POST']        = 'Tasks/change_column';
 # end-of-API
 
 

@@ -22,7 +22,7 @@ $(document).on('click', '.team-edit', function () {
 
     getProject($(this).data('value')).always(function(data) {
 
-        $('#teamModifyModal').find('form').data('value', data['id']);
+        $('#teamModifyModal').find('form').attr('data-value', data['id']);
         $('#teamModifyModal').find('[name="name"]').val(data['name']);
 
         displayMember(data['members'], true);
@@ -56,7 +56,7 @@ $(document).on('keypress', '.team-member', function (e) {
 
         var result = validateMember(data).responseJSON;
         
-        if(result['exist']) {
+        if(result['exists']) {
 
             if(!$(this).closest('form').has(`input[name="members[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
@@ -101,7 +101,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
 
         if($(this).attr('id') == 'teamCreateForm') {
             
-            createaPoject(teamDetails).always(function(data) {
+            createProject(teamDetails).always(function(data) {
                 
                 var boardDetails = {
                     name:       "Default",

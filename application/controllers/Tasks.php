@@ -68,7 +68,6 @@ class Tasks extends CI_Controller {
 			'description' 	=> $this->input->post('description'),
 			'due_date'	  	=> $due_date,
 			'color'		  	=> $this->input->post('color'),
-			'column_id'		=> $this->input->post('column_id')
 		];
 
 		$this->task->update($task_id, $task_details);

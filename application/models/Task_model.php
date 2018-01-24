@@ -63,7 +63,7 @@ class Task_model extends CI_Model {
 	# Get Task Actors
 	public function get_actors($task_id) {
 		
-		return $this->db->select('t1.*, t2.first_name, t2.last_name')
+		return $this->db->select('t1.*')
 			->from('users as t1')
 			->join('kb_tactors as t2', 't2.user_id = t1.id')
 			->where('t2.task_id', $task_id)

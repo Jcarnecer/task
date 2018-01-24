@@ -52,7 +52,7 @@ class Tag_model extends CI_Model {
 		$names = [];
 		$tags  =  $this->db->select('name')
 			->from('kb_tags as t1')
-			->join('kb_ttags as t2', 't2.tag_id = t2.id')
+			->join('kb_ttags as t2', 't2.tag_id = t1.id')
 			->where('t2.task_id', $id)
 			->get()
 			->result();

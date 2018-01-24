@@ -20,7 +20,7 @@ $(document).on('click', '.task-edit', function () {
     
     getTask($(this).data('value')).done(function (data) {
         
-        $('#taskModifyModal').find('form').data('value', data['id']);
+        $('#taskModifyModal').find('form').attr('data-value', data['id']);
         $('#taskModifyModal').find('[name="title"]').val(data['title']);
         $('#taskModifyModal').find('[name="description"]').val(data['description']);
         $('#taskModifyModal').find('[name="due_date"]').val(data['due_date']);
@@ -42,8 +42,8 @@ $(document).on('click', '.task-view', function () {
 
     getTask($(this).data('value')).always(function (data) {
 
-        $('#taskViewModal').find('[data-target="#taskModifyModal"], [href="#taskModifyModal"]').data('value', data['id']);
-        $('#taskViewModal').find('.task-note').data('value', data['id']);
+        $('#taskViewModal').find('[data-target="#taskModifyModal"], [href="#taskModifyModal"]').attr('data-value', data['id']);
+        $('#taskViewModal').find('.task-note').attr('data-value', data['id']);
         $('#taskViewModal').find('.task-title').html(data['title']);
         $('#taskViewModal').find('.task-description').html(data['description'] ? data['description'] : '<small class="text-muted">No Description</small>');
         $('#taskViewModal').find('.task-date').html(data['due_date_long']);
@@ -91,7 +91,7 @@ $(document).on('click', '.task-view', function () {
             $('#taskViewModal').find('.task-actor-list').html('None');
         }
 
-        $(document).displayNote(data['notes']);
+        displayNote(data['notes']);
     });
 });
 
@@ -185,7 +185,7 @@ $(document).on('keypress', '.task-actor', function (e) {
 
         var result = validateMember(data).responseJSON;
         
-        if(result['exist']) {
+        if(result['exists']) {
             
             if(!$(this).closest('form').has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
