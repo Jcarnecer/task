@@ -23,7 +23,7 @@ class Project_model extends CI_Model {
 		
 			return $this->db->select('*')
 				->from('pj_projects as t1')
-				->join('pj_members as t2', 't2.team_id = t1.id')
+				->join('pj_members as t2', 't2.project_id = t1.id')
 				->where('t2.user_id', $user_id)
 				->get()
 				->result();
@@ -38,8 +38,8 @@ class Project_model extends CI_Model {
 
 		return $this->db->select('t1.*')
 			->from('pj_projects as t1')
-			->join('pj_members as t2', 't2.team_id = t1.id')
-			->where(['t2.team_id' => $proj_id])
+			->join('pj_members as t2', 't2.project_id = t1.id')
+			->where(['t2.project_id' => $proj_id])
 			->get()
 			->result();
 	}
@@ -70,10 +70,10 @@ class Project_model extends CI_Model {
 		
 		if($user_id != null) {
 
-			return $this->db->get_where('pj_members', ['team_id' => $proj_id, 'user_id' => $user_id])->result();
+			return $this->db->get_where('pj_members', ['project_id' => $proj_id, 'user_id' => $user_id])->result();
 		} else {
 
-			return $this->db->get_where('pj_members', ['team_id' => $proj_id])->result();
+			return $this->db->get_where('pj_members', ['project_id' => $proj_id])->result();
 		}
 	}
 
@@ -83,7 +83,7 @@ class Project_model extends CI_Model {
 		return $this->db->select('*')
 			->from('users as t1')
 			->join('pj_members as t2', 't2.user_id = t1.id') #inner?
-			->where('t2.team_id', $proj_id)
+			->where('t2.project_id', $proj_id)
 			->get()
 			->result();
 	}
@@ -92,14 +92,14 @@ class Project_model extends CI_Model {
 	public function update_members($proj_id, $users) {
 		
 		$new_member_ids = array_column($this->db->select('id')->from('users')->where_in('email_address', $users)->get()->result_array(), 'id');
-		$old_member_ids = array_column($this->db->select('user_id')->from('pj_members')->where('team_id', $proj_id)->get()->result_array(), 'user_id');
+		$old_member_ids = array_column($this->db->select('user_id')->from('pj_members')->where('project_id', $proj_id)->get()->result_array(), 'user_id');
 
 		foreach ($new_member_ids as $id) {
 			
 			if(!in_array($id, $old_member_ids)) {
 				
 				$this->db->insert('pj_members', [
-					'team_id' => $proj_id,
+					'project_id' => $proj_id,
 					'user_id' => $id
 				]);
 			}
@@ -110,7 +110,7 @@ class Project_model extends CI_Model {
 			if(!in_array($id, $new_member_ids)) {
 			
 				$this->db->delete('pj_members', [
-					'team_id' => $proj_id,
+					'project_id' => $proj_id,
 					'user_id' => $id
 				]);
 			}
@@ -121,7 +121,7 @@ class Project_model extends CI_Model {
 	public function delete_member($proj_id, $user_id) {
 		
 		$this->db->delete('pj_members', [
-			'team_id' => $proj_id,
+			'project_id' => $proj_id,
 			'user_id' => $user_id
 		]);
 	}

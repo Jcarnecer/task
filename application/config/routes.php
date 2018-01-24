@@ -56,13 +56,13 @@ $route['tasks'] = 'Views/personal';
 
 # view
 $route['personal']                              = 'Views/personal';
-$route['team/(:any)']                           = 'Views/team/$1';
+$route['project/(:any)']                           = 'Views/project/$1';
 
 # API
 # user
 $route['api/user/(:any)']['GET']                = 'Users/get/$1';
 
-# team
+# project
 $route['api/project/get']['GET']                = 'Projects/get';
 $route['api/project/insert']['POST']            = 'Projects/insert';
 $route['api/project/update']['POST']            = 'Projects/update';

@@ -115,7 +115,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
                     $(this).find('.close-modal').click();
                 }
 
-                window.location.href = `${baseUrl}team/${data['team_id']}`;
+                window.location.href = `${baseUrl}project/${data['team_id']}`;
             });
         } else if($(this).attr('id') == 'teamUpdateForm') {
         

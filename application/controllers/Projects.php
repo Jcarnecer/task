@@ -34,7 +34,7 @@ class Projects extends CI_Controller {
 
 		$this->project->update_members($proj_id, $members);
 
-		echo json_encode(['team_id' => $proj_id]);
+		echo json_encode(['project_id' => $proj_id]);
 	}
 
 
