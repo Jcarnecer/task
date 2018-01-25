@@ -105,7 +105,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
                 
                 var boardDetails = {
                     name:       "Default",
-                    author_id:  data['team_id']
+                    author_id:  data['project_id']
                 };
 
                 createBoard(boardDetails);
@@ -115,7 +115,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
                     $(this).find('.close-modal').click();
                 }
 
-                window.location.href = `${baseUrl}project/${data['team_id']}`;
+                window.location.href = `${baseUrl}project/${data['project_id']}`;
             });
         } else if($(this).attr('id') == 'teamUpdateForm') {
         
