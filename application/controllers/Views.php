@@ -23,7 +23,7 @@ class Views extends CI_Controller {
 		$data['first_name']		= $this->session->user->first_name;
         $data['email']			= $this->session->user->email_address;
         $data['avatar_url']		= $this->session->user->avatar_url;
-		$data['teams']			= $this->team_model->get_all($this->session->user->id);
+		$data['projects']			= $this->project->get_many_by_user($this->session->user->id);
 		$data['colors']			= unserialize(COLORS);
 		$data['task_type']		= 'personal';
 
@@ -34,24 +34,24 @@ class Views extends CI_Controller {
 	}
 
 
-	public function team($id) {
+	public function project($id) {
 		
 		$data['author_id'] 		= $id;
 		$data['user_id']		= $this->session->user->id;
 		$data['user_name']		= $this->session->user->first_name.' '.$this->session->user->last_name;
         $data['email'] 			= $this->session->user->email_address;
         $data['avatar_url']		= $this->session->user->avatar_url;
-        $data['teams']			= $this->team_model->get_all($this->session->user->id);
+        $data['projects']			= $this->project->get_many_by_user($this->session->user->id);
 		$data['colors'] 		= unserialize(COLORS);
-		$data['task_type']	    = 'team';
-		$data['team'] 			= new stdClass();
-		$data['team']->id 		= $id;
-		$data['team']->name 	= $this->team_model->get($id)->name;
-		$data['team']->members 	= $this->team_model->get_members($id);
+		$data['task_type']	    = 'project';
+		$data['project'] 			= new stdClass();
+		$data['project']->id 		= $id;
+		$data['project']->name 	= $this->project->get($id)->name;
+		$data['project']->members 	= $this->project->get_members($id);
 		
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);
-		$this->load->view('task/team', $data);
+		$this->load->view('task/project', $data);
 		$this->load->view('include/footer', $data);
     }
 }

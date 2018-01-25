@@ -1,64 +1,89 @@
-$.fn.getUser = function(userId, syncToggle = false) {
+function getUser(userId) {
 
     return $.ajax({
          
-        async: !syncToggle,
+        async: false,
         type: 'GET',
         url: `${baseUrl}api/user/${userId}`,
         dataType: 'json'
     });
 };
 
-
-
-$.fn.getTask = function(taskId = null, syncToggle = false) {
+// Task
+// Task Fetch
+function getTask(taskId) {
 
     return $.ajax({
 
-        async: !syncToggle,
         type: 'GET',
-        url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
+        url: `${baseUrl}api/task/get`,
+        data: {
+            id: taskId
+        },
         dataType: 'json'
     });
 };
 
 
-$.fn.postTask = function(details, taskId = null, syncToggle = false) {
+// Task Fetch All
+function getAllTask(asyncMode = true) {
 
     return $.ajax({
 
-        async: !syncToggle,
+        async: asyncMode,
+        type: 'GET',
+        url: `${baseUrl}api/task/get_all`,
+        data: {
+            author_id: getAuthorId()
+        },
+        dataType: 'json'
+    });
+};
+
+
+// Task Create
+function addTask(details) {
+
+    return $.ajax({
+
         type: 'POST',
-        url: `${baseUrl}api/task/${getAuthorId()}` + (taskId != null ? `/${taskId}` : ''),
+        url: `${baseUrl}api/task/insert`,
         data: details,
         dataType: 'json'
     });
 };
 
 
-$.fn.archiveTask = function(taskId) {
+// Task Update
+function updateTask(details) {
 
     return $.ajax({
 
         type: 'POST',
-        url: `${baseUrl}api/done/${taskId}`,
+        url: `${baseUrl}api/task/update`,
+        data: details,
         dataType: 'json'
     });
 };
 
 
-$.fn.getTaskNote = function(taskId) {
+// Task Archive
+function archiveTask(taskId) {
 
     return $.ajax({
 
-        type: 'GET',
-        url: `${baseUrl}api/note/${taskId}`,
+        type: 'POST',
+        url: `${baseUrl}api/task/archive`,
+        data: {
+            id: taskId
+        },
         dataType: 'json'
     });
-};
+}
 
 
-$.fn.postTaskNote = function(message, taskId) {
+// Task Add Note
+function addNote(message, taskId) {
 
     return $.ajax({
 
@@ -72,150 +97,216 @@ $.fn.postTaskNote = function(message, taskId) {
 };
 
 
-$.fn.getTeam = function(teamId = null) {
+// Task Fetch User Task
+function getActorTask(userId) {
 
     return $.ajax({
 
         type: 'GET',
-        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
-        dataType: 'json'
-    });
-};
-
-
-$.fn.postTeam = function(details, teamId = null) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/team` + (teamId != null ? `/${teamId}` : ''),
-        dataType: 'json',
-        data: details
-    });
-};
-
-
-$.fn.getBoard = function(userId, boardId = null, syncToggle = false) {
-
-    return $.ajax({
-
-        async: !syncToggle,
-        type: 'GET',
-        url: `${baseUrl}api/board/${userId}` + (boardId != null ? `/${boardId}` : ''),
-        dataType: 'json'
-    });
-};
-
-
-$.fn.postBoard = function(details, userId, boardId = null, syncToggle = false) {
-    
-    return $.ajax({
-
-        async: !syncToggle,
-        type: 'POST',
-        url: `${baseUrl}api/board/${userId}` + (boardId != null ? `/${boardId}` : ''),
-        dataType: 'json',
-        data: details
-    });
-};
-
-
-$.fn.getColumn = function(boardId, columnId = null, syncToggle = false) {
-
-    return $.ajax({
-
-        async: !syncToggle,
-        type: 'GET',
-        url: `${baseUrl}api/column/${boardId}` + (columnId != null ? `/${columnId}` : ''),
-        dataType: 'json'
-    });
-};
-
-
-$.fn.postColumn = function(details, boardId, columnId = null, syncToggle = false) {
-
-    return $.ajax({
-
-        async: !syncToggle,
-        type: 'POST',
-        url: `${baseUrl}api/column/${boardId}` + (columnId != null ? `/${columnId}` : ''),
-        dataType: 'json',
-        data: details
-    });
-};
-
-
-$.fn.deleteColumn = function(columnId, syncToggle = false) {
-
-    return $.ajax({
-
-        async: !syncToggle,
-        type: 'POST',
-        url: `${baseUrl}api/delete_column/${columnId}`,
-        dataType: 'json'        
-    });
-};
-
-
-$.fn.changeColumn = function(column, taskId) {
-
-    return $.ajax({
-
-        type: 'POST',
-        url: `${baseUrl}api/change_column/${taskId}`,
-        datType: 'json',
+        url: `${baseUrl}api/task/get_user_task`,
         data: {
-            column_id: column
-        }
-    });
-};
-
-
-$.fn.updatePositions = function(details, syncToggle = false) {
-
-    return $.ajax({
-
-        async: !syncToggle,
-        type: 'POST',
-        url: `${baseUrl}api/update_columns`,
-        dataType: 'json',
-        data: details
-    });
-}
-
-
-$.fn.getUserTeamTask = function(userId) {
-
-    return $.ajax({
-
-        type: 'GET',
-        url: `${baseUrl}api/get_user_team_task/${userId}`,
-        dataType: 'json'
-    });
-};
-
-
-$.fn.validateMember = function(value, teamId = null, syncToggle = false) {
-
-    return $.ajax({
-
-        async: !syncToggle,
-        type: 'POST',
-        url: `${baseUrl}api/validate_member` + (teamId != null ? `/${teamId}` : ''),
-        data: {
-            email: value
+            actor_id: userId
         },
         dataType: 'json'
     });
 };
 
 
-$.fn.leaveTeam = function(teamId, userId) {
+// Task Change Column
+function changeTaskColumn(details) {
 
     return $.ajax({
 
         type: 'POST',
-        url: `${baseUrl}api/leave_team/${teamId}`,
+        url: `${baseUrl}api/task/change_column`,
+        data: details,
+        datType: 'json'
+    });
+};
+
+// Board
+// Board Fetch
+function getBoard() {
+
+    return $.ajax({
+
+        async: false,
+        type: 'GET',
+        url: `${baseUrl}api/board/get`,
+        data: {
+            author_id: getAuthorId()
+        },
+        dataType: 'json'
+    });
+};
+
+
+// Board Create
+function createBoard(details) {
+    
+    return $.ajax({
+
+        async: false,
+        type: 'POST',
+        url: `${baseUrl}api/board/insert`,
+        data: details,
+        dataType: 'json'
+    });
+};
+
+
+// Column
+// Column Fetch
+function getColumn(columnId) {
+
+    return $.ajax({
+
+        type: 'GET',
+        url: `${baseUrl}api/column/get`,
+        data: {
+            id: columnId
+        },
+        dataType: 'json'
+    });
+};
+
+
+// Column Fetch All
+function getAllColumn(boardId) {
+
+    return $.ajax({
+
+        async: false,
+        type: 'GET',
+        url: `${baseUrl}api/column/get_all`,
+        data: {
+            board_id: boardId
+        },
+        dataType: 'json'
+    });
+};
+
+
+// Column Create
+function createColumn(details) {
+
+    return $.ajax({
+
+        async: false,
+        type: 'POST',
+        url: `${baseUrl}api/column/insert`,
+        data: details,
+        dataType: 'json'
+    });
+};
+
+
+// Column Update
+function updateColumn(details) {
+
+    return $.ajax({
+
+        async: false,
+        type: 'POST',
+        url: `${baseUrl}api/column/update`,
+        data: details,
+        dataType: 'json'
+    });
+};
+
+
+// Column Delete
+function deleteColumn(details) {
+
+    return $.ajax({
+
+        async: false,
+        type: 'POST',
+        url: `${baseUrl}api/column/delete`,
+        data: details,
+        dataType: 'json'        
+    });
+};
+
+
+// Column Change Position
+function changeColumnsPosition(details) {
+
+    return $.ajax({
+
+        async: false,
+        type: 'POST',
+        url: `${baseUrl}api/column/change_position`,
+        dataType: 'json',
+        data: details
+    });
+}
+
+
+// Project
+// Project Fetch
+function getProject(projectId) {
+
+    return $.ajax({
+
+        type: 'GET',
+        url: `${baseUrl}api/project/get`,
+        data: {
+            id: projectId
+        },
+        dataType: 'json'
+    });
+};
+
+
+// Project Create
+function createProject(details, teamId = null) {
+
+    return $.ajax({
+
+        type: 'POST',
+        url: `${baseUrl}api/project/insert`,
+        data: details,
+        dataType: 'json'
+    });
+};
+
+
+// Project Update
+function updateProject(details) {
+
+    return $.ajax({
+
+        type: 'POST',
+        url: `${baseUrl}api/project/update`,
+        data: details,
+        dataType: 'json'
+    });
+};
+
+
+// Project Leave
+function leaveProject(details) {
+
+    return $.ajax({
+
+        type: 'POST',
+        url: `${baseUrl}api/project/leave`,
+        data: details,
+        dataType: 'json'
+    });
+};
+
+
+// Project Validate Member
+function validateMember(details) {
+
+    return $.ajax({
+
+        async: false,
+        type: 'POST',
+        url: `${baseUrl}api/validate_member`,
+        data: details,
         dataType: 'json'
     });
 };
