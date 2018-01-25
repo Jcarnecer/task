@@ -23,7 +23,7 @@ class Views extends CI_Controller {
 		$data['first_name']		= $this->session->user->first_name;
         $data['email']			= $this->session->user->email_address;
         $data['avatar_url']		= $this->session->user->avatar_url;
-		$data['projects']			= $this->project->get_many_by_user($this->session->user->id);
+		$data['projects']		= $this->project->get_many_by_user($this->session->user->id);
 		$data['colors']			= unserialize(COLORS);
 		$data['task_type']		= 'personal';
 
@@ -36,17 +36,16 @@ class Views extends CI_Controller {
 
 	public function project($id) {
 		
-		$data['author_id'] 		= $id;
-		$data['user_id']		= $this->session->user->id;
-		$data['user_name']		= $this->session->user->first_name.' '.$this->session->user->last_name;
-        $data['email'] 			= $this->session->user->email_address;
-        $data['avatar_url']		= $this->session->user->avatar_url;
+		$data['author_id'] 			= $id;
+		$data['user_id']			= $this->session->user->id;
+		$data['user_name']			= $this->session->user->first_name.' '.$this->session->user->last_name;
+        $data['email'] 				= $this->session->user->email_address;
+        $data['avatar_url']			= $this->session->user->avatar_url;
         $data['projects']			= $this->project->get_many_by_user($this->session->user->id);
-		$data['colors'] 		= unserialize(COLORS);
-		$data['task_type']	    = 'project';
+		$data['colors'] 			= unserialize(COLORS);
+		$data['task_type']	    	= 'project';
 		$data['project'] 			= new stdClass();
-		$data['project']->id 		= $id;
-		$data['project']->name 	= $this->project->get($id)->name;
+		$data['project']			= $this->project->get($id);
 		$data['project']->members 	= $this->project->get_members($id);
 		
 		$this->load->view('include/header', $data);

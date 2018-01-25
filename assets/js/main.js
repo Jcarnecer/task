@@ -82,7 +82,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 // Column Builder
 function columnBuilder(column) {
     var columnString = 
-    `<div class="card border-0 h-100 w-25 kanban-column" 
+    `<div class="card border-0 h-100 w-25 kanban-column rounded-0" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
         <h4 class="card-header clearfix"
@@ -93,7 +93,7 @@ function columnBuilder(column) {
             </span>
 
             <span class="float-right">
-                <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
+                <a class="kanban-column-edit" href="#"><i class="fa fa-edit mx-1"></i></a>
                 <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
             </span>
 
@@ -255,7 +255,7 @@ function displayBoard(board) {
     });
     
     $('#kanbanBoard .card-group').append(`
-        <div id="addColumn" class="card h-100 w-25">
+        <div id="addColumn" class="card rounded-0 h-100 w-25">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
                 <span id="addColumnName" contenteditable="true">Type Here</span>

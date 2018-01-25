@@ -4,6 +4,7 @@
 <script src="<?= base_url('assets/js/jquery.js'); ?>"></script>
 <script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/fontawesome-all.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/script.js'); ?>"></script>
 
 <script src="<?= base_url('assets/js/api.js'); ?>"></script>

@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/flavored-reset-and-normalize.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css'); ?>" />
-    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" />
+    <!-- <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>" /> -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/styles.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/paper.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/kanban.css'); ?>" />     
@@ -30,14 +30,7 @@
         <span></span>
     </div>
 
-    <ul class="sidebar-menu">		
-        <li class="">
-            <a class="task-create" href="#taskSearchModal" data-toggle="modal">
-                <i class="fa fa-search" aria-hidden="true"></i>
-                <span>Search</span>
-            </a>
-        </li>
-        
+    <ul class="sidebar-menu">
         <li class="">
             <a class="" href="<?= base_url('personal'); ?>">
                 <i class="fa fa-tasks" aria-hidden="true"></i>
@@ -51,8 +44,8 @@
                 <span>Projects</span>
             </a>
             <ul class="sub collapse" id="UIElementsSub1">
-                <?php foreach($projects as $project): ?>
-                <li><a href="<?= base_url('project/' . $project->id); ?>"><?=$project->name?></a></li>
+                <?php foreach($projects as $project_instance): ?>
+                <li><a href="<?= base_url('project/' . $project_instance->id); ?>"><i class="fa fa-users"></i> <?=$project_instance->name?></a></li>
                 <?php endforeach; ?>
                 <li>
                     <a class="team-create" href="#teamModifyModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Add Project</a>
@@ -62,7 +55,7 @@
         
         <li class="">
             <a class="" href="http://payakapps.com/users/logout">
-                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                 <span>Logout</span>
             </a>
         </li>
@@ -74,21 +67,27 @@
 
     <div class="topbar">
         <nav class="navbar navbar-custom clearfix">
-            <div id="nav-icon-open" class="custom-toggle hidden-toggle d-block">
-                <span></span>
-                <span></span>
-                <span></span>
+            
+            <div id="nav-icon-open navbar-brand " class="custom-toggle hidden-toggle d-block">
+                <i class="fa fa-bars fa-lg text-primary"></i>
             </div>
-            <a class="navbar-brand" href="<?= base_url('tasks'); ?>">Task</a>
+
+            <a class="navbar-brand font-weight-bold text-uppercase" href="<?= base_url('tasks'); ?>">
+                <?= $task_type == 'personal' ? 'Tasks' : $project->name ?>
+            </a>
             
             <span class="ml-auto">
-                <a class="navbar-brand" href="#taskSearchModal" data-toggle="modal"><i class="fa fa-search"></i> Search</a>
                 <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
-                    <!-- <i class="fa fa-user-circle"></i> <?= $user_name ?> -->
                     <img class="img-avatar" src="<?= $avatar_url ?>"> <?= $user_name ?>
                 </a>
             </span>
         </nav>
     </div>
     
-    <div class="inner-content">
+    <div class="inner-content d-flex flex-column">
+        <?php if($task_type == 'project'): ?>
+        <div class="d-flex w-100">
+            <a href="#" class="btn btn-lg btn-primary w-50 rounded-0"><i class="fa fa-tasks"></i> Tasks</a>
+            <a href="#" class="btn btn-lg btn-primary w-50 rounded-0"><i class="fa fa-exchange-alt"></i> Forum</a>
+        </div>
+        <?php endif; ?>

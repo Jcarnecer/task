@@ -17,11 +17,11 @@
 }
 
 
-#kanbanBoard.highlight>.card-group>.card {
+#kanbanBoard.highlight .card-group>.card {
     background-color: rgba(0, 0, 0, 1);
 }
 
-#kanbanBoard.highlight>.card-group>.card>.card-header {
+#kanbanBoard.highlight .card-group>.card>.card-header {
     color: #fff;
 }
 
