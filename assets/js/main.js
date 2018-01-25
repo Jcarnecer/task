@@ -1,67 +1,46 @@
 const baseUrl = window.location.origin === "http://task.payakapps.com" ? "http://task.payakapps.com/" : "http://localhost/task/";
 
-console.log(baseUrl);
-
 var userId = null;
 var authorId = null;
 var taskType = null;
 var userName = null;
 var avatarUrl = null;
 
-function setAuthorId(id) { authorId = id; }
 
+function setAuthorId(id) { authorId = id; }
 
 function getAuthorId() { return authorId; }
 
 
 function setTaskType(type) { taskType = type; }
 
-
 function getTaskType() { return taskType; }
 
 
 function setUserId(id) { userId = id; }
 
-
 function getUserId() { return userId; }
 
 
-// Initiate
-$(function() {
-
-$(document).getUser(getUserId(), true).done(function(data) {
-    userName = data['first_name'] + ' ' + data['last_name'];
-    avatarUrl = data['avatar_url'];
-});
-
-});
-
-// Store
-function storeTask() {
-
-    return $(document).getTask(null, true).responseJSON;
-}
-
-
-// Builder
+// Task Builder
 function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     
-    var taskString = "";
-    var actorsAppend = "";
-    var contributorsAppend = "";
-    var iconAppend = "";
-    var modalDismissAppend = modalDismiss ? 'data-dismiss="modal"': '';
+    var taskString          = "";
+    var actorsAppend        = "";
+    var contributorsAppend  = "";
+    var iconAppend          = "";
+    var modalDismissAppend  = modalDismiss ? 'data-dismiss="modal"': '';
 
     
     if (actorIcon) {
         
-        var actors = task['actors'];
-
-        actorsAppend = "<strong>Contributor</strong><br/>";
+        var actors      = task['actors'];
+        actorsAppend    = "<strong>Contributor</strong><br/>";
 
         if(actors.length) {
 
-            $.each(actors, function (i, actor) {
+            actors.forEach(function(actor) {
+
                 actorsAppend += actor['first_name'] + " " + actor['last_name'] + "<br/>";
             });
         } else {
@@ -72,10 +51,13 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
         contributorsAppend = `data-toggle="popover" data-trigger="hover" data-html="true" data-placement="right" data-content="${actorsAppend}"`;
     
         if (actors.length == 0) {
+
             iconAppend = '<i class="fa fa-user-o"></i> ';
         } else if (actors.length == 1) {
+
             iconAppend = '<i class="fa fa-user"></i> ';
         } else if (actors.length > 1) {
+
             iconAppend = '<i class="fa fa-users"></i> ';
         }
     }
@@ -97,6 +79,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 }
 
 
+// Column Builder
 function columnBuilder(column) {
     var columnString = 
     `<div class="card border-0 h-100 w-25 kanban-column" 
@@ -128,15 +111,16 @@ function columnBuilder(column) {
 
 
 // Team
-$.fn.displayMember = function(items, edit = false) {
+function displayMember(items, edit = false) {
 
-    $.each(items, function(i, item) {
+    items.forEach(function(item) {
 
         if(edit) {
 
             $('.team-member').before(
                 `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
+
             $('#teamModifyModal form').append(
                 `<input type="hidden" name="members[]" value="${item['email_address']}" />`
             );
@@ -150,7 +134,7 @@ $.fn.displayMember = function(items, edit = false) {
 
 
 // Task
-$.fn.resetForm = function() {
+function resetForm() {
     
     $('#taskModifyModal').find('form')[0].reset();
 
@@ -163,20 +147,20 @@ $.fn.resetForm = function() {
 };
 
 
-$.fn.displayTask = function(items) {
+function displayTask(items) {
 
     $('.kanban-column .task-create').prevAll().remove();
     
-    $.each(items, function(i, item) {
+    items.forEach(function(item) {
         
         $(`.kanban-column[data-value="${item['column_id']}"]>.card-body`).prepend(taskBuilder(item, getTaskType() == 'team'));
     });
 };
 
 
-$.fn.displayActor = function(items, edit = false) {
+function displayActor(items, edit = false) {
 
-    $.each(items, function(i, item) {
+    items.forEach(function(item) {
 
         if(edit) {
 
@@ -187,18 +171,19 @@ $.fn.displayActor = function(items, edit = false) {
             $('#taskModifyModal form').append(
                 `<input type="hidden" name="actors[]" value="${item['email_address']}" />`
             );
-        } else
+        } else {
 
             $('.task-actor-list').append(
                 `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']}</span>`
             );
+        }
     });
 };
     
 
-$.fn.displayTag = function(items, edit = false) {
+function displayTag(items, edit = false) {
 
-    $.each(items, function(i, item) {
+    items.forEach(function(item) {
 
         if(edit) {
                 
@@ -208,21 +193,22 @@ $.fn.displayTag = function(items, edit = false) {
             $('#taskModifyModal .task-tag').append(
                 `<input type="hidden" name="tags[]" value="${item['name']}" />`
             );
-        } else
+        } else {
 
             $('.task-tag-list').append(
                 `<span class="badge badge-dark badge-pill mx-1">${item['name']}</span>`
             );
+        }
     });
 };
 
 
-$.fn.displayNote = function(items) {
+function displayNote(items) {
 
-    $.each(items, function(i, item){
+    items.forEach(function(item){
 
-        var user = $(document).getUser(item['user_id'], true).responseJSON;
-        console.log(item['user_id']);
+        var user = getUser(item['user_id']).responseJSON;
+        
         $('.task-note-list').append(
             `<div class="col-2">
                 <h4 class="text-center">
@@ -239,13 +225,13 @@ $.fn.displayNote = function(items) {
 }
 
 
-$.fn.searchTask = function(items, keyword) {
+function searchTask(items, keyword) {
 
     $('#taskSearchList').html('');
 
     if(keyword != '') {
 
-        $.each(items, function(i, item) {
+        items.forEach(function(item) {
             
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 
@@ -257,13 +243,13 @@ $.fn.searchTask = function(items, keyword) {
 
 
 // Kanban
-$.fn.displayBoard = function(board) {
+function displayBoard(board) {
 
     $('#kanbanBoard .card-group').html('');
 
     $('#kanbanBoard .card-group').css(`width`, `${(board['columns'].length + 1) * 25}%`);
 
-    $.each(board['columns'], function(i, column) {
+    board['columns'].forEach(function(column) {
 
         $('#kanbanBoard .card-group').append(columnBuilder(column));
     });
@@ -280,7 +266,7 @@ $.fn.displayBoard = function(board) {
 };
 
 
-$.fn.addColumn = function(column) {
+function addColumn(column) {
     
     $('#kanbanBoard .card-group').css(`width`,  `${(column['position'] + 1) * 25}%`);
     
@@ -288,15 +274,16 @@ $.fn.addColumn = function(column) {
 };
 
 
-$.fn.highlightTask = function(userId) {
+function highlightTask() {
     
-    userId = userId == null ? getUserId() : userId;
+    userId = getUserId();
 
-    $(document).getUserTeamTask(userId).done(function (data) {
+    getActorTask(userId).done(function (data) {
 
-        $.each(data, function(i, item) {
+        data.forEach(function(item) {
+
             $(`#kanbanBoard .kanban-task[data-value="${item['id']}"]`).toggleClass('active');
-        })
+        });
     }).always(function () {
 
         $('#kanbanBoard').toggleClass('highlight');

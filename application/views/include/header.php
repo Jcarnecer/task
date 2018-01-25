@@ -48,14 +48,14 @@
         <li class="sub-menu">
             <a data-toggle="collapse" href="#UIElementsSub1" aria-expanded="false" aria-controls="UIElementsSub1" >
                 <i class="fa fa-users" aria-hidden="true"></i>
-                <span>Team Task</span>
+                <span>Projects</span>
             </a>
             <ul class="sub collapse" id="UIElementsSub1">
-                <?php foreach($teams as $team): ?>
-                <li><a href="<?= base_url('team/' . $team->id); ?>"><?=$team->name?></a></li>
+                <?php foreach($projects as $project): ?>
+                <li><a href="<?= base_url('project/' . $project->id); ?>"><?=$project->name?></a></li>
                 <?php endforeach; ?>
                 <li>
-                    <a class="team-create" href="#teamModifyModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Create Team</a>
+                    <a class="team-create" href="#teamModifyModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Add Project</a>
                 </li>
             </ul>
         </li>
