@@ -116,7 +116,7 @@ function columnBuilder(column) {
 
         </h4>
         <div class="card-body text-center" style="overflow-y: auto;">
-            <button type="button" class="btn btn-primary btn-lg btn-block my-2 task-create"
+            <button type="button" class="btn custom-button btn-block my-2 task-create"
                 data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
                 <i class="fa fa-plus"></i> Add Task
             </button>
@@ -269,7 +269,7 @@ $.fn.displayBoard = function(board) {
     });
     
     $('#kanbanBoard .card-group').append(`
-        <div id="addColumn" class="card h-100 w-25">
+        <div id="addColumn" class="card border-0 h-100 w-25">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
                 <span id="addColumnName" contenteditable="true">Type Here</span>
