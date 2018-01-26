@@ -5,7 +5,7 @@
                 <form method="post">
                     <div class="card">
                         <div class="card-header">
-                            <input type="text" class="h3 font-weight-bold border-0 h-100 w-100" name="name" placeholder="Team Name" maxlength="20" style="outline: none; background-color: rgba(0, 0, 0, 0);" required>
+                            <input type="text" class="h3 font-weight-bold border-0 h-100 w-100" name="name" placeholder="Project Name" maxlength="20" style="outline: none; background-color: rgba(0, 0, 0, 0);" required>
                         </div>
                         <div class="card-body">
                             <div class="container-fluid p-0">
@@ -128,16 +128,16 @@
 <!-- Task Search Modal -->
 <div id="taskSearchModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content border-0">
-            <div class="card">
-                <h2 class="card-header p-0">
-                    <input type="search" id="taskSearch" class="form-control text-center m-0 font-weight-bold" placeholder="Search"/>
+        <!-- <div class="modal-content border-0 rounded"> -->
+            <div class="card border-0">
+                <h2 class="card-header rounded-top p-0">
+                    <input type="search" id="taskSearch" class="form-control text-center m-0 font-weight-bold border-0" placeholder="Search"/>
                 </h2>
-                <div class="card-body">
+                <div class="card-body bg-primary rounded-bottom ">
                     <div id="taskSearchList" class="card-columns"></div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div>
 </div>
 

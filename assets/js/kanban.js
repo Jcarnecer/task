@@ -1,24 +1,23 @@
 $(function() {
 
-
 // Initiate
-$(document).getBoard(getAuthorId(), null, true).done(function(data) {
+getUser(getUserId()).done(function(data) {
 
-    if(data == null) {
+    userName    = data['first_name'] + ' ' + data['last_name'];
+    avatarUrl   = data['avatar_url'];
+});
 
-        var boardDetails = {name: 'Default'};
-        
-        $(document).postBoard(boardDetails, getAuthorId());
-    }
+getBoard().done(function(data) {
 
     $('#kanbanBoard').attr('data-value', data['id']);
-    $(document).displayBoard(data);
+    
+    displayBoard(data);
 });
 
 
-$(document).getTask().done(function(data) {
+getAllTask().done(function(data) {
     
-    $(document).displayTask(data);
+    displayTask(data);
 
     if(getTaskType() == 'personal') {
         $('.task-count').html(data.length);
@@ -29,7 +28,7 @@ $(document).getTask().done(function(data) {
 // Highlight
 $(document).on('click', '#highlightBtn', function() {
     
-    $(document).highlightTask(getUserId());
+    highlightTask();
 });
 
 
@@ -50,14 +49,20 @@ $(document).on('keypress', '#addColumnName', function(e) {
     if (e.which == 13) {
 
         e.preventDefault();
+
+        console.log(getAllColumn($('#kanbanBoard').data('value')));
+
+        var columnCount = getAllColumn($('#kanbanBoard').data('value')).responseJSON.length + 1;
         
-        var columnDetails = new Object;
-        columnDetails.name = $(this).html();
-        columnDetails.position = $(document).getColumn($('#kanbanBoard').attr('data-value'), null, true).responseJSON.length + 1;
+        var columnDetails = {
+            name:       $(this).html(),
+            board_id:   $('#kanbanBoard').data('value'),
+            position:   columnCount
+        };
+        
+        columnDetails.id = createColumn(columnDetails).responseJSON['response'];
 
-        columnDetails.id = $(document).postColumn(columnDetails, $('#kanbanBoard').attr('data-value'), null, true).responseJSON;
-
-        $(document).addColumn(columnDetails);
+        addColumn(columnDetails);
         $('#addColumnName').html('Type Here');
     }
 });
@@ -68,9 +73,12 @@ $(document).on('click', '.kanban-column-delete',  function(e) {
 
     if(confirm(`Are you sure you want to delete ${$(this).closest('.kanban-column').find('.kanban-column-title').html().trim()}?`)){
 
-        $(document).deleteColumn($(this).closest('.kanban-column').attr('data-value'));
+        var columnDetails = {
+            id: $(this).closest('.kanban-column').data('value')
+        };
+
+        deleteColumn(columnDetails);
         $(this).closest('.kanban-column').remove();
-    
     
         var newWidth = $('#kanbanBoard>.card-group').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
     
@@ -79,6 +87,7 @@ $(document).on('click', '.kanban-column-delete',  function(e) {
 });
    
 
+// Update Column
 $(document).on('click', '.kanban-column-edit', function(e) {
 
     $(this).closest('.card-header').find('.kanban-column-title').attr('contenteditable', true);
@@ -93,12 +102,12 @@ $(document).on('keypress', '.kanban-column .kanban-column-title', function(e) {
         e.preventDefault();
 
         var columnDetails = {
-            name: $(this).html(), 
-            position: $(this).closest('.kanban-column').attr('data-position')
+            id:         $(this).closest('.kanban-column').data('value'), 
+            name:       $(this).html(), 
+            position:   $(this).closest('.kanban-column').data('position')
         };
 
-        $(document).postColumn(columnDetails, $('#kanbanBoard').attr('data-value'), $(this).closest('.kanban-column').attr('data-value'));
-        console.log(columnDetails + ' ' + $('#kanbanBoard').attr('data-value') + ' ' + $(this).closest('.kanban-column').attr('data-value'));
+        updateColumn(columnDetails);
 
         $(this).attr('contenteditable', false);
     }
