@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="container-fluid text-center m-0 p-4 bg-primary" style="height: 160px;">
+<div class="container-fluid text-center m-0 p-4">
     <h1 class="my-2 font-weight-bold">Welcome, <?= $first_name ?>!</h1>
     <h5>You have <span class="h4 font-weight-bold task-count"></span> task to do.</h5>
 </div>

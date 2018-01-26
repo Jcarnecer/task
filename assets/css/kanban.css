@@ -2,6 +2,19 @@
     transition: all 0.2s ease-in-out;
 }
 
+#kanbanBoard .card-header {
+    border-radius: 0;
+}
+
+#kanbanBoard .card-header span i {
+    font-size: 18px;
+    color: #38b5ff;
+}
+
+#kanbanBoard .card-header span i:hover {
+    color: #3679b2;
+}
+
 #kanbanBoard .card {
     transition: all 0.2s ease-in-out;
 }
