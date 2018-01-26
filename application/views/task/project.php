@@ -44,7 +44,7 @@
         </button>
     </div>
 
-    <div class="h-100 bg-light border-top" style="overflow-x: auto; box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.4);">
+    <div class="h-100 bg-light border-top" style="overflow-x: auto; box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);">
         <div class="card-group h-100 m-0 p-0"></div>
     </div>
 </div>

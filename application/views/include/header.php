@@ -78,7 +78,7 @@
             </a>
             
             <span class="ml-auto">
-                <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
+                <a href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
                     <img class="img-avatar mr-2" src="<?= $avatar_url ?>"><?= $user_name ?>
                 </a>
             </span>
@@ -88,7 +88,7 @@
     <div class="inner-content d-flex flex-column">
         <?php if($task_type == 'project'): ?>
         <div class="d-flex w-100">
-            <a href="#" class="btn btn-lg btn-primary w-50 rounded-0 active"><i class="fa fa-tasks"></i> Tasks</a>
-            <a href="http://localhost/forum/" class="btn btn-lg btn-primary w-50 rounded-0"><i class="fa fa-exchange-alt"></i> Forum</a>
+            <a href="http://localhost/task/project/<?= $project->id ?>" class="btn btn-lg btn-primary w-50 rounded-0 active"><i class="fa fa-tasks"></i> Tasks</a>
+            <a href="http://localhost/forum/project/<?= $project->id ?>" class="btn btn-lg btn-primary w-50 rounded-0"><i class="fa fa-exchange-alt"></i> Forum</a>
         </div>
         <?php endif; ?>
