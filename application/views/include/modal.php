@@ -66,7 +66,7 @@
                                         <i class="fa fa-cog"></i> More
                                     </button>
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-floppy-o"></i> Save
+                                        <i class="fa fa-save"></i> Save
                                     </button>
                                     <button type="button" class="close-modal d-none" data-dismiss="modal"></button>
                                 </div>
@@ -178,7 +178,7 @@
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2"></div>
                         <div class="p-2">
-                            <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                            <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><i class="fa fa-save"></i> Save</button>
                         </div>
                         <div class="p-2">
                             <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="glyphicon glyphicon-cog"></span> Settings</button>

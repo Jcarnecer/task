@@ -78,7 +78,7 @@
             
             <span class="ml-auto">
                 <a class="navbar-brand" href="#" data-toggle="popover" data-placement="bottom"  data-content="<?= $email ?>" data-trigger="hover">
-                    <img class="img-avatar" src="<?= $avatar_url ?>"> <?= $user_name ?>
+                    <img class="img-avatar mr-2" src="<?= $avatar_url ?>"><?= $user_name ?>
                 </a>
             </span>
         </nav>
