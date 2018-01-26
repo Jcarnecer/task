@@ -99,7 +99,7 @@ function columnBuilder(column) {
 
         </h4>
         <div class="card-body text-center" style="overflow-y: auto;">
-            <button type="button" class="btn btn-primary btn-lg btn-block my-2 task-create"
+            <button type="button" class="btn custom-button btn-block my-2 task-create"
                 data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
                 <i class="fa fa-plus"></i> Add Task
             </button>

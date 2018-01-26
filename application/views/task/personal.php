@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div id="kanbanBoard" class="d-flex flex-column bg-primary w-100 m-0 p-0" style="height: 100%;">
+<div id="kanbanBoard" class="d-flex flex-column bg-light w-100 m-0 p-0" style="height: 100%;">
     <h1 class="font-weight-bold text-center mb-2 mt-3">Welcome, <?= $first_name ?>!</h1>
     <h5 class=" text-center mb-3">You have <span class="h4 font-weight-bold task-count"></span> task to do.</h5>
     <div class="h-100" style="overflow-x: auto;">

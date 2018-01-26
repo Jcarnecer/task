@@ -23,7 +23,7 @@
 
 <body>
 
-<div id="sidebar" style="overflow-y: auto; margin-left: -210px;">
+<div id="sidebar" style="overflow-y: auto;">
 
     <div id="nav-icon-close" class="custom-toggle">
         <span></span>
@@ -63,13 +63,14 @@
 
 </div>
 
-<div class="main-content animation">
+<div class="main-content h-100">
 
     <div class="topbar">
         <nav class="navbar navbar-custom clearfix">
-            
-            <div id="nav-icon-open navbar-brand " class="custom-toggle hidden-toggle d-block">
-                <i class="fa fa-bars fa-lg text-primary"></i>
+            <div id="nav-icon-open" class="custom-toggle hidden-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
 
             <a class="navbar-brand font-weight-bold text-uppercase" href="<?= base_url('tasks'); ?>">
