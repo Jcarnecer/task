@@ -40,12 +40,12 @@
         
         <li class="sub-menu">
             <a data-toggle="collapse" href="#UIElementsSub1" aria-expanded="false" aria-controls="UIElementsSub1" >
-                <i class="fa fa-users" aria-hidden="true"></i>
+                <i class="fa fa-folder" aria-hidden="true"></i>
                 <span>Projects</span>
             </a>
             <ul class="sub collapse" id="UIElementsSub1">
                 <?php foreach($projects as $project_instance): ?>
-                <li><a href="<?= base_url('project/' . $project_instance->id); ?>"><i class="fa fa-users"></i> <?=$project_instance->name?></a></li>
+                <li><a href="<?= base_url('project/' . $project_instance->id); ?>"><i class="fa fa-file"></i> <?=$project_instance->name?></a></li>
                 <?php endforeach; ?>
                 <li>
                     <a class="team-create" href="#teamModifyModal" data-toggle="modal"><i class="fa fa-plus" aria-hidden="true"></i> Add Project</a>
@@ -88,7 +88,7 @@
     <div class="inner-content d-flex flex-column">
         <?php if($task_type == 'project'): ?>
         <div class="d-flex w-100">
-            <a href="#" class="btn btn-lg btn-primary w-50 rounded-0"><i class="fa fa-tasks"></i> Tasks</a>
-            <a href="#" class="btn btn-lg btn-primary w-50 rounded-0"><i class="fa fa-exchange-alt"></i> Forum</a>
+            <a href="#" class="btn btn-lg btn-primary w-50 rounded-0 active"><i class="fa fa-tasks"></i> Tasks</a>
+            <a href="http://localhost/forum/" class="btn btn-lg btn-primary w-50 rounded-0"><i class="fa fa-exchange-alt"></i> Forum</a>
         </div>
         <?php endif; ?>

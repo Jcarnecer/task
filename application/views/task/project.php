@@ -8,43 +8,43 @@
 
 <div id="kanbanBoard" class="d-flex flex-column bg-primary h-100 w-100 m-0 p-0">
     <div class="d-flex w-100">
-        <button class="btn btn-primary rounded-0" data-target="#taskSearchModal" data-toggle="modal" style="width: 20%;">
+        <button class="btn btn-primary  rounded-0" data-target="#taskSearchModal" data-toggle="modal" style="width: 20%;">
             <i class="fa fa-search"></i> Search Tasks
         </button>
 
-        <button id="highlightBtn" class="btn btn-primary rounded-0" style="width: 20%;">
+        <button id="highlightBtn" class="btn btn-primary  rounded-0" style="width: 20%;">
             <i class="fa fa-lightbulb"></i> Highlight Tasks
         </button>
 
-        <button class="team-edit btn btn-primary rounded-0" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>" style="width: 20%;">
+        <button class="team-edit btn btn-primary  rounded-0" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>" style="width: 20%;">
             <i class="fa fa-edit"></i> Edit Project
         </button>
 
-        <div class="btn-group" style="width: 20%;">
-            <button class="btn btn-primary rounded-0 w-100" data-toggle="dropdown">
-                <i class="fa fa-users"></i> Project Members
-            </button>
+        <!-- <div class="dropdown rounded-0 border-0 h-100" style="width: 20%;"> -->
+        <button class="btn btn-primary  rounded-0" data-toggle="dropdown" style="width: 20%">
+            <i class="fa fa-users"></i> Project Members
+        </button>
 
-            <div class="dropdown-menu">
-                <?php foreach($project->members as $member): ?>
-                <a class="dropdown-item" href="#">
-                    <?php if($project->admin == $member->id): ?>
-                    <i class="fa fa-star"></i> 
-                    <?php else: ?>
-                    <i class="fa fa-user"></i> 
-                    <?php endif; ?>
-                    <?= $member->first_name.' '.$member->last_name ?>
-                </a>
-                <?php endforeach; ?>
-            </div>
+        <div class="dropdown-menu">
+            <?php foreach($project->members as $member): ?>
+            <a class="dropdown-item" href="#">
+                <?php if($project->admin == $member->id): ?>
+                <i class="fa fa-star"></i> 
+                <?php else: ?>
+                <i class="fa fa-user"></i> 
+                <?php endif; ?>
+                <?= $member->first_name.' '.$member->last_name ?>
+            </a>
+            <?php endforeach; ?>
         </div>
+        <!-- </div> -->
 
-        <button class="team-leave btn btn-primary rounded-0" data-value="<?= $project->id; ?>" style="width: 20%;">
+        <button class="team-leave btn btn-primary  rounded-0" data-value="<?= $project->id; ?>" style="width: 20%;">
             <i class="fa fa-sign-out-alt"></i> Leave Project
         </button>
     </div>
 
-    <div class="h-100" style="overflow-x: auto;">
+    <div class="h-100 bg-light border-top" style="overflow-x: auto; box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.4);">
         <div class="card-group h-100 m-0 p-0"></div>
     </div>
 </div>

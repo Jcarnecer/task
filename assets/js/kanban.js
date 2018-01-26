@@ -50,8 +50,6 @@ $(document).on('keypress', '#addColumnName', function(e) {
 
         e.preventDefault();
 
-        console.log(getAllColumn($('#kanbanBoard').data('value')));
-
         var columnCount = getAllColumn($('#kanbanBoard').data('value')).responseJSON.length + 1;
         
         var columnDetails = {

@@ -32,6 +32,7 @@
 
 #kanbanBoard.highlight .card-group>.card {
     background-color: rgba(0, 0, 0, 1);
+    border-color: #1f1f20 !important;
 }
 
 #kanbanBoard.highlight .card-group>.card>.card-header {
