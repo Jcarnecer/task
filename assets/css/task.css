@@ -18,6 +18,13 @@ html, body {
     overflow: hidden;
 }
 
+.modal .modal-content .card-header i {
+    font-size: 18px;
+    color: #626262;
+    vertical-align: middle;
+    margin-top: 6px;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -63,4 +70,9 @@ html, body {
 a:link, a:visited, a:hover, a:focus{
     text-decoration: none;
     outline: none;
+}
+
+.badge {
+    padding: 7px;
+    vertical-align: middle;
 }
