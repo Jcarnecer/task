@@ -16,12 +16,11 @@ class Task_model extends CI_Model {
 	# Get Task By ID
 	public function get($id) {
 		
-		$task 				  	= $this->db->get_where('tasks', ['id' => $id], 1)->result()[0];
+		$task 				  	= $this->db->get_where('kb_tasks', ['id' => $id])->row();
 		$task->due_date_long	= date('F d, Y', strtotime($task->due_date));
-		$task->notes 		  	= $this->get_task_notes($task->id);
-		$task->actors 		  	= $this->get_task_actors($task->id);
-		$task->tags 		  	= $this->get_task_tags($task->id);
-		$task->column_id		= $this->get_task_column($task->id);
+		$task->notes 		  	= $this->get_notes($task->id);
+		$task->actors 		  	= $this->get_actors($task->id);
+		$task->tags 		  	= $this->get_tags($task->id);
 		$task->remaining_days	= $this->estimate_days($task->id);
 
 		return $task;
@@ -32,17 +31,17 @@ class Task_model extends CI_Model {
 	public function get_all($author_id, $status = null) {
 
 		if($status != null)
-			$tasks = $this->db->get_where('tasks', ['user_id' => $author_id, 'status' => $status])->result();
+			$tasks = $this->db->get_where('kb_tasks', ['user_id' => $author_id, 'status' => $status])->result();
 		else
-			$tasks = $this->db->get_where('tasks', ['user_id' => $author_id])->result();
+			$tasks = $this->db->get_where('kb_tasks', ['user_id' => $author_id])->result();
 
-		foreach ($tasks as $task) {
+		foreach ($tasks as $index => $task) {
 
-			$task->notes 		  	= $this->get_task_notes($task->id);
-			$task->actors 		  	= $this->get_task_actors($task->id);
-			$task->tags 		  	= $this->get_task_tags($task->id);
-			$task->column_id		= $this->get_task_column($task->id);
-			$task->remaining_days	= $this->estimate_days($task->id);
+			$tasks[$index]->due_date_long	= date('F d, Y', strtotime($task->due_date));
+			$tasks[$index]->notes 		  	= $this->get_notes($task->id);
+			$tasks[$index]->actors			= $this->get_actors($task->id);
+			$tasks[$index]->tags 		  	= $this->get_tags($task->id);
+			$tasks[$index]->remaining_days	= $this->estimate_days($task->id);
 		}
 		
 		return $tasks;
@@ -50,14 +49,148 @@ class Task_model extends CI_Model {
 	
 	
 	# Get User Team Tasks
-	public function get_user_team_task($user_id) {
+	public function get_by_actor($user_id) {
 		
 		return $this->db->select('*')
-			->from('tasks')
-			->join('tasks_assignment', 'tasks_assignment.task_id = tasks.id')
-			->where('tasks_assignment.user_id', $user_id)
+			->from('kb_tasks as t1')
+			->join('kb_tactors as t2', 't2.task_id = t1.id')
+			->where('t2.user_id', $user_id)
 			->get()
 			->result();
+	}
+
+
+	# Get Task Actors
+	public function get_actors($task_id) {
+		
+		return $this->db->select('t1.*')
+			->from('users as t1')
+			->join('kb_tactors as t2', 't2.user_id = t1.id')
+			->where('t2.task_id', $task_id)
+			->get()
+			->result();
+	}
+
+
+	# Get Task Tags
+	public function get_tags($task_id) {
+
+		return $this->db->select('name')
+			->from('kb_tags as t1')
+			->join('kb_ttags as t2', 't2.tag_id = t1.id')
+			->where('t2.task_id', $task_id)
+			->get()
+			->result();
+	}
+
+
+	# Get Task Notes
+	public function get_notes($task_id) {
+
+		return $this->db->get_where('kb_notes', ['task_id' => $task_id])->result();
+	}
+	
+
+	# Return Estimated Days
+	public function estimate_days($id) {
+		
+		$due_date 	= date_create($this->db->get_where('kb_tasks', ['id' => $id])->row()->due_date);
+		$today 		= date_create(date('Y-m-d'));
+		$days  		= date_diff($today, $due_date)->days;
+
+		if($today > $due_date) {
+			$days = $days * -1;
+		}
+		
+		return $days;
+	}
+
+
+	# Add Task returning ID
+	public function insert($data) {
+
+		$data['status'] = 1;
+		$data['created_at'] = date('Y-m-d');
+		$data['updated_at'] = date('Y-m-d');
+
+		$this->db->insert('kb_tasks', $data);
+
+		return $this->db->insert_id();
+	}
+
+
+	public function update($id, $data) {
+
+		return $this->db->update('kb_tasks', $data, ['id' => $id]);
+	}
+
+	# Delete Task
+	public function delete($task_id) {
+		
+		$this->db->delete('kb_notes', ['task_id' => $task_id]);
+		$this->db->delete('kb_ttags', ['task_id' => $task_id]);
+		$this->db->delete('kb_tactors', ['task_id' => $task_id]);
+
+		return $this->db->delete('kb_tasks', ['id' => $task_id]);
+	}
+
+	# Delete Task by condition (Used on delete_column)
+	public function delete_by($where) {
+		
+		$tasks = $this->db->get_where('kb_tasks', $where);
+
+		foreach($tasks as $task) {
+
+			$this->db->delete('kb_notes', ['task_id' => $task->id]);
+			$this->db->delete('kb_ttags', ['task_id' => $task->id]);
+			$this->db->delete('kb_tactors', ['task_id' => $task->id]);
+		}
+		
+		$this->db->delete('kb_tasks', $where);
+	}
+
+
+	# Add Task Actors
+	public function add_actors($task_id, $users) {
+		
+		if(count($users) == 0){
+
+			$new_member_ids = [];
+		} else {
+
+			$new_member_ids = array_column($this->db->select('id')->from('users')->where_in('email_address', $users)->get()->result_array(), 'id');
+		}
+			
+		$old_member_ids = array_column($this->db->select('user_id')->from('kb_tactors')->where('task_id', $task_id)->get()->result_array(), 'user_id');
+
+		foreach ($new_member_ids as $id) {
+			
+			if(!in_array($id, $old_member_ids)) {
+				
+				$this->db->insert('kb_tactors', [
+					'task_id' => $task_id,
+					'user_id' => $id
+				]);
+			}
+		}
+
+		foreach ($old_member_ids as $id) {
+			
+			if(!in_array($id, $new_member_ids)) {
+			
+				$this->db->delete('kb_tactors', [
+					'task_id' => $task_id,
+					'user_id' => $id
+				]);
+			}
+		}
+	}
+
+
+	# Add Task Notes
+	public function add_notes($data) {
+
+		return $this->db->insert('kb_notes', $data);
 	}
 
 
@@ -69,152 +202,22 @@ class Task_model extends CI_Model {
 	}
 
 
-	# Get Task Actors
-	public function get_task_actors($id = null) {
-		
-		return $this->db->select('*')
-			->from('users')
-			->join('tasks_assignment', 'tasks_assignment.user_id = users.id')
-			->where('tasks_assignment.task_id', $id)
-			->get()
-			->result();
-	}
-
-
-	# Get Task Tags
-	public function get_task_tags($id = null) {
-
-		return $this->db->select('name')
-			->from('tags')
-			->join('tasks_tagging', 'tasks_tagging.tag_id = tags.id')
-			->where('tasks_tagging.task_id', $id)
-			->get()
-			->result();
-	}
-
-
-	# Add Task Notes
-	public function add_task_notes($task_id, $note_details) {
-
-		$this->db->insert('task_notes', $note_details);
-	}
-
-
-	# Get Task Notes
-	public function get_task_notes($task_id) {
-
-		return $this->db->get_where('task_notes', ['task_id' => $task_id])->result();
-	}
-
-
-	public function get_task_column($task_id) {
-
-		$result = $this->db->get_where('kanban_tasks', ['id' => $task_id], 1)->result();
-
-		if($result != null) {
-		
-			return $result[0]->column_id;
-		} else {
-			
-			return null;
-		}
-	}
-
-
-	# Add Task returning ID
-	public function insert($task_details) {
-
-		$task_details['status'] = 1;
-		$task_details['created_at'] = date('Y-m-d');
-		$task_details['updated_at'] = date('Y-m-d');
-
-		$this->db->insert('tasks', $task_details);
-
-		return $this->db->insert_id();
-	}
-
-
 	# FOR KANBAN BOARD STATUS UPDATE
 	public function update_status($id, $key) {
 
-		return $this->db->update('tasks', ['status' => $key, 'completion_date' => date('Y-m-d')], "id = $id");
+		return $this->db->update('kb_tasks', ['status' => $key, 'completion_date' => date('Y-m-d')], ['id' => $id]);
 	}
 
 
-	public function update($id, $task_details) {
-
-		return $this->db->update('tasks', $task_details, "id = $id");
-	}
-	
-
-	public function estimate_days($id) {
+	public function prune_tasks($user_id) {
 		
-		$due_date = date_create($this->db->get_where('tasks', ['id' => $id], 1)->result()[0]->due_date);
-		$today = date_create(date('Y-m-d'));
-		$days  = date_diff($today, $due_date)->days;
-
-		if($today > $due_date) {
-			$days = $days * -1;
-		}
-		
-		return $days;
-	}
-
-
-	public function prune_tasks($id) {
-		
-		foreach($this->db->get_where('tasks', ['user_id' => $id])->result() as $task){
+		foreach($this->db->get_where('kb_tasks', ['user_id' => $user_id])->result() as $task){
 			
-			$this->db->delete('task_notes', ['task_id' => $task->id]);
-			$this->db->delete('tasks_tagging', ['task_id' => $task->id]);
-			$this->db->delete('tasks_assignment', ['task_id' => $task->id]);
+			$this->db->delete('kb_notes', ['task_id' => $task->id]);
+			$this->db->delete('kb_ttags', ['task_id' => $task->id]);
+			$this->db->delete('kb_tactors', ['task_id' => $task->id]);
 		}
 
-		$this->db->delete('tasks', ['user_id' => $id]);
-	}
-
-
-	public function delete($task_id) {
-		
-		$this->db->delete('task_notes', ['task_id' => $task_id]);
-		$this->db->delete('tasks_tagging', ['task_id' => $task_id]);
-		$this->db->delete('tasks_assignment', ['task_id' => $task_id]);
-
-		$this->db->delete('tasks', ['id' => $task_id]);
-	}
-	
-
-	public function add_actors($task_id, $users) {
-		
-		if(count($users) == 0)
-
-			$new_member_ids = [];
-		else
-
-			$new_member_ids = array_column($this->db->select('id')->from('users')->where_in('email_address', $users)->get()->result_array(), 'id');
-			
-		$old_member_ids = array_column($this->db->select('user_id')->from('tasks_assignment')->where('task_id', $task_id)->get()->result_array(), 'user_id');
-
-		foreach ($new_member_ids as $id) {
-			
-			if(!in_array($id, $old_member_ids)) {
-				
-				$this->db->insert('tasks_assignment', [
-					'task_id' => $task_id,
-					'user_id' => $id
-				]);
-			}
-		}
-
-		foreach ($old_member_ids as $id) {
-			
-			if(!in_array($id, $new_member_ids)) {
-			
-				$this->db->delete('tasks_assignment', [
-					'task_id' => $task_id,
-					'user_id' => $id
-				]);
-			}
-		}
+		$this->db->delete('kb_tasks', ['user_id' => $user_id]);
 	}
 }

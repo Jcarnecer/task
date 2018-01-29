@@ -20,19 +20,23 @@ $(document).on('click', '.team-edit', function () {
     $('#teamModifyModal .team-button-text').html('Edit Team');
     $('#teamModifyModal').find('.team-member').siblings('span.badge').remove();
 
-    $(document).getTeam($(this).attr('data-value')).always(function(data) {
+    getProject($(this).data('value')).always(function(data) {
 
         $('#teamModifyModal').find('form').attr('data-value', data['id']);
         $('#teamModifyModal').find('[name="name"]').val(data['name']);
 
-        $(document).displayMember(data['members'], true);
+        displayMember(data['members'], true);
     });
 });
 
 
 $(document).on('click', '.team-leave', function () {
 
-    $(document).leaveTeam(getAuthorId()).always(function () {
+    var project_details = {
+        proj_id: getAuthorId()
+    }
+
+    leaveProject(project_details).always(function () {
 
         window.location.href = `${baseUrl}tasks`;
     });
@@ -46,9 +50,13 @@ $(document).on('keypress', '.team-member', function (e) {
 
         e.preventDefault();
 
-        var result = $(document).validateMember($(this).val().toLowerCase(), null, true).responseJSON;
+        data = {
+            email: $(this).val().toLowerCase()
+        };
+
+        var result = validateMember(data).responseJSON;
         
-        if(result['exist']) {
+        if(result['exists']) {
 
             if(!$(this).closest('form').has(`input[name="members[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
@@ -72,7 +80,7 @@ $(document).on('keypress', '.team-member', function (e) {
 
 $(document).on('click', '.team-member-remove', function () {
 
-    $(this).closest('form').find(`input[name="members[]"][value="${$(this).attr('data-value')}"]`).remove();
+    $(this).closest('form').find(`input[name="members[]"][value="${$(this).data('value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -80,7 +88,7 @@ $(document).on('click', '.team-member-remove', function () {
 // Submit
 $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e) {
 
-    var team = $(this).serializeArray();
+    var teamDetails = $(this).serializeArray();
 
     e.preventDefault();
 
@@ -93,23 +101,28 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
 
         if($(this).attr('id') == 'teamCreateForm') {
             
-
-            $(document).postTeam(team).always(function(data) {
+            createProject(teamDetails).always(function(data) {
                 
-                var boardDetails = new Object();
-                boardDetails.name = "Default";
-                $(document).postBoard(boardDetails, data['team_id'], null, true);
+                var boardDetails = {
+                    name:       "Default",
+                    author_id:  data['project_id']
+                };
+
+                createBoard(boardDetails);
 
                 if($(this).has('.close-modal')) {
                     
                     $(this).find('.close-modal').click();
                 }
 
-                window.location.href = `${baseUrl}team/${data['team_id']}`;
+                window.location.href = `${baseUrl}project/${data['project_id']}`;
             });
         } else if($(this).attr('id') == 'teamUpdateForm') {
         
-            $(document).postTeam(team, $(this).attr('data-value')).always(function() {
+            teamDetails.push({name: id, value: $(this).data('value')})
+
+            updateProject(teamDetails).always(function() {
+
                 location.reload();
             });
         }

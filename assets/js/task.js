@@ -2,28 +2,23 @@ $(function () {
 
 var storedTasks = null;
 
-function archive(taskId) {
-
-    $(document).archiveTask(taskId);
-}
-
 // Load Modal
 $(document).on('click', '.task-create', function() {
 
-    $(document).resetForm();
+    resetForm();
     $('#taskModifyModal').find('form').attr('id', 'taskCreateForm');
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskCreateForm');
-    $('#taskModifyModal').find('[name="column_id"]').val($(this).attr('data-parent'));
+    $('#taskModifyModal').find('[name="column_id"]').val($(this).data('parent'));
 });
 
 
 $(document).on('click', '.task-edit', function () {
     
-    $(document).resetForm();
+    resetForm();
     $('#taskModifyModal').find('form').attr('id', 'taskUpdateForm');
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskUpdateForm');
     
-    $(document).getTask($(this).attr('data-value')).done(function (data) {
+    getTask($(this).data('value')).done(function (data) {
         
         $('#taskModifyModal').find('form').attr('data-value', data['id']);
         $('#taskModifyModal').find('[name="title"]').val(data['title']);
@@ -31,8 +26,8 @@ $(document).on('click', '.task-edit', function () {
         $('#taskModifyModal').find('[name="due_date"]').val(data['due_date']);
         $('#taskModifyModal').find('[name="color"]').val(data['color']);
         
-        $(document).displayTag(data['tags'], true);
-        $(document).displayActor(data['actors'], true);
+        displayTag(data['tags'], true);
+        displayActor(data['actors'], true);
         
         $('#taskModifyModal .card-header').css('background-color', data['color']);
         $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
@@ -45,7 +40,7 @@ $(document).on('click', '.task-view', function () {
 
     $('#taskViewModal').find('.task-note-list').html('');
 
-    $(document).getTask($(this).attr('data-value')).always(function (data) {
+    getTask($(this).data('value')).always(function (data) {
 
         $('#taskViewModal').find('[data-target="#taskModifyModal"], [href="#taskModifyModal"]').attr('data-value', data['id']);
         $('#taskViewModal').find('.task-note').attr('data-value', data['id']);
@@ -80,21 +75,23 @@ $(document).on('click', '.task-view', function () {
             }
         }
 
-        if(data['tags'].length != 0) 
+        if(data['tags'].length != 0) {
 
-            $(document).displayTag(data['tags']);
-        else
+            displayTag(data['tags']);
+        } else {
 
             $('#taskViewModal').find('.task-tag-list').html('None');
+        }
 
-        if(data['actors'].length != 0) 
-        
-            $(document).displayActor(data['actors']);
-        else
+        if(data['actors'].length != 0) {
+
+            displayActor(data['actors']);
+        } else {
 
             $('#taskViewModal').find('.task-actor-list').html('None');
+        }
 
-        $(document).displayNote(data['notes']);
+        displayNote(data['notes']);
     });
 });
 
@@ -102,7 +99,7 @@ $(document).on('click', '.task-view', function () {
 // Search
 $(document).on('click', '[href="#taskSearchModal"]', function(e) {
 
-    storedTasks = storeTask();
+    storedTasks = getAllTask(false).responseJSON;
 });
 
 
@@ -113,8 +110,9 @@ $(document).on('input', '#taskSearch', function (e) {
         e.preventDefault();
     }
 
-    $(document).searchTask(storedTasks, $('#taskSearch').val());
+    searchTask(storedTasks, $('#taskSearch').val());
 });
+
 
 $('#taskSearchModal').on('hidden.bs.modal', function () {
     
@@ -127,8 +125,8 @@ $(document).on('click', '.btn-color', function () {
 
     $(this).find('i').addClass('fa fa-check fa-lg');
     $(this).siblings('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    $(this).closest('form').find('[name="color"]').attr('value', $(this).attr('data-value'));
-    $(this).closest('#taskModifyModal .card').css('background-color', $(this).attr('data-value'));
+    $(this).closest('form').find('[name="color"]').attr('value', $(this).data('value'));
+    $(this).closest('#taskModifyModal .card').css('background-color', $(this).data('value'));
 });
 
 
@@ -168,7 +166,7 @@ $(document).on('keypress', '.task-tag', function (e) {
 
 $(document).on('click', '.task-tag-remove', function() {
 
-    $(this).closest('form').find(`input[name="tags[]"][value="${$(this).attr('data-value')}"]`).remove();
+    $(this).closest('form').find(`input[name="tags[]"][value="${$(this).data('value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -180,9 +178,14 @@ $(document).on('keypress', '.task-actor', function (e) {
 
         e.preventDefault();
 
-        var result = $(document).validateMember($(this).val().toLowerCase(), getAuthorId(), true).responseJSON;
+        var data = {
+            email: $(this).val().toLowerCase(),
+            proj_id: getAuthorId()
+        };
+
+        var result = validateMember(data).responseJSON;
         
-        if(result['exist']) {
+        if(result['exists']) {
             
             if(!$(this).closest('form').has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
@@ -200,15 +203,13 @@ $(document).on('keypress', '.task-actor', function (e) {
         }
 
         $(this).val('');
-
-        return false;
     }
 });
 
 
 $(document).on('click', '.task-actor-remove', function() {
 
-    $(this).closest('form').find(`input[name="actors[]"][value="${$(this).attr('data-value')}"]`).remove();
+    $(this).closest('form').find(`input[name="actors[]"][value="${$(this).data('value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -219,6 +220,14 @@ $(document).on('keypress', '.task-note', function (e) {
     if(e.which == 13) {
 
         e.preventDefault();
+
+        var data = {
+            note: $(this).val(),
+            task_id: $(this).data('value')        
+        };
+        
+        addNote(data);
+
         $(this).closest('.modal').find('.task-note-list').append(`
             <div class="col-2 my-1">
                 <h4 class="text-center">
@@ -230,8 +239,7 @@ $(document).on('keypress', '.task-note', function (e) {
                 ${$(this).val()}
             </div>
         `);
-        
-        $(document).postTaskNote($(this).val(), $(this).attr('data-value'));
+
         $(this).val('');
     }
 });
@@ -247,23 +255,27 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
         var task = $(this).serializeArray();
         
         if($(this).is('#taskCreateForm')) {
+
+            task.push({name: 'author_id', value: getAuthorId()});
             
-            $(document).postTask(task).always(function() {
+            addTask(task).always(function() {
                 
-                $(document).getTask().done(function(data) {
+                getAllTask().always(function(data) {
                     
-                    $(document).displayTask(data);
-                    $(document).resetForm();
+                    displayTask(data);
+                    resetForm();
                 });
             });
         } else if($(this).is('#taskUpdateForm')) {
             
-            $(document).postTask(task, $(this).attr('data-value')).always(function(data) {
+            task.push({name: 'id', value: $(this).data('value')});
+
+            updateTask(task).always(function() {
                 
-                $(document).getTask().always(function(data){
+                getAllTask().always(function(data){
                     
-                    $(document).displayTask(data);
-                    $(document).resetForm();
+                    displayTask(data);
+                    resetForm();
                 });
             });
         }

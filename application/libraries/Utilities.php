@@ -55,17 +55,6 @@ class Utilities {
 	public function unique_id($table, $length) {
 		
 		switch($table) {
-		
-			case 'teams':
-				$temp_id = '';
-
-				do {
-					
-					$temp_id = 'TM' . $this->generate_id($length);
-				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
-
-				return $temp_id;
-				break;
 
 			case 'users':
 				$temp_id = '';
@@ -77,42 +66,17 @@ class Utilities {
 				
 				return $temp_id;
 				break;
-
-			case 'kanban_boards':
+		
+			case 'pj_projects':
 				$temp_id = '';
-			
+
 				do {
-				
-					$temp_id = 'BD' . $this->generate_id($length);
+					
+					$temp_id = 'PRJ' . $this->generate_id($length);
 				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
-				
+
 				return $temp_id;
 				break;
-
-			case 'kanban_columns':
-				$temp_id = '';
-			
-				do {
-				
-					$temp_id = 'COL' . $this->generate_id($length);
-				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
-				
-				return $temp_id;
-				break;
-
-			case 'tasks':
-				$temp_id = '';
-			
-				do {
-				
-					$temp_id = 'TK' . $this->generate_id($length);
-				} while ($this->ci->db->where('id', $temp_id)->get($table)->result() != null);
-				
-				return $temp_id;
-				break;
-
-			default:
-				return null;
 		}
 	}
 }
