@@ -13,8 +13,8 @@ html, body {
 .inner-content {
     background: #ffffff;
     margin-top: -20px;
-    max-height: calc(100% - 54.76px);
-    height: calc(100% - 54.76px);
+    max-height: calc(100% - 49px);
+    height: calc(100% - 49px);
     overflow: hidden;
 }
 
