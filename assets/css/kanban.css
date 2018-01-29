@@ -50,6 +50,7 @@
 /* Column */
 #addColumnName {
     outline: none;
+    padding-left: 5px;
 }
 
 .kanban-column-title {

@@ -162,3 +162,7 @@ body {
       display: none; }
     .form-horizontal .control-label {
       text-align: left; } }
+
+.modal-content .card {
+  border: none !important;
+}

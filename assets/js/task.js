@@ -34,7 +34,7 @@ $(document).on('click', '.task-edit', function () {
         $(document).displayTag(data['tags'], true);
         $(document).displayActor(data['actors'], true);
         
-        $('#taskModifyModal .card').css('background-color', data['color']);
+        $('#taskModifyModal .card-header').css('background-color', data['color']);
         $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
         $('#taskModifyModal').find(`button[data-value="${data['color']}"] i`).addClass('fa fa-check fa-lg');
     });
@@ -58,7 +58,7 @@ $(document).on('click', '.task-view', function () {
         $('#taskViewModal').find('.task-countdown-text').html('');
         $('#taskViewModal').find('.task-tag-list').html('');
         $('#taskViewModal').find('.task-actor-list').html('');
-        $('#taskViewModal').find('.card').css('background-color', data['color']);
+        $('#taskViewModal').find('.card-header').css('background-color', data['color']);
 
         if(data['status'] == 2) // ARCHIVE
 
@@ -226,7 +226,7 @@ $(document).on('keypress', '.task-note', function (e) {
                     data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${userName}">
                 </h4>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 text-dark">
                 ${$(this).val()}
             </div>
         `);

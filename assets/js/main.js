@@ -231,7 +231,7 @@ $.fn.displayNote = function(items) {
                 </h4>
             </div>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 text-dark">
                 ${item['body']}
             </div>`
         );

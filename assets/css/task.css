@@ -18,6 +18,14 @@ html, body {
     overflow: hidden;
 }
 
+.modal .modal-content .card-header i {
+    font-size: 18px;
+    color: #626262;
+    vertical-align: middle;
+    margin-top: 6px;
+}
+
+
 ::-webkit-scrollbar {
     display: none;
 }

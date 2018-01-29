@@ -85,10 +85,10 @@
     <div class="modal-dialog model-sm">
         <div class="modal-content border-0" style="transition:0.2s;">
             <div class="card">
-                <h2 class="card-header font-weight-bold clearfix">
-                    <span class="task-title float-left"></span>
-                    <a class="task-edit float-right" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-pencil mx-1"></i></a>
-                </h2>
+                <div class="card-header font-weight-bold clearfix">
+                    <h2 class="task-title float-left"></h2>
+                    <a class="task-edit float-right" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-pencil"></i></a>
+                </div>
                 <div class="card-body">
                     <h4 class="task-description card-title"></h4>
                     <?php if($task_type == 'team'): ?>
@@ -102,7 +102,7 @@
                     <div class="container-fluid">
                         <div class="task-note-list row"></div>
                     </div>
-                    <div class="container-fluid my-1">
+                    <div class="container-fluid mt-3">
                         <div class="row">
                             <div class="col-2">
                                 <h2 class="text-center">
