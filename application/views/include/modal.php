@@ -86,11 +86,11 @@
         <div class="modal-content border-0" style="transition:0.2s;">
             <div class="card">
                 <div class="card-header font-weight-bold clearfix">
-                    <h2 class="task-title float-left"></h2>
+                    <h3 class="task-title float-left"></h3>
                     <a class="task-edit float-right" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-pencil"></i></a>
                 </div>
                 <div class="card-body">
-                    <h4 class="task-description card-title"></h4>
+                    <h5 class="task-description card-title"></h5>
                     <?php if($task_type == 'team'): ?>
                     <hr>
                     <p class="card-title">Contributors:  <span class="task-actor-list card-text"></span></p>

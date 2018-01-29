@@ -85,19 +85,19 @@ function columnBuilder(column) {
     `<div class="card border-0 h-100 w-25 kanban-column" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
-        <h4 class="card-header clearfix"
+        <div class="card-header clearfix"
             draggable="true" ondragstart="drag(event)">
 
-            <span class="kanban-column-title float-left" contenteditable="false">
+            <h4 class="kanban-column-title mb-0 float-left" contenteditable="false">
                 ${column['name']}
-            </span>
+            </h4>
 
             <span class="float-right">
                 <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
                 <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
             </span>
 
-        </h4>
+        </div>
         <div class="card-body text-center" style="overflow-y: auto;">
             <button type="button" class="btn custom-button btn-block my-2 task-create"
                 data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
