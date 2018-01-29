@@ -61,12 +61,12 @@
                                     </button>
                                     <?php endforeach; ?>
                                 </span>
-                                <div class="btn-group float-right">
-                                    <button type="button" class="btn btn-primary" data-target="#modifyTaskCollapse" data-toggle="collapse">
+                                <div class="float-right">
+                                    <button type="button" class="btn" data-target="#modifyTaskCollapse" data-toggle="collapse">
                                         <i class="fa fa-cog"></i> More
                                     </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> Save
+                                    <button type="submit" class="btn custom-button">
+                                        <i class="fa fa-floppy-o"></i> Save
                                     </button>
                                     <button type="button" class="close-modal d-none" data-dismiss="modal"></button>
                                 </div>
@@ -85,12 +85,12 @@
     <div class="modal-dialog model-sm">
         <div class="modal-content border-0" style="transition:0.2s;">
             <div class="card">
-                <h2 class="card-header font-weight-bold clearfix">
-                    <span class="task-title float-left"></span>
-                    <a class="task-edit float-right" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-edit mx-1"></i></a>
-                </h2>
+                <div class="card-header font-weight-bold clearfix">
+                    <h3 class="task-title float-left"></h3>
+                    <a class="task-edit float-right" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-pencil"></i></a>
+                </div>
                 <div class="card-body">
-                    <h4 class="task-description card-title"></h4>
+                    <h5 class="task-description card-title"></h5>
                     <?php if($task_type == 'project'): ?>
                     <hr>
                     <p class="card-title">Contributors:  <span class="task-actor-list card-text"></span></p>
@@ -102,7 +102,7 @@
                     <div class="container-fluid">
                         <div class="task-note-list row"></div>
                     </div>
-                    <div class="container-fluid my-1">
+                    <div class="container-fluid mt-3">
                         <div class="row">
                             <div class="col-2">
                                 <h2 class="text-center">

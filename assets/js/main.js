@@ -65,12 +65,12 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     var taskString = 
     `<div class="card my-1 rounded kanban-task task-view"
         data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}" 
-        ${modalDismissAppend} 
-        style="background-color:${task['color']};">
+        ${modalDismissAppend}">
         
         <div class="card-body" ${contributorsAppend}
             draggable="true" ondragstart="drag(event)" ondragend="closeDeleteModal(event)">
-            <h5 class="card-title font-weight-bold">${iconAppend + task['title']}</h5>
+            <span class="badge badge-pill" style="background-color:${task['color']};"> </span>
+            <h5 class="card-title mb-0 d-inline font-weight-bold">${iconAppend + task['title']}</h5>
         </div>
 
     </div>`;
@@ -85,20 +85,20 @@ function columnBuilder(column) {
     `<div class="card border h-100 w-25 kanban-column rounded-0" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
-        <h4 class="card-header clearfix"
+        <div class="card-header clearfix"
             draggable="true" ondragstart="drag(event)">
 
-            <span class="kanban-column-title float-left" contenteditable="false">
+            <h4 class="kanban-column-title mb-0 float-left" contenteditable="false">
                 ${column['name']}
-            </span>
+            </h4>
 
             <span class="float-right">
                 <a class="kanban-column-edit" href="#"><i class="fa fa-edit mx-1"></i></a>
                 <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
             </span>
 
-        </h4>
-        <div class="card-body text-center" style="overflow-y: auto;">
+        </div>
+        <div class="card-body" style="overflow-y: auto;">
             <button type="button" class="btn custom-button btn-block my-2 task-create"
                 data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
                 <i class="fa fa-plus"></i> Add Task
@@ -217,7 +217,7 @@ function displayNote(items) {
                 </h4>
             </div>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 text-dark">
                 ${item['body']}
             </div>`
         );

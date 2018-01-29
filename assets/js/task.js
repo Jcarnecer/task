@@ -29,7 +29,7 @@ $(document).on('click', '.task-edit', function () {
         displayTag(data['tags'], true);
         displayActor(data['actors'], true);
         
-        $('#taskModifyModal .card').css('background-color', data['color']);
+        $('#taskModifyModal .card .card-header').css('background-color', data['color']);
         $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
         $('#taskModifyModal').find(`button[data-value="${data['color']}"] i`).addClass('fa fa-check fa-lg');
     });
@@ -53,7 +53,7 @@ $(document).on('click', '.task-view', function () {
         $('#taskViewModal').find('.task-countdown-text').html('');
         $('#taskViewModal').find('.task-tag-list').html('');
         $('#taskViewModal').find('.task-actor-list').html('');
-        $('#taskViewModal').find('.card').css('background-color', data['color']);
+        $('#taskViewModal').find('.card .card-header').css('background-color', data['color']);
 
         if(data['status'] == 2) // ARCHIVE
 
@@ -125,8 +125,10 @@ $(document).on('click', '.btn-color', function () {
 
     $(this).find('i').addClass('fa fa-check fa-lg');
     $(this).siblings('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    $(this).closest('form').find('[name="color"]').attr('value', $(this).attr('data-value'));
-    $(this).closest('#taskModifyModal .card').css('background-color', $(this).attr('data-value'));
+    $(this).closest('form').find('[name="color"]').attr('value', $(this).data('value'));
+    $('#taskModifyModal .card .card-header').css('background-color', $(this).data('value'));
+    // console.log($('#taskModifyModal .card').find('.card-header'));
+    // $(this).closest('#taskModifyModal .card .card-footer').css('background-color', $(this).data('value'));
 });
 
 
@@ -235,7 +237,7 @@ $(document).on('keypress', '.task-note', function (e) {
                     data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${userName}">
                 </h4>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 text-dark">
                 ${$(this).val()}
             </div>
         `);
