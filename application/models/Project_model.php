@@ -5,7 +5,6 @@ class Project_model extends CI_Model {
 
 
 	public function get($proj_id) {
-
 		
 		return $this->db->get_where('pj_projects', ['id' => $proj_id])->row();
 	}

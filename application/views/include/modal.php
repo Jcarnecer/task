@@ -36,7 +36,7 @@
                             <div class="w-100">
                                 <textarea rows="5" class="h4 border-0 w-100" name="description" placeholder="Description" style="outline: none; resize: none; background-color: rgba(0, 0, 0, 0);"></textarea>
                             </div>
-                            <?php if($task_type == 'team'): ?>
+                            <?php if($task_type == 'project'): ?>
                             <div class="container-fluid p-0">
                                 <p class="card-title d-inline-block">Contributors: </p>
                                 <input type="text" class="task-actor border-0 d-inline-block" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="task-description card-title"></h5>
-                    <?php if($task_type == 'team'): ?>
+                    <?php if($task_type == 'project'): ?>
                     <hr>
                     <p class="card-title">Contributors:  <span class="task-actor-list card-text"></span></p>
                     <?php endif; ?>
@@ -167,7 +167,7 @@
                         <?php foreach($colors as $color): ?>
                         <button type="button" class="btn btn-circle btn-color" style="background-color:<?= $color ?>;" data-value="<?= $color ?>">
                             <?php if($color == '#ffffff'): ?>
-                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="fa fa-check fa-lg"></span>
                             <?php else: ?>
                             <span></span>
                             <?php endif; ?>
@@ -178,10 +178,10 @@
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2"></div>
                         <div class="p-2">
-                            <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                            <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><i class="fa fa-save"></i> Save</button>
                         </div>
                         <div class="p-2">
-                            <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="glyphicon glyphicon-cog"></span> Settings</button>
+                            <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="fa fa-cog"></span> Settings</button>
                         </div>
                     </div>
                 </form>

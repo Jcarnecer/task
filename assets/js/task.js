@@ -3,22 +3,22 @@ $(function () {
 var storedTasks = null;
 
 // Load Modal
-$(document).on('click', '.task-create', function() {
+$(document).on('click', '.task-create', function () {
 
     resetForm();
     $('#taskModifyModal').find('form').attr('id', 'taskCreateForm');
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskCreateForm');
-    $('#taskModifyModal').find('[name="column_id"]').val($(this).data('parent'));
+    $('#taskModifyModal').find('[name="column_id"]').val($(this).attr('data-parent'));
 });
 
 
 $(document).on('click', '.task-edit', function () {
-    
+
     resetForm();
     $('#taskModifyModal').find('form').attr('id', 'taskUpdateForm');
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskUpdateForm');
     
-    getTask($(this).data('value')).done(function (data) {
+    getTask($(this).attr('data-value')).done(function (data) {
         
         $('#taskModifyModal').find('form').attr('data-value', data['id']);
         $('#taskModifyModal').find('[name="title"]').val(data['title']);
@@ -40,7 +40,7 @@ $(document).on('click', '.task-view', function () {
 
     $('#taskViewModal').find('.task-note-list').html('');
 
-    getTask($(this).data('value')).always(function (data) {
+    getTask($(this).attr('data-value')).always(function (data) {
 
         $('#taskViewModal').find('[data-target="#taskModifyModal"], [href="#taskModifyModal"]').attr('data-value', data['id']);
         $('#taskViewModal').find('.task-note').attr('data-value', data['id']);
@@ -168,7 +168,7 @@ $(document).on('keypress', '.task-tag', function (e) {
 
 $(document).on('click', '.task-tag-remove', function() {
 
-    $(this).closest('form').find(`input[name="tags[]"][value="${$(this).data('value')}"]`).remove();
+    $(this).closest('form').find(`input[name="tags[]"][value="${$(this).attr('data-value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -211,7 +211,7 @@ $(document).on('keypress', '.task-actor', function (e) {
 
 $(document).on('click', '.task-actor-remove', function() {
 
-    $(this).closest('form').find(`input[name="actors[]"][value="${$(this).data('value')}"]`).remove();
+    $(this).closest('form').find(`input[name="actors[]"][value="${$(this).attr('data-value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -225,7 +225,7 @@ $(document).on('keypress', '.task-note', function (e) {
 
         var data = {
             note: $(this).val(),
-            task_id: $(this).data('value')        
+            task_id: $(this).attr('data-value')        
         };
         
         addNote(data);
@@ -270,7 +270,7 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
             });
         } else if($(this).is('#taskUpdateForm')) {
             
-            task.push({name: 'id', value: $(this).data('value')});
+            task.push({name: 'id', value: $(this).attr('data-value')});
 
             updateTask(task).always(function() {
                 

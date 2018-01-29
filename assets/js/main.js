@@ -52,7 +52,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     
         if (actors.length == 0) {
 
-            iconAppend = '<i class="fa fa-user-o"></i> ';
+            iconAppend = '<i class="far fa-user"></i> ';
         } else if (actors.length == 1) {
 
             iconAppend = '<i class="fa fa-user"></i> ';
@@ -82,7 +82,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 // Column Builder
 function columnBuilder(column) {
     var columnString = 
-    `<div class="card border-0 h-100 w-25 kanban-column" 
+    `<div class="card border h-100 w-25 kanban-column rounded-0" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
         <div class="card-header clearfix"
@@ -93,7 +93,7 @@ function columnBuilder(column) {
             </h4>
 
             <span class="float-right">
-                <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
+                <a class="kanban-column-edit" href="#"><i class="fa fa-edit mx-1"></i></a>
                 <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
             </span>
 
@@ -153,7 +153,7 @@ function displayTask(items) {
     
     items.forEach(function(item) {
         
-        $(`.kanban-column[data-value="${item['column_id']}"]>.card-body`).prepend(taskBuilder(item, getTaskType() == 'team'));
+        $(`.kanban-column[data-value="${item['column_id']}"]>.card-body`).prepend(taskBuilder(item, getTaskType() == 'project'));
     });
 };
 
@@ -235,7 +235,7 @@ function searchTask(items, keyword) {
             
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 
-                $('#taskSearchList').append(taskBuilder(item, getTaskType() == 'team', true));
+                $('#taskSearchList').append(taskBuilder(item, getTaskType() == 'project', true));
             }
         });
     }
@@ -255,7 +255,7 @@ function displayBoard(board) {
     });
     
     $('#kanbanBoard .card-group').append(`
-        <div id="addColumn" class="card border-0 h-100 w-25">
+        <div id="addColumn" class="card rounded-0 border h-100 w-25">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
                 <span id="addColumnName" contenteditable="true">Type Here</span>

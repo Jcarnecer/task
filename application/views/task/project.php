@@ -6,38 +6,45 @@
     </div>
 </div>
 
-<div class="container-fluid text-center text-light bg-primary m-0 p-3" style="height: 160px;">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <h1 class="text-center"><?= $project->name ?></h1>
-        </div>
-        <div class="w-100"></div>
-        <div class="col-12">
-            <h6>
-            <?php foreach($project->members as $project_member): ?>
-                <span class="badge badge-dark"><?= $project_member->first_name . ' ' . $project_member->last_name ?></span>
+<div id="kanbanBoard" class="d-flex flex-column bg-primary h-100 w-100 m-0 p-0">
+    <div class="d-flex w-100">
+        <button class="btn btn-primary  rounded-0" data-target="#taskSearchModal" data-toggle="modal" style="width: 20%;">
+            <i class="fa fa-search"></i> Search Tasks
+        </button>
+
+        <button id="highlightBtn" class="btn btn-primary  rounded-0" style="width: 20%;">
+            <i class="fa fa-lightbulb"></i> Highlight Tasks
+        </button>
+
+        <button class="team-edit btn btn-primary  rounded-0" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>" style="width: 20%;">
+            <i class="fa fa-edit"></i> Edit Project
+        </button>
+
+        <!-- <div class="dropdown rounded-0 border-0 h-100" style="width: 20%;"> -->
+        <button class="btn btn-primary  rounded-0" data-toggle="dropdown" style="width: 20%">
+            <i class="fa fa-users"></i> Project Members
+        </button>
+
+        <div class="dropdown-menu">
+            <?php foreach($project->members as $member): ?>
+            <a class="dropdown-item" href="#">
+                <?php if($project->admin == $member->id): ?>
+                <i class="fa fa-star"></i> 
+                <?php else: ?>
+                <i class="fa fa-user"></i> 
+                <?php endif; ?>
+                <?= $member->first_name.' '.$member->last_name ?>
+            </a>
             <?php endforeach; ?>
-            </h6>
         </div>
-        <div class="w-100"></div>
-        <div class="col-12">
-            <div class="btn-group btn-group-sm">
-                <button id="highlightBtn" type="button" class="btn btn-success">
-                    <i class="fa fa-eye"></i> Highlight Tasks
-                </button>
+        <!-- </div> -->
 
-                <button type="button" class="team-edit btn btn-warning" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>">
-                    <i class="fa fa-edit"></i> Edit Project
-                </button>
-
-                <button type="button" class="team-leave btn btn-danger" data-value="<?= $project->id; ?>">
-                    <i class="fa fa-sign-out"></i> Leave
-                </button>
-            </div>
-        </div>
+        <button class="team-leave btn btn-primary  rounded-0" data-value="<?= $project->id; ?>" style="width: 20%;">
+            <i class="fa fa-sign-out-alt"></i> Leave Project
+        </button>
     </div>
-</div>
 
-<div id="kanbanBoard" class="w-100 m-0 p-0" style="height: calc(100% - 160px); overflow-x: auto;">
-    <div class="card-group h-100 m-0 p-0"></div>
+    <div class="h-100 bg-light border-top" style="overflow-x: auto; box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);">
+        <div class="card-group h-100 m-0 p-0"></div>
+    </div>
 </div>
