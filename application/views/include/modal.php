@@ -61,11 +61,11 @@
                                     </button>
                                     <?php endforeach; ?>
                                 </span>
-                                <div class="btn-group float-right">
-                                    <button type="button" class="btn btn-primary" data-target="#modifyTaskCollapse" data-toggle="collapse">
+                                <div class="float-right">
+                                    <button type="button" class="btn" data-target="#modifyTaskCollapse" data-toggle="collapse">
                                         <i class="fa fa-cog"></i> More
                                     </button>
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn custom-button">
                                         <i class="fa fa-floppy-o"></i> Save
                                     </button>
                                     <button type="button" class="close-modal d-none" data-dismiss="modal"></button>

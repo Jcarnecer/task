@@ -71,3 +71,8 @@ a:link, a:visited, a:hover, a:focus{
     text-decoration: none;
     outline: none;
 }
+
+.badge {
+    padding: 7px;
+    vertical-align: middle;
+}

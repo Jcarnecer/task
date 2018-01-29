@@ -65,12 +65,12 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     var taskString = 
     `<div class="card my-1 rounded kanban-task task-view"
         data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}" 
-        ${modalDismissAppend} 
-        style="background-color:${task['color']};">
+        ${modalDismissAppend}">
         
         <div class="card-body" ${contributorsAppend}
             draggable="true" ondragstart="drag(event)" ondragend="closeDeleteModal(event)">
-            <h5 class="card-title font-weight-bold">${iconAppend + task['title']}</h5>
+            <span class="badge badge-pill" style="background-color:${task['color']};"> </span>
+            <h5 class="card-title mb-0 d-inline font-weight-bold">${iconAppend + task['title']}</h5>
         </div>
 
     </div>`;
@@ -98,7 +98,7 @@ function columnBuilder(column) {
             </span>
 
         </div>
-        <div class="card-body text-center" style="overflow-y: auto;">
+        <div class="card-body" style="overflow-y: auto;">
             <button type="button" class="btn custom-button btn-block my-2 task-create"
                 data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
                 <i class="fa fa-plus"></i> Add Task

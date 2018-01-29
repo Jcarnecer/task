@@ -21,6 +21,7 @@
 
 #kanbanBoard .kanban-task {
     transition: all 0.2s ease-in-out;
+    border: 1px solid #cccccc;
 }
 
 

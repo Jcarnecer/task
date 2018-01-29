@@ -127,7 +127,7 @@ $(document).on('click', '.btn-color', function () {
     $(this).siblings('.btn-color').find('i').removeClass('fa fa-check fa-lg');
     $(this).closest('form').find('[name="color"]').attr('value', $(this).data('value'));
     $('#taskModifyModal .card .card-header').css('background-color', $(this).data('value'));
-    console.log($('#taskModifyModal .card').find('.card-header'));
+    // console.log($('#taskModifyModal .card').find('.card-header'));
     // $(this).closest('#taskModifyModal .card .card-footer').css('background-color', $(this).data('value'));
 });
 
