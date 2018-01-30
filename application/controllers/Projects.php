@@ -46,8 +46,8 @@ class Projects extends CI_Controller {
 		$members 	= $this->input->post('members[]');
 		$members[]	= $this->session->user->email_address;
 		
-		$this->project->update($id, ['title' => $this->input->post('name')]);
-		$this->project->update_members($id, $members);
+		$this->project->update($proj_id, ['name' => $this->input->post('name')]);
+		$this->project->update_members($proj_id, $members);
 	}
 
 

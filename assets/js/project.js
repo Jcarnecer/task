@@ -20,7 +20,7 @@ $(document).on('click', '.team-edit', function () {
     $('#teamModifyModal .team-button-text').html('Edit Team');
     $('#teamModifyModal').find('.team-member').siblings('span.badge').remove();
 
-    getProject($(this).data('value')).always(function(data) {
+    getProject($(this).attr('data-value')).always(function(data) {
 
         $('#teamModifyModal').find('form').attr('data-value', data['id']);
         $('#teamModifyModal').find('[name="name"]').val(data['name']);
@@ -80,7 +80,7 @@ $(document).on('keypress', '.team-member', function (e) {
 
 $(document).on('click', '.team-member-remove', function () {
 
-    $(this).closest('form').find(`input[name="members[]"][value="${$(this).data('value')}"]`).remove();
+    $(this).closest('form').find(`input[name="members[]"][value="${$(this).attr('data-value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -119,7 +119,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
             });
         } else if($(this).attr('id') == 'teamUpdateForm') {
         
-            teamDetails.push({name: id, value: $(this).data('value')})
+            teamDetails.push({name: 'id', value: $(this).attr('data-value')});
 
             updateProject(teamDetails).always(function() {
 

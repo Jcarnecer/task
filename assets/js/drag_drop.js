@@ -7,7 +7,7 @@ function drag(e) {
 
     var $elem = $(e.target);
 
-    e.dataTransfer.setData('id', $elem.parent().data('value'));
+    e.dataTransfer.setData('id', $elem.parent().attr('data-value'));
 
     if($elem.parent().hasClass('kanban-column')) {
       
@@ -41,7 +41,7 @@ function drop(e) {
 
         var task_details = {
             id:         id,
-            column_id:  $elem.data('value')
+            column_id:  $elem.attr('data-value')
         }
 
         changeTaskColumn(task_details);
@@ -51,22 +51,22 @@ function drop(e) {
             
             $.each($('#kanbanBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
                 
-                if(Number($(column).data('position')) >= Number($elem.data('position')) && Number($(column).data('position')) < Number($(`.kanban-column[data-value="${id}"]`).data('position'))) {
+                if(Number($(column).attr('data-position')) >= Number($elem.attr('data-position')) && Number($(column).attr('data-position')) < Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {
                     
-                    $(column).data('position', Number($(column).data('position')) + 1);
+                    $(column).attr('data-position', Number($(column).attr('data-position')) + 1);
 
                     updateColumn.push({
-                        id: $(column).data('value'),
-                        position: $(column).data('position')
+                        id: $(column).attr('data-value'),
+                        position: $(column).attr('data-position')
                     });
                 }
             });
             
-            $(`.kanban-column[data-value="${id}"]`).data('position', Number($elem.data('position')) - 1);
+            $(`.kanban-column[data-value="${id}"]`).attr('data-position', Number($elem.attr('data-position')) - 1);
 
             updateColumn.push({
-                id: $(`.kanban-column[data-value="${id}"]`).data('value'),
-                position: $(`.kanban-column[data-value="${id}"]`).data('position')
+                id: $(`.kanban-column[data-value="${id}"]`).attr('data-value'),
+                position: $(`.kanban-column[data-value="${id}"]`).attr('data-position')
             });
             
             $elem.before($(`.kanban-column[data-value="${id}"]`));
@@ -74,22 +74,22 @@ function drop(e) {
             
             $.each($('#kanbanBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
                 
-                if(Number($(column).data('position')) <= Number($elem.data('position')) &&  Number($(column).data('position')) > Number($(`.kanban-column[data-value="${id}"]`).data('position'))) {
+                if(Number($(column).attr('data-position')) <= Number($elem.attr('data-position')) &&  Number($(column).attr('data-position')) > Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {
                     
-                    $(column).data('position', Number($(column).data('position')) - 1);
+                    $(column).attr('data-position', Number($(column).attr('data-position')) - 1);
 
                     updateColumn.push({
-                        id: $(column).data('value'),
-                        position: $(column).data('position')
+                        id: $(column).attr('data-value'),
+                        position: $(column).attr('data-position')
                     });
                 }
             });
             
-            $(`.kanban-column[data-value="${id}"]`).data('position', Number($elem.data('position')) + 1);
+            $(`.kanban-column[data-value="${id}"]`).attr('data-position', Number($elem.attr('data-position')) + 1);
 
             updateColumn.push({
-                id: $(`.kanban-column[data-value="${id}"]`).data('value'),
-                position: $(`.kanban-column[data-value="${id}"]`).data('position')
+                id: $(`.kanban-column[data-value="${id}"]`).attr('data-value'),
+                position: $(`.kanban-column[data-value="${id}"]`).attr('data-position')
             });
 
             $elem.after($(`.kanban-column[data-value="${id}"]`));
