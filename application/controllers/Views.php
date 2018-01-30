@@ -11,7 +11,7 @@ class Views extends CI_Controller {
         }
 
         if (!$this->session->has_userdata("user")) {
-        	return redirect("http://payakapps.com/users/login");
+        	return redirect(LOGIN_URL);
         }
     }
 
