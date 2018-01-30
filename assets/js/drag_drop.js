@@ -7,30 +7,23 @@ function drag(e) {
 
     var $elem = $(e.target);
 
-    e.dataTransfer.setData('id', $elem.parent().attr('data-value'));
-
-    if($elem.parent().hasClass('kanban-column')) {
-      
-        e.dataTransfer.setData('type', 'column');
-    } else if($elem.parent().hasClass('kanban-task')) {
-        
-        e.dataTransfer.setData('type', 'task');
-        $('#deleteTaskModal').removeClass('d-none');
-    }
-}
-
-function closeDeleteModal(e) {
     
-    $('#deleteTaskModal').addClass('d-none');
+    if($elem.parent().hasClass('kanban-column')) {
+        
+        e.dataTransfer.setData('id', $elem.parent().attr('data-value'));
+        e.dataTransfer.setData('type', 'column');
+    } else if($elem.hasClass('kanban-task')) {
+        
+        e.dataTransfer.setData('id', $elem.attr('data-value'));
+        e.dataTransfer.setData('type', 'task');
+    }
 }
 
 function drop(e) {
     
     e.preventDefault();
 
-    $('#deleteTaskModal').addClass('d-none');
-
-    var $elem = $(e.target).hasClass('.kanban-column') ? $(e.target) : $(e.target).closest('.kanban-column');
+    var $elem = $(e.target).hasClass('kanban-column') ? $(e.target) : $(e.target).closest('.kanban-column');
     var id = e.dataTransfer.getData('id');
     var type = e.dataTransfer.getData('type');
     var updateColumn = [];
@@ -97,12 +90,4 @@ function drop(e) {
 
         changeColumnsPosition({column_update: updateColumn});
     }
-}
-
-function deleteTask(e) {
-    
-    $(`.kanban-task[data-value="${e.dataTransfer.getData('id')}"]`).remove();
-    $(`.task-count`).html(Number($(`.task-count`).html()) - 1);
-
-    archiveTask(e.dataTransfer.getData('id'));
 }

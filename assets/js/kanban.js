@@ -39,6 +39,12 @@ $(document).on('select, click', '#addColumnName', function(e) {
 });
 
 
+$(document).on('blur', '#addColumnName', function(e) {
+
+    $('#addColumnName').html('Type Here');
+});
+
+
 $(document).on('keypress', '#addColumnName', function(e) {
 
     if ($('#addColumnName').html() == 'Type Here') {
