@@ -1,8 +1,8 @@
 <div id="deleteTaskModal" ondrop="deleteTask(event)" ondragover="allowDrop(event)" class="d-none card position-fixed bg-dark text-white rounded w-50" style="z-index: 9999; top: 10%; left: 25%; height: 15%">
     <div class="card-body d-flex justify-content-center align-items-center">
-        <h1 class="card-title">
+        <h4 class="card-title">
             <i class="fa fa-archive"></i> Archive Task
-        </h1>
+        </h4>
     </div>
 </div>
 

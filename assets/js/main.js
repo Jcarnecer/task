@@ -64,13 +64,17 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 
     var taskString = 
     `<div class="card my-1 rounded kanban-task task-view"
-        data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}" 
+         data-value="${task['id']}" data-parent="${task['column_id']}" 
         ${modalDismissAppend}">
         
-        <div class="card-body" ${contributorsAppend}
+        <div class="card-body" data-toggle="modal" data-target="#taskViewModal" ${contributorsAppend}
             draggable="true" ondragstart="drag(event)" ondragend="closeDeleteModal(event)">
             <span class="badge badge-pill" style="background-color:${task['color']};"> </span>
             <h5 class="card-title mb-0 d-inline font-weight-bold">${iconAppend + task['title']}</h5>
+        </div>
+        <div class="card-footer pt-2 border-top-0">
+            <small>Date</small>
+            <button class="float-right"><i class="fa fa-archive float-right"></i></button>
         </div>
 
     </div>`;
@@ -85,17 +89,25 @@ function columnBuilder(column) {
     `<div class="card border-0 h-100 w-25 kanban-column" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
-        <div class="card-header clearfix"
+        <div class="card-header kanban-column-edit clearfix"
             draggable="true" ondragstart="drag(event)">
 
             <h4 class="kanban-column-title mb-0 float-left" contenteditable="false">
                 ${column['name']}
             </h4>
 
-            <span class="float-right">
-                <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
-                <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
-            </span>
+            
+            <div class="dropdown show float-right">
+                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-angle-down fa-lg"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item kanban-column-edit" href="#">Edit</a>
+                    <a class="dropdown-item kanban-column-delete" href="#">Delete</a>
+                </div>
+            </div>
+                
 
         </div>
         <div class="card-body" style="overflow-y: auto;">

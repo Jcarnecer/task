@@ -4,6 +4,7 @@
 
 #kanbanBoard .card-header {
     border-radius: 0;
+    cursor: text;
 }
 
 #kanbanBoard .card-header span i {
