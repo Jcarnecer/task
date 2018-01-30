@@ -76,3 +76,12 @@ a:link, a:visited, a:hover, a:focus{
     padding: 7px;
     vertical-align: middle;
 }
+
+.task-view .card-footer button {
+    background: none;
+    border: none;
+}
+
+.task-view .card-footer button i {
+    line-height: 20px;
+}
