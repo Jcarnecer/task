@@ -96,7 +96,6 @@ function columnBuilder(column) {
                 ${column['name']}
             </h4>
 
-<<<<<<< HEAD
             
             <div class="dropdown show float-right">
                 <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,12 +108,6 @@ function columnBuilder(column) {
                 </div>
             </div>
                 
-=======
-            <span class="float-right">
-                <a class="kanban-column-edit" href="#"><i class="fa fa-edit mx-1"></i></a>
-                <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
-            </span>
->>>>>>> master
 
         </div>
         <div class="card-body" style="overflow-y: auto;">
