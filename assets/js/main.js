@@ -65,7 +65,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     var taskString = 
     `<div class="card my-1 rounded kanban-task task-view"
          data-value="${task['id']}" data-parent="${task['column_id']}" ${contributorsAppend}
-         draggable="true" ondragstart="drag(event)" ondragend="closeDeleteModal(event)" 
+         draggable="true" ondragstart="drag(event)" 
         ${modalDismissAppend}">
         
         <div class="card-body" data-toggle="modal" data-target="#taskViewModal">
@@ -73,8 +73,8 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
             <h5 class="card-title mb-0 d-inline font-weight-bold">${iconAppend + task['title']}</h5>
         </div>
         <div class="card-footer pt-2 border-top-0">
-            <small>Date</small>
-            <button class="float-right task-archive"><i class="fa fa-archive float-right"></i></button>
+            <small class="${task['remaining_days'] < 0 ? 'text-danger' : ''}">${task['due_date_long']}</small>
+            <button class="float-right task-archive" data-value="${task['id']}"><i class="fa fa-archive float-right"></i></button>
         </div>
 
     </div>`;

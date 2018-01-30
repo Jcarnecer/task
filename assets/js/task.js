@@ -96,6 +96,17 @@ $(document).on('click', '.task-view', function () {
 });
 
 
+$(document).on('click', '.task-archive', function() {
+
+    var $task = $(this).closest('.card .kanban-task');
+    
+    archiveTask($(this).attr('data-value')).done(function() {
+
+        $task.remove();
+    });
+});
+
+
 // Search
 $(document).on('click', '[href="#taskSearchModal"]', function(e) {
 
