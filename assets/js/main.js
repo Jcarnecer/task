@@ -1,7 +1,7 @@
 switch(window.location.origin){
-    case 'http://task.payakapps.com': const baseUrl = 'http://task.payakapps.com/'; break;
-    case 'http://stage.payakapps.com': const baseUrl = 'http://stage.payakapps.com/'; break;
-    default: const baseUrl = 'http://task.payakapps.com/'; break;
+    case 'http://task.payakapps.com': var baseUrl = 'http://task.payakapps.com/'; break;
+    case 'http://stage.payakapps.com': var baseUrl = 'http://stage.payakapps.com/'; break;
+    default: var baseUrl = 'http://localhost/task/'; break;
 }
 
 var userId = null;
