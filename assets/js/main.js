@@ -1,4 +1,8 @@
-const baseUrl = window.location.origin === "http://task.payakapps.com" ? "http://task.payakapps.com/" : "http://localhost/task/";
+switch(window.location.origin){
+    case 'http://task.payakapps.com': const baseUrl = 'http://task.payakapps.com/'; break;
+    case 'http://stage.payakapps.com': const baseUrl = 'http://stage.payakapps.com/'; break;
+    default: const baseUrl = 'http://task.payakapps.com/'; break;
+}
 
 var userId = null;
 var authorId = null;
