@@ -19,6 +19,12 @@ class Projects extends CI_Controller {
 		echo json_encode($this->project->get_many_by_user($this->session->user->id));
 	}
 
+
+	public function get_member()
+	{
+		echo json_encode($this->project->get_member_by_email($this->input->get('email_address')));
+	}
+
 	
 	# Create Project
 	public function insert() {

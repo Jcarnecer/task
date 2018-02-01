@@ -94,8 +94,19 @@ $(document).on('keypress', '.team-member', function (e) {
 
 $(document).on('click', '.team-member-remove', function () {
 
-    $(this).closest('form').find(`input[name="members[]"][value="${$(this).attr('data-value')}"]`).remove();
-    $(this).parent().remove();
+    var $elem = $(this);
+    var memberDetail = {
+        email_address: $(this).attr('data-value')
+    };
+
+    getMember(memberDetail).done(function(data) {
+
+        if(confirm(`Are you sure you want to remove ${data['first_name']} ${data['last_name']} from your project?`)) {
+            
+            $elem.closest('form').find(`input[name="members[]"][value="${$elem.attr('data-value')}"]`).remove();
+            $elem.parent().remove();
+        }
+    });
 });
 
 
