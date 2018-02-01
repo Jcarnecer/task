@@ -24,22 +24,36 @@ $(document).on('click', '.team-edit', function () {
 
         $('#teamModifyModal').find('form').attr('data-value', data['id']);
         $('#teamModifyModal').find('[name="name"]').val(data['name']);
+        
+        if(data['admin'] == getUserId()) {
+            
+            $('#teamModifyModal').find('[name="name"]').prop('readonly', false);
+        } else {
+            
+            $('#teamModifyModal').find('[name="name"]').prop('readonly', true);
+            $('#teamModifyModal').find('input.team-member').removeClass('d-inline-block');
+            $('#teamModifyModal').find('input.team-member').addClass('d-none');
+            $('#teamModifyModal').find('button[type="submit"]').addClass('d-none');
+        }
 
-        displayMember(data['members'], true);
+        displayMember(data['members'], data['admin'] == getUserId());
     });
 });
 
 
 $(document).on('click', '.team-leave', function () {
 
-    var project_details = {
-        proj_id: getAuthorId()
+    if(confirm('Are you sure you want to leave this project?')) {
+
+        var project_details = {
+            proj_id: getAuthorId()
+        }
+    
+        leaveProject(project_details).always(function () {
+    
+            window.location.href = `${baseUrl}tasks`;
+        });
     }
-
-    leaveProject(project_details).always(function () {
-
-        window.location.href = `${baseUrl}tasks`;
-    });
 });
 
 

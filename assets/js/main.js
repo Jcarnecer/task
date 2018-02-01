@@ -142,8 +142,8 @@ function displayMember(items, edit = false) {
             );
         } else
 
-            $('.team-member-list').append(
-                `<span class="badge badge-secondary">${item['first_name']} ${item['last_name']}</span>`
+            $('.team-member').before(
+                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']}</span>`
             );
     });
 };
