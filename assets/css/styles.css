@@ -167,6 +167,10 @@ body {
   border: none !important;
 }
 
+.project-buttons {
+  border-bottom: 3px solid #38b5ff;
+}
+
 .project-button {
   padding-bottom: 15px;
   padding-top: 15px;

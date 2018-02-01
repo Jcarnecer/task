@@ -85,7 +85,7 @@
         </nav>
     </div>
     
-    <div class="inner-content d-flex flex-column">
+    <div class="inner-content d-flex project-buttons flex-column">
         <?php if($task_type == 'project'): ?>
         <div class="d-flex w-100">
             <a href="http://localhost/task/project/<?= $project->id ?>" class="btn btn-lg project-button w-50 rounded-0 active"><i class="fa fa-tasks"></i> Tasks</a>
