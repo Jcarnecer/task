@@ -33,6 +33,16 @@ class Project_model extends CI_Model {
 	}
 
 
+	public function get_member_by_email($email_address)
+	{
+		return $this->db->select('t1.first_name, t1.last_name')
+			->from('users as t1')
+			->where(['email_address' => $email_address])
+			->get()
+			->row();
+	}
+
+
 	public function get_all($proj_id) {
 
 		return $this->db->select('t1.*')

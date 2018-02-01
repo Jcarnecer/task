@@ -9,7 +9,7 @@
         </button>
 
         <button class="team-edit btn btn-primary  rounded-0" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>" style="width: 20%;">
-            <i class="fa fa-edit"></i> Edit Project
+            <i class="fa fa-edit"></i> Edit/View Project
         </button>
 
         <!-- <div class="dropdown rounded-0 border-0 h-100" style="width: 20%;"> -->
