@@ -78,7 +78,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
         </div>
         <div class="card-footer pt-2 border-top-0">
             <small class="${task['remaining_days'] < 0 ? 'text-danger' : ''}">${task['due_date_long']}</small>
-            <button class="float-right task-archive" data-value="${task['id']}"><i class="fa fa-archive float-right"></i></button>
+            <button class="float-right task-archive" data-value="${task['id']}"><i class="fa fa-archive"></i></button>
         </div>
 
     </div>`;

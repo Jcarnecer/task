@@ -166,3 +166,47 @@ body {
 .modal-content .card {
   border: none !important;
 }
+
+.project-button {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  color: #626262;
+  background-color: #f2f2f2;
+}
+
+.project-button:hover {
+  background-color: #3679b2;
+  color: #ffffff;
+}
+
+.project-button.active {
+  background-color: #38b5ff;
+  color: #ffffff;
+  /* -webkit-box-shadow: 10px 0 5px -2px #888;
+          box-shadow: 10px 0 5px -2px #888; */
+}
+
+/* .project-button:hover {
+  color: #3679b2;
+} */
+
+.secondary-button {
+  /* background-color: #cccccc; */
+  /* color: #ffffff; */
+  /* border-bottom: 3px solid transparent; */
+  border-top: 3px solid #38b5ff;
+  border-left: none;
+  border-right: none;
+  color: #626262;
+  padding-bottom: 13px;
+  padding-top: 10px;
+}
+
+.secondary-button:hover {
+  color: #3679b2;
+  /* border-bottom: 3px solid #3679b2; */
+}
+
+.secondary-button:focus {
+  box-shadow: none;
+}
