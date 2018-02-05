@@ -134,8 +134,8 @@ $('#taskSearchModal').on('hidden.bs.modal', function () {
 // Button Color
 $(document).on('click', '.btn-color', function () {
 
-    $(this).find('i').addClass('fa fa-check fa-lg');
-    $(this).siblings('.btn-color').find('i').removeClass('fa fa-check fa-lg');
+    $('.btn-color .fa-check').hide();
+    $(this).find('.fa-check').show();
     $(this).closest('form').find('[name="color"]').attr('value', $(this).data('value'));
     $('#taskModifyModal .card .card-header').css('background-color', $(this).data('value'));
     // console.log($('#taskModifyModal .card').find('.card-header'));
