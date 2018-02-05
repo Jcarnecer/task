@@ -59,3 +59,7 @@
 .kanban-column-title {
     outline:none;
 }
+
+.task-view {
+    cursor: pointer;
+}
