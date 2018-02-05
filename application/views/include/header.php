@@ -87,8 +87,46 @@
     
     <div class="inner-content d-flex flex-column">
         <?php if($task_type == 'project'): ?>
-        <div class="d-flex w-100 project-buttons">
+        <!-- <div class="d-flex w-100 project-buttons">
             <a href="http://localhost/task/project/<?= $project->id ?>" class="btn btn-lg project-button w-50 rounded-0 active"><i class="fa fa-tasks"></i> Tasks</a>
-            <a href="http://localhost/forum/project/<?= $project->id ?>" class="btn btn-lg project-button w-50 rounded-0"><i class="fa fa-exchange-alt"></i> Forum</a>
-        </div>
+            <a href="http://localhost/forum/project/<?= $project->id ?>" class="btn btn-lg project-button w-50 rounded-0"><i class="fa fa-exchange-alt"></i> Discussion</a>
+        </div> -->
+        <!-- <div class="dropdown show float-right">
+                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-angle-down fa-lg"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item kanban-column-edit" href="#">Edit</a>
+                    <a class="dropdown-item kanban-column-delete" href="#">Delete</a>
+                </div>
+            </div> -->
+        <ul class="nav nav-tabs project-buttons">
+            <li class="nav-item dropdown w-50">
+                <a href="http://localhost/task/project/<?= $project->id ?>" class="nav-link dropdown-toggle project-button active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tasks"></i> Tasks</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" id="highlightBtn"><i class="fa fa-lightbulb"></i> Highlight Tasks</a>
+                <a class="dropdown-item" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>"><i class="fa fa-edit"></i> Edit Project</a>
+                <a class="dropdown-item" data-toggle="dropdown"><i class="fa fa-users"></i> Project Members
+                <div class="dropdown-menu">
+                    <?php foreach($project->members as $member): ?>
+                    <a class="dropdown-item" href="#">
+                        <?php if($project->admin == $member->id): ?>
+                        <i class="fa fa-star"></i> 
+                        <?php else: ?>
+                        <i class="fa fa-user"></i> 
+                        <?php endif; ?>
+                        <?= $member->first_name.' '.$member->last_name ?>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+                </a>
+                <!-- <div class="dropdown-divider"></div> -->
+                <a class="dropdown-item" data-value="<?= $project->id; ?>"><i class="fa fa-sign-out-alt"></i> Leave Project</a>
+                </div>
+            </li>
+            <li class="nav-item w-50">
+            <a href="http://localhost/forum/project/<?= $project->id ?>" class="nav-link secondary-button"><i class="fa fa-exchange-alt"></i> Discussion</a>
+            </li>
+        </ul>
         <?php endif; ?>
