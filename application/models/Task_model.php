@@ -34,7 +34,7 @@ class Task_model extends CI_Model {
 			$tasks = $this->db->get_where('kb_tasks', ['user_id' => $author_id, 'status' => $status])->result();
 		else
 			$tasks = $this->db->get_where('kb_tasks', ['user_id' => $author_id])->result();
-		print_r($tasks);
+		// print_r($tasks);
 		foreach ($tasks as $index => $task) {
 
 			$tasks[$index]->due_date_long	= date('F d, Y', strtotime($task->due_date));

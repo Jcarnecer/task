@@ -67,7 +67,8 @@ $route['api/project/get']['GET']                = 'Projects/get';
 $route['api/project/insert']['POST']            = 'Projects/insert';
 $route['api/project/update']['POST']            = 'Projects/update';
 $route['api/project/leave']['POST']             = 'Projects/leave_project';
-$route['api/validate_member']['POST']           = 'Projects/validate_member';
+$route['api/project/get_member']['GET']         = 'Projects/get_member';
+$route['api/project/validate_member']['POST']   = 'Projects/validate_member';
 
 # board
 $route['api/board/get']['GET']                  = 'Boards/get_board_by_project';
