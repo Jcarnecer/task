@@ -14,19 +14,7 @@ class Tasks extends CI_Controller {
 	# Fetch All Board Tasks
 	public function get_all()
 	{
-		$author_id = $this->input->get('author_id');
-		
-		if($this->input->get('callback') != null) 
-		{
-			header('Access-Control-Allow-Origin: *');
-			header('Access-Control-Allow-Methods: GET');
-			header('Access-Control-Max-Age: 600');
-			echo $this->input->get('callback').'('.json_encode($this->task->get_all($author_id, 1)).')';
-		}
-		else
-		{
-			echo json_encode($this->task->get_all($author_id, 1));
-		}
+		echo json_encode($this->task->get_all($this->input->get('author_id'), 1));
 	}
 	
 	
