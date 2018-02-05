@@ -54,7 +54,7 @@
         </li>
         
         <li class="">
-            <a class="" href="http://payakapps.com/users/logout">
+            <a class="" href="<?= ENVIRONMENT === 'development' ? 'http://localhost/main/users/logout' : 'http://payakapps.com/users/logout' ?>">
                 <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                 <span>Logout</span>
             </a>
