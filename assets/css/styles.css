@@ -170,13 +170,17 @@ body {
 .project-buttons {
   background-color: #3679b2;
   border-bottom: 3px solid #38b5ff;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
   text-align: center;
 }
 
 .project-buttons .dropdown .dropdown-menu {
   margin-left: 50%;
   cursor: pointer;
+}
+.project-buttons .dropdown .dropdown-menu .dropdown-item:active {
+  background-color: #3679b2;
+  color: #ffffff;
 }
 
 .nav-tabs .nav-link {
