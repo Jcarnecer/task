@@ -2,26 +2,42 @@
     transition: all 0.2s ease-in-out;
 }
 
+#kanbanBoard .card-header {
+    border-radius: 0;
+    cursor: text;
+}
+
+#kanbanBoard .card-header span i {
+    font-size: 18px;
+    color: #38b5ff;
+}
+
+#kanbanBoard .card-header span i:hover {
+    color: #3679b2;
+}
+
 #kanbanBoard .card {
     transition: all 0.2s ease-in-out;
 }
 
 #kanbanBoard .kanban-task {
     transition: all 0.2s ease-in-out;
+    border: 1px solid #cccccc;
 }
 
 
 /* Highlight */
 #kanbanBoard.highlight {
-    background-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, .3);
 }
 
 
-#kanbanBoard.highlight>.card-group>.card {
-    background-color: rgba(0, 0, 0, 1);
+#kanbanBoard.highlight .card-group>.card {
+    background-color: rgba(0, 0, 0, .3);
+    border-color: #626262 !important;
 }
 
-#kanbanBoard.highlight>.card-group>.card>.card-header {
+#kanbanBoard.highlight .card-group>.card>.card-header {
     color: #fff;
 }
 
@@ -37,8 +53,13 @@
 /* Column */
 #addColumnName {
     outline: none;
+    padding-left: 5px;
 }
 
 .kanban-column-title {
     outline:none;
+}
+
+.task-view {
+    cursor: pointer;
 }

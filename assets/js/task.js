@@ -3,22 +3,22 @@ $(function () {
 var storedTasks = null;
 
 // Load Modal
-$(document).on('click', '.task-create', function() {
+$(document).on('click', '.task-create', function () {
 
     resetForm();
     $('#taskModifyModal').find('form').attr('id', 'taskCreateForm');
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskCreateForm');
-    $('#taskModifyModal').find('[name="column_id"]').val($(this).data('parent'));
+    $('#taskModifyModal').find('[name="column_id"]').val($(this).attr('data-parent'));
 });
 
 
 $(document).on('click', '.task-edit', function () {
-    
+
     resetForm();
     $('#taskModifyModal').find('form').attr('id', 'taskUpdateForm');
     $('#taskModifyModal').find('button[type="submit"]').attr('form', 'taskUpdateForm');
     
-    getTask($(this).data('value')).done(function (data) {
+    getTask($(this).attr('data-value')).done(function (data) {
         
         $('#taskModifyModal').find('form').attr('data-value', data['id']);
         $('#taskModifyModal').find('[name="title"]').val(data['title']);
@@ -29,7 +29,7 @@ $(document).on('click', '.task-edit', function () {
         displayTag(data['tags'], true);
         displayActor(data['actors'], true);
         
-        $('#taskModifyModal .card').css('background-color', data['color']);
+        $('#taskModifyModal .card .card-header').css('background-color', data['color']);
         $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
         $('#taskModifyModal').find(`button[data-value="${data['color']}"] i`).addClass('fa fa-check fa-lg');
     });
@@ -40,7 +40,7 @@ $(document).on('click', '.task-view', function () {
 
     $('#taskViewModal').find('.task-note-list').html('');
 
-    getTask($(this).data('value')).always(function (data) {
+    getTask($(this).attr('data-value')).always(function (data) {
 
         $('#taskViewModal').find('[data-target="#taskModifyModal"], [href="#taskModifyModal"]').attr('data-value', data['id']);
         $('#taskViewModal').find('.task-note').attr('data-value', data['id']);
@@ -53,7 +53,7 @@ $(document).on('click', '.task-view', function () {
         $('#taskViewModal').find('.task-countdown-text').html('');
         $('#taskViewModal').find('.task-tag-list').html('');
         $('#taskViewModal').find('.task-actor-list').html('');
-        $('#taskViewModal').find('.card').css('background-color', data['color']);
+        $('#taskViewModal').find('.card .card-header').css('background-color', data['color']);
 
         if(data['status'] == 2) // ARCHIVE
 
@@ -96,6 +96,17 @@ $(document).on('click', '.task-view', function () {
 });
 
 
+$(document).on('click', '.task-archive', function() {
+
+    var $task = $(this).closest('.card .kanban-task');
+    
+    archiveTask($(this).attr('data-value')).done(function() {
+
+        $task.remove();
+    });
+});
+
+
 // Search
 $(document).on('click', '[href="#taskSearchModal"]', function(e) {
 
@@ -123,10 +134,12 @@ $('#taskSearchModal').on('hidden.bs.modal', function () {
 // Button Color
 $(document).on('click', '.btn-color', function () {
 
-    $(this).find('i').addClass('fa fa-check fa-lg');
-    $(this).siblings('.btn-color').find('i').removeClass('fa fa-check fa-lg');
+    $('.btn-color .fa-check').hide();
+    $(this).find('.fa-check').show();
     $(this).closest('form').find('[name="color"]').attr('value', $(this).data('value'));
-    $(this).closest('#taskModifyModal .card').css('background-color', $(this).data('value'));
+    $('#taskModifyModal .card .card-header').css('background-color', $(this).data('value'));
+    // console.log($('#taskModifyModal .card').find('.card-header'));
+    // $(this).closest('#taskModifyModal .card .card-footer').css('background-color', $(this).data('value'));
 });
 
 
@@ -166,7 +179,7 @@ $(document).on('keypress', '.task-tag', function (e) {
 
 $(document).on('click', '.task-tag-remove', function() {
 
-    $(this).closest('form').find(`input[name="tags[]"][value="${$(this).data('value')}"]`).remove();
+    $(this).closest('form').find(`input[name="tags[]"][value="${$(this).attr('data-value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -209,7 +222,7 @@ $(document).on('keypress', '.task-actor', function (e) {
 
 $(document).on('click', '.task-actor-remove', function() {
 
-    $(this).closest('form').find(`input[name="actors[]"][value="${$(this).data('value')}"]`).remove();
+    $(this).closest('form').find(`input[name="actors[]"][value="${$(this).attr('data-value')}"]`).remove();
     $(this).parent().remove();
 });
 
@@ -223,7 +236,7 @@ $(document).on('keypress', '.task-note', function (e) {
 
         var data = {
             note: $(this).val(),
-            task_id: $(this).data('value')        
+            task_id: $(this).attr('data-value')        
         };
         
         addNote(data);
@@ -235,7 +248,7 @@ $(document).on('keypress', '.task-note', function (e) {
                     data-toggle="popover" data-trigger="hover" data-html="true" data-placement="left" data-content="${userName}">
                 </h4>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 text-dark">
                 ${$(this).val()}
             </div>
         `);
@@ -268,7 +281,7 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
             });
         } else if($(this).is('#taskUpdateForm')) {
             
-            task.push({name: 'id', value: $(this).data('value')});
+            task.push({name: 'id', value: $(this).attr('data-value')});
 
             updateTask(task).always(function() {
                 

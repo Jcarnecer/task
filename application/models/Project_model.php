@@ -5,7 +5,6 @@ class Project_model extends CI_Model {
 
 
 	public function get($proj_id) {
-
 		
 		return $this->db->get_where('pj_projects', ['id' => $proj_id])->row();
 	}
@@ -31,6 +30,16 @@ class Project_model extends CI_Model {
 		
 			return $this->db->select('id')->from('pj_projects')->get()->result();
 		}
+	}
+
+
+	public function get_member_by_email($email_address)
+	{
+		return $this->db->select('t1.first_name, t1.last_name')
+			->from('users as t1')
+			->where(['email_address' => $email_address])
+			->get()
+			->row();
 	}
 
 

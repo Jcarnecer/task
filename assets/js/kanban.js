@@ -39,6 +39,12 @@ $(document).on('select, click', '#addColumnName', function(e) {
 });
 
 
+$(document).on('blur', '#addColumnName', function(e) {
+
+    $('#addColumnName').html('Type Here');
+});
+
+
 $(document).on('keypress', '#addColumnName', function(e) {
 
     if ($('#addColumnName').html() == 'Type Here') {
@@ -50,13 +56,11 @@ $(document).on('keypress', '#addColumnName', function(e) {
 
         e.preventDefault();
 
-        console.log(getAllColumn($('#kanbanBoard').data('value')));
-
-        var columnCount = getAllColumn($('#kanbanBoard').data('value')).responseJSON.length + 1;
+        var columnCount = getAllColumn($('#kanbanBoard').attr('data-value')).responseJSON.length + 1;
         
         var columnDetails = {
             name:       $(this).html(),
-            board_id:   $('#kanbanBoard').data('value'),
+            board_id:   $('#kanbanBoard').attr('data-value'),
             position:   columnCount
         };
         
@@ -74,15 +78,15 @@ $(document).on('click', '.kanban-column-delete',  function(e) {
     if(confirm(`Are you sure you want to delete ${$(this).closest('.kanban-column').find('.kanban-column-title').html().trim()}?`)){
 
         var columnDetails = {
-            id: $(this).closest('.kanban-column').data('value')
+            id: $(this).closest('.kanban-column').attr('data-value')
         };
 
         deleteColumn(columnDetails);
         $(this).closest('.kanban-column').remove();
     
-        var newWidth = $('#kanbanBoard>.card-group').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
+        var newWidth = $('#kanbanBoard .card-group').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
     
-        $('#kanbanBoard>.card-group').css('width', `${newWidth}%`);
+        $('#kanbanBoard .card-group').css('width', `${newWidth}%`);
     }
 });
    
@@ -102,9 +106,9 @@ $(document).on('keypress', '.kanban-column .kanban-column-title', function(e) {
         e.preventDefault();
 
         var columnDetails = {
-            id:         $(this).closest('.kanban-column').data('value'), 
+            id:         $(this).closest('.kanban-column').attr('data-value'), 
             name:       $(this).html(), 
-            position:   $(this).closest('.kanban-column').data('position')
+            position:   $(this).closest('.kanban-column').attr('data-position')
         };
 
         updateColumn(columnDetails);

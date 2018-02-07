@@ -8,13 +8,12 @@
                             <input type="text" class="h3 font-weight-bold border-0 h-100 w-100" name="name" placeholder="Project Name" maxlength="20" style="outline: none; background-color: rgba(0, 0, 0, 0);" required>
                         </div>
                         <div class="card-body">
-                            <div class="container-fluid p-0">
-                                <p class="card-title d-inline-block">Members: </p>
-                                <input type="text" class="team-member border-0 d-inline-block" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                            <div class="d-block">
+                                <label>Members:</label>
+                                <input type="text" class="team-member border-0" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
                             </div>
-                            <div class="container-fluid clearfix px-0">
-                                <button type="submit" class="btn btn-primary float-right"><i class="fa fa-users"></i> <span class="team-button-text"></span></button>
-                                <button type="button" class="close-modal d-none" data-dismiss="modal"></button>
+                            <div class="d-block">
+                                <button type="submit" class="btn custom-button float-right"><i class="fa fa-plus"></i> Add</button>
                             </div>
                         </div>
                     </div>
@@ -36,7 +35,7 @@
                             <div class="w-100">
                                 <textarea rows="5" class="h4 border-0 w-100" name="description" placeholder="Description" style="outline: none; resize: none; background-color: rgba(0, 0, 0, 0);"></textarea>
                             </div>
-                            <?php if($task_type == 'team'): ?>
+                            <?php if($task_type == 'project'): ?>
                             <div class="container-fluid p-0">
                                 <p class="card-title d-inline-block">Contributors: </p>
                                 <input type="text" class="task-actor border-0 d-inline-block" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
@@ -57,16 +56,16 @@
                                 <span class="float-left">
                                     <?php foreach($colors as $color): ?>
                                     <button type="button" class="btn btn-circle btn-color" style="background-color: <?= $color ?>;" data-value="<?= $color ?>">
-                                    <?php if($color == '#ffffff'): ?><i class="fa fa-check fa-lg"></i><?php else: ?><i></i><?php endif; ?>
+                                        <i class="fa fa-check fa-lg" style="<?= $color != '#ffffff' ? 'display:none;' : '' ?>"></i>
                                     </button>
                                     <?php endforeach; ?>
                                 </span>
-                                <div class="btn-group float-right">
-                                    <button type="button" class="btn btn-primary" data-target="#modifyTaskCollapse" data-toggle="collapse">
+                                <div class="float-right">
+                                    <button type="button" class="btn" data-target="#modifyTaskCollapse" data-toggle="collapse">
                                         <i class="fa fa-cog"></i> More
                                     </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-floppy-o"></i> Save
+                                    <button type="submit" class="btn custom-button">
+                                        <i class="fa fa-save"></i> Save
                                     </button>
                                     <button type="button" class="close-modal d-none" data-dismiss="modal"></button>
                                 </div>
@@ -85,13 +84,13 @@
     <div class="modal-dialog model-sm">
         <div class="modal-content border-0" style="transition:0.2s;">
             <div class="card">
-                <h2 class="card-header font-weight-bold clearfix">
-                    <span class="task-title float-left"></span>
-                    <a class="task-edit float-right" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-pencil mx-1"></i></a>
-                </h2>
+                <div class="card-header font-weight-bold clearfix">
+                    <h3 class="task-title float-left"></h3>
+                    <a class="task-edit float-right h3" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-edit"></i></a>
+                </div>
                 <div class="card-body">
-                    <h4 class="task-description card-title"></h4>
-                    <?php if($task_type == 'team'): ?>
+                    <h5 class="task-description card-title"></h5>
+                    <?php if($task_type == 'project'): ?>
                     <hr>
                     <p class="card-title">Contributors:  <span class="task-actor-list card-text"></span></p>
                     <?php endif; ?>
@@ -102,7 +101,7 @@
                     <div class="container-fluid">
                         <div class="task-note-list row"></div>
                     </div>
-                    <div class="container-fluid my-1">
+                    <div class="container-fluid mt-3">
                         <div class="row">
                             <div class="col-2">
                                 <h2 class="text-center">
@@ -167,7 +166,7 @@
                         <?php foreach($colors as $color): ?>
                         <button type="button" class="btn btn-circle btn-color" style="background-color:<?= $color ?>;" data-value="<?= $color ?>">
                             <?php if($color == '#ffffff'): ?>
-                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="fa fa-check fa-lg"></span>
                             <?php else: ?>
                             <span></span>
                             <?php endif; ?>
@@ -178,10 +177,10 @@
                     <div class="d-flex flex-row-reverse">
                         <div class="p-2"></div>
                         <div class="p-2">
-                            <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                            <button type="button" id="taskSubmit" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 0 1px;"><i class="fa fa-save"></i> Save</button>
                         </div>
                         <div class="p-2">
-                            <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="glyphicon glyphicon-cog"></span> Settings</button>
+                            <button type="button" class="btn btn-default pull-right" data-target="#createTaskSetting" data-toggle="collapse" style="margin: 0 1px;"><span class="fa fa-cog"></span> Settings</button>
                         </div>
                     </div>
                 </form>

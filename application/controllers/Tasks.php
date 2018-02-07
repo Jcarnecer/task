@@ -14,8 +14,7 @@ class Tasks extends CI_Controller {
 	# Fetch All Board Tasks
 	public function get_all()
 	{
-		$author_id = $this->input->get('author_id');
-		echo json_encode($this->task->get_all($author_id, 1));
+		echo json_encode($this->task->get_all($this->input->get('author_id'), 1));
 	}
 	
 	

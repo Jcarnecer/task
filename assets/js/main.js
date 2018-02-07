@@ -56,7 +56,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     
         if (actors.length == 0) {
 
-            iconAppend = '<i class="fa fa-user-o"></i> ';
+            iconAppend = '<i class="far fa-user"></i> ';
         } else if (actors.length == 1) {
 
             iconAppend = '<i class="fa fa-user"></i> ';
@@ -68,13 +68,17 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 
     var taskString = 
     `<div class="card my-1 rounded kanban-task task-view"
-        data-toggle="modal" data-target="#taskViewModal" data-value="${task['id']}" data-parent="${task['column_id']}" 
-        ${modalDismissAppend} 
-        style="background-color:${task['color']};">
+         data-value="${task['id']}" data-parent="${task['column_id']}" ${contributorsAppend}
+         draggable="true" ondragstart="drag(event)" 
+        ${modalDismissAppend}">
         
-        <div class="card-body" ${contributorsAppend}
-            draggable="true" ondragstart="drag(event)" ondragend="closeDeleteModal(event)">
-            <h5 class="card-title font-weight-bold">${iconAppend + task['title']}</h5>
+        <div class="card-body" data-toggle="modal" data-target="#taskViewModal">
+            <span class="badge badge-pill" style="background-color:${task['color']};"> </span>
+            <h5 class="card-title mb-0 d-inline font-weight-bold">${iconAppend + task['title']}</h5>
+        </div>
+        <div class="card-footer pt-2 border-top-0">
+            <small class="${task['remaining_days'] < 0 ? 'text-danger' : ''}">${task['due_date_long']}</small>
+            <button class="float-right task-archive" data-value="${task['id']}"><i class="fa fa-archive"></i></button>
         </div>
 
     </div>`;
@@ -86,24 +90,32 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 // Column Builder
 function columnBuilder(column) {
     var columnString = 
-    `<div class="card border-0 h-100 w-25 kanban-column" 
+    `<div class="card border h-100 w-25 kanban-column rounded-0" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
-        <h4 class="card-header clearfix"
+        <div class="card-header kanban-column-edit clearfix"
             draggable="true" ondragstart="drag(event)">
 
-            <span class="kanban-column-title float-left" contenteditable="false">
+            <h4 class="kanban-column-title mb-0 float-left" contenteditable="false">
                 ${column['name']}
-            </span>
+            </h4>
 
-            <span class="float-right">
-                <a class="kanban-column-edit" href="#"><i class="fa fa-pencil mx-1"></i></a>
-                <a class="kanban-column-delete" href="#"><i class="fa fa-trash mx-1"></i></a>
-            </span>
+            
+            <div class="dropdown show float-right">
+                <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-angle-down fa-lg"></i>
+                </a>
 
-        </h4>
-        <div class="card-body text-center" style="overflow-y: auto;">
-            <button type="button" class="btn btn-primary btn-lg btn-block my-2 task-create"
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item kanban-column-edit" href="#">Edit</a>
+                    <a class="dropdown-item kanban-column-delete" href="#">Delete</a>
+                </div>
+            </div>
+                
+
+        </div>
+        <div class="card-body" style="overflow-y: auto;">
+            <button type="button" class="btn custom-button btn-block my-2 task-create"
                 data-toggle="modal" data-target="#taskModifyModal" data-parent="${column['id']}">
                 <i class="fa fa-plus"></i> Add Task
             </button>
@@ -130,8 +142,8 @@ function displayMember(items, edit = false) {
             );
         } else
 
-            $('.team-member-list').append(
-                `<span class="badge badge-secondary">${item['first_name']} ${item['last_name']}</span>`
+            $('.team-member').before(
+                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']}</span>`
             );
     });
 };
@@ -145,9 +157,9 @@ function resetForm() {
     $('#taskModifyModal form').children('input').remove();
     $('#taskModifyModal').find('.task-tag').siblings('span.badge').remove();
     $('#taskModifyModal').find('.task-actor').siblings('span.badge').remove();
-    $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
-    $('#taskModifyModal .card').css('background-color', '#ffffff');
+    $('#taskModifyModal').find('.btn-color .fa-check').hide();
+    $('#taskModifyModal').find(`button[data-value="#ffffff"] .fa-check`).show();
+    $('#taskModifyModal .card .card-header').css('background-color', '#ffffff');
 };
 
 
@@ -157,7 +169,7 @@ function displayTask(items) {
     
     items.forEach(function(item) {
         
-        $(`.kanban-column[data-value="${item['column_id']}"]>.card-body`).prepend(taskBuilder(item, getTaskType() == 'team'));
+        $(`.kanban-column[data-value="${item['column_id']}"]>.card-body`).prepend(taskBuilder(item, getTaskType() == 'project'));
     });
 };
 
@@ -221,7 +233,7 @@ function displayNote(items) {
                 </h4>
             </div>
             </div>
-            <div class="col-10 d-flex align-self-stretch my-1 rounded border border-secondary bg-white text-dark">
+            <div class="col-10 d-flex align-self-stretch my-1 text-dark">
                 ${item['body']}
             </div>`
         );
@@ -239,7 +251,7 @@ function searchTask(items, keyword) {
             
             if(item['title'].toLowerCase().indexOf(keyword.toLowerCase()) != -1) {
                 
-                $('#taskSearchList').append(taskBuilder(item, getTaskType() == 'team', true));
+                $('#taskSearchList').append(taskBuilder(item, getTaskType() == 'project', true));
             }
         });
     }
@@ -259,7 +271,7 @@ function displayBoard(board) {
     });
     
     $('#kanbanBoard .card-group').append(`
-        <div id="addColumn" class="card h-100 w-25">
+        <div id="addColumn" class="card rounded-0 border h-100 w-25">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
                 <span id="addColumnName" contenteditable="true">Type Here</span>

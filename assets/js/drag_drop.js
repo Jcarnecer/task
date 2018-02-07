@@ -7,30 +7,23 @@ function drag(e) {
 
     var $elem = $(e.target);
 
-    e.dataTransfer.setData('id', $elem.parent().data('value'));
-
-    if($elem.parent().hasClass('kanban-column')) {
-      
-        e.dataTransfer.setData('type', 'column');
-    } else if($elem.parent().hasClass('kanban-task')) {
-        
-        e.dataTransfer.setData('type', 'task');
-        $('#deleteTaskModal').removeClass('d-none');
-    }
-}
-
-function closeDeleteModal(e) {
     
-    $('#deleteTaskModal').addClass('d-none');
+    if($elem.parent().hasClass('kanban-column')) {
+        
+        e.dataTransfer.setData('id', $elem.parent().attr('data-value'));
+        e.dataTransfer.setData('type', 'column');
+    } else if($elem.hasClass('kanban-task')) {
+        
+        e.dataTransfer.setData('id', $elem.attr('data-value'));
+        e.dataTransfer.setData('type', 'task');
+    }
 }
 
 function drop(e) {
     
     e.preventDefault();
 
-    $('#deleteTaskModal').addClass('d-none');
-
-    var $elem = $(e.target).hasClass('.kanban-column') ? $(e.target) : $(e.target).closest('.kanban-column');
+    var $elem = $(e.target).hasClass('kanban-column') ? $(e.target) : $(e.target).closest('.kanban-column');
     var id = e.dataTransfer.getData('id');
     var type = e.dataTransfer.getData('type');
     var updateColumn = [];
@@ -41,7 +34,7 @@ function drop(e) {
 
         var task_details = {
             id:         id,
-            column_id:  $elem.data('value')
+            column_id:  $elem.attr('data-value')
         }
 
         changeTaskColumn(task_details);
@@ -51,22 +44,22 @@ function drop(e) {
             
             $.each($('#kanbanBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
                 
-                if(Number($(column).data('position')) >= Number($elem.data('position')) && Number($(column).data('position')) < Number($(`.kanban-column[data-value="${id}"]`).data('position'))) {
+                if(Number($(column).attr('data-position')) >= Number($elem.attr('data-position')) && Number($(column).attr('data-position')) < Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {
                     
-                    $(column).data('position', Number($(column).data('position')) + 1);
+                    $(column).attr('data-position', Number($(column).attr('data-position')) + 1);
 
                     updateColumn.push({
-                        id: $(column).data('value'),
-                        position: $(column).data('position')
+                        id: $(column).attr('data-value'),
+                        position: $(column).attr('data-position')
                     });
                 }
             });
             
-            $(`.kanban-column[data-value="${id}"]`).data('position', Number($elem.data('position')) - 1);
+            $(`.kanban-column[data-value="${id}"]`).attr('data-position', Number($elem.attr('data-position')) - 1);
 
             updateColumn.push({
-                id: $(`.kanban-column[data-value="${id}"]`).data('value'),
-                position: $(`.kanban-column[data-value="${id}"]`).data('position')
+                id: $(`.kanban-column[data-value="${id}"]`).attr('data-value'),
+                position: $(`.kanban-column[data-value="${id}"]`).attr('data-position')
             });
             
             $elem.before($(`.kanban-column[data-value="${id}"]`));
@@ -74,22 +67,22 @@ function drop(e) {
             
             $.each($('#kanbanBoard .kanban-column-holder').children('.kanban-column'), function(i, column) {
                 
-                if(Number($(column).data('position')) <= Number($elem.data('position')) &&  Number($(column).data('position')) > Number($(`.kanban-column[data-value="${id}"]`).data('position'))) {
+                if(Number($(column).attr('data-position')) <= Number($elem.attr('data-position')) &&  Number($(column).attr('data-position')) > Number($(`.kanban-column[data-value="${id}"]`).attr('data-position'))) {
                     
-                    $(column).data('position', Number($(column).data('position')) - 1);
+                    $(column).attr('data-position', Number($(column).attr('data-position')) - 1);
 
                     updateColumn.push({
-                        id: $(column).data('value'),
-                        position: $(column).data('position')
+                        id: $(column).attr('data-value'),
+                        position: $(column).attr('data-position')
                     });
                 }
             });
             
-            $(`.kanban-column[data-value="${id}"]`).data('position', Number($elem.data('position')) + 1);
+            $(`.kanban-column[data-value="${id}"]`).attr('data-position', Number($elem.attr('data-position')) + 1);
 
             updateColumn.push({
-                id: $(`.kanban-column[data-value="${id}"]`).data('value'),
-                position: $(`.kanban-column[data-value="${id}"]`).data('position')
+                id: $(`.kanban-column[data-value="${id}"]`).attr('data-value'),
+                position: $(`.kanban-column[data-value="${id}"]`).attr('data-position')
             });
 
             $elem.after($(`.kanban-column[data-value="${id}"]`));
@@ -97,12 +90,4 @@ function drop(e) {
 
         changeColumnsPosition({column_update: updateColumn});
     }
-}
-
-function deleteTask(e) {
-    
-    $(`.kanban-task[data-value="${e.dataTransfer.getData('id')}"]`).remove();
-    $(`.task-count`).html(Number($(`.task-count`).html()) - 1);
-
-    archiveTask(e.dataTransfer.getData('id'));
 }

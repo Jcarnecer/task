@@ -298,6 +298,19 @@ function leaveProject(details) {
 };
 
 
+function getMember(details) {
+
+    return $.ajax({
+         
+        async: false,
+        type: 'GET',
+        url: `${baseUrl}api/project/get_member`,
+        data: details,
+        dataType: 'json'
+    });
+};
+
+
 // Project Validate Member
 function validateMember(details) {
 
@@ -305,7 +318,7 @@ function validateMember(details) {
 
         async: false,
         type: 'POST',
-        url: `${baseUrl}api/validate_member`,
+        url: `${baseUrl}api/project/validate_member`,
         data: details,
         dataType: 'json'
     });
