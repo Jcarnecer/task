@@ -166,3 +166,66 @@ body {
 .modal-content .card {
   border: none !important;
 }
+
+.project-buttons {
+  background-color: #3679b2;
+  border-bottom: 3px solid #38b5ff;
+  padding-bottom: 4px;
+  text-align: center;
+}
+
+.project-buttons .dropdown .dropdown-menu {
+  margin-left: 50%;
+  cursor: pointer;
+}
+.project-buttons .dropdown .dropdown-menu .dropdown-item:active {
+  background-color: #3679b2;
+  color: #ffffff;
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  border-radius: 0;
+}
+
+.navlink:hover {
+  border: none;
+}
+
+.project-button {
+  background-color: #f2f2f2;
+  color: #626262;
+  padding: 10px;
+}
+
+.project-button:hover {
+  background-color: #3679b2;
+  color: #ffffff;
+}
+
+.nav-link.project-button.active, .nav-link.secondary-button.active  {
+  background-color: #38b5ff !important;
+  border: none;
+  border-top-right-radius: 8px;
+  color: #ffffff !important;
+}
+
+.nav-link.project-button.active {
+  border-top-right-radius: 8px;
+}
+
+.secondary-button {
+  background-color: #3679b2;
+  border: none;
+  color: #ffffff;
+  padding: 10px;
+}
+
+.secondary-button:hover {
+  color: #38b5ff;
+  
+}
+
+.secondary-button:focus {
+  box-shadow: none;
+}

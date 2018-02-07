@@ -19,6 +19,12 @@ class Projects extends CI_Controller {
 		echo json_encode($this->project->get_many_by_user($this->session->user->id));
 	}
 
+
+	public function get_member()
+	{
+		echo json_encode($this->project->get_member_by_email($this->input->get('email_address')));
+	}
+
 	
 	# Create Project
 	public function insert() {
@@ -54,7 +60,7 @@ class Projects extends CI_Controller {
 	# Check if user is a member
 	public function validate_member() {
         
-		$user 		= $this->user_model->get_by(['email_address' => $this->input->post('email')]);
+		$user 		= $this->user_model->get_by(['email_address' => $this->input->post('email'), 'company_id' => $this->session->user->company_id]);
 		$proj_id 	= $this->input->post('proj_id');
 
 		if($user != null) {

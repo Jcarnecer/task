@@ -74,7 +74,13 @@ a:link, a:visited, a:hover, a:focus{
 
 .badge {
     padding: 7px;
-    vertical-align: middle;
+    /* vertical-align: middle; */
+}
+
+.task-view .card-body {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .task-view .card-footer button {
@@ -85,3 +91,4 @@ a:link, a:visited, a:hover, a:focus{
 .task-view .card-footer button i {
     line-height: 20px;
 }
+

@@ -78,7 +78,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
         </div>
         <div class="card-footer pt-2 border-top-0">
             <small class="${task['remaining_days'] < 0 ? 'text-danger' : ''}">${task['due_date_long']}</small>
-            <button class="float-right task-archive" data-value="${task['id']}"><i class="fa fa-archive float-right"></i></button>
+            <button class="float-right task-archive" data-value="${task['id']}"><i class="fa fa-archive"></i></button>
         </div>
 
     </div>`;
@@ -142,8 +142,8 @@ function displayMember(items, edit = false) {
             );
         } else
 
-            $('.team-member-list').append(
-                `<span class="badge badge-secondary">${item['first_name']} ${item['last_name']}</span>`
+            $('.team-member').before(
+                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']}</span>`
             );
     });
 };
@@ -157,9 +157,9 @@ function resetForm() {
     $('#taskModifyModal form').children('input').remove();
     $('#taskModifyModal').find('.task-tag').siblings('span.badge').remove();
     $('#taskModifyModal').find('.task-actor').siblings('span.badge').remove();
-    $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
-    $('#taskModifyModal .card').css('background-color', '#ffffff');
+    $('#taskModifyModal').find('.btn-color .fa-check').hide();
+    $('#taskModifyModal').find(`button[data-value="#ffffff"] .fa-check`).show();
+    $('#taskModifyModal .card .card-header').css('background-color', '#ffffff');
 };
 
 
