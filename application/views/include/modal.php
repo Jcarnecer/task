@@ -56,7 +56,7 @@
                                 <span class="float-left">
                                     <?php foreach($colors as $color): ?>
                                     <button type="button" class="btn btn-circle btn-color" style="background-color: <?= $color ?>;" data-value="<?= $color ?>">
-                                    <?php if($color == '#ffffff'): ?><i class="fa fa-check fa-lg"></i><?php else: ?><i></i><?php endif; ?>
+                                        <i class="fa fa-check fa-lg" style="<?= $color != '#ffffff' ? 'display:none;' : '' ?>"></i>
                                     </button>
                                     <?php endforeach; ?>
                                 </span>
@@ -65,7 +65,7 @@
                                         <i class="fa fa-cog"></i> More
                                     </button>
                                     <button type="submit" class="btn custom-button">
-                                        <i class="fa fa-floppy-o"></i> Save
+                                        <i class="fa fa-save"></i> Save
                                     </button>
                                     <button type="button" class="close-modal d-none" data-dismiss="modal"></button>
                                 </div>
@@ -86,7 +86,7 @@
             <div class="card">
                 <div class="card-header font-weight-bold clearfix">
                     <h3 class="task-title float-left"></h3>
-                    <a class="task-edit float-right" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-pencil"></i></a>
+                    <a class="task-edit float-right h3" href="#taskModifyModal" data-toggle="modal" data-dismiss="modal"><i class="fa fa-edit"></i></a>
                 </div>
                 <div class="card-body">
                     <h5 class="task-description card-title"></h5>
