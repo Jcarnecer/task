@@ -157,9 +157,9 @@ function resetForm() {
     $('#taskModifyModal form').children('input').remove();
     $('#taskModifyModal').find('.task-tag').siblings('span.badge').remove();
     $('#taskModifyModal').find('.task-actor').siblings('span.badge').remove();
-    $('#taskModifyModal').find('.btn-color').find('i').removeClass('fa fa-check fa-lg');
-    $('#taskModifyModal').find(`button[data-value="#ffffff"] i`).addClass('fa fa-check fa-lg');
-    $('#taskModifyModal .card').css('background-color', '#ffffff');
+    $('#taskModifyModal').find('.btn-color .fa-check').hide();
+    $('#taskModifyModal').find(`button[data-value="#ffffff"] .fa-check`).show();
+    $('#taskModifyModal .card .card-header').css('background-color', '#ffffff');
 };
 
 
