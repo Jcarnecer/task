@@ -106,7 +106,7 @@
                 <a href="http://localhost/task/project/<?= $project->id ?>" class="nav-link dropdown-toggle project-button active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tasks"></i> Tasks</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" id="highlightBtn"><i class="fa fa-lightbulb"></i> Highlight Tasks</a>
-                    <a class="dropdown-item" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>"><i class="fa fa-edit"></i> Edit Project</a>
+                    <a class="dropdown-item team-edit" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>"><i class="fa fa-edit"></i> Edit Project</a>
                     <a class="dropdown-item" data-toggle="dropdown"><i class="fa fa-users"></i> Project Members <i class="fas fa-caret-right"></i></a>
                         <div class="dropdown-menu">
                             <?php foreach($project->members as $member): ?>
