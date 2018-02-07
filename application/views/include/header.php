@@ -124,7 +124,7 @@
                 </div>
             </li>
             <li class="nav-item w-50">
-            <a href="http://localhost/forum/project/<?= $project->id ?>" class="nav-link secondary-button"><i class="fa fa-exchange-alt"></i> Discussion</a>
+            <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/forum/project/' . $project->id : 'http://forum.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-exchange-alt"></i> Discussion</a>
             </li>
         </ul>
         <?php endif; ?>
