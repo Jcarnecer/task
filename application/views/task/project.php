@@ -1,5 +1,5 @@
-<div id="kanbanBoard" class="d-flex flex-column bg-primary h-100 w-100 m-0 p-0">
-    <div class="d-flex w-100">
+<div id="kanbanBoard" class="d-flex flex-column h-100 w-100 m-0 p-0">
+    <!-- <div class="d-flex w-100 mb-4">
         <button class="btn secondary-button rounded-0" data-target="#taskSearchModal" data-toggle="modal" style="width: 20%;">
             <i class="fa fa-search"></i> Search Tasks
         </button>
@@ -12,7 +12,7 @@
             <i class="fa fa-edit"></i> Edit/View Project
         </button>
 
-        <!-- <div class="dropdown rounded-0 border-0 h-100" style="width: 20%;"> -->
+        
         <button class="btn secondary-button rounded-0" data-toggle="dropdown" style="width: 20%">
             <i class="fa fa-users"></i> Project Members
         </button>
@@ -29,12 +29,12 @@
             </a>
             <?php endforeach; ?>
         </div>
-        <!-- </div> -->
+        
 
         <button class="team-leave btn secondary-button rounded-0" data-value="<?= $project->id; ?>" style="width: 20%;">
             <i class="fa fa-sign-out-alt"></i> Leave Project
         </button>
-    </div>
+    </div> -->
 
     <div class="h-100 bg-light border-top" style="overflow-x: auto;">
         <div class="card-group h-100 m-0 p-0"></div>

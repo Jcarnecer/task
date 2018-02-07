@@ -8,13 +8,12 @@
                             <input type="text" class="h3 font-weight-bold border-0 h-100 w-100" name="name" placeholder="Project Name" maxlength="20" style="outline: none; background-color: rgba(0, 0, 0, 0);" required>
                         </div>
                         <div class="card-body">
-                            <div class="container-fluid p-0">
-                                <p class="card-title d-inline-block">Members: </p>
-                                <input type="text" class="team-member border-0 d-inline-block" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                            <div class="d-block">
+                                <label>Members:</label>
+                                <input type="text" class="team-member border-0" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
                             </div>
-                            <div class="container-fluid clearfix px-0">
-                                <button type="submit" class="btn btn-primary float-right"><i class="fa fa-users"></i> <span class="team-button-text"></span></button>
-                                <button type="button" class="close-modal d-none" data-dismiss="modal"></button>
+                            <div class="d-block">
+                                <button type="submit" class="btn custom-button float-right"><i class="fa fa-plus"></i> Add</button>
                             </div>
                         </div>
                     </div>
