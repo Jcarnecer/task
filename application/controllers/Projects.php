@@ -60,7 +60,7 @@ class Projects extends CI_Controller {
 	# Check if user is a member
 	public function validate_member() {
         
-		$user 		= $this->user_model->get_by(['email_address' => $this->input->post('email'), 'company_id' => $this->session->user->company_id]);
+		$user 		= $this->user->as_object()->get_by(['email_address' => $this->input->post('email'), 'company_id' => $this->session->user->company_id]);
 		$proj_id 	= $this->input->post('proj_id');
 
 		if($user != null) {
