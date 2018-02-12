@@ -37,6 +37,6 @@
     </div> -->
 
     <div class="h-100 bg-light border-top" style="overflow-x: auto;">
-        <div class="card-group h-100 m-0 p-0"></div>
+        <div id="kanbanColumnContainer" class="d-flex flex-row flex-nowrap align-items-stretch h-100 m-0 p-0" style="width: auto;"></div>
     </div>
 </div>

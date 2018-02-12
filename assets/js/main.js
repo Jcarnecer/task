@@ -90,7 +90,7 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 // Column Builder
 function columnBuilder(column) {
     var columnString = 
-    `<div class="card border h-100 w-25 kanban-column rounded-0" 
+    `<div class="card border h-100 w-100 kanban-column rounded-0" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
         <div class="card-header kanban-column-edit clearfix"
@@ -261,17 +261,17 @@ function searchTask(items, keyword) {
 // Kanban
 function displayBoard(board) {
 
-    $('#kanbanBoard .card-group').html('');
+    $('#kanbanBoard #kanbanColumnContainer').html('');
 
-    $('#kanbanBoard .card-group').css(`width`, `${(board['columns'].length + 1) * 25}%`);
-
+    $('#kanbanBoard #kanbanColumnContainer').css(`width`, `${(board['columns'].length + 1) * 25}%`);
+    
     board['columns'].forEach(function(column) {
 
-        $('#kanbanBoard .card-group').append(columnBuilder(column));
+        $('#kanbanBoard #kanbanColumnContainer').append(columnBuilder(column));
     });
     
-    $('#kanbanBoard .card-group').append(`
-        <div id="addColumn" class="card rounded-0 border h-100 w-25">
+    $('#kanbanBoard #kanbanColumnContainer').append(`
+        <div id="addColumn" class="card rounded-0 border h-100 w-100">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
                 <span id="addColumnName" contenteditable="true">Type Here</span>
@@ -284,7 +284,7 @@ function displayBoard(board) {
 
 function addColumn(column) {
     
-    $('#kanbanBoard .card-group').css(`width`,  `${(column['position'] + 1) * 25}%`);
+    $('#kanbanBoard #kanbanColumnContainer').css(`width`,  `${(column['position'] + 1) * 25}%`);
     
     $('#addColumn').before(columnBuilder(column));
 };

@@ -92,6 +92,37 @@ $(document).on('keypress', '.team-member', function (e) {
 });
 
 
+$(document).on('blur', '.team-member', function (e) {
+
+    e.preventDefault();
+
+    data = {
+        email: $(this).val().toLowerCase()
+    };
+
+    var result = validateMember(data).responseJSON;
+    
+    if(result['exists']) {
+
+        if(!$(this).closest('form').has(`input[name="members[]"][value="${$(this).val().toLowerCase()}"]`).length){
+
+            $(this).before(
+                `<span class="badge badge-dark mx-1">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+            );
+
+            $(this).closest('form').append(
+                `<input type="hidden" name="members[]" value="${$(this).val().toLowerCase()}" />`
+            );
+        }
+    } else {
+
+        alert('User does not exist in the company');
+    }
+
+    $(this).val('');
+});
+
+
 $(document).on('click', '.team-member-remove', function () {
 
     var $elem = $(this);
@@ -117,7 +148,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
 
     e.preventDefault();
 
-    if($(this).find('input[required]').val() != '') {
+    if($(this).find('input[required]').val() != '' && $(this).find('.team-member').val() != '') {
         
         if($(this).has('.close-modal')) {
             
