@@ -136,7 +136,8 @@ $autoload['model'] = [
 	'Task_model' 		=> 'task', 
 	'Project_model' 	=> 'project', 
 	'Kanban_model' 		=> 'kanban',
-	'Tag_model' 		=> 'tag_model',
+	'Tag_model' 		=> 'tag',
+	'Ttag_model'		=> 'ttag',
 	'User_model'		=> 'user'
 	// 'User_Model' 		=> 'user_model'
 ];

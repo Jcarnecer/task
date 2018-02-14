@@ -41,7 +41,7 @@ class Tasks extends CI_Controller {
 		
 		if($this->input->post('tags[]') != null) {
 
-			$this->tag_model->insert($task_id, $this->input->post('tags[]'));
+			$this->tag->insert_tag($task_id, $this->input->post('tags[]'));
 		}
 
 		if($this->input->post('actors[]') != null){
@@ -73,10 +73,10 @@ class Tasks extends CI_Controller {
 		
 		if($this->input->post('tags[]') != null) {
 
-			$this->tag_model->update($task_id, $this->input->post('tags[]'));
+			$this->tag->update_tag($task_id, $this->input->post('tags[]'));
 		} else {
 
-			$this->tag_model->update($task_id, []);
+			$this->tag->update_tag($task_id, []);
 		}
 
 		if($this->input->post('actors[]') != null) {

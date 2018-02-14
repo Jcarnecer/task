@@ -1,35 +1,37 @@
 <?php
 
-class Tag_model extends CI_Model {
+class Tag_model extends BaseModel {
 
+	protected $_table = "kb_tags";
+
+
+	public function __construct() {
+		parent::__construct();
+	}
 
 	public function get_id($name) {
 		
-		return $this->db->select('id')
-			->from('kb_tags')
-			->where('name', $name)
-			->get()
-			->row()->id;
+		return $this->tag->get_by('name', $name)['id'];
 	}
 
 
-	public function insert($id, $updated_tags) {
+	public function insert_tag($id, $updated_tags) {
 		
-		$tags = array_column($this->db->get('kb_tags')->result_array(), 'name');
+		$tags = array_column($this->tag->get_all(), 'name');
 
 		foreach($updated_tags as $updated_tag) {
+
+			$insert_id = null;
 			
 			if(!in_array($updated_tag, $tags)) {
 			
-				$this->db->insert('kb_tags', [
-					'name' => $updated_tag
-				]);
+				$insert_id = $this->tag->insert(['name' => $updated_tag]);
 			}
 
-			if(!in_array($updated_tag, $this->get($id))) {
+			if(!in_array($updated_tag, $this->get_ttag($id))) {
 
-				$this->db->insert('kb_ttags', [
-					'tag_id'  => $this->get_id($updated_tag),
+				$this->ttag->insert([
+					'tag_id'  => $insert_id,
 					'task_id' => $id
 				]);
 			}
@@ -37,29 +39,25 @@ class Tag_model extends CI_Model {
 	}
 
 
-	public function update($id, $updated_tags) {
+	public function update_tag($id, $updated_tags) {
 		
-		$this->insert($id, $updated_tags);
+		$this->insert_tag($id, $updated_tags);
 		
-		foreach($this->get($id) as $old_tag)
+		foreach($this->get_ttag($id) as $old_tag)
 			if(!in_array($old_tag, $updated_tags))
-				$this->db->delete('kb_ttags', ['task_id' => $id, 'tag_id' => $this->get_id($old_tag)]);
+				$this->ttag->delete(['task_id' => $id, 'tag_id' => $this->get_id($old_tag)]);
 	}
 
 
-	public function get($id) {
+	public function get_ttag($id) {
 
+		$ttags = $this->ttag->with('tag')->get_many_by('task_id', $id);
 		$names = [];
-		$tags  =  $this->db->select('name')
-			->from('kb_tags as t1')
-			->join('kb_ttags as t2', 't2.tag_id = t1.id')
-			->where('t2.task_id', $id)
-			->get()
-			->result();
-
-		foreach ($tags as $tag)
-			$names[] = $tag->name;
 		
+		if(isset($ttags))
+			foreach ($ttags as $ttag)
+				$names[] = $ttag['tag']['name'];
+
 		return $names;
 	}
 }
