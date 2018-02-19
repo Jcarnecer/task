@@ -191,65 +191,43 @@ $(document).on('keypress', '.task-actor', function (e) {
 
         e.preventDefault();
 
-        var data = {
-            email: $(this).val().toLowerCase(),
-            proj_id: getAuthorId()
-        };
-
-        var result = validateMember(data).responseJSON;
-        
-        if(result['exists']) {
-            
-            if(!$(this).closest('form').has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
-
-                $(this).before(
-                    `<span class="badge badge-dark mx-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
-                );
-
-                $(this).closest('form').append(
-                    `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
-                );
-            }
-        } else {
-            
-            alert('User does not exist in the team');
-        }
+        checkTeamMember($(this));
 
         $(this).val('');
     }
 });
 
 
-$(document).on('blur', '.task-actor', function (e) {
+// $(document).on('blur', '.task-actor', function (e) {
 
-    e.preventDefault();
+//     e.preventDefault();
 
-    var data = {
-        email: $(this).val().toLowerCase(),
-        proj_id: getAuthorId()
-    };
+//     var data = {
+//         email: $(this).val().toLowerCase(),
+//         proj_id: getAuthorId()
+//     };
 
-    var result = validateMember(data).responseJSON;
+//     var result = validateMember(data).responseJSON;
     
-    if(result['exists']) {
+//     if(result['exists']) {
         
-        if(!$(this).closest('form').has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
+//         if(!$(this).closest('form').has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
 
-            $(this).before(
-                `<span class="badge badge-dark mx-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
-            );
+//             $(this).before(
+//                 `<span class="badge badge-dark mx-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+//             );
 
-            $(this).closest('form').append(
-                `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
-            );
-        }
-    } else {
+//             $(this).closest('form').append(
+//                 `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
+//             );
+//         }
+//     } else {
         
-        alert('User does not exist in the team');
-    }
+//         alert('User does not exist in the team');
+//     }
 
-    $(this).val('');
-});
+//     $(this).val('');
+// });
 
 
 $(document).on('click', '.task-actor-remove', function() {
@@ -295,7 +273,7 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
     
     e.preventDefault();    
 
-    if($(this).find('input[required]').val() != '') {
+    if($(this).find('input[required]').val() != '' && $(this).find('.task-actor').val() == '') {
 
         var task = $(this).serializeArray();
         
@@ -329,6 +307,11 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
             
             $(this).find('.close-modal').click();
         } 
+    } else if($(this).find('.task-actor').val() != '') {
+
+        checkTeamMember($(this).find('.task-actor'));
+
+        $(this).find('.task-actor').val('');
     }
 });
 

@@ -26,6 +26,60 @@ function setUserId(id) { userId = id; }
 function getUserId() { return userId; }
 
 
+function checkEmployee($emailField) {
+    data = {
+        email: $emailField.val().toLowerCase()
+    };
+
+    var result = validateMember(data).responseJSON;
+    
+    if(result['exists']) {
+
+        if(!$emailField.closest('form').has(`input[name="members[]"][value="${$emailField.val().toLowerCase()}"]`).length){
+
+            $emailField.before(
+                `<span class="badge badge-dark mx-1">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
+            );
+
+            $emailField.closest('form').append(
+                `<input type="hidden" name="members[]" value="${$emailField.val().toLowerCase()}" />`
+            );
+        }
+    } else {
+
+        alert('User does not exist in the company');
+    }
+}
+
+
+function checkTeamMember($emailField) {
+    
+    var data = {
+        email: $emailField.val().toLowerCase(),
+        proj_id: getAuthorId()
+    };
+
+    var result = validateMember(data).responseJSON;
+    
+    if(result['exists']) {
+        
+        if(!$emailField.closest('form').has(`input[name="actors[]"][value="${$emailField.val().toLowerCase()}"]`).length){
+
+            $emailField.before(
+                `<span class="badge badge-dark mx-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
+            );
+
+            $emailField.closest('form').append(
+                `<input type="hidden" name="actors[]" value="${$emailField.val().toLowerCase()}" />`
+            );
+        }
+    } else {
+        
+        alert('User does not exist in the team');
+    }
+}
+
+
 // Task Builder
 function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     
@@ -93,7 +147,7 @@ function columnBuilder(column) {
     `<div class="card border h-100 w-100 kanban-column rounded-0" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
-        <div class="card-header kanban-column-edit clearfix"
+        <div class="card-header clearfix"
             draggable="true" ondragstart="drag(event)">
 
             <h4 class="kanban-column-title mb-0 float-left" contenteditable="false">
