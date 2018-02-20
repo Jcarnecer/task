@@ -112,4 +112,5 @@ $colors = serialize(['#ffffff', '#ff8a80', '#ffd180', '#ffff8d', '#ccff90', '#a7
 
 defined('COLORS')		OR define('COLORS', $colors);
 
-define("LOGIN_URL", ENVIRONMENT === "production" ? "http://payakapps.com/users/login" : "http://localhost/main/users/login");
+define('LOGIN_URL', ENVIRONMENT === "development" ? "http://localhost/main/users/login" : "http://payakapps.com/users/login");
+define('LOGOUT_URL', ENVIRONMENT === "development" ? "http://localhost/main/users/logout" : "http://payakapps.com/users/logout");
