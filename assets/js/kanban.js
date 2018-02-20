@@ -82,11 +82,26 @@ $(document).on('click', '.kanban-column-delete',  function(e) {
         };
 
         deleteColumn(columnDetails);
-        $(this).closest('.kanban-column').remove();
+        // $(this).closest('.kanban-column').remove();
     
-        var newWidth = $('#kanbanBoard .card-group').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
+        // var newWidth = $('#kanbanColumnContainer').css('width').replace(/\D/g, '') / $('#kanbanBoard').css('width').replace(/\D/g, '') * 100 - 25;
     
-        $('#kanbanBoard .card-group').css('width', `${newWidth}%`);
+        // $('#kanbanColumnContainer').css('width', `${newWidth}%`);
+        getBoard().done(function(data) {
+
+            displayBoard(data);
+            
+            getAllTask().done(function(data) {
+    
+                displayTask(data);
+            
+                if(getTaskType() == 'personal') {
+                    $('.task-count').html(data.length);
+                }
+            });
+        });
+
+       
     }
 });
    

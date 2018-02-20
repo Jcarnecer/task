@@ -36,7 +36,7 @@
         </button>
     </div> -->
 
-    <div class="h-100 bg-light border-top" style="overflow-x: auto;">
-        <div id="kanbanColumnContainer" class="d-flex flex-row flex-nowrap align-items-stretch h-100 m-0 p-0" style="width: auto;"></div>
+    <div class="h-100 bg-light border-top w-100" style="overflow-x: auto;">
+        <div id="kanbanColumnContainer" class="d-flex flex-row flex-nowrap align-items-stretch h-100 m-0 p-0"></div>
     </div>
 </div>
