@@ -11,6 +11,13 @@ class Task_model extends CI_Model {
 	public $created_by;
 	public $created_at;
 	public $updated_at;
+
+	public $has_many = [
+		'notes' => ['model' => 'Note_model', 'primary_key' => 'task_id'], 
+		'actors' => ['model' => 'Actor_model', 'primary_key' => 'task_id'],
+		'ttags' => ['model' => 'Ttag_model', 'primary_key' => 'task_id']
+	];
+	protected $_table = 'kb_tasks';
 	
 
 	# Get Task By ID
