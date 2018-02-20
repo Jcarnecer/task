@@ -32,6 +32,13 @@
 
     <ul class="sidebar-menu">
         <li class="">
+            <a class="font-weight-bold text-warning" href="#tutorialModal" data-toggle="modal">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span>Get Started</span>
+            </a>    
+        </li>
+
+        <li class="">
             <a class="" href="<?= base_url('personal'); ?>">
                 <i class="fa fa-tasks" aria-hidden="true"></i>
                 <span>Personal Task</span>
