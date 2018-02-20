@@ -7,7 +7,7 @@
                         <div class="card border-0 rounded-0">
                             <img src="<?= base_url('assets/tutorial/welcome.png') ?>" alt="Sidebar" class="rounded-0 card-img-top">
                             <div class="card-body">
-                                <h5 class="card-title">Welcome to PayakApps' Task Module</h5>
+                                <h5 class="card-title">Welcome to PayakApps' Project Module</h5>
                                 <p class="card-text">This is where you organize things you have to do!</p>
                             </div>
                         </div>
@@ -81,6 +81,69 @@
                             <div class="card-body">
                                 <h5 class="card-title">Drag and Drop</h5>
                                 <p class="card-text">Dragging task across different column is also possible. Columns may also be drag and drop to change column order.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 rounded-0">
+                            <img src="<?= base_url('assets/tutorial/project.png') ?>" alt="Project" class="rounded-0 card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Project</h5>
+                                <p class="card-text">This module got your basic needs for project management.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 rounded-0">
+                            <img src="<?= base_url('assets/tutorial/create project.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Create Project</h5>
+                                <p class="card-text">Creating a new project is simple. Just click "Add Project" withing the project folder at the sidebar and type the name of the project and the email addresses of the project members.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 rounded-0">
+                            <img src="<?= base_url('assets/tutorial/project settings.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Project Settings</h5>
+                                <p class="card-text">Project settings are located at the tab dropdown.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 rounded-0">
+                            <img src="<?= base_url('assets/tutorial/member.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Project Member</h5>
+                                <p class="card-text">Wonder who are your team mates? Just click on the "Project Members" button to see them.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 rounded-0">
+                            <img src="<?= base_url('assets/tutorial/contributor.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Task Contributors</h5>
+                                <p class="card-text">Within the Project, you have the ability to assign contributors to an specific task upon task creation. You may update the contributor from time to time.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 rounded-0">
+                            <img src="<?= base_url('assets/tutorial/view contributor.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Viewing Task Contributors</h5>
+                                <p class="card-text">Hovering the mouse over a task will reveal the contributors of the task. Each icons represents the number of the contributor of a task.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card border-0 rounded-0">
+                            <img src="<?= base_url('assets/tutorial/highlight.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Highlight my Tasks</h5>
+                                <p class="card-text">Things are getting messy? Highlight Task will help you focus on the task you're contributing to.</p>
                             </div>
                         </div>
                     </div>
