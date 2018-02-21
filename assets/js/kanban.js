@@ -41,13 +41,13 @@ $(document).on('select, click', '#addColumnName', function(e) {
 
 $(document).on('blur', '#addColumnName', function(e) {
 
-    $('#addColumnName').html('Type Here');
+    $('#addColumnName').html('New Column');
 });
 
 
 $(document).on('keypress', '#addColumnName', function(e) {
 
-    if ($('#addColumnName').html() == 'Type Here') {
+    if ($('#addColumnName').html() == 'New Column') {
         
         $('#addColumnName').html('');
     }
@@ -67,7 +67,7 @@ $(document).on('keypress', '#addColumnName', function(e) {
         columnDetails.id = createColumn(columnDetails).responseJSON['response'];
 
         addColumn(columnDetails);
-        $('#addColumnName').html('Type Here');
+        $('#addColumnName').html('New Column');
     }
 });
 

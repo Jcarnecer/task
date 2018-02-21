@@ -29,6 +29,7 @@ class Views extends CI_Controller {
 
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);
+		$this->load->view('include/tutorial');
 		$this->load->view('task/personal', $data);
 		$this->load->view('include/footer', $data);
 	}
@@ -50,6 +51,7 @@ class Views extends CI_Controller {
 		
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);
+		$this->load->view('include/tutorial');
 		$this->load->view('task/project', $data);
 		$this->load->view('include/footer', $data);
     }

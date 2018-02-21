@@ -29,7 +29,7 @@
                 <form method="post">
                     <div class="card">
                         <div class="card-header">
-                            <input type="text" class="h3 font-weight-bold border-0 h-100 w-100" name="title" placeholder="Title" maxlength="20" style="outline: none; background-color: rgba(0, 0, 0, 0);" required>
+                            <input type="text" class="h3 font-weight-bold border-0 h-100 w-100" name="title" placeholder="Title" maxlength="50" style="outline: none; background-color: rgba(0, 0, 0, 0);" required>
                         </div>
                         <div class="card-body">
                             <div class="w-100">
@@ -40,13 +40,13 @@
                                 <p class="card-title d-inline-block">Contributors: </p>
                                 <input type="text" class="task-actor border-0 d-inline-block" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
                             </div>
+                            <div class="form-inline">
+                                <label class="card-text">Due Date: </label>
+                                <input type="date" class="form-control border-0" name="due_date" style="outline: none; background-color: rgba(0, 0, 0, 0);">
+                            </div>
                             <?php endif; ?>
                             <div id="modifyTaskCollapse" class="collapse py-2 px-0">
                                 <hr>
-                                <div class="form-inline">
-                                    <label class="card-text">Due Date: </label>
-                                    <input type="date" class="form-control border-0" name="due_date" style="outline: none; background-color: rgba(0, 0, 0, 0);">
-                                </div>
                                 <div class="container-fluid p-0">
                                     <p class="card-title d-inline-block">Tags: </p>
                                     <input type="text" class="task-tag border-0 d-inline-block" placeholder="Add Tags" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
@@ -62,7 +62,7 @@
                                 </span>
                                 <div class="float-right">
                                     <button type="button" class="btn" data-target="#modifyTaskCollapse" data-toggle="collapse">
-                                        <i class="fa fa-cog"></i> More
+                                        <i class="fa fa-cog"></i>
                                     </button>
                                     <button type="submit" class="btn custom-button">
                                         <i class="fa fa-save"></i> Save

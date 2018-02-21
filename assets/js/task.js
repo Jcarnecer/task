@@ -98,12 +98,17 @@ $(document).on('click', '.task-view', function () {
 
 $(document).on('click', '.task-archive', function() {
 
-    var $task = $(this).closest('.card .kanban-task');
-    
-    archiveTask($(this).attr('data-value')).done(function() {
+    var $task = $(this).closest('.card.kanban-task');
+ 
+    if(confirm('Are you sure you want to delete this task?')) {
 
-        $task.remove();
-    });
+        $task.popover('hide');
+
+        archiveTask($(this).attr('data-value')).done(function() {
+
+            $task.remove();
+        });
+    }
 });
 
 

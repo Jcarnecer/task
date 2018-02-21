@@ -32,6 +32,8 @@ function drop(e) {
         
         $elem.children('.card-body').prepend($(`.kanban-task[data-value="${id}"]`));
 
+        $(`.kanban-task[data-value="${id}"]`).popover('hide');
+
         var task_details = {
             id:         id,
             column_id:  $elem.attr('data-value')
