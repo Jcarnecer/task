@@ -3,6 +3,6 @@
     <h5>You have <span class="h4 font-weight-bold task-count"></span> task to do.</h5>
 </div>
 
-<div id="kanbanBoard" class="w-100 h-100 m-0 p-0" style="height: calc(100% - 160px); overflow-x: auto;">
-<div class="card-group h-100 m-0 p-0"></div>
+<div id="kanbanBoard" class="w-100 h-100 m-0 p-0" style="overflow-x: auto;">
+<div id="kanbanColumnContainer" class="d-flex flex-row flex-nowrap align-items-stretch h-100 m-0 p-0" style="width: auto;"></div>
 </div>

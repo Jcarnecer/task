@@ -137,10 +137,9 @@ class Task_model extends CI_Model {
 	# Delete Task by condition (Used on delete_column)
 	public function delete_by($where) {
 		
-		$tasks = $this->db->get_where('kb_tasks', $where);
+		$tasks = $this->db->get_where('kb_tasks', $where)->result();
 
 		foreach($tasks as $task) {
-
 			$this->db->delete('kb_notes', ['task_id' => $task->id]);
 			$this->db->delete('kb_ttags', ['task_id' => $task->id]);
 			$this->db->delete('kb_tactors', ['task_id' => $task->id]);
