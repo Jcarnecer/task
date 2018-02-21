@@ -138,7 +138,6 @@ class Task_model extends CI_Model {
 	public function delete_by($where) {
 		
 		$tasks = $this->db->get_where('kb_tasks', $where)->result();
-		var_dump($tasks);
 
 		foreach($tasks as $task) {
 			$this->db->delete('kb_notes', ['task_id' => $task->id]);
