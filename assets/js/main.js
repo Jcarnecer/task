@@ -274,7 +274,7 @@ function displayBoard(board) {
         <div id="addColumn" class="card rounded-0 border h-100 w-25">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
-                <span id="addColumnName" contenteditable="true">Type Here</span>
+                <span id="addColumnName" contenteditable="true">New Column</span>
             </h4>
             <div class="card-body"></div>
         </div>
