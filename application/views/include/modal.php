@@ -35,14 +35,14 @@
                             <div class="w-100">
                                 <textarea rows="5" class="h4 border-0 w-100" name="description" placeholder="Description" style="outline: none; resize: none; background-color: rgba(0, 0, 0, 0);"></textarea>
                             </div>
+                            <div class="form-inline">
+                                <label class="card-text">Due Date: </label>
+                                <input type="date" class="form-control border-0" name="due_date" style="outline: none; background-color: rgba(0, 0, 0, 0);">
+                            </div>
                             <?php if($task_type == 'project'): ?>
                             <div class="container-fluid p-0">
                                 <p class="card-title d-inline-block">Contributors: </p>
                                 <input type="text" class="task-actor border-0 d-inline-block" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
-                            </div>
-                            <div class="form-inline">
-                                <label class="card-text">Due Date: </label>
-                                <input type="date" class="form-control border-0" name="due_date" style="outline: none; background-color: rgba(0, 0, 0, 0);">
                             </div>
                             <?php endif; ?>
                             <div id="modifyTaskCollapse" class="collapse py-2 px-0">
