@@ -26,6 +26,7 @@ class Views extends CI_Controller {
 		$data['projects']		= $this->project->get_many_by_user($this->session->user->id);
 		$data['colors']			= unserialize(COLORS);
 		$data['task_type']		= 'personal';
+		$data['company_user']	= $this->user_model->get_all();
 
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);
@@ -48,6 +49,7 @@ class Views extends CI_Controller {
 		$data['project'] 			= new stdClass();
 		$data['project']			= $this->project->get($id);
 		$data['project']->members 	= $this->project->get_members($id);
+		$data['company_user']		= $this->user_model->get_all();
 		
 		$this->load->view('include/header', $data);
 		$this->load->view('include/modal', $data);
