@@ -44,8 +44,8 @@ class User_model extends CI_Model {
     }
 
 
-    public function get_all() {
+    public function get_all($company_id) {
 
-        return $this->db->get('users')->result();
+        return $this->db->get_where('users', ['company_id' => $company_id])->result();
     }
 }

@@ -8,9 +8,9 @@
                             <input type="text" class="h3 font-weight-bold border-0 h-100 w-100" name="name" placeholder="Project Name" maxlength="20" style="outline: none; background-color: rgba(0, 0, 0, 0);" required>
                         </div>
                         <div class="card-body">
-                            <div class="d-block">
-                                <label>Members:</label>
-                                <input list="memberList" type="text" class="team-member border-0" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                            <div class="d-flex flex-wrap align-items-center w-100">
+                                <span class="card-title my-1 mr-2">Members:</label>
+                                <input list="memberList" type="text" class="team-member border-0 d-inline-block w-75" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
                                 <datalist id="memberList">
                                     <?php foreach($company_user as $user): ?>
                                     <option value="<?= $user->email_address ?>"></option>
@@ -45,9 +45,9 @@
                                 <input type="date" class="form-control border-0" name="due_date" style="outline: none; background-color: rgba(0, 0, 0, 0);">
                             </div>
                             <?php if($task_type == 'project'): ?>
-                            <div class="container-fluid p-0">
-                                <p class="card-title d-inline-block">Contributors: </p>
-                                <input list="contributorList" type="text" class="task-actor border-0 d-inline-block" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                            <div class="d-flex flex-wrap align-items-center w-100">
+                                <span class="card-title my-1 mr-2">Contributors:</span>
+                                <input list="contributorList" type="text" class="task-actor border-0 d-inline-block w-75" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
                                 <datalist id="contributorList">
                                     <?php foreach($project->members as $member): ?>
                                     <option value="<?= $member->email_address ?>"></option>

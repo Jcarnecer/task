@@ -38,7 +38,7 @@ function checkEmployee($emailField) {
         if(!$emailField.closest('form').has(`input[name="members[]"][value="${$emailField.val().toLowerCase()}"]`).length){
 
             $emailField.before(
-                `<span class="badge badge-dark mx-1">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
+                `<span class="badge badge-dark m-1">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
             );
 
             $emailField.closest('form').append(
@@ -66,7 +66,7 @@ function checkTeamMember($emailField) {
         if(!$emailField.closest('form').has(`input[name="actors[]"][value="${$emailField.val().toLowerCase()}"]`).length){
 
             $emailField.before(
-                `<span class="badge badge-dark mx-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
+                `<span class="badge badge-dark m-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
             );
 
             $emailField.closest('form').append(
@@ -188,7 +188,7 @@ function displayMember(items, edit = false) {
         if(edit) {
 
             $('.team-member').before(
-                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
+                `<span class="badge badge-dark m-1">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
             $('#teamModifyModal form').append(
@@ -197,7 +197,7 @@ function displayMember(items, edit = false) {
         } else
 
             $('.team-member').before(
-                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']}</span>`
+                `<span class="badge badge-dark m-1">${item['first_name']} ${item['last_name']}</span>`
             );
     });
 };
@@ -235,7 +235,7 @@ function displayActor(items, edit = false) {
         if(edit) {
 
             $('#taskModifyModal .task-actor').before(
-                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
+                `<span class="badge badge-dark m-1">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
             $('#taskModifyModal form').append(
@@ -244,7 +244,7 @@ function displayActor(items, edit = false) {
         } else {
 
             $('.task-actor-list').append(
-                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']}</span>`
+                `<span class="badge badge-dark m-1">${item['first_name'] + ' ' + item['last_name']}</span>`
             );
         }
     });

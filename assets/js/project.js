@@ -127,7 +127,14 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
 
     e.preventDefault();
 
-    if($(this).find('input[required]').val() != '' && $(this).find('.team-member').val() == '') {
+    if ($(this).find('.team-member').val() != '') {
+        
+        checkEmployee($(this).find('.team-member'));
+        $(this).find('.team-member').val('');
+        return;
+    }
+
+    if($(this).find('input[required]').val() != '') {
 
         console.log($(this).find('.team-member').val());
         
@@ -163,12 +170,7 @@ $(document).on('submit', 'form#teamCreateForm, form#teamUpdateForm', function (e
                 location.reload();
             });
         }
-    } else if ($(this).find('.team-member').val() != '') {
-        
-        checkEmployee($(this).find('.team-member'));
-
-        $(this).find('.team-member').val('');
-    }
+    } 
 });
 
 });
