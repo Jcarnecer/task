@@ -10,7 +10,12 @@
                         <div class="card-body">
                             <div class="d-block">
                                 <label>Members:</label>
-                                <input type="text" class="team-member border-0" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                                <input list="memberList" type="text" class="team-member border-0" placeholder="Add Member's Email Address" size="32" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                                <datalist id="memberList">
+                                    <?php foreach($company_user as $user): ?>
+                                    <option value="<?= $user->email_address ?>"></option>
+                                    <?php endforeach; ?>
+                                </datalist>
                             </div>
                             <div class="d-block">
                                 <button type="submit" class="btn custom-button float-right"><i class="fa fa-plus"></i> Add</button>
@@ -42,7 +47,12 @@
                             <?php if($task_type == 'project'): ?>
                             <div class="container-fluid p-0">
                                 <p class="card-title d-inline-block">Contributors: </p>
-                                <input type="text" class="task-actor border-0 d-inline-block" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                                <input list="contributorList" type="text" class="task-actor border-0 d-inline-block" placeholder="Add Contributor" style="outline: none; background-color: rgba(0, 0, 0, 0);"/>
+                                <datalist id="contributorList">
+                                    <?php foreach($project->members as $member): ?>
+                                    <option value="<?= $member->email_address ?>"></option>
+                                    <?php endforeach; ?>
+                                </datalist>
                             </div>
                             <?php endif; ?>
                             <div id="modifyTaskCollapse" class="collapse py-2 px-0">
