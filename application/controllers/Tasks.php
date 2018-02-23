@@ -14,6 +14,7 @@ class Tasks extends CI_Controller {
 	# Fetch All Board Tasks
 	public function get_all()
 	{
+ 		header("Access-Control-Allow-Origin: *");
 		echo json_encode($this->task->get_all($this->input->get('author_id'), 1));
 	}
 	
