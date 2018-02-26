@@ -196,6 +196,10 @@ $(document).on('keypress', '.task-actor', function (e) {
 
         e.preventDefault();
 
+        if ($(this).val() == '') {
+            return $(this).closest('form').submit();
+        }
+
         checkTeamMember($(this));
 
         $(this).val('');
@@ -278,7 +282,14 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
     
     e.preventDefault();    
 
-    if($(this).find('input[required]').val() != '' && $(this).find('.task-actor').val() == '') {
+    if(getTaskType() == 'project' && $(this).find('.task-actor').val() != '') {
+
+        checkTeamMember($(this).find('.task-actor'));
+        $(this).find('.task-actor').val('');
+        return;
+    }
+
+    if($(this).find('input[required]').val() != '') {
 
         var task = $(this).serializeArray();
         
@@ -312,11 +323,6 @@ $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e
             
             $(this).find('.close-modal').click();
         } 
-    } else if($(this).find('.task-actor').val() != '') {
-
-        checkTeamMember($(this).find('.task-actor'));
-
-        $(this).find('.task-actor').val('');
     }
 });
 
