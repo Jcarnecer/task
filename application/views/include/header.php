@@ -109,8 +109,8 @@
                     <a class="dropdown-item kanban-column-delete" href="#">Delete</a>
                 </div>
             </div> -->
-        <ul class="nav nav-tabs project-buttons">
-            <li class="nav-item dropdown w-50">
+        <ul class="nav nav-tabs d-flex flex-nowrap project-buttons">
+            <li class="nav-item dropdown w-100">
                 <a href="http://localhost/task/project/<?= $project->id ?>" class="nav-link dropdown-toggle project-button active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tasks"></i> Tasks</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" id="highlightBtn"><i class="fa fa-lightbulb"></i> Highlight Tasks</a>
@@ -131,8 +131,11 @@
                     <a class="dropdown-item" data-value="<?= $project->id; ?>"><i class="fa fa-sign-out-alt"></i> Leave Project</a>
                 </div>
             </li>
-            <li class="nav-item w-50">
-            <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/forum/project/' . $project->id : 'http://forum.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-exchange-alt"></i> Discussion</a>
+            <li class="nav-item w-100">
+                <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/forum/project/' . $project->id : 'http://forum.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-exchange-alt"></i> Discussion</a>
+            </li>
+            <li class="nav-item w-100">
+                <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/file/project/' . $project->id : 'http://file.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-file"></i> Files</a>
             </li>
         </ul>
         <?php endif; ?>
