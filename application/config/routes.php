@@ -56,7 +56,7 @@ $route['tasks'] = 'Views/personal';
 
 # view
 $route['personal']                              = 'Views/personal';
-$route['project/(:any)']                           = 'Views/project/$1';
+$route['project/(:any)']                        = 'Views/project/$1';
 
 # API
 # user

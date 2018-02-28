@@ -26,6 +26,60 @@ function setUserId(id) { userId = id; }
 function getUserId() { return userId; }
 
 
+function checkEmployee($emailField) {
+    data = {
+        email: $emailField.val().toLowerCase()
+    };
+
+    var result = validateMember(data).responseJSON;
+    
+    if(result['exists']) {
+
+        if(!$emailField.closest('form').has(`input[name="members[]"][value="${$emailField.val().toLowerCase()}"]`).length){
+
+            $emailField.before(
+                `<span class="badge badge-dark m-1">${result['first_name']} ${result['last_name']} <a class="team-member-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
+            );
+
+            $emailField.closest('form').append(
+                `<input type="hidden" name="members[]" value="${$emailField.val().toLowerCase()}" />`
+            );
+        }
+    } else {
+
+        alert('User does not exist in the company');
+    }
+}
+
+
+function checkTeamMember($emailField) {
+    
+    var data = {
+        email: $emailField.val().toLowerCase(),
+        proj_id: getAuthorId()
+    };
+
+    var result = validateMember(data).responseJSON;
+    
+    if(result['exists']) {
+        
+        if(!$emailField.closest('form').has(`input[name="actors[]"][value="${$emailField.val().toLowerCase()}"]`).length){
+
+            $emailField.before(
+                `<span class="badge badge-dark m-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$emailField.val().toLowerCase()}">&times;</a></span>`
+            );
+
+            $emailField.closest('form').append(
+                `<input type="hidden" name="actors[]" value="${$emailField.val().toLowerCase()}" />`
+            );
+        }
+    } else {
+        
+        alert('User does not exist in the team');
+    }
+}
+
+
 // Task Builder
 function taskBuilder(task, actorIcon = true, modalDismiss = false) {
     
@@ -90,10 +144,10 @@ function taskBuilder(task, actorIcon = true, modalDismiss = false) {
 // Column Builder
 function columnBuilder(column) {
     var columnString = 
-    `<div class="card border h-100 w-25 kanban-column rounded-0" 
+    `<div class="card border h-100 w-100 kanban-column rounded-0" 
         ondrop="drop(event)" ondragover="allowDrop(event)" 
         data-value="${column['id']}" data-position="${column['position']}">
-        <div class="card-header kanban-column-edit clearfix"
+        <div class="card-header clearfix"
             draggable="true" ondragstart="drag(event)">
 
             <h4 class="kanban-column-title mb-0 float-left" contenteditable="false">
@@ -134,7 +188,7 @@ function displayMember(items, edit = false) {
         if(edit) {
 
             $('.team-member').before(
-                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
+                `<span class="badge badge-dark m-1">${item['first_name']} ${item['last_name']} <a class="team-member-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
             $('#teamModifyModal form').append(
@@ -143,7 +197,7 @@ function displayMember(items, edit = false) {
         } else
 
             $('.team-member').before(
-                `<span class="badge badge-dark mx-1">${item['first_name']} ${item['last_name']}</span>`
+                `<span class="badge badge-dark m-1">${item['first_name']} ${item['last_name']}</span>`
             );
     });
 };
@@ -181,7 +235,7 @@ function displayActor(items, edit = false) {
         if(edit) {
 
             $('#taskModifyModal .task-actor').before(
-                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
+                `<span class="badge badge-dark m-1">${item['first_name'] + ' ' + item['last_name']} <a class="task-actor-remove" data-value="${item['email_address']}">&times;</a></span>`
             );
 
             $('#taskModifyModal form').append(
@@ -190,7 +244,7 @@ function displayActor(items, edit = false) {
         } else {
 
             $('.task-actor-list').append(
-                `<span class="badge badge-dark mx-1">${item['first_name'] + ' ' + item['last_name']}</span>`
+                `<span class="badge badge-dark m-1">${item['first_name'] + ' ' + item['last_name']}</span>`
             );
         }
     });
@@ -261,20 +315,20 @@ function searchTask(items, keyword) {
 // Kanban
 function displayBoard(board) {
 
-    $('#kanbanBoard .card-group').html('');
+    $('#kanbanBoard #kanbanColumnContainer').html('');
 
-    $('#kanbanBoard .card-group').css(`width`, `${(board['columns'].length + 1) * 25}%`);
-
+    $('#kanbanBoard #kanbanColumnContainer').css(`width`, `${(board['columns'].length + 1) * 25}%`);
+    
     board['columns'].forEach(function(column) {
 
-        $('#kanbanBoard .card-group').append(columnBuilder(column));
+        $('#kanbanBoard #kanbanColumnContainer').append(columnBuilder(column));
     });
     
-    $('#kanbanBoard .card-group').append(`
-        <div id="addColumn" class="card rounded-0 border h-100 w-25">
+    $('#kanbanBoard #kanbanColumnContainer').append(`
+        <div id="addColumn" class="card rounded-0 border h-100 w-100">
             <h4 class="card-header w-100">
                 <i class="fa fa-plus mx-1"></i>
-                <span id="addColumnName" contenteditable="true">Type Here</span>
+                <span id="addColumnName" contenteditable="true">New Column</span>
             </h4>
             <div class="card-body"></div>
         </div>
@@ -284,7 +338,7 @@ function displayBoard(board) {
 
 function addColumn(column) {
     
-    $('#kanbanBoard .card-group').css(`width`,  `${(column['position'] + 1) * 25}%`);
+    $('#kanbanBoard #kanbanColumnContainer').css(`width`,  `${(column['position'] + 1) * 25}%`);
     
     $('#addColumn').before(columnBuilder(column));
 };

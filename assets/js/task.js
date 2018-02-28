@@ -98,12 +98,17 @@ $(document).on('click', '.task-view', function () {
 
 $(document).on('click', '.task-archive', function() {
 
-    var $task = $(this).closest('.card .kanban-task');
-    
-    archiveTask($(this).attr('data-value')).done(function() {
+    var $task = $(this).closest('.card.kanban-task');
+ 
+    if(confirm('Are you sure you want to delete this task?')) {
 
-        $task.remove();
-    });
+        $task.popover('hide');
+
+        archiveTask($(this).attr('data-value')).done(function() {
+
+            $task.remove();
+        });
+    }
 });
 
 
@@ -191,33 +196,47 @@ $(document).on('keypress', '.task-actor', function (e) {
 
         e.preventDefault();
 
-        var data = {
-            email: $(this).val().toLowerCase(),
-            proj_id: getAuthorId()
-        };
-
-        var result = validateMember(data).responseJSON;
-        
-        if(result['exists']) {
-            
-            if(!$(this).closest('form').has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
-
-                $(this).before(
-                    `<span class="badge badge-dark mx-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
-                );
-
-                $(this).closest('form').append(
-                    `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
-                );
-            }
-        } else {
-            
-            alert('User does not exist in the team');
+        if ($(this).val() == '') {
+            return $(this).closest('form').submit();
         }
+
+        checkTeamMember($(this));
 
         $(this).val('');
     }
 });
+
+
+// $(document).on('blur', '.task-actor', function (e) {
+
+//     e.preventDefault();
+
+//     var data = {
+//         email: $(this).val().toLowerCase(),
+//         proj_id: getAuthorId()
+//     };
+
+//     var result = validateMember(data).responseJSON;
+    
+//     if(result['exists']) {
+        
+//         if(!$(this).closest('form').has(`input[name="actors[]"][value="${$(this).val().toLowerCase()}"]`).length){
+
+//             $(this).before(
+//                 `<span class="badge badge-dark mx-1">${result['first_name'] + ' ' + result['last_name']} <a class="task-actor-remove" data-value="${$(this).val().toLowerCase()}">&times;</a></span>`
+//             );
+
+//             $(this).closest('form').append(
+//                 `<input type="hidden" name="actors[]" value="${$(this).val().toLowerCase()}" />`
+//             );
+//         }
+//     } else {
+        
+//         alert('User does not exist in the team');
+//     }
+
+//     $(this).val('');
+// });
 
 
 $(document).on('click', '.task-actor-remove', function() {
@@ -262,6 +281,13 @@ $(document).on('keypress', '.task-note', function (e) {
 $(document).on('submit', 'form#taskCreateForm, form#taskUpdateForm', function (e) {
     
     e.preventDefault();    
+
+    if(getTaskType() == 'project' && $(this).find('.task-actor').val() != '') {
+
+        checkTeamMember($(this).find('.task-actor'));
+        $(this).find('.task-actor').val('');
+        return;
+    }
 
     if($(this).find('input[required]').val() != '') {
 
