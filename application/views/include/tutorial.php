@@ -8,7 +8,7 @@
                             <img src="<?= base_url('assets/tutorial/welcome.png') ?>" alt="Sidebar" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Welcome to PayakApps' Project Module</h5>
-                                <p class="card-text">This is where you organize things you have to do!</p>
+                                <p class="card-text">This is where you organize the things you have to do!</p>
                             </div>
                         </div>
                     </div>
@@ -17,7 +17,7 @@
                             <img src="<?= base_url('assets/tutorial/column.png') ?>" alt="Dashboard" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Columns</h5>
-                                <p class="card-text">Columns serves as task containers.</p>
+                                <p class="card-text">Columns serve as task containers.</p>
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                             <img src="<?= base_url('assets/tutorial/add column.png') ?>" alt="Account" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Creating Column</h5>
-                                <p class="card-text">Creating new column is very easy. All you have to do is to start typing on the "Type Here" at the top of the blank column.</p>
+                                <p class="card-text">Creating new column is very easy. All you have to do is to start typing on the "+ New Column" at the top of the blank column.</p>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             <img src="<?= base_url('assets/tutorial/add task.png') ?>" alt="Account" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Creating Task</h5>
-                                <p class="card-text">To add task, just click "Add Task at the bottom of task list within a column. You may set deadline, change color, and add tags to a task.</p>
+                                <p class="card-text">To add task, just click "Add Task" at the bottom of task list within a column. You may set deadline, change color, and add tags to a task.</p>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                             <img src="<?= base_url('assets/tutorial/edit task.png') ?>" alt="Account" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Editing Task</h5>
-                                <p class="card-text">From time to time, we made mistakes. You may still update or change the task you have added.</p>
+                                <p class="card-text">From time to time, we make mistakes. You may still update or change the task you have added.</p>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             <img src="<?= base_url('assets/tutorial/drag.png') ?>" alt="Account" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Drag and Drop</h5>
-                                <p class="card-text">Dragging task across different column is also possible. Columns may also be drag and drop to change column order.</p>
+                                <p class="card-text">Dragging task across different columns is possible. Columns may also be dragged and dropped to change column order.</p>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                             <img src="<?= base_url('assets/tutorial/project.png') ?>" alt="Project" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Project</h5>
-                                <p class="card-text">This module got your basic needs for project management.</p>
+                                <p class="card-text">This module has your basic needs for project management.</p>
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                             <img src="<?= base_url('assets/tutorial/create project.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Create Project</h5>
-                                <p class="card-text">Creating a new project is simple. Just click "Add Project" withing the project folder at the sidebar and type the name of the project and the email addresses of the project members.</p>
+                                <p class="card-text">Creating a new project is simple. Just click "Add Project" within the project folder at the sidebar and type the name of the project and the email addresses of the project members.</p>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                             <img src="<?= base_url('assets/tutorial/member.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Project Member</h5>
-                                <p class="card-text">Wonder who are your team mates? Just click on the "Project Members" button to see them.</p>
+                                <p class="card-text">Wonder who your team mates are? Just click on the "Project Members" button to see them.</p>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                             <img src="<?= base_url('assets/tutorial/contributor.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Task Contributors</h5>
-                                <p class="card-text">Within the Project, you have the ability to assign contributors to an specific task upon task creation. You may update the contributor from time to time.</p>
+                                <p class="card-text">Within the Project, you have the ability to assign contributors to an specific task upon task creation. You may update the contributors from time to time.</p>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                             <img src="<?= base_url('assets/tutorial/view contributor.png') ?>" alt="Create Project" class="rounded-0 card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Viewing Task Contributors</h5>
-                                <p class="card-text">Hovering the mouse over a task will reveal the contributors of the task. Each icons represents the number of the contributor of a task.</p>
+                                <p class="card-text">Hovering the mouse over a task will reveal the contributors of the task. Each icon represents the number of the contributor of a task.</p>
                             </div>
                         </div>
                     </div>
