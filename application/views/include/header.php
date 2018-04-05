@@ -25,7 +25,11 @@
 <body>
 
 <div id="sidebar" style="overflow-y: auto;">
-
+    <div id="nav-icon-back">
+        <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/main' : 'http://payakapps.com' ?>">
+            <i style="color:#fff;height: 25px;position: relative;width:30px;" class="fa fa-arrow-left"></i>
+        </a>
+    </div>
     <div id="nav-icon-close" class="custom-toggle">
         <span></span>
         <span></span>
