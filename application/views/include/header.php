@@ -104,7 +104,7 @@
                 <span></span>
                 <span></span>
             </div>
-            <a class="navbar-brand" href="<?= base_url('tasks'); ?>">
+            <a class="navbar-brand" href="">
                 <?= $task_type == 'personal' ? 'Personal Tasks' : $project->name ?>
             </a>
             
