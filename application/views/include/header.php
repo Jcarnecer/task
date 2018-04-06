@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
     <link rel="shortcut icon" href="payakapps.com/assets/images/favicon.png" type="image/x-icon">
     
-    <title>Projects</title>
+    <title>PayakApps</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+27px">
 
@@ -104,8 +104,8 @@
                 <span></span>
                 <span></span>
             </div>
-             <a class="navbar-brand font-weight-bold text-uppercase" href="<?= base_url('tasks'); ?>">
-                <?= $task_type == 'personal' ? 'Tasks' : $project->name ?>
+            <a class="navbar-brand" href="<?= base_url('tasks'); ?>">
+                <?= $task_type == 'personal' ? 'Personal Tasks' : $project->name ?>
             </a>
             
             <ul class="navbar-nav flex-row ml-auto">
