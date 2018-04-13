@@ -87,6 +87,18 @@ body {
   #nav-icon-close {
     float: right;
     margin: 10px; }
+
+  #nav-icon-back {
+    float: left;
+    margin: 15px; }
+    #nav-icon-back a {
+      display:inline; border-left:0px; padding:0px; 
+    }
+    #nav-icon-back a:hover{
+      background-color: inherit;
+        border-left: 0px;
+        text-decoration: none; 
+    }
   
   #nav-icon-close span {
     background: #ffffff;}
