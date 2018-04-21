@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
     <link rel="shortcut icon" href="payakapps.com/assets/images/favicon.png" type="image/x-icon">
     
-    <title>Task</title>
+    <title>PayakApps</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Slabo+27px">
 
@@ -25,7 +25,11 @@
 <body>
 
 <div id="sidebar" style="overflow-y: auto;">
-
+    <div id="nav-icon-back">
+        <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/main' : 'https://payakapps.com' ?>">
+            <i style="color:#fff;height: 25px;position: relative;width:30px;" class="fa fa-arrow-left"></i>
+        </a>
+    </div>
     <div id="nav-icon-close" class="custom-toggle">
         <span></span>
         <span></span>
@@ -33,16 +37,9 @@
 
     <ul class="sidebar-menu">
         <li class="">
-            <a class="font-weight-bold text-warning" href="#tutorialModal" data-toggle="modal">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <span>Get Started with Task</span>
-            </a>    
-        </li>
-
-        <li class="">
             <a class="" href="<?= base_url('personal'); ?>">
                 <i class="fa fa-tasks" aria-hidden="true"></i>
-                <span>Personal Task</span>
+                <span>Personal Tasks</span>
             </a>    
         </li>
         
@@ -62,7 +59,14 @@
         </li>
         
         <li class="">
-            <a class="" href="<?= ENVIRONMENT === 'development' ? 'http://localhost/main/users/logout' : 'http://payakapps.com/users/logout' ?>">
+            <a class="font-weight-bold text-warning" href="#tutorialModal" data-toggle="modal">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <span>Guide with Tasks</span>
+            </a>    
+        </li>
+
+        <li class="">
+            <a class="" href="<?= LOGOUT_URL ?>">
                 <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
                 <span>Logout</span>
             </a>
@@ -73,7 +77,7 @@
 
 <div class="main-content h-100">
 
-    <div class="topbar">
+    <!-- <div class="topbar">
         <nav class="navbar navbar-custom clearfix">
             <div id="nav-icon-open" class="custom-toggle hidden-toggle">
                 <span></span>
@@ -91,8 +95,35 @@
                 </a>
             </span>
         </nav>
-    </div>
+    </div> -->
     
+    <div class="topbar w-100" style="margin-bottom: -20px;">
+        <nav class="navbar navbar-custom navbar-expand-lg">
+            <div id="nav-icon-open" class="custom-toggle hidden-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a class="navbar-brand" href="">
+                <?= $task_type == 'personal' ? 'Personal Tasks' : $project->name ?>
+            </a>
+            
+            <ul class="navbar-nav flex-row ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        <img class="img-avatar mr-2" src="<?= $avatar_url ?>"><?= $user_name ?>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="<?= ENVIRONMENT === "development" ? 'http://localhost/main/users/profile' : 'https://payakapps.com/users/profile' ?>">My Profile</a>
+                        <a class="dropdown-item" href="<?= ENVIRONMENT === "development" ? 'http://localhost/main/users/profile/change-password' : 'https://payakapps.com/users/profile/change-password' ?>">My Password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="<?= LOGOUT_URL ?>">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
     <div class="inner-content d-flex flex-column">
         <?php if($task_type == 'project'): ?>
         <!-- <div class="d-flex w-100 project-buttons">
@@ -111,7 +142,7 @@
             </div> -->
         <ul class="nav nav-tabs d-flex flex-nowrap project-buttons">
             <li class="nav-item dropdown w-100">
-                <a href="http://localhost/task/project/<?= $project->id ?>" class="nav-link dropdown-toggle project-button active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tasks"></i> Tasks</a>
+                <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/task/project/' . $project->id : 'https://task.payakapps.com/task/project/' . $project->id ?>" class="nav-link dropdown-toggle project-button active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tasks"></i> Tasks</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" id="highlightBtn"><i class="fa fa-lightbulb"></i> Highlight Tasks</a>
                     <a class="dropdown-item team-edit" data-target="#teamModifyModal" data-toggle="modal" data-value="<?= $project->id; ?>"><i class="fa fa-edit"></i> Edit Project</a>
@@ -132,10 +163,10 @@
                 </div>
             </li>
             <li class="nav-item w-100">
-                <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/forum/project/' . $project->id : 'http://forum.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-exchange-alt"></i> Discussion</a>
+                <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/forum/project/' . $project->id : 'https://forum.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-exchange-alt"></i> Discussion</a>
             </li>
             <li class="nav-item w-100">
-                <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/file/project/' . $project->id : 'http://file.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-file"></i> Files</a>
+                <a href="<?= ENVIRONMENT === 'development' ? 'http://localhost/file/project/' . $project->id : 'https://file.payakapps.com/project/' . $project->id ?>" class="nav-link secondary-button"><i class="fa fa-file"></i> Files</a>
             </li>
         </ul>
         <?php endif; ?>
